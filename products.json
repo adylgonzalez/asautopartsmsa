@@ -3316,20 +3316,24 @@
     "price": 850,
     "priceMode": "fixed",
     "partNo": "BF-DOT4-500",
-    "oem": "N/A",
+    "oem": "BF-DOT4-500",
     "application": "Universal - all vehicles",
-    "category": "Brakes",
+    "category": "Oils & Fluids",
     "brand": "BOSCH",
     "image": "🛢️",
-    "images": [],
+    "images": [
+      "🛢️"
+    ],
     "vehicleMake": "Universal",
     "vehicleModel": "All Models",
     "yearStart": 0,
     "yearEnd": 0,
     "stock": 50,
-    "description": "DOT 4 brake fluid, 500ml. Universal fit. [VERIFY: supplier]",
+    "description": "DOT 4 brake fluid, 500ml. Universal fit. ",
     "sku": "BF-DOT4-500",
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Windshield Washer Fluid - 1L Concentrate",

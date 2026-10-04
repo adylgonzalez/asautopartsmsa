@@ -563,13 +563,11 @@
         <a href="tel:+254713349554" class="call"><i class="fas fa-phone"></i> Call</a>
     </div>
 
-    <!-- ===== AI CHAT BUTTON ===== -->
     <button class="ai-chat-btn" id="aiChatBtn" onclick="toggleAIChat()" title="Chat with A&S Assistant">
         <span class="pulse-ring"></span>
         <i class="fas fa-robot" id="aiChatIcon"></i>
     </button>
 
-    <!-- ===== AI CHAT WINDOW ===== -->
     <div class="ai-chat-window" id="aiChatWindow">
         <div class="ai-chat-header">
             <div class="ai-avatar"><i class="fas fa-robot"></i></div>
@@ -3066,7 +3064,7 @@ function logOutAdmin(){
 // ==================== AI CHAT ASSISTANT ====================
 let aiChatOpen = false;
 let aiChatState = {
-    stage: 'welcome', // welcome | make | model | year | part | results | confirm
+    stage: 'welcome',
     make: null,
     model: null,
     year: null,
@@ -3211,7 +3209,7 @@ function handleAIAction(action, value){
             showAIResults();
             break;
         case 'oil_help':
-            aiBotSay(`For engine oil, we recommend:<br><br>🛢️ <b>Most Toyota/Nissan/Honda (2000-2015)</b>: 5W-30 or 10W-30<br>🛢️ <b>Modern cars (2015+)</b>: 0W-20 or 5W-20<br>🛢️ <b>Diesel Hilux/Prado</b>: 5W-30 or 15W-40<br>🛢️ <b>High mileage</b>: 10W-40 or 20W-50<br><br>We stock:</b> Castrol, Total, Shell, Toyota Genuine.<br><br>Want me to check which oil fits your exact car?`, [
+            aiBotSay(`For engine oil, we recommend:<br><br>🛢️ <b>Most Toyota/Nissan/Honda (2000-2015)</b>: 5W-30 or 10W-30<br>🛢️ <b>Modern cars (2015+)</b>: 0W-20 or 5W-20<br>🛢️ <b>Diesel Hilux/Prado</b>: 5W-30 or 15W-40<br>🛢️ <b>High mileage</b>: 10W-40 or 20W-50<br><br>We stock: Castrol, Total, Shell, Toyota Genuine.<br><br>Want me to check which oil fits your exact car?`, [
                 {label: '🔧 Yes, find my oil', action: 'start_find'},
                 {label: '💬 Ask on WhatsApp', href: 'https://wa.me/254713349554?text=Hi%20A%26S%2C%20I%20need%20advice%20on%20engine%20oil%20for%20my%20car', wa: true}
             ]);
@@ -3226,6 +3224,24 @@ function handleAIAction(action, value){
             aiBotSay(`Sure! Tap a brother below to WhatsApp him directly 👇`, [
                 {label: '💬 WhatsApp ADIL', href: 'https://wa.me/254713349554?text=Hi%20ADIL%2C%20I%20need%20help%20with%20a%20part', wa: true},
                 {label: '💬 WhatsApp SUHAYL', href: 'https://wa.me/254752763924?text=Hi%20SUHAYL%2C%20I%20need%20help%20with%20a%20part', wa: true}
+            ]);
+            break;
+        case 'model_other':
+            aiBotSay(`Please type the model name in the message box 👇`);
+            aiChatState.stage = 'model_typed';
+            break;
+        case 'part_other':
+            aiBotSay(`Please type the part you need in the message box 👇`);
+            aiChatState.stage = 'part_typed';
+            break;
+        case 'manual_search':
+            toggleAIChat();
+            scrollToSection('products');
+            break;
+        case 'done':
+            aiBotSay(`Asante! 🙏 Come back any time you need a part. You can reach us on WhatsApp 24/7.`, [
+                {label: '💬 WhatsApp ADIL', href: 'https://wa.me/254713349554', wa: true},
+                {label: '💬 WhatsApp SUHAYL', href: 'https://wa.me/254752763924', wa: true}
             ]);
             break;
     }
@@ -3277,70 +3293,65 @@ function showAIResults(){
     }
 
     filtered = filtered.slice(0, 3);
-    aiBotSay(`Great! Here ${filtered.length === 1 ? 'is' : 'are'} ${filtered.length} match${filtered.length > 1 ? 'es' : ''} for your ${state.make} ${state.model}:`);
+    const count = filtered.length;
+    const body = document.getElementById('aiChatBody');
 
-    filtered.forEach((prod, i) => {
-        const idx = products.indexOf(prod);
-        const { text: priceTxt } = priceDisplay(prod);
-        const partNo = prod.partNo || prod.oem || 'N/A';
-        const st = normalizeStock(prod.availability);
-        const stockTag = st === STOCK_ON_ORDER
-            ? '<span class="cart-item-status on-order">Shipped on Order</span>'
-            : '<span class="cart-item-status in-stock">In Stock</span>';
-        const img = renderImageHTML(prod);
-        const msg = document.createElement('div');
-        msg.className = 'ai-msg bot';
-        msg.style.maxWidth = '100%';
-        msg.innerHTML = `
-            <div class="ai-product-mini">
-                <div style="display:flex;gap:10px;align-items:flex-start;">
-                    <div style="font-size:32px;flex-shrink:0;">${img}</div>
-                    <div style="flex:1;min-width:0;">
-                        <div class="mini-name">${escapeAttr(prod.name)}</div>
-                        <div class="mini-meta">Part No: ${escapeAttr(partNo)} · ${escapeAttr(prod.brand||'')}</div>
-                        ${stockTag}
-                        <div class="mini-price" style="margin-top:6px;">${escapeAttr(priceTxt)}</div>
-                    </div>
-                </div>
-                <div class="mini-actions">
-                    <button class="mini-cart" onclick="addToCart(${idx});showNotification('Added to cart!');">🛒 Add to Cart</button>
-                    <button class="mini-wa" onclick="window.open('https://wa.me/254713349554?text=Hi%2C%20I%20want%20to%20order%20${encodeURIComponent(prod.name)}%20(SKU%20${encodeURIComponent(prod.sku||'')})','_blank');">💬 Order Now</button>
-                </div>
-            </div>
-        `;
-        document.getElementById('aiChatBody').appendChild(msg);
-    });
+    const typing = document.createElement('div');
+    typing.className = 'ai-msg bot typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(typing);
+    body.scrollTop = body.scrollHeight;
 
     setTimeout(() => {
-        aiBotSay(`Anything else I can help with?`, [
-            {label: '🔍 Search another part', action: 'start_find'},
-            {label: '💬 Ask a human', action: 'human'},
-            {label: '✅ I\'m done', action: 'done'}
-        ]);
-    }, 800);
-}
+        typing.remove();
 
-function handleAIActionOnly(action){
-    switch(action){
-        case 'model_other':
-            aiBotSay(`Please type the model name in the message box 👇`);
-            aiChatState.stage = 'model_typed';
-            break;
-        case 'part_other':
-            aiBotSay(`Please type the part you need in the message box 👇`);
-            aiChatState.stage = 'part_typed';
-            break;
-        case 'manual_search':
-            toggleAIChat();
-            scrollToSection('products');
-            break;
-        case 'done':
-            aiBotSay(`Asante! 🙏 Come back any time you need a part. You can reach us on WhatsApp 24/7.`, [
-                {label: '💬 WhatsApp ADIL', href: 'https://wa.me/254713349554', wa: true},
-                {label: '💬 WhatsApp SUHAYL', href: 'https://wa.me/254752763924', wa: true}
+        const intro = document.createElement('div');
+        intro.className = 'ai-msg bot';
+        intro.innerHTML = `Great! Here ${count === 1 ? 'is' : 'are'} <b>${count}</b> match${count > 1 ? 'es' : ''} for your ${escapeAttr(state.make)} ${escapeAttr(state.model)}:`;
+        body.appendChild(intro);
+
+        filtered.forEach(prod => {
+            const idx = products.indexOf(prod);
+            const { text: priceTxt } = priceDisplay(prod);
+            const partNo = prod.partNo || prod.oem || 'N/A';
+            const st = normalizeStock(prod.availability);
+            const stockTag = st === STOCK_ON_ORDER
+                ? '<span class="cart-item-status on-order">Shipped on Order</span>'
+                : '<span class="cart-item-status in-stock">In Stock</span>';
+            const img = renderImageHTML(prod);
+            const msg = document.createElement('div');
+            msg.className = 'ai-msg bot';
+            msg.style.maxWidth = '100%';
+            msg.innerHTML = `
+                <div class="ai-product-mini">
+                    <div style="display:flex;gap:10px;align-items:flex-start;">
+                        <div style="font-size:32px;flex-shrink:0;">${img}</div>
+                        <div style="flex:1;min-width:0;">
+                            <div class="mini-name">${escapeAttr(prod.name)}</div>
+                            <div class="mini-meta">Part No: ${escapeAttr(partNo)} · ${escapeAttr(prod.brand||'')}</div>
+                            ${stockTag}
+                            <div class="mini-price" style="margin-top:6px;">${escapeAttr(priceTxt)}</div>
+                        </div>
+                    </div>
+                    <div class="mini-actions">
+                        <button class="mini-cart" onclick="addToCart(${idx});showNotification('Added to cart!');">🛒 Add to Cart</button>
+                        <button class="mini-wa" onclick="window.open('https://wa.me/254713349554?text=Hi%2C%20I%20want%20to%20order%20${encodeURIComponent(prod.name)}%20(SKU%20${encodeURIComponent(prod.sku||'')})','_blank');">💬 Order Now</button>
+                    </div>
+                </div>
+            `;
+            body.appendChild(msg);
+        });
+
+        body.scrollTop = body.scrollHeight;
+
+        setTimeout(() => {
+            aiBotSay(`Anything else I can help with?`, [
+                {label: '🔍 Search another part', action: 'start_find'},
+                {label: '💬 Ask a human', action: 'human'},
+                {label: '✅ I\'m done', action: 'done'}
             ]);
-            break;
-    }
+        }, 500);
+    }, 500);
 }
 
 function sendAIMessage(){
@@ -3353,7 +3364,6 @@ function sendAIMessage(){
     const lower = text.toLowerCase();
     const state = aiChatState;
 
-    // Handle typed responses based on stage
     if(state.stage === 'make_typed'){
         state.make = text;
         state.stage = 'model';
@@ -3388,7 +3398,6 @@ function sendAIMessage(){
         return;
     }
 
-    // Keyword-based fallback
     setTimeout(() => {
         if(lower.includes('oil') || lower.includes('lubricant')){
             handleAIAction('oil_help');
@@ -3443,16 +3452,6 @@ function sendAIMessage(){
         }
     }, 400);
 }
-
-// Intercept chip actions for special cases
-const originalHandleAIAction = handleAIAction;
-handleAIAction = function(action, value){
-    if(['model_other', 'part_other', 'manual_search', 'done'].includes(action)){
-        handleAIActionOnly(action);
-        return;
-    }
-    originalHandleAIAction(action, value);
-};
 
 // ==================== INITIALIZE ====================
 async function init(){

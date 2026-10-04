@@ -170,6 +170,32 @@
         .lwu-whatsapp a.suhayl{background:#128C7E}
         @media(max-width:768px){.lwu-whatsapp a{min-width:100%}.list-with-us h2{font-size:28px}}
 
+        /* === INSURANCE PAGE === */
+        .insurance-page{padding:50px 20px;background:#fff;display:none}
+        .insurance-page.active{display:block}
+        .insurance-inner{max-width:1100px;margin:0 auto}
+        .insurance-page h2{text-align:center;color:#1a237e;margin-bottom:10px;font-size:32px}
+        .insurance-subtitle{text-align:center;color:#666;font-size:16px;margin-bottom:40px;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.6}
+        .insurance-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:40px}
+        .insurance-card{background:#f9f9f9;border:2px solid #e0e0e0;border-radius:14px;padding:28px 24px;text-align:center;transition:all .3s;display:flex;flex-direction:column;height:100%}
+        .insurance-card:hover{border-color:#ff6f00;transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+        .insurance-logo{font-size:56px;margin-bottom:14px}
+        .insurance-card h3{color:#1a237e;font-size:18px;margin-bottom:10px;font-weight:800}
+        .insurance-desc{color:#666;font-size:14px;line-height:1.6;margin-bottom:16px;flex:1}
+        .insurance-tags{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+        .insurance-tags .tag{background:#e3f2fd;color:#1565c0;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
+        .insurance-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;background:#25D366;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;font-size:14px;transition:background .2s}
+        .insurance-btn:hover{background:#1eaa53}
+        .insurance-cta{background:#f0f4ff;border-radius:14px;padding:32px 24px;text-align:center;border:2px dashed #c5cae9}
+        .insurance-cta h3{color:#1a237e;font-size:22px;margin-bottom:10px}
+        .insurance-cta p{color:#555;font-size:15px;line-height:1.6;margin-bottom:20px;max-width:600px;margin-left:auto;margin-right:auto}
+        .insurance-cta-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+        .insurance-cta-buttons .cta-btn{flex:1;min-width:200px;padding:14px 22px;border-radius:50px;color:#fff;text-decoration:none;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .2s}
+        .insurance-cta-buttons .cta-btn:hover{transform:scale(1.03)}
+        .insurance-cta-buttons .cta-btn.adil{background:#25D366}
+        .insurance-cta-buttons .cta-btn.suhayl{background:#128C7E}
+        @media(max-width:768px){.insurance-page h2{font-size:26px}.insurance-cta-buttons .cta-btn{min-width:100%}}
+
         .source-it-box{grid-column:1/-1;background:#fff3e0;border:2px dashed #ff6f00;border-radius:12px;padding:30px 25px;text-align:center;max-width:600px;margin:0 auto}
         .source-it-box h3{color:#e65100;font-size:22px;margin-bottom:12px}
         .source-it-box p{color:#555;font-size:15px;line-height:1.6;margin-bottom:20px}
@@ -389,14 +415,18 @@
         .ai-chip.wa{background:#25D366;border-color:#25D366;color:#fff}
         .ai-chip.wa:hover{background:#1eaa53;border-color:#1eaa53}
 
-        .ai-product-mini{background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:12px;margin-top:8px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-        .ai-product-mini .mini-name{font-weight:700;color:#1a237e;font-size:14px;margin-bottom:4px}
-        .ai-product-mini .mini-meta{font-size:12px;color:#666;margin-bottom:6px}
-        .ai-product-mini .mini-price{color:#ff6f00;font-weight:700;font-size:16px;margin-bottom:8px}
+        .ai-product-mini{background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:10px;margin-top:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);max-width:100%}
+        .ai-product-mini .mini-img{width:48px;height:48px;flex-shrink:0;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:26px;overflow:hidden}
+        .ai-product-mini .mini-img img{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block}
+        .ai-product-mini .mini-name{font-weight:700;color:#1a237e;font-size:13px;margin-bottom:3px;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+        .ai-product-mini .mini-meta{font-size:11px;color:#666;margin-bottom:4px;line-height:1.3}
+        .ai-product-mini .mini-price{color:#ff6f00;font-weight:700;font-size:15px;margin-bottom:8px}
         .ai-product-mini .mini-actions{display:flex;gap:6px;flex-wrap:wrap}
-        .ai-product-mini .mini-actions button{flex:1;min-width:100px;padding:8px 10px;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:4px}
+        .ai-product-mini .mini-actions button{flex:1;min-width:90px;padding:7px 8px;border:none;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:3px}
         .ai-product-mini .mini-actions .mini-cart{background:#1a237e}
+        .ai-product-mini .mini-actions .mini-cart:hover{background:#ff6f00}
         .ai-product-mini .mini-actions .mini-wa{background:#25D366}
+        .ai-product-mini .mini-actions .mini-wa:hover{background:#1eaa53}
 
         .ai-chat-footer{padding:12px;background:#fff;border-top:1px solid #eee;flex-shrink:0}
         .ai-input-wrap{display:flex;gap:8px}
@@ -425,6 +455,7 @@
             <a onclick="scrollToSection('contact')">Contact</a>
             <a onclick="viewCart()">🛒 Cart <span class="cart-count" id="cartCount">0</span></a>
             <a onclick="showListWithUs()">🤝 List With Us</a>
+            <a onclick="showInsurance()">🛡️ Insurance</a>
         </div>
     </div>
 
@@ -469,6 +500,7 @@
             <div class="category-card" onclick="shopByCategory('Engine')"><i class="fas fa-cogs"></i><h3>Engine</h3><p>Timing Belts, Pumps</p></div>
             <div class="category-card" onclick="shopByCategory('Cooling')"><i class="fas fa-fan"></i><h3>Cooling</h3><p>Radiators, Water Pumps</p></div>
             <div class="category-card" onclick="shopByCategory('EX JAPAN')"><i class="fas fa-cogs"></i><h3>EX JAPAN</h3><p>Engines, Gearbox, Rims, Sun Roof</p></div>
+            <div class="category-card" onclick="shopByCategory('Oils & Fluids')"><i class="fas fa-oil-can"></i><h3>Oils & Fluids</h3><p>Engine Oil, Coolant, ATF</p></div>
         </div>
         <div class="see-all-wrap">
             <button class="see-all-btn" id="seeAllBtn" onclick="toggleAllCategories()">
@@ -532,6 +564,70 @@
                 </div>
             </div>
             <button onclick="hideListWithUs()" style="width:100%;padding:14px;background:#1a237e;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:16px;font-weight:700;">← Back to Shop</button>
+        </div>
+    </div>
+
+    <!-- ===== INSURANCE PAGE ===== -->
+    <div class="insurance-page" id="insurancePage">
+        <div class="insurance-inner">
+            <h2><i class="fas fa-shield-alt" style="color:#ff6f00;"></i> Our Trusted Insurance Partners</h2>
+            <p class="insurance-subtitle">We've partnered with Kenya's leading motor insurance providers so you can protect your car with confidence. Get a free quote today.</p>
+
+            <div class="insurance-grid">
+                <div class="insurance-card">
+                    <div class="insurance-logo">🏛️</div>
+                    <h3>Partner 1 — Coming Soon</h3>
+                    <p class="insurance-desc">Description of the insurance provider, their cover options, and why we recommend them.</p>
+                    <div class="insurance-tags">
+                        <span class="tag">Comprehensive</span>
+                        <span class="tag">Third Party</span>
+                    </div>
+                    <a href="https://wa.me/254713349554?text=Hi%20A%26S%2C%20I%27d%20like%20a%20quote%20for%20motor%20insurance" target="_blank" class="insurance-btn">
+                        <i class="fab fa-whatsapp"></i> Request Quote
+                    </a>
+                </div>
+
+                <div class="insurance-card">
+                    <div class="insurance-logo">🏢</div>
+                    <h3>Partner 2 — Coming Soon</h3>
+                    <p class="insurance-desc">Description of the insurance provider, their cover options, and why we recommend them.</p>
+                    <div class="insurance-tags">
+                        <span class="tag">Comprehensive</span>
+                        <span class="tag">PSV</span>
+                    </div>
+                    <a href="https://wa.me/254713349554?text=Hi%20A%26S%2C%20I%27d%20like%20a%20quote%20for%20motor%20insurance" target="_blank" class="insurance-btn">
+                        <i class="fab fa-whatsapp"></i> Request Quote
+                    </a>
+                </div>
+
+                <div class="insurance-card">
+                    <div class="insurance-logo">🛡️</div>
+                    <h3>Partner 3 — Coming Soon</h3>
+                    <p class="insurance-desc">Description of the insurance provider, their cover options, and why we recommend them.</p>
+                    <div class="insurance-tags">
+                        <span class="tag">Comprehensive</span>
+                        <span class="tag">Commercial</span>
+                    </div>
+                    <a href="https://wa.me/254713349554?text=Hi%20A%26S%2C%20I%27d%20like%20a%20quote%20for%20motor%20insurance" target="_blank" class="insurance-btn">
+                        <i class="fab fa-whatsapp"></i> Request Quote
+                    </a>
+                </div>
+            </div>
+
+            <div class="insurance-cta">
+                <h3>Not sure which policy is right for you?</h3>
+                <p>Talk to us on WhatsApp — we'll help you compare options and get the best cover for your car.</p>
+                <div class="insurance-cta-buttons">
+                    <a href="https://wa.me/254713349554?text=Hi%20ADIL%2C%20I%20need%20help%20choosing%20motor%20insurance" target="_blank" class="cta-btn adil">
+                        <i class="fab fa-whatsapp"></i> Chat with ADIL
+                    </a>
+                    <a href="https://wa.me/254752763924?text=Hi%20SUHAYL%2C%20I%20need%20help%20choosing%20motor%20insurance" target="_blank" class="cta-btn suhayl">
+                        <i class="fab fa-whatsapp"></i> Chat with SUHAYL
+                    </a>
+                </div>
+            </div>
+
+            <button onclick="hideInsurance()" style="width:100%;padding:14px;background:#1a237e;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:16px;font-weight:700;margin-top:20px;">← Back to Shop</button>
         </div>
     </div>
 
@@ -695,18 +791,18 @@ const DEFAULT_CATEGORIES = [
     "Brakes","Suspension","Filters","Electrical","Engine","Cooling",
     "Transmission","Body & Exterior","Interior","Lighting","Steering",
     "Fuel System","Exhaust","Air Conditioning","Belts & Hoses","Bearings",
-    "Clutch","Ignition","Sensors","Other","EX JAPAN"
+    "Clutch","Ignition","Sensors","Other","EX JAPAN","Oils & Fluids"
 ];
 const DEFAULT_BRANDS = [
     "BOSCH","DENSO","NGK","KYB","AISIN","Gates","Akebono","ACDelco",
     "TOYOTA Genuine","HONDA Genuine","NISSAN Genuine","MITSUBISHI Genuine",
     "MAZDA Genuine","SUBARU Genuine","TYC","KINGMIRROR","TAMA (Japan)",
     "PFI","FROTIS","MECHANGING","TYD","YTM","555","Nisshinbo","Advics",
-    "NTN","NSK","Taiho","NPR","Musashi","Exedy","Other"
+    "NTN","NSK","Taiho","NPR","Musashi","Exedy","Castrol","Total","Shell","Other"
 ];
 
 // ==================== CATEGORY DISPLAY HELPERS ====================
-const FIXED_CATEGORIES = ["Brakes","Suspension","Filters","Electrical","Engine","Cooling","EX JAPAN"];
+const FIXED_CATEGORIES = ["Brakes","Suspension","Filters","Electrical","Engine","Cooling","EX JAPAN","Oils & Fluids"];
 const CATEGORY_DESCRIPTIONS = {
     "Brakes":"Pads, Rotors","Suspension":"Struts, Springs","Filters":"Oil, Air Filters",
     "Electrical":"Alternators, Plugs","Engine":"Belts, Pumps","Cooling":"Radiators, Pumps",
@@ -714,14 +810,14 @@ const CATEGORY_DESCRIPTIONS = {
     "Lighting":"Bulbs, Lamps","Steering":"Racks, Tie Rods","Fuel System":"Pumps, Injectors",
     "Exhaust":"Mufflers, Pipes","Air Conditioning":"Compressors, Fans","Belts & Hoses":"Drive Belts, Hoses",
     "Bearings":"Wheel, Hub","Clutch":"Discs, Covers","Ignition":"Coils, Plugs","Sensors":"O2, MAP, MAF",
-    "Other":"Misc. Parts","EX JAPAN":"Engines, Gearbox, Rims, Sun Roof"
+    "Other":"Misc. Parts","EX JAPAN":"Engines, Gearbox, Rims, Sun Roof","Oils & Fluids":"Engine Oil, Coolant, ATF"
 };
 const CATEGORY_ICONS = {
     "Brakes":"fa-car-battery","Suspension":"fa-car","Filters":"fa-oil-can","Electrical":"fa-bolt",
     "Engine":"fa-cogs","Cooling":"fa-fan","Transmission":"fa-cog","Body & Exterior":"fa-car-side",
     "Interior":"fa-chair","Lighting":"fa-lightbulb","Steering":"fa-dharmachakra","Fuel System":"fa-gas-pump",
     "Exhaust":"fa-smog","Air Conditioning":"fa-snowflake","Belts & Hoses":"fa-link","Bearings":"fa-circle-notch",
-    "Clutch":"fa-compact-disc","Ignition":"fa-fire","Sensors":"fa-satellite-dish","Other":"fa-cog","EX JAPAN":"fa-cogs"
+    "Clutch":"fa-compact-disc","Ignition":"fa-fire","Sensors":"fa-satellite-dish","Other":"fa-cog","EX JAPAN":"fa-cogs","Oils & Fluids":"fa-oil-can"
 };
 function getCategoryDescription(cat){ return CATEGORY_DESCRIPTIONS[cat] || "Browse parts"; }
 function getCategoryIcon(cat){ return CATEGORY_ICONS[cat] || "fa-cog"; }
@@ -915,6 +1011,7 @@ const defaultProducts=[
 {name:"Oil Filter - Toyota",price:1500,category:"Filters",image:"🔩",brand:"TOYOTA Genuine",oem:"90915-YZZD2",partNo:"90915-YZZD2",application:"Toyota All Models",description:"Genuine Toyota oil filter. Traps 95% of contaminants.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OF-TY-ALL",stock:100,availability:"in_stock",priceMode:"fixed"},
 {name:"Air Filter - Toyota",price:2200,category:"Filters",image:"💨",brand:"DENSO",oem:"17801-0D050",partNo:"17801-0D050",application:"Toyota All Models",description:"Engine air filter for Toyota. Improves fuel efficiency.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"AF-TY-ALL",stock:50,availability:"in_stock",priceMode:"fixed"},
 {name:"Spark Plugs - Toyota (4 Pack)",price:2800,category:"Electrical",image:"⚡",brand:"NGK",oem:"90919-01253",partNo:"90919-01253",application:"Toyota All Models",description:"Iridium spark plugs for Toyota. Better combustion and performance.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"SP-TY-ALL",stock:60,availability:"in_stock",priceMode:"fixed"},
+{name:"Engine Oil 5W-30 (4L) - Castrol",price:4800,category:"Oils & Fluids",image:"🛢️",brand:"Castrol",oem:"N/A",partNo:"N/A",application:"Universal All Models",description:"Fully synthetic engine oil 5W-30. Ideal for most modern petrol and diesel engines.",vehicleMake:"Universal",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OIL-5W30-4L",stock:40,availability:"in_stock",priceMode:"fixed"},
 {name:"Brake Pads - Honda Civic",price:3900,category:"Brakes",image:"🔧",brand:"ACDelco",oem:"45022-SNA-A01",partNo:"45022-SNA-A01",application:"Honda Civic 2016-2023",description:"Front brake pads for Honda Civic. Premium quality.",vehicleMake:"Honda",vehicleModel:"Civic",yearStart:2016,yearEnd:2023,sku:"BP-HC-1623",stock:25,availability:"in_stock",priceMode:"fixed"},
 {name:"Oil Filter - Honda",price:1200,category:"Filters",image:"🔩",brand:"HONDA Genuine",oem:"15400-PLM-A01",partNo:"15400-PLM-A01",application:"Honda All Models",description:"Genuine Honda oil filter. Perfect fit.",vehicleMake:"Honda",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OF-HN-ALL",stock:80,availability:"in_stock",priceMode:"fixed"},
 {name:"Brake Pads - Nissan X-Trail",price:4200,category:"Brakes",image:"🔧",brand:"Akebono",oem:"D1060-JD00A",partNo:"D1060-JD00A",application:"Nissan X-Trail 2010-2023",description:"Front brake pads for Nissan X-Trail. OEM specification.",vehicleMake:"Nissan",vehicleModel:"X-Trail",yearStart:2010,yearEnd:2023,sku:"BP-NX-1023",stock:20,availability:"in_stock",priceMode:"fixed"},
@@ -1405,11 +1502,40 @@ function showListWithUs(){
     document.querySelector('.products').style.display='none';
     document.querySelector('.testimonials').style.display='none';
     document.querySelector('.contact-info').style.display='none';
+    document.getElementById('insurancePage').classList.remove('active');
     document.getElementById('listWithUs').classList.add('active');
     document.getElementById('listWithUs').scrollIntoView({behavior:'smooth'});
 }
 function hideListWithUs(){
     document.getElementById('listWithUs').classList.remove('active');
+    document.getElementById('insurancePage').classList.remove('active');
+    document.querySelector('.search-section').style.display='block';
+    document.querySelector('.search-bar').style.display='block';
+    document.querySelector('.vehicle-selector').style.display='block';
+    document.querySelector('.trust-strip').style.display='flex';
+    document.querySelector('.categories').style.display='block';
+    document.querySelector('.products').style.display='block';
+    document.querySelector('.testimonials').style.display='block';
+    document.querySelector('.contact-info').style.display='block';
+    document.getElementById('products').scrollIntoView({behavior:'smooth'});
+}
+
+// ==================== INSURANCE PAGE ====================
+function showInsurance(){
+    document.querySelector('.search-section').style.display='none';
+    document.querySelector('.search-bar').style.display='none';
+    document.querySelector('.vehicle-selector').style.display='none';
+    document.querySelector('.trust-strip').style.display='none';
+    document.querySelector('.categories').style.display='none';
+    document.querySelector('.products').style.display='none';
+    document.querySelector('.testimonials').style.display='none';
+    document.querySelector('.contact-info').style.display='none';
+    document.getElementById('listWithUs').classList.remove('active');
+    document.getElementById('insurancePage').classList.add('active');
+    document.getElementById('insurancePage').scrollIntoView({behavior:'smooth'});
+}
+function hideInsurance(){
+    document.getElementById('insurancePage').classList.remove('active');
     document.querySelector('.search-section').style.display='block';
     document.querySelector('.search-bar').style.display='block';
     document.querySelector('.vehicle-selector').style.display='block';
@@ -3265,6 +3391,7 @@ function showModelsForMake(make){
 function showPartTypes(){
     aiBotSay(`Got it! What kind of part do you need?`, [
         {label: '🛢️ Oil & Filters', action: 'set_part', value: 'Filters'},
+        {label: '🛢️ Engine Oil / Fluids', action: 'set_part', value: 'Oils & Fluids'},
         {label: '🔧 Brake Pads', action: 'set_part', value: 'Brakes'},
         {label: '⚡ Spark Plugs', action: 'set_part', value: 'Electrical'},
         {label: '🛠️ Suspension', action: 'set_part', value: 'Suspension'},
@@ -3318,14 +3445,21 @@ function showAIResults(){
             const stockTag = st === STOCK_ON_ORDER
                 ? '<span class="cart-item-status on-order">Shipped on Order</span>'
                 : '<span class="cart-item-status in-stock">In Stock</span>';
-            const img = renderImageHTML(prod);
+            const imgs = getProductImages(prod);
+            const firstImg = imgs.length > 0 ? imgs[0] : '🔧';
+            const imgHtml = isImageReference(firstImg)
+                ? `<img src="${escapeAttr(firstImg)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">`
+                : escapeAttr(firstImg);
             const msg = document.createElement('div');
             msg.className = 'ai-msg bot';
             msg.style.maxWidth = '100%';
+            msg.style.padding = '0';
+            msg.style.background = 'transparent';
+            msg.style.boxShadow = 'none';
             msg.innerHTML = `
                 <div class="ai-product-mini">
                     <div style="display:flex;gap:10px;align-items:flex-start;">
-                        <div style="font-size:32px;flex-shrink:0;">${img}</div>
+                        <div class="mini-img">${imgHtml}</div>
                         <div style="flex:1;min-width:0;">
                             <div class="mini-name">${escapeAttr(prod.name)}</div>
                             <div class="mini-meta">Part No: ${escapeAttr(partNo)} · ${escapeAttr(prod.brand||'')}</div>

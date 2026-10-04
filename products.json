@@ -840,16 +840,20 @@
     "application": "Toyota Hilux, Fortuner, Prado 150",
     "category": "Filters",
     "brand": "DENSO",
-    "image": "🌬️",
-    "images": [],
+    "image": "images/cabin-air-filter-toyota-hilux-fortuner-p-1791126181675.jpg",
+    "images": [
+      "images/cabin-air-filter-toyota-hilux-fortuner-p-1791126181675.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Hilux, Fortuner, Prado",
     "yearStart": 2015,
     "yearEnd": 2023,
     "stock": 30,
-    "description": "Cabin air filter for Toyota Hilux, Fortuner and Prado 150. [VERIFY: supplier]",
+    "description": "Cabin air filter for Toyota Hilux, Fortuner and Prado 150.",
     "sku": "CF-TH-1523",
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Spark Plugs - Toyota Camry V6 (6 Pack)",

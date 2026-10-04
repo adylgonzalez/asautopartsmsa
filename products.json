@@ -905,23 +905,27 @@
   },
   {
     "name": "Spark Plugs - Toyota Vitz / Probox / Aqua",
-    "price": 3200,
+    "price": 2500,
     "priceMode": "fixed",
     "partNo": "90919-01266",
     "oem": "90919-01266",
     "application": "Toyota Vitz, Probox, Aqua, Sienta 1NZ/1KR engines",
     "category": "Ignition",
-    "brand": "NGK",
-    "image": "⚡",
-    "images": [],
+    "brand": "TOYOTA",
+    "image": "images/spark-plugs-toyota-vitz-probox-aqua-1791126732439.jpg",
+    "images": [
+      "images/spark-plugs-toyota-vitz-probox-aqua-1791126732439.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Vitz, Probox, Aqua, Sienta",
     "yearStart": 2005,
     "yearEnd": 2023,
     "stock": 30,
-    "description": "Iridium spark plugs for Toyota Vitz, Probox, Aqua and Sienta. [VERIFY: supplier]",
+    "description": "Iridium spark plugs for Toyota Vitz, Probox, Aqua and Sienta.",
     "sku": "SP-TV-0523",
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Brake Pads - Toyota Vitz / Yaris (Front)",

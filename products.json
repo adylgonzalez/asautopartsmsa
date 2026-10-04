@@ -881,23 +881,27 @@
   },
   {
     "name": "Spark Plugs - Toyota Corolla 1.8",
-    "price": 2800,
+    "price": 6800,
     "priceMode": "fixed",
     "partNo": "90919-01256",
     "oem": "90919-01256",
     "application": "Toyota Corolla 1.8",
     "category": "Ignition",
     "brand": "BOSCH",
-    "image": "⚡",
-    "images": [],
+    "image": "images/spark-plugs-toyota-corolla-1-8-1791126291559.jpg",
+    "images": [
+      "images/spark-plugs-toyota-corolla-1-8-1791126291559.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Corolla",
     "yearStart": 2008,
     "yearEnd": 2020,
     "stock": 25,
-    "description": "Iridium spark plugs for Corolla 1.8. [VERIFY: supplier]",
+    "description": "Iridium spark plugs for Corolla 1.8.",
     "sku": "SP-TC-0820",
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Spark Plugs - Toyota Vitz / Probox / Aqua",

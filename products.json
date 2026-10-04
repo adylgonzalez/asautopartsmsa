@@ -816,16 +816,20 @@
     "application": "Toyota Camry, RAV4, Corolla, Prius, Lexus RX350",
     "category": "Filters",
     "brand": "DENSO",
-    "image": "🌬️",
-    "images": [],
+    "image": "images/cabin-air-filter-toyota-camry-rav4-corol-1791126048248.jpg",
+    "images": [
+      "images/cabin-air-filter-toyota-camry-rav4-corol-1791126048248.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Camry, RAV4, Corolla, Prius",
     "yearStart": 2012,
     "yearEnd": 2024,
     "stock": 40,
-    "description": "Cabin air filter with activated carbon. Fits Camry, RAV4, Corolla, Prius and Lexus RX350. [VERIFY: supplier]",
+    "description": "Cabin air filter with activated carbon. Fits Camry, RAV4, Corolla, Prius and Lexus RX350.",
     "sku": "CF-TC-1224",
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Cabin Air Filter - Toyota Hilux / Fortuner / Prado",

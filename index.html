@@ -179,7 +179,8 @@
         .insurance-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:40px}
         .insurance-card{background:#f9f9f9;border:2px solid #e0e0e0;border-radius:14px;padding:28px 24px;text-align:center;transition:all .3s;display:flex;flex-direction:column;height:100%}
         .insurance-card:hover{border-color:#ff6f00;transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
-        .insurance-logo{font-size:56px;margin-bottom:14px}
+        .insurance-logo{font-size:56px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;height:80px}
+        .insurance-logo img{max-width:120px;max-height:80px;object-fit:contain;border-radius:8px}
         .insurance-card h3{color:#1a237e;font-size:18px;margin-bottom:10px;font-weight:800}
         .insurance-desc{color:#666;font-size:14px;line-height:1.6;margin-bottom:16px;flex:1}
         .insurance-tags{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
@@ -194,6 +195,7 @@
         .insurance-cta-buttons .cta-btn:hover{transform:scale(1.03)}
         .insurance-cta-buttons .cta-btn.adil{background:#25D366}
         .insurance-cta-buttons .cta-btn.suhayl{background:#128C7E}
+        .insurance-empty{text-align:center;padding:50px 20px;color:#888;font-style:italic}
         @media(max-width:768px){.insurance-page h2{font-size:26px}.insurance-cta-buttons .cta-btn{min-width:100%}}
 
         .source-it-box{grid-column:1/-1;background:#fff3e0;border:2px dashed #ff6f00;border-radius:12px;padding:30px 25px;text-align:center;max-width:600px;margin:0 auto}
@@ -377,63 +379,27 @@
             .admin-section-header h3{font-size:16px}
         }
 
-        /* ===== AI CHAT ASSISTANT ===== */
-        .ai-chat-btn{position:fixed;bottom:100px;right:30px;width:60px;height:60px;border-radius:50%;background:#1a237e;color:#fff;border:none;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:1160;display:flex;align-items:center;justify-content:center;font-size:26px;transition:transform .2s,background .3s}
-        .ai-chat-btn:hover{background:#ff6f00;transform:scale(1.05)}
-        .ai-chat-btn .pulse-ring{position:absolute;width:100%;height:100%;border-radius:50%;border:3px solid #ff6f00;opacity:.7;animation:pulseRing 2s ease-out infinite;pointer-events:none}
-        @keyframes pulseRing{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.5);opacity:0}}
-        @media(max-width:768px){.ai-chat-btn{width:54px;height:54px;font-size:22px;bottom:150px;right:20px}}
-
-        .ai-chat-window{position:fixed;bottom:20px;right:20px;width:380px;max-width:calc(100vw - 30px);height:600px;max-height:calc(100vh - 40px);background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.35);z-index:3000;display:none;flex-direction:column;overflow:hidden}
-        .ai-chat-window.open{display:flex;animation:chatPop .25s ease}
-        @keyframes chatPop{from{transform:translateY(20px) scale(.95);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
-        @media(max-width:768px){.ai-chat-window{width:calc(100vw - 20px);height:calc(100vh - 40px);bottom:10px;right:10px;border-radius:12px}}
-
-        .ai-chat-header{background:linear-gradient(135deg,#1a237e 0%,#283593 100%);color:#fff;padding:16px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0}
-        .ai-chat-header .ai-avatar{width:40px;height:40px;border-radius:50%;background:#ff6f00;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-        .ai-chat-header .ai-title{flex:1;font-weight:700;font-size:16px;line-height:1.2}
-        .ai-chat-header .ai-subtitle{font-size:11px;opacity:.85;font-weight:400;margin-top:2px}
-        .ai-chat-header .ai-close{background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center}
-        .ai-chat-header .ai-close:hover{background:rgba(255,255,255,.35)}
-
-        .ai-chat-body{flex:1;overflow-y:auto;padding:18px;background:#f5f7fa;display:flex;flex-direction:column;gap:12px}
-        .ai-msg{max-width:85%;padding:12px 16px;border-radius:16px;font-size:14px;line-height:1.5;word-wrap:break-word;animation:msgIn .2s ease}
-        @keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-        .ai-msg.bot{background:#fff;color:#333;align-self:flex-start;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-        .ai-msg.user{background:#1a237e;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-        .ai-msg.typing{display:flex;gap:4px;align-items:center;padding:14px 18px}
-        .ai-msg.typing span{width:6px;height:6px;background:#999;border-radius:50%;animation:dotBounce 1.4s infinite ease-in-out}
-        .ai-msg.typing span:nth-child(2){animation-delay:.2s}
-        .ai-msg.typing span:nth-child(3){animation-delay:.4s}
-        @keyframes dotBounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
-
-        .ai-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-        .ai-chip{background:#fff;border:2px solid #1a237e;color:#1a237e;padding:8px 14px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
-        .ai-chip:hover{background:#1a237e;color:#fff}
-        .ai-chip.primary{background:#ff6f00;border-color:#ff6f00;color:#fff}
-        .ai-chip.primary:hover{background:#e65100;border-color:#e65100}
-        .ai-chip.wa{background:#25D366;border-color:#25D366;color:#fff}
-        .ai-chip.wa:hover{background:#1eaa53;border-color:#1eaa53}
-
-        .ai-product-mini{background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:10px;margin-top:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);max-width:100%}
-        .ai-product-mini .mini-img{width:48px;height:48px;flex-shrink:0;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:26px;overflow:hidden}
-        .ai-product-mini .mini-img img{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block}
-        .ai-product-mini .mini-name{font-weight:700;color:#1a237e;font-size:13px;margin-bottom:3px;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-        .ai-product-mini .mini-meta{font-size:11px;color:#666;margin-bottom:4px;line-height:1.3}
-        .ai-product-mini .mini-price{color:#ff6f00;font-weight:700;font-size:15px;margin-bottom:8px}
-        .ai-product-mini .mini-actions{display:flex;gap:6px;flex-wrap:wrap}
-        .ai-product-mini .mini-actions button{flex:1;min-width:90px;padding:7px 8px;border:none;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:3px}
-        .ai-product-mini .mini-actions .mini-cart{background:#1a237e}
-        .ai-product-mini .mini-actions .mini-cart:hover{background:#ff6f00}
-        .ai-product-mini .mini-actions .mini-wa{background:#25D366}
-        .ai-product-mini .mini-actions .mini-wa:hover{background:#1eaa53}
-
-        .ai-chat-footer{padding:12px;background:#fff;border-top:1px solid #eee;flex-shrink:0}
-        .ai-input-wrap{display:flex;gap:8px}
-        .ai-input-wrap input{flex:1;padding:12px 14px;border:2px solid #e0e0e0;border-radius:50px;font-size:14px;outline:none;transition:border-color .2s}
-        .ai-input-wrap input:focus{border-color:#1a237e}
-        .ai-input-wrap button{width:44px;height:44px;border-radius:50%;background:#1a237e;color:#fff;border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-        .ai-input-wrap button:hover{background:#ff6f00}
+        /* === INSURANCE ADMIN CARDS === */
+        .admin-ins-card{background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:16px;margin-bottom:14px}
+        .admin-ins-card .ins-header{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+        .admin-ins-card .ins-logo-preview{width:64px;height:64px;border-radius:10px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0;overflow:hidden;border:1px solid #e0e0e0}
+        .admin-ins-card .ins-logo-preview img{width:100%;height:100%;object-fit:contain}
+        .admin-ins-card .ins-head-info{flex:1;min-width:0}
+        .admin-ins-card .ins-head-info h4{color:#1a237e;font-size:16px;font-weight:800;margin-bottom:3px;word-wrap:break-word}
+        .admin-ins-card .ins-head-info .ins-cat{font-size:12px;color:#666}
+        .admin-ins-card .ins-field{margin-bottom:10px}
+        .admin-ins-card .ins-field label{display:block;font-size:12px;font-weight:700;color:#333;margin-bottom:4px}
+        .admin-ins-card .ins-field input,.admin-ins-card .ins-field textarea,.admin-ins-card .ins-field select{width:100%;padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;font-family:inherit}
+        .admin-ins-card .ins-field textarea{min-height:60px;resize:vertical}
+        .admin-ins-card .ins-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+        .admin-ins-card .ins-actions button{flex:1;min-width:100px;padding:10px;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;color:#fff}
+        .admin-ins-card .ins-actions .save{background:#4caf50}
+        .admin-ins-card .ins-actions .save:hover{background:#388e3c}
+        .admin-ins-card .ins-actions .delete{background:#f44336}
+        .admin-ins-card .ins-actions .delete:hover{background:#d32f2f}
+        .admin-ins-card .ins-actions .move{background:#9e9e9e;flex:0 0 auto;min-width:auto;padding:10px 14px}
+        .admin-ins-card .ins-actions .move:hover{background:#757575}
+        .admin-ins-card .ins-actions .move:disabled{opacity:.3;cursor:not-allowed}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios@1.20.0/dist/axios.min.js"></script>
@@ -573,46 +539,7 @@
             <h2><i class="fas fa-shield-alt" style="color:#ff6f00;"></i> Our Trusted Insurance Partners</h2>
             <p class="insurance-subtitle">We've partnered with Kenya's leading motor insurance providers so you can protect your car with confidence. Get a free quote today.</p>
 
-            <div class="insurance-grid">
-                <div class="insurance-card">
-                    <div class="insurance-logo">🏛️</div>
-                    <h3>Partner 1 — Coming Soon</h3>
-                    <p class="insurance-desc">Description of the insurance provider, their cover options, and why we recommend them.</p>
-                    <div class="insurance-tags">
-                        <span class="tag">Comprehensive</span>
-                        <span class="tag">Third Party</span>
-                    </div>
-                    <a href="https://wa.me/254713349554?text=Hi%20A%26S%2C%20I%27d%20like%20a%20quote%20for%20motor%20insurance" target="_blank" class="insurance-btn">
-                        <i class="fab fa-whatsapp"></i> Request Quote
-                    </a>
-                </div>
-
-                <div class="insurance-card">
-                    <div class="insurance-logo">🏢</div>
-                    <h3>Partner 2 — Coming Soon</h3>
-                    <p class="insurance-desc">Description of the insurance provider, their cover options, and why we recommend them.</p>
-                    <div class="insurance-tags">
-                        <span class="tag">Comprehensive</span>
-                        <span class="tag">PSV</span>
-                    </div>
-                    <a href="https://wa.me/254713349554?text=Hi%20A%26S%2C%20I%27d%20like%20a%20quote%20for%20motor%20insurance" target="_blank" class="insurance-btn">
-                        <i class="fab fa-whatsapp"></i> Request Quote
-                    </a>
-                </div>
-
-                <div class="insurance-card">
-                    <div class="insurance-logo">🛡️</div>
-                    <h3>Partner 3 — Coming Soon</h3>
-                    <p class="insurance-desc">Description of the insurance provider, their cover options, and why we recommend them.</p>
-                    <div class="insurance-tags">
-                        <span class="tag">Comprehensive</span>
-                        <span class="tag">Commercial</span>
-                    </div>
-                    <a href="https://wa.me/254713349554?text=Hi%20A%26S%2C%20I%27d%20like%20a%20quote%20for%20motor%20insurance" target="_blank" class="insurance-btn">
-                        <i class="fab fa-whatsapp"></i> Request Quote
-                    </a>
-                </div>
-            </div>
+            <div class="insurance-grid" id="insuranceGrid"></div>
 
             <div class="insurance-cta">
                 <h3>Not sure which policy is right for you?</h3>
@@ -722,12 +649,14 @@ const GITHUB_FILE  = 'products.json';
 const OPTIONS_FILE = 'options.json';
 const AVAILABILITY_FILE = 'availability.json';
 const ORDERS_FILE  = 'orders.json';
+const INSURANCE_FILE = 'insurance.json';
 const GITHUB_BRANCH = 'main';
 const PAGES_BASE = `https://${GITHUB_OWNER}.github.io/${GITHUB_REPO}`;
 const PRODUCTS_URL = `${PAGES_BASE}/${GITHUB_FILE}`;
 const OPTIONS_URL  = `${PAGES_BASE}/${OPTIONS_FILE}`;
 const AVAILABILITY_URL = `${PAGES_BASE}/${AVAILABILITY_FILE}`;
 const ORDERS_URL   = `${PAGES_BASE}/${ORDERS_FILE}`;
+const INSURANCE_URL = `${PAGES_BASE}/${INSURANCE_FILE}`;
 const IMAGES_FOLDER = 'images';
 
 // ==================== AVAILABILITY HELPERS ====================
@@ -799,6 +728,34 @@ const DEFAULT_BRANDS = [
     "MAZDA Genuine","SUBARU Genuine","TYC","KINGMIRROR","TAMA (Japan)",
     "PFI","FROTIS","MECHANGING","TYD","YTM","555","Nisshinbo","Advics",
     "NTN","NSK","Taiho","NPR","Musashi","Exedy","Castrol","Total","Shell","Other"
+];
+
+// ==================== DEFAULT INSURANCE PARTNERS (fallback) ====================
+const DEFAULT_INSURANCE = [
+    {
+        id: 'ins-1',
+        name: 'Partner 1 — Coming Soon',
+        logo: '🏛️',
+        description: 'Description of the insurance provider, their cover options, and why we recommend them.',
+        tags: ['Comprehensive', 'Third Party'],
+        whatsappText: 'Hi A&S, I would like a quote for motor insurance'
+    },
+    {
+        id: 'ins-2',
+        name: 'Partner 2 — Coming Soon',
+        logo: '🏢',
+        description: 'Description of the insurance provider, their cover options, and why we recommend them.',
+        tags: ['Comprehensive', 'PSV'],
+        whatsappText: 'Hi A&S, I would like a quote for motor insurance'
+    },
+    {
+        id: 'ins-3',
+        name: 'Partner 3 — Coming Soon',
+        logo: '🛡️',
+        description: 'Description of the insurance provider, their cover options, and why we recommend them.',
+        tags: ['Comprehensive', 'Commercial'],
+        whatsappText: 'Hi A&S, I would like a quote for motor insurance'
+    }
 ];
 
 // ==================== CATEGORY DISPLAY HELPERS ====================
@@ -1027,6 +984,7 @@ const defaultProducts=[
 let products = [];
 let categories = [...DEFAULT_CATEGORIES];
 let brands = [...DEFAULT_BRANDS];
+let insurancePartners = [...DEFAULT_INSURANCE];
 let availability = {adil:true, suhayl:true};
 let cart = JSON.parse(localStorage.getItem('A & SCart')) || [];
 let adminLoggedIn = false;
@@ -1199,6 +1157,156 @@ function renderSingleImage(img){
     return `<span class="gallery-emoji">${escapeAttr(img)}</span>`;
 }
 
+// ==================== INSURANCE RENDERING ====================
+function renderInsuranceLogoHtml(logo){
+    if(!logo) return '🛡️';
+    const v = String(logo).trim();
+    if(!v) return '🛡️';
+    if(isImageReference(v)){
+        return `<img src="${escapeAttr(toAbsoluteImageUrl(v))}" alt="" onerror="this.style.display='none';this.parentElement.textContent='🛡️';">`;
+    }
+    return escapeAttr(v);
+}
+function renderInsurancePage(){
+    const grid = document.getElementById('insuranceGrid');
+    if(!grid) return;
+    if(!insurancePartners || insurancePartners.length === 0){
+        grid.innerHTML = `<div class="insurance-empty" style="grid-column:1/-1;">Our insurance partners are being added. Check back soon!</div>`;
+        return;
+    }
+    grid.innerHTML = insurancePartners.map(p => {
+        const tags = Array.isArray(p.tags) ? p.tags : [];
+        const tagsHTML = tags.map(t => `<span class="tag">${escapeAttr(t)}</span>`).join('');
+        const waText = encodeURIComponent(p.whatsappText || `Hi A&S, I'd like a quote for motor insurance (${p.name})`);
+        return `<div class="insurance-card">
+            <div class="insurance-logo">${renderInsuranceLogoHtml(p.logo)}</div>
+            <h3>${escapeAttr(p.name || '')}</h3>
+            <p class="insurance-desc">${escapeAttr(p.description || '')}</p>
+            <div class="insurance-tags">${tagsHTML}</div>
+            <a href="https://wa.me/254713349554?text=${waText}" target="_blank" class="insurance-btn">
+                <i class="fab fa-whatsapp"></i> Request Quote
+            </a>
+        </div>`;
+    }).join('');
+}
+
+// ==================== INSURANCE ADMIN ====================
+function renderAdminInsuranceCards(){
+    const container = document.getElementById('adminInsuranceList');
+    if(!container) return;
+    if(!insurancePartners || insurancePartners.length === 0){
+        container.innerHTML = `<div class="admin-no-results">No insurance partners yet. Click "Add Partner" above to create one.</div>`;
+        return;
+    }
+    let html = '';
+    insurancePartners.forEach((p, i) => {
+        const logoPreview = renderInsuranceLogoHtml(p.logo);
+        const tagsStr = Array.isArray(p.tags) ? p.tags.join(', ') : '';
+        html += `<div class="admin-ins-card" data-index="${i}">
+            <div class="ins-header">
+                <div class="ins-logo-preview">${logoPreview}</div>
+                <div class="ins-head-info">
+                    <h4>${escapeAttr(p.name || 'Untitled Partner')}</h4>
+                    <div class="ins-cat">Partner #${i+1}</div>
+                </div>
+            </div>
+            <div class="ins-field">
+                <label>Partner Name</label>
+                <input type="text" id="ins_name_${i}" value="${escapeAttr(p.name || '')}" placeholder="e.g. Jubilee Insurance">
+            </div>
+            <div class="ins-field">
+                <label>Logo (emoji, image URL, or images/xxx.png)</label>
+                <input type="text" id="ins_logo_${i}" value="${escapeAttr(p.logo || '')}" placeholder="e.g. 🏛️ or https://.../logo.png">
+            </div>
+            <div class="ins-field">
+                <label>Description</label>
+                <textarea id="ins_desc_${i}" placeholder="Brief description of the insurer and their cover">${escapeAttr(p.description || '')}</textarea>
+            </div>
+            <div class="ins-field">
+                <label>Cover Tags (comma-separated)</label>
+                <input type="text" id="ins_tags_${i}" value="${escapeAttr(tagsStr)}" placeholder="e.g. Comprehensive, Third Party">
+            </div>
+            <div class="ins-field">
+                <label>WhatsApp Message (pre-filled when customer taps Quote)</label>
+                <input type="text" id="ins_wa_${i}" value="${escapeAttr(p.whatsappText || '')}" placeholder="Hi A&S, I would like a quote for motor insurance">
+            </div>
+            <div class="ins-actions">
+                <button class="move" onclick="moveInsurancePartner(${i}, -1)" ${i===0?'disabled':''} title="Move up">↑</button>
+                <button class="move" onclick="moveInsurancePartner(${i}, 1)" ${i===insurancePartners.length-1?'disabled':''} title="Move down">↓</button>
+                <button class="save" onclick="updateInsurancePartner(${i})">💾 Save</button>
+                <button class="delete" onclick="deleteInsurancePartner(${i})">🗑️ Delete</button>
+            </div>
+        </div>`;
+    });
+    container.innerHTML = html;
+}
+
+function addNewInsurancePartner(){
+    const newPartner = {
+        id: 'ins-' + Date.now(),
+        name: 'New Partner',
+        logo: '🛡️',
+        description: 'Describe the insurer and their cover options.',
+        tags: ['Comprehensive'],
+        whatsappText: 'Hi A&S, I would like a quote for motor insurance'
+    };
+    insurancePartners.push(newPartner);
+    renderAdminInsuranceCards();
+    showNotification('✅ Added new partner — fill in the details and Save');
+    // Scroll to the new card
+    setTimeout(() => {
+        const cards = document.querySelectorAll('.admin-ins-card');
+        if(cards.length > 0) cards[cards.length - 1].scrollIntoView({behavior:'smooth', block:'center'});
+    }, 200);
+}
+
+async function updateInsurancePartner(i){
+    const p = insurancePartners[i];
+    if(!p) return;
+    const nameEl = document.getElementById(`ins_name_${i}`);
+    const logoEl = document.getElementById(`ins_logo_${i}`);
+    const descEl = document.getElementById(`ins_desc_${i}`);
+    const tagsEl = document.getElementById(`ins_tags_${i}`);
+    const waEl = document.getElementById(`ins_wa_${i}`);
+
+    const name = (nameEl ? nameEl.value : '').trim();
+    if(!name){ alert('Please enter a partner name.'); return; }
+
+    p.name = name;
+    p.logo = (logoEl ? logoEl.value : '').trim() || '🛡️';
+    p.description = (descEl ? descEl.value : '').trim();
+    p.tags = (tagsEl ? tagsEl.value : '').split(',').map(s => s.trim()).filter(Boolean);
+    p.whatsappText = (waEl ? waEl.value : '').trim() || 'Hi A&S, I would like a quote for motor insurance';
+
+    renderAdminInsuranceCards();
+    renderInsurancePage();
+    showNotification('⏳ Pushing partner to GitHub...');
+    await saveInsuranceToGitHub();
+}
+
+async function deleteInsurancePartner(i){
+    const p = insurancePartners[i];
+    if(!p) return;
+    if(!confirm(`Delete "${p.name}" from the insurance partners list?`)) return;
+    insurancePartners.splice(i, 1);
+    renderAdminInsuranceCards();
+    renderInsurancePage();
+    showNotification('⏳ Pushing to GitHub...');
+    await saveInsuranceToGitHub();
+}
+
+async function moveInsurancePartner(i, dir){
+    const newIdx = i + dir;
+    if(newIdx < 0 || newIdx >= insurancePartners.length) return;
+    const tmp = insurancePartners[i];
+    insurancePartners[i] = insurancePartners[newIdx];
+    insurancePartners[newIdx] = tmp;
+    renderAdminInsuranceCards();
+    renderInsurancePage();
+    showNotification('⏳ Pushing to GitHub...');
+    await saveInsuranceToGitHub();
+}
+
 // ==================== IMAGE UPLOAD TO GITHUB ====================
 function shrinkImage(file, maxWidth, quality){
     return new Promise((resolve, reject) => {
@@ -1311,6 +1419,17 @@ async function fetchOrdersFromGitHub(){
         return false;
     }
 }
+async function fetchInsuranceFromGitHub(){
+    try {
+        const res = await axios.get(INSURANCE_URL + '?t=' + Date.now());
+        if(Array.isArray(res.data)){ insurancePartners = res.data; return true; }
+        throw new Error('insurance.json did not return an array');
+    } catch (err){
+        console.warn('Could not load insurance.json — using default partners. Error:', err.message);
+        insurancePartners = [...DEFAULT_INSURANCE];
+        return false;
+    }
+}
 async function putFileToGitHub(filePath, contentObject, commitMessage){
     const token = getToken();
     if(!token){ throw new Error('No GitHub token saved'); }
@@ -1399,6 +1518,18 @@ async function saveAvailabilityToGitHub(){
     } catch (err){
         console.error('Availability save failed:', err);
         alert('❌ Save availability to GitHub failed:\n\n' + (err.response?.data?.message || err.message));
+        return false;
+    }
+}
+async function saveInsuranceToGitHub(){
+    if(!getToken()){ alert('⚠️ No GitHub token saved.\n\nOpen the Admin Panel and paste your token first.'); return false; }
+    try {
+        await putFileToGitHub(INSURANCE_FILE, insurancePartners, `Update insurance.json — ${new Date().toISOString()}`);
+        showNotification('✅ Insurance partners saved to GitHub! Live in ~1 minute.');
+        return true;
+    } catch (err){
+        console.error('Insurance save failed:', err);
+        alert('❌ Save insurance to GitHub failed:\n\n' + (err.response?.data?.message || err.message));
         return false;
     }
 }
@@ -1532,6 +1663,7 @@ function showInsurance(){
     document.querySelector('.contact-info').style.display='none';
     document.getElementById('listWithUs').classList.remove('active');
     document.getElementById('insurancePage').classList.add('active');
+    renderInsurancePage();
     document.getElementById('insurancePage').scrollIntoView({behavior:'smooth'});
 }
 function hideInsurance(){
@@ -2530,6 +2662,7 @@ function switchAdminTab(tab){
     });
     if(tab === 'parts') renderAdminProductCards();
     if(tab === 'orders') renderOrdersList();
+    if(tab === 'insurance') renderAdminInsuranceCards();
     if(tab === 'add'){
         const container = document.getElementById('addProductForm');
         if(container && !container.innerHTML.trim()) showAddProductForm();
@@ -2852,6 +2985,7 @@ function showAdminPanel(){
                 <button class="admin-tab" data-tab="orders" onclick="switchAdminTab('orders')">📋 Orders</button>
                 <button class="admin-tab" data-tab="parts" onclick="switchAdminTab('parts')">🔩 Parts</button>
                 <button class="admin-tab" data-tab="add" onclick="switchAdminTab('add')">➕ Add New</button>
+                <button class="admin-tab" data-tab="insurance" onclick="switchAdminTab('insurance')">🛡️ Insurance</button>
                 <button class="admin-tab" data-tab="availability" onclick="switchAdminTab('availability')">🟢 Availability</button>
                 <button class="admin-tab" data-tab="github" onclick="switchAdminTab('github')">🔑 GitHub</button>
                 <button class="admin-tab" data-tab="session" onclick="switchAdminTab('session')">👤 Session</button>
@@ -2895,6 +3029,20 @@ function showAdminPanel(){
                 <div id="addProductForm"></div>
             </div>
 
+            <div class="admin-panel-section" data-tab="insurance">
+                <div class="admin-section-header">
+                    <div>
+                        <h3>🛡️ Insurance Partners</h3>
+                        <div class="admin-section-sub">Add, edit, reorder or delete the insurance partners shown on your Insurance page.</div>
+                    </div>
+                    <button onclick="addNewInsurancePartner()" style="padding:10px 16px;background:#2e7d32;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;">➕ Add Partner</button>
+                </div>
+                <div class="admin-card-box" style="background:#e3f2fd;border-color:#90caf9;font-size:13px;color:#0d47a1;line-height:1.5;">
+                    💡 <strong>Tip:</strong> Logo can be an emoji (🏛️ 🏢 🛡️) or a real image URL. For uploaded logos, put the file in your <code>images/</code> folder on GitHub and use <code>images/your-file.png</code>.
+                </div>
+                <div id="adminInsuranceList"></div>
+            </div>
+
             <div class="admin-panel-section" data-tab="availability">
                 <div class="admin-section-header">
                     <div>
@@ -2919,7 +3067,7 @@ function showAdminPanel(){
                     </div>
                 </div>
                 <div class="admin-card-box">
-                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Paste your GitHub Personal Access Token below. It stays on this device only (localStorage). Used to push changes to <code>products.json</code>, <code>options.json</code>, <code>availability.json</code> and <code>orders.json</code>.</p>
+                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Paste your GitHub Personal Access Token below. It stays on this device only (localStorage). Used to push changes to <code>products.json</code>, <code>options.json</code>, <code>availability.json</code>, <code>insurance.json</code> and <code>orders.json</code>.</p>
                     <input type="password" id="tokenInput" placeholder="ghp_..." style="width:100%;padding:12px;border:1px solid #ccc;border-radius:6px;margin-bottom:12px;font-size:14px;">
                     <div style="display:flex;gap:10px;flex-wrap:wrap;">
                         <button onclick="saveTokenFromPanel()" style="flex:1;min-width:140px;padding:12px;background:#1a237e;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;">💾 Save Token</button>
@@ -2928,7 +3076,7 @@ function showAdminPanel(){
                 </div>
                 <div class="admin-card-box" style="background:#e8f5e9;border-color:#c8e6c9;">
                     <h4 style="color:#2e7d32;margin-bottom:8px;font-size:15px;">☁️ Push Everything to GitHub</h4>
-                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Push all local changes at once — products, options and availability.</p>
+                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Push all local changes at once — products, options, availability and insurance.</p>
                     <button onclick="pushAllToGitHub()" style="width:100%;padding:12px;background:#2e7d32;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;">⬆️ Push All Changes</button>
                 </div>
             </div>
@@ -2966,7 +3114,8 @@ async function pushAllToGitHub(){
     const okProducts = await saveProductsToGitHub();
     const okOptions = await saveOptionsToGitHub();
     const okAvail = await saveAvailabilityToGitHub();
-    if(okProducts && okOptions && okAvail){ showNotification('✅ All changes pushed! Live in ~1 minute.'); }
+    const okIns = await saveInsuranceToGitHub();
+    if(okProducts && okOptions && okAvail && okIns){ showNotification('✅ All changes pushed! Live in ~1 minute.'); }
 }
 async function reloadProductsFromGitHub(){
     showNotification('⏳ Reloading products...');
@@ -3547,6 +3696,12 @@ function sendAIMessage(){
                 {label: '🔧 Find filters', action: 'start_find'},
                 {label: '💬 WhatsApp us', href: 'https://wa.me/254713349554?text=Hi%2C%20I%20need%20filters', wa: true}
             ]);
+        } else if(lower.includes('insurance')){
+            aiBotSay(`We partner with trusted motor insurance providers in Kenya. Visit our Insurance page or WhatsApp us for a quote 👇`, [
+                {label: '🛡️ View Insurance Partners', action: 'show_insurance'},
+                {label: '💬 WhatsApp ADIL', href: 'https://wa.me/254713349554?text=Hi%2C%20I%20need%20a%20motor%20insurance%20quote', wa: true},
+                {label: '💬 WhatsApp SUHAYL', href: 'https://wa.me/254752763924?text=Hi%2C%20I%20need%20a%20motor%20insurance%20quote', wa: true}
+            ]);
         } else if(lower.includes('price') || lower.includes('cost') || lower.includes('how much')){
             aiBotSay(`For pricing, please tell me the exact part or WhatsApp us with your car details — we'll quote you right away.`, [
                 {label: '🔧 Find a part', action: 'start_find'},
@@ -3587,6 +3742,17 @@ function sendAIMessage(){
     }, 400);
 }
 
+// Handle the "show_insurance" action from the AI chat
+const _originalHandleAIAction = handleAIAction;
+handleAIAction = function(action, value){
+    if(action === 'show_insurance'){
+        toggleAIChat();
+        setTimeout(() => showInsurance(), 200);
+        return;
+    }
+    _originalHandleAIAction(action, value);
+};
+
 // ==================== INITIALIZE ====================
 async function init(){
     const grid = document.getElementById('productGrid');
@@ -3595,8 +3761,10 @@ async function init(){
     await fetchOptionsFromGitHub();
     await fetchAvailabilityFromGitHub();
     await fetchOrdersFromGitHub();
+    await fetchInsuranceFromGitHub();
     loadProducts();
     buildExtraCategoryCards();
+    renderInsurancePage();
     updateCartCount();
 }
 init();

@@ -1960,16 +1960,20 @@
     "application": "Mitsubishi Pajero, Lancer, Outlander",
     "category": "Filters",
     "brand": "TOYOMAX",
-    "image": "🔩",
-    "images": [],
+    "image": "images/oil-filter-mitsubishi-pajero-lancer-outl-1791219070123.jpg",
+    "images": [
+      "images/oil-filter-mitsubishi-pajero-lancer-outl-1791219070123.jpg"
+    ],
     "vehicleMake": "Mitsubishi",
     "vehicleModel": "Pajero, Lancer, Outlander",
     "yearStart": 2000,
     "yearEnd": 2023,
     "stock": 40,
-    "description": "Oil filter for Mitsubishi Pajero, Lancer and Outlander. Also cross-ref: ME034611. [VERIFY: supplier]",
+    "description": "Oil filter for Mitsubishi Pajero, Lancer and Outlander.",
     "sku": "OF-MP-0023",
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Oil Filter - Mitsubishi Pajero / Lancer (Alternate)",

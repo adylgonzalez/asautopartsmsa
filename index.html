@@ -871,8 +871,6 @@ const DEFAULT_INSURANCE = [
             {label: 'Comprehensive', value: '12% of car value'},
             {label: 'Third Party', value: 'KSh 6,000'}
         ],
-        tags: ['Comprehensive', 'Third Party'],
-        whatsappText: 'Hi A&S, I would like a quote for motor insurance'
     },
     {
         id: 'ins-2',
@@ -883,8 +881,6 @@ const DEFAULT_INSURANCE = [
             {label: 'Comprehensive', value: '12% of car value'},
             {label: 'Third Party', value: 'KSh 6,000'}
         ],
-        tags: ['Comprehensive', 'PSV'],
-        whatsappText: 'Hi A&S, I would like a quote for motor insurance'
     },
     {
         id: 'ins-3',
@@ -895,8 +891,6 @@ const DEFAULT_INSURANCE = [
             {label: 'Comprehensive', value: '12% of car value'},
             {label: 'Third Party', value: 'KSh 6,000'}
         ],
-        tags: ['Comprehensive', 'Commercial'],
-        whatsappText: 'Hi A&S, I would like a quote for motor insurance'
     }
 ];
 
@@ -1420,14 +1414,6 @@ function renderAdminInsuranceCards(){
                     </div>
                     <button type="button" class="admin-add-row-btn" onclick="addInsurancePriceRow(${i})">➕ Add Price Row</button>
                 </div>
-                <div class="ins-field">
-                    <label>Cover Tags (comma-separated)</label>
-                    <input type="text" id="ins_tags_${i}" value="${escapeAttr(tagsStr)}" placeholder="e.g. Comprehensive, Third Party">
-                </div>
-                <div class="ins-field">
-                    <label>WhatsApp Message (pre-filled when customer taps Quote)</label>
-                    <input type="text" id="ins_wa_${i}" value="${escapeAttr(p.whatsappText || '')}" placeholder="Hi A&S, I would like a quote for motor insurance">
-                </div>
                 <div class="ins-actions">
                     <button class="move" onclick="moveInsurancePartner(${i}, -1)" ${i===0?'disabled':''} title="Move up">↑</button>
                     <button class="move" onclick="moveInsurancePartner(${i}, 1)" ${i===insurancePartners.length-1?'disabled':''} title="Move down">↓</button>
@@ -1549,8 +1535,6 @@ function addNewInsurancePartner(){
             {label: 'Comprehensive', value: '12% of car value'},
             {label: 'Third Party', value: 'KSh 6,000'}
         ],
-        tags: ['Comprehensive'],
-        whatsappText: 'Hi A&S, I would like a quote for motor insurance'
     };
     insurancePartners.push(newPartner);
     renderAdminInsuranceCards();
@@ -1567,7 +1551,6 @@ async function updateInsurancePartner(i){
     syncInsurancePartnerFromDOM(i);
     if(!p.name){ alert('Please enter a partner name.'); return; }
     p.logo = p.logo || '🛡️';
-    p.whatsappText = p.whatsappText || 'Hi A&S, I would like a quote for motor insurance';
 
     renderAdminInsuranceCards();
     renderInsurancePage();

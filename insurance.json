@@ -1,13 +1,55 @@
-[
-  {
-    "id": "ins-1",
-    "name": "Partner 1 — Coming Soon",
-    "logo": "🏛️",
-    "description": "Description of the insurance provider, their cover options, and why we recommend them.",
-    "tags": [
-      "Comprehensive",
-      "Third Party"
-    ],
-    "whatsappText": "Hi A&S, I would like a quote for motor insurance"
-  }
-]
+{
+  "partners": [
+    {
+      "id": "ins-1",
+      "name": "DEFINITE ASSURANCE",
+      "logo": "images/definite-assurance-brand.jpeg",
+      "description": "We offer specialized insurance products designed to keep you, your family, and your business definitely covered through direct underwriting.",
+      "tags": [
+        "Comprehensive",
+        "Third Party"
+      ],
+      "whatsappText": "Hi A&S, I would like a quote for motor insurance",
+      "pricing": [
+        {
+          "label": "Third Party - 1 Month",
+          "value": "1000"
+        },
+        {
+          "label": "Third Party - 1 Year",
+          "value": "5200"
+        },
+        {
+          "label": "Comprehensive - 1 year (500k-1M)",
+          "value": "4.6% Of Value"
+        },
+        {
+          "label": "Comprehensive - 1 year (1M-2M)",
+          "value": "3.6% Of Value"
+        },
+        {
+          "label": "Comprehensive - 1 year (2M +)",
+          "value": "3.2% Of Value"
+        },
+        {
+          "label": "PSV - Taxi, Uber",
+          "value": "8000"
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "label": "Copy of Logbook"
+    },
+    {
+      "label": "KRA PIN Certificate"
+    },
+    {
+      "label": "Copy of ID / Passport"
+    },
+    {
+      "label": "Car Valuation (for Comprehensive)"
+    }
+  ]
+}

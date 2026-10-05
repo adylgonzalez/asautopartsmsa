@@ -1,1 +1,24 @@
-
+[
+  {
+    "id": "ins-1",
+    "name": "Partner 1 — Coming Soon",
+    "logo": "🏛️",
+    "description": "Description of the insurance provider, their cover options, and why we recommend them.",
+    "tags": [
+      "Comprehensive",
+      "Third Party"
+    ],
+    "whatsappText": "Hi A&S, I would like a quote for motor insurance"
+  },
+  {
+    "id": "ins-3",
+    "name": "Partner 3 — Coming Soon",
+    "logo": "🛡️",
+    "description": "Description of the insurance provider, their cover options, and why we recommend them.",
+    "tags": [
+      "Comprehensive",
+      "Commercial"
+    ],
+    "whatsappText": "Hi A&S, I would like a quote for motor insurance"
+  }
+]

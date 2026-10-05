@@ -42,8 +42,9 @@
         .top-bar{background:#1a237e;color:#fff;padding:8px 20px;text-align:center;font-size:13px}
         .top-bar a{color:#fff;text-decoration:none;font-weight:700;border-bottom:1px dotted rgba(255,255,255,.4)}
         .top-bar a:hover{color:#ff6f00;border-bottom-color:#ff6f00}
-        .header{background:#fff;padding:14px 20px;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,.1)}
-        .header h1{color:#1a237e;font-size:30px;margin-bottom:6px}
+        .header{background:#fff;padding:14px 20px;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,.1);cursor:pointer;transition:background .2s}
+        .header:hover{background:#fafafa}
+        .header h1{color:#1a237e;font-size:30px;margin-bottom:6px;user-select:none}
         .header h1 span{color:#ff6f00}
         .header p{color:#666;font-size:14px}
         .nav{background:#1a237e;padding:8px;text-align:center}
@@ -102,6 +103,7 @@
         .product-description{color:#666;font-size:14px;margin-bottom:10px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;min-height:4.2em}
         .product-vehicle-info{background:#f0f0f0;padding:8px;border-radius:5px;margin-bottom:10px;font-size:13px;color:#555;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;min-height:3.2em}
         .product-brand{background:#1a237e;color:#fff;display:inline-block;padding:5px 15px;border-radius:5px;font-size:14px;margin-bottom:10px;align-self:center}
+        .product-supercedes{background:#e8eaf6;color:#3949ab;padding:5px 10px;border-radius:4px;font-size:11px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:5px;justify-content:center;line-height:1.3}
         .product-price{color:#ff6f00;font-size:24px;font-weight:700;margin:15px 0 5px;flex-shrink:0}
         .product-price-note{font-size:11px;color:#888;margin-bottom:10px;font-style:italic;min-height:14px}
         .product-buttons{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
@@ -335,6 +337,7 @@
         .gallery-info .pname{font-weight:700;color:#1a237e;font-size:18px;margin-bottom:4px}
         .gallery-info .pmeta{font-size:13px;color:#666;line-height:1.5}
         .gallery-info .pprice{color:#ff6f00;font-weight:700;font-size:20px;margin-top:6px}
+        .gallery-info .psupercedes{background:#e8eaf6;color:#3949ab;padding:6px 10px;border-radius:5px;font-size:12px;font-weight:700;margin-top:8px;display:inline-block}
         @media(max-width:768px){
             .gallery-inner{max-height:95vh}
             .gallery-main{max-height:50vh;min-height:220px}
@@ -497,7 +500,10 @@
             <a href="https://wa.me/254752763924?text=Hello%20SUHAYL%2C%20A%20%26%20S%20AUTOPARTS" target="_blank">WA SUHAYL</a> |
             📍 Mombasa, Kenya
         </div>
-        <div class="header"><h1>A & S <span>AUTOPARTS</span></h1><p>Two Brothers, One Mission: Quality Parts</p></div>
+        <div class="header" onclick="goToHomepage()" title="Back to top / Main page">
+            <h1>A & S <span>AUTOPARTS</span></h1>
+            <p>Two Brothers, One Mission: Quality Parts</p>
+        </div>
         <div class="nav" id="mainNav">
             <a onclick="toggleVinSearch()">VIN Search</a>
             <a onclick="scrollToSection('categories')">Categories</a>
@@ -744,6 +750,35 @@ const ORDERS_URL   = `${PAGES_BASE}/${ORDERS_FILE}`;
 const INSURANCE_URL = `${PAGES_BASE}/${INSURANCE_FILE}`;
 const IMAGES_FOLDER = 'images';
 
+// ==================== HOME BUTTON ====================
+function goToHomepage(){
+    // If the insurance page or list-with-us page is showing, hide it
+    const insurancePage = document.getElementById('insurancePage');
+    const listWithUs = document.getElementById('listWithUs');
+    if(insurancePage && insurancePage.classList.contains('active')){
+        hideInsurance();
+    }
+    if(listWithUs && listWithUs.classList.contains('active')){
+        hideListWithUs();
+    }
+    // Reset any active filters
+    if(filtersActive){
+        resetFilters();
+    }
+    // Clear search
+    const searchInput = document.getElementById('searchInput');
+    if(searchInput) searchInput.value = '';
+    // Hide VIN section
+    const vinSec = document.getElementById('vinSection');
+    if(vinSec) vinSec.classList.remove('show');
+    const vinResults = document.getElementById('vinResults');
+    if(vinResults){ vinResults.style.display = 'none'; vinResults.innerHTML = ''; }
+    const vinInput = document.getElementById('vinInput');
+    if(vinInput) vinInput.value = '';
+    // Scroll to top
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
 // ==================== AVAILABILITY HELPERS ====================
 const STOCK_IN = 'in_stock';
 const STOCK_ON_ORDER = 'on_order';
@@ -761,6 +796,17 @@ function stockBadgeHTML(v, large){
     const cls = normalizeStock(v) === STOCK_ON_ORDER ? 'on-order' : 'in-stock';
     const lbl = stockLabelShort(v);
     return `<span class="stock-badge ${cls}${large?' large':''}">${lbl}</span>`;
+}
+
+// ==================== SUPERCEDES HELPERS ====================
+function parseSupercedes(v){
+    if(!v) return [];
+    return String(v).split(',').map(s => s.trim()).filter(Boolean);
+}
+function supercedesDisplayText(supersedes){
+    const list = parseSupercedes(supersedes);
+    if(list.length === 0) return '';
+    return list.join(', ');
 }
 
 // ==================== PRICE MODE HELPERS ====================
@@ -825,6 +871,8 @@ const DEFAULT_INSURANCE = [
             {label: 'Comprehensive', value: '12% of car value'},
             {label: 'Third Party', value: 'KSh 6,000'}
         ],
+        tags: ['Comprehensive', 'Third Party'],
+        whatsappText: 'Hi A&S, I would like a quote for motor insurance'
     },
     {
         id: 'ins-2',
@@ -835,6 +883,8 @@ const DEFAULT_INSURANCE = [
             {label: 'Comprehensive', value: '12% of car value'},
             {label: 'Third Party', value: 'KSh 6,000'}
         ],
+        tags: ['Comprehensive', 'PSV'],
+        whatsappText: 'Hi A&S, I would like a quote for motor insurance'
     },
     {
         id: 'ins-3',
@@ -845,6 +895,8 @@ const DEFAULT_INSURANCE = [
             {label: 'Comprehensive', value: '12% of car value'},
             {label: 'Third Party', value: 'KSh 6,000'}
         ],
+        tags: ['Comprehensive', 'Commercial'],
+        whatsappText: 'Hi A&S, I would like a quote for motor insurance'
     }
 ];
 
@@ -1058,23 +1110,23 @@ const audiModelCodes={
 
 // ==================== DEFAULT PRODUCTS (fallback) ====================
 const defaultProducts=[
-{name:"Brake Pads - Toyota Camry",price:4500,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-33470",partNo:"04465-33470",application:"Toyota Camry 2018-2023",description:"Front brake pads for Toyota Camry. Ceramic compound for smooth stopping.",vehicleMake:"Toyota",vehicleModel:"Camry",yearStart:2018,yearEnd:2023,sku:"BP-TC-1823",stock:25,availability:"in_stock",priceMode:"fixed"},
-{name:"Brake Pads - Toyota Corolla",price:3500,category:"Brakes",image:"🔧",brand:"Akebono",oem:"04465-02480",partNo:"04465-02480",application:"Toyota Corolla 2008-2023",description:"Front brake pads for Toyota Corolla. OEM quality.",vehicleMake:"Toyota",vehicleModel:"Corolla",yearStart:2008,yearEnd:2023,sku:"BP-TC-0823",stock:30,availability:"in_stock",priceMode:"fixed"},
-{name:"Brake Pads - Toyota Hilux",price:5000,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-0K340",partNo:"04465-0K340",application:"Toyota Hilux 2015-2023",description:"Heavy-duty brake pads for Toyota Hilux. Perfect for rough terrain.",vehicleMake:"Toyota",vehicleModel:"Hilux",yearStart:2015,yearEnd:2023,sku:"BP-TH-1523",stock:20,availability:"in_stock",priceMode:"fixed"},
-{name:"Brake Pads - Toyota Land Cruiser",price:6200,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-60310",partNo:"04465-60310",application:"Toyota Land Cruiser 2010-2023",description:"Heavy-duty brake pads for Land Cruiser. Maximum stopping power.",vehicleMake:"Toyota",vehicleModel:"Land Cruiser",yearStart:2010,yearEnd:2023,sku:"BP-TL-1023",stock:18,availability:"in_stock",priceMode:"fixed"},
-{name:"Oil Filter - Toyota",price:1500,category:"Filters",image:"🔩",brand:"TOYOTA Genuine",oem:"90915-YZZD2",partNo:"90915-YZZD2",application:"Toyota All Models",description:"Genuine Toyota oil filter. Traps 95% of contaminants.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OF-TY-ALL",stock:100,availability:"in_stock",priceMode:"fixed"},
-{name:"Air Filter - Toyota",price:2200,category:"Filters",image:"💨",brand:"DENSO",oem:"17801-0D050",partNo:"17801-0D050",application:"Toyota All Models",description:"Engine air filter for Toyota. Improves fuel efficiency.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"AF-TY-ALL",stock:50,availability:"in_stock",priceMode:"fixed"},
-{name:"Spark Plugs - Toyota (4 Pack)",price:2800,category:"Electrical",image:"⚡",brand:"NGK",oem:"90919-01253",partNo:"90919-01253",application:"Toyota All Models",description:"Iridium spark plugs for Toyota. Better combustion and performance.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"SP-TY-ALL",stock:60,availability:"in_stock",priceMode:"fixed"},
-{name:"Engine Oil 5W-30 (4L) - Castrol",price:4800,category:"Oils & Fluids",image:"🛢️",brand:"Castrol",oem:"N/A",partNo:"N/A",application:"Universal All Models",description:"Fully synthetic engine oil 5W-30. Ideal for most modern petrol and diesel engines.",vehicleMake:"Universal",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OIL-5W30-4L",stock:40,availability:"in_stock",priceMode:"fixed"},
-{name:"Brake Pads - Honda Civic",price:3900,category:"Brakes",image:"🔧",brand:"ACDelco",oem:"45022-SNA-A01",partNo:"45022-SNA-A01",application:"Honda Civic 2016-2023",description:"Front brake pads for Honda Civic. Premium quality.",vehicleMake:"Honda",vehicleModel:"Civic",yearStart:2016,yearEnd:2023,sku:"BP-HC-1623",stock:25,availability:"in_stock",priceMode:"fixed"},
-{name:"Oil Filter - Honda",price:1200,category:"Filters",image:"🔩",brand:"HONDA Genuine",oem:"15400-PLM-A01",partNo:"15400-PLM-A01",application:"Honda All Models",description:"Genuine Honda oil filter. Perfect fit.",vehicleMake:"Honda",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OF-HN-ALL",stock:80,availability:"in_stock",priceMode:"fixed"},
-{name:"Brake Pads - Nissan X-Trail",price:4200,category:"Brakes",image:"🔧",brand:"Akebono",oem:"D1060-JD00A",partNo:"D1060-JD00A",application:"Nissan X-Trail 2010-2023",description:"Front brake pads for Nissan X-Trail. OEM specification.",vehicleMake:"Nissan",vehicleModel:"X-Trail",yearStart:2010,yearEnd:2023,sku:"BP-NX-1023",stock:20,availability:"in_stock",priceMode:"fixed"},
-{name:"Brake Pads - Mitsubishi Pajero",price:5500,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"MR527678",partNo:"MR527678",application:"Mitsubishi Pajero 2005-2023",description:"Front brake pads for Pajero. Heavy-duty.",vehicleMake:"Mitsubishi",vehicleModel:"Pajero",yearStart:2005,yearEnd:2023,sku:"BP-MP-0523",stock:15,availability:"in_stock",priceMode:"fixed"},
-{name:"Oil Filter - Nissan",price:1300,category:"Filters",image:"🔩",brand:"NISSAN Genuine",oem:"15208-65F0A",partNo:"15208-65F0A",application:"Nissan All Models",description:"Genuine Nissan oil filter.",vehicleMake:"Nissan",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OF-NS-ALL",stock:70,availability:"in_stock",priceMode:"fixed"},
-{name:"Universal Alternator",price:21000,category:"Electrical",image:"🔋",brand:"DENSO",oem:"27060-0T041",partNo:"27060-0T041",application:"Universal All Models",description:"High-output alternator for various vehicles.",vehicleMake:"Universal",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"ALT-UNI-001",stock:8,availability:"in_stock",priceMode:"fixed"},
-{name:"Timing Belt Kit - Toyota",price:14500,category:"Engine",image:"⛓️",brand:"Gates",oem:"13568-09070",partNo:"13568-09070",application:"Toyota All Models",description:"Complete timing belt kit with tensioner.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"TB-TY-ALL",stock:12,availability:"in_stock",priceMode:"fixed"},
-{name:"Water Pump - Toyota",price:8900,category:"Cooling",image:"💧",brand:"AISIN",oem:"16100-09280",partNo:"16100-09280",application:"Toyota All Models",description:"High-quality water pump for Toyota.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"WP-TY-ALL",stock:20,availability:"in_stock",priceMode:"fixed"},
-{name:"Shock Absorber - Toyota Hilux",price:14500,category:"Suspension",image:"🛠️",brand:"KYB",oem:"48531-09885",partNo:"48531-09885",application:"Toyota Hilux 2015-2023",description:"Front shock absorber for Hilux.",vehicleMake:"Toyota",vehicleModel:"Hilux",yearStart:2015,yearEnd:2023,sku:"SA-TH-1523",stock:10,availability:"in_stock",priceMode:"fixed"}
+{name:"Brake Pads - Toyota Camry",price:4500,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-33470",partNo:"04465-33470",supercedes:"",application:"Toyota Camry 2018-2023",description:"Front brake pads for Toyota Camry. Ceramic compound for smooth stopping.",vehicleMake:"Toyota",vehicleModel:"Camry",yearStart:2018,yearEnd:2023,sku:"BP-TC-1823",stock:25,availability:"in_stock",priceMode:"fixed"},
+{name:"Brake Pads - Toyota Corolla",price:3500,category:"Brakes",image:"🔧",brand:"Akebono",oem:"04465-02480",partNo:"04465-02480",supercedes:"04465-02470",application:"Toyota Corolla 2008-2023",description:"Front brake pads for Toyota Corolla. OEM quality.",vehicleMake:"Toyota",vehicleModel:"Corolla",yearStart:2008,yearEnd:2023,sku:"BP-TC-0823",stock:30,availability:"in_stock",priceMode:"fixed"},
+{name:"Brake Pads - Toyota Hilux",price:5000,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-0K340",partNo:"04465-0K340",supercedes:"04465-0K290, 04465-0K291, 04465-0K292",application:"Toyota Hilux 2015-2023",description:"Heavy-duty brake pads for Toyota Hilux. Perfect for rough terrain.",vehicleMake:"Toyota",vehicleModel:"Hilux",yearStart:2015,yearEnd:2023,sku:"BP-TH-1523",stock:20,availability:"in_stock",priceMode:"fixed"},
+{name:"Brake Pads - Toyota Land Cruiser",price:6200,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-60310",partNo:"04465-60310",supercedes:"",application:"Toyota Land Cruiser 2010-2023",description:"Heavy-duty brake pads for Land Cruiser. Maximum stopping power.",vehicleMake:"Toyota",vehicleModel:"Land Cruiser",yearStart:2010,yearEnd:2023,sku:"BP-TL-1023",stock:18,availability:"in_stock",priceMode:"fixed"},
+{name:"Oil Filter - Toyota",price:1500,category:"Filters",image:"🔩",brand:"TOYOTA Genuine",oem:"90915-YZZD2",partNo:"90915-YZZD2",supercedes:"90915-YZZE1",application:"Toyota All Models",description:"Genuine Toyota oil filter. Traps 95% of contaminants.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OF-TY-ALL",stock:100,availability:"in_stock",priceMode:"fixed"},
+{name:"Air Filter - Toyota",price:2200,category:"Filters",image:"💨",brand:"DENSO",oem:"17801-0D050",partNo:"17801-0D050",supercedes:"",application:"Toyota All Models",description:"Engine air filter for Toyota. Improves fuel efficiency.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"AF-TY-ALL",stock:50,availability:"in_stock",priceMode:"fixed"},
+{name:"Spark Plugs - Toyota (4 Pack)",price:2800,category:"Electrical",image:"⚡",brand:"NGK",oem:"90919-01253",partNo:"90919-01253",supercedes:"",application:"Toyota All Models",description:"Iridium spark plugs for Toyota. Better combustion and performance.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"SP-TY-ALL",stock:60,availability:"in_stock",priceMode:"fixed"},
+{name:"Engine Oil 5W-30 (4L) - Castrol",price:4800,category:"Oils & Fluids",image:"🛢️",brand:"Castrol",oem:"N/A",partNo:"N/A",supercedes:"",application:"Universal All Models",description:"Fully synthetic engine oil 5W-30. Ideal for most modern petrol and diesel engines.",vehicleMake:"Universal",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OIL-5W30-4L",stock:40,availability:"in_stock",priceMode:"fixed"},
+{name:"Brake Pads - Honda Civic",price:3900,category:"Brakes",image:"🔧",brand:"ACDelco",oem:"45022-SNA-A01",partNo:"45022-SNA-A01",supercedes:"45022-SNA-A02",application:"Honda Civic 2016-2023",description:"Front brake pads for Honda Civic. Premium quality.",vehicleMake:"Honda",vehicleModel:"Civic",yearStart:2016,yearEnd:2023,sku:"BP-HC-1623",stock:25,availability:"in_stock",priceMode:"fixed"},
+{name:"Oil Filter - Honda",price:1200,category:"Filters",image:"🔩",brand:"HONDA Genuine",oem:"15400-PLM-A01",partNo:"15400-PLM-A01",supercedes:"",application:"Honda All Models",description:"Genuine Honda oil filter. Perfect fit.",vehicleMake:"Honda",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OF-HN-ALL",stock:80,availability:"in_stock",priceMode:"fixed"},
+{name:"Brake Pads - Nissan X-Trail",price:4200,category:"Brakes",image:"🔧",brand:"Akebono",oem:"D1060-JD00A",partNo:"D1060-JD00A",supercedes:"D1060-JD00B",application:"Nissan X-Trail 2010-2023",description:"Front brake pads for Nissan X-Trail. OEM specification.",vehicleMake:"Nissan",vehicleModel:"X-Trail",yearStart:2010,yearEnd:2023,sku:"BP-NX-1023",stock:20,availability:"in_stock",priceMode:"fixed"},
+{name:"Brake Pads - Mitsubishi Pajero",price:5500,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"MR527678",partNo:"MR527678",supercedes:"",application:"Mitsubishi Pajero 2005-2023",description:"Front brake pads for Pajero. Heavy-duty.",vehicleMake:"Mitsubishi",vehicleModel:"Pajero",yearStart:2005,yearEnd:2023,sku:"BP-MP-0523",stock:15,availability:"in_stock",priceMode:"fixed"},
+{name:"Oil Filter - Nissan",price:1300,category:"Filters",image:"🔩",brand:"NISSAN Genuine",oem:"15208-65F0A",partNo:"15208-65F0A",supercedes:"",application:"Nissan All Models",description:"Genuine Nissan oil filter.",vehicleMake:"Nissan",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OF-NS-ALL",stock:70,availability:"in_stock",priceMode:"fixed"},
+{name:"Universal Alternator",price:21000,category:"Electrical",image:"🔋",brand:"DENSO",oem:"27060-0T041",partNo:"27060-0T041",supercedes:"",application:"Universal All Models",description:"High-output alternator for various vehicles.",vehicleMake:"Universal",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"ALT-UNI-001",stock:8,availability:"in_stock",priceMode:"fixed"},
+{name:"Timing Belt Kit - Toyota",price:14500,category:"Engine",image:"⛓️",brand:"Gates",oem:"13568-09070",partNo:"13568-09070",supercedes:"",application:"Toyota All Models",description:"Complete timing belt kit with tensioner.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"TB-TY-ALL",stock:12,availability:"in_stock",priceMode:"fixed"},
+{name:"Water Pump - Toyota",price:8900,category:"Cooling",image:"💧",brand:"AISIN",oem:"16100-09280",partNo:"16100-09280",supercedes:"",application:"Toyota All Models",description:"High-quality water pump for Toyota.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"WP-TY-ALL",stock:20,availability:"in_stock",priceMode:"fixed"},
+{name:"Shock Absorber - Toyota Hilux",price:14500,category:"Suspension",image:"🛠️",brand:"KYB",oem:"48531-09885",partNo:"48531-09885",supercedes:"",application:"Toyota Hilux 2015-2023",description:"Front shock absorber for Hilux.",vehicleMake:"Toyota",vehicleModel:"Hilux",yearStart:2015,yearEnd:2023,sku:"SA-TH-1523",stock:10,availability:"in_stock",priceMode:"fixed"}
 ];
 
 // ==================== STATE MANAGEMENT ====================
@@ -1103,16 +1155,20 @@ window.addEventListener('scroll', handleBackToTopVisibility);
 function toggleVinSearch(){
     const vinSec = document.getElementById('vinSection');
     if(!vinSec) return;
+    const isOpening = !vinSec.classList.contains('show');
     vinSec.classList.toggle('show');
-    if(vinSec.classList.contains('show')){
+    if(isOpening){
         setTimeout(() => vinSec.scrollIntoView({behavior:'smooth', block:'center'}), 50);
         const vinInput = document.getElementById('vinInput');
         if(vinInput) vinInput.focus();
     } else {
+        // Closing VIN search — clean up and scroll back to top of page
         const vinResults = document.getElementById('vinResults');
         if(vinResults){ vinResults.style.display = 'none'; vinResults.innerHTML = ''; }
         const vinInput = document.getElementById('vinInput');
         if(vinInput) vinInput.value = '';
+        // Scroll back to the top of the page
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 }
 
@@ -1283,7 +1339,6 @@ function renderInsurancePage(){
                     ${pricing.map(pr => `<div class="price-line"><span>${escapeAttr(pr.label)}</span><strong>${escapeAttr(pr.value)}</strong></div>`).join('')}
                 </div>` : '';
 
-            const generalWa = encodeURIComponent(p.whatsappText || `Hi, I'd like a quote for motor insurance (${p.name})`);
             const adilWa = `https://wa.me/254713349554?text=${encodeURIComponent('Hi ADIL, I would like a motor insurance quote — ' + (p.name||''))}`;
             const suhaylWa = `https://wa.me/254752763924?text=${encodeURIComponent('Hi SUHAYL, I would like a motor insurance quote — ' + (p.name||''))}`;
 
@@ -1384,7 +1439,6 @@ function renderAdminInsuranceCards(){
         container.innerHTML = html;
     }
 
-    // Documents checklist
     const docsContainer = document.getElementById('adminInsuranceDocsList');
     if(docsContainer){
         if(!insuranceDocs || insuranceDocs.length === 0){
@@ -1406,7 +1460,6 @@ function addInsurancePriceRow(partnerIndex){
     const p = insurancePartners[partnerIndex];
     if(!p) return;
     if(!Array.isArray(p.pricing)) p.pricing = [];
-    // Read current values from DOM first
     syncInsurancePartnerFromDOM(partnerIndex);
     p.pricing.push({label: '', value: ''});
     renderAdminInsuranceCards();
@@ -1433,7 +1486,6 @@ function syncInsurancePartnerFromDOM(i){
     if(descEl) p.description = descEl.value.trim();
     if(tagsEl) p.tags = tagsEl.value.split(',').map(s => s.trim()).filter(Boolean);
     if(waEl) p.whatsappText = waEl.value.trim();
-    // Read pricing rows
     const pricingContainer = document.getElementById(`ins_price_rows_${i}`);
     if(pricingContainer){
         const rows = pricingContainer.querySelectorAll('.admin-price-row');
@@ -1772,7 +1824,6 @@ async function saveAvailabilityToGitHub(){
 async function saveInsuranceToGitHub(){
     if(!getToken()){ alert('⚠️ No GitHub token saved.\n\nOpen the Admin Panel and paste your token first.'); return false; }
     try {
-        // Save as object with partners + documents
         const payload = {
             partners: insurancePartners,
             documents: insuranceDocs
@@ -2201,13 +2252,17 @@ function renderProductCard(product){
     const stock = normalizeStock(product.availability);
     const stockBadge = stockBadgeHTML(stock);
     const priceHTML = priceDisplayHTML(product);
+    const supercedesList = parseSupercedes(product.supercedes);
+    const supercedesHTML = supercedesList.length > 0
+        ? `<div class="product-supercedes" title="Replaces older part numbers"><i class="fas fa-exchange-alt"></i> Replaces: ${escapeAttr(supercedesList.join(', '))}</div>`
+        : '';
     const card=document.createElement('div');
     card.className='product-card';
     card.onclick = (ev) => {
         if(ev.target.closest('button')) return;
         openGallery(idx);
     };
-    card.innerHTML=`<div class="product-image">${renderImageHTML(product)}${countBadge}</div><div class="product-name">${escapeAttr(product.name)}${isUniversal?' <span class="universal-badge">Universal</span>':''}</div><div>${stockBadge}</div><div class="product-oem">Part No: ${escapeAttr(partNo)}</div><div class="product-vehicle-info"><i class="fas fa-car"></i> Fits: ${escapeAttr(application)}</div><div class="product-description">${escapeAttr(product.description||'')}</div><div class="product-brand">${escapeAttr(product.brand||'')}</div>${priceHTML}<div class="product-buttons"><button class="add-to-cart-btn" onclick="addToCart(${idx})"><i class="fas fa-cart-plus"></i> Add to Cart</button><button class="order-now-btn" onclick="orderNow(${idx})"><i class="fas fa-bolt"></i> Order Now</button></div>`;
+    card.innerHTML=`<div class="product-image">${renderImageHTML(product)}${countBadge}</div><div class="product-name">${escapeAttr(product.name)}${isUniversal?' <span class="universal-badge">Universal</span>':''}</div><div>${stockBadge}</div><div class="product-oem">Part No: ${escapeAttr(partNo)}</div>${supercedesHTML}<div class="product-vehicle-info"><i class="fas fa-car"></i> Fits: ${escapeAttr(application)}</div><div class="product-description">${escapeAttr(product.description||'')}</div><div class="product-brand">${escapeAttr(product.brand||'')}</div>${priceHTML}<div class="product-buttons"><button class="add-to-cart-btn" onclick="addToCart(${idx})"><i class="fas fa-cart-plus"></i> Add to Cart</button><button class="order-now-btn" onclick="orderNow(${idx})"><i class="fas fa-bolt"></i> Order Now</button></div>`;
     return card;
 }
 function loadProducts(){
@@ -2256,6 +2311,10 @@ function renderGallery(product){
         ? `<div class="stock-note">50% Deposit required — arrives in about 2 weeks.</div>`
         : '';
     const priceHTML = priceDisplayHTML(product, true);
+    const supercedesList = parseSupercedes(product.supercedes);
+    const supercedesHTML = supercedesList.length > 0
+        ? `<div class="psupercedes"><i class="fas fa-exchange-alt"></i> Replaces: ${escapeAttr(supercedesList.join(', '))}</div>`
+        : '';
     document.getElementById('galleryInfo').innerHTML = `
         <div class="pname">${escapeAttr(product.name || '')}</div>
         <div style="margin:6px 0;">${badgeLarge}${stockNote}</div>
@@ -2264,6 +2323,7 @@ function renderGallery(product){
             ${product.partNo || product.oem ? `Part No: ${escapeAttr(product.partNo || product.oem)}<br>` : ''}
             ${product.application ? `Fits: ${escapeAttr(product.application)}` : ''}
         </div>
+        ${supercedesHTML}
         ${priceHTML}
     `;
 }
@@ -2369,6 +2429,8 @@ function closeVinResults(){
     vinResults.style.display='none';
     vinResults.innerHTML='';
     document.getElementById('vinInput').value='';
+    // Scroll back to top of page when closing the VIN results
+    window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 // ==================== SOURCE-IT FALLBACK ====================
@@ -2436,7 +2498,7 @@ function displayFilteredProducts(list,title){
 function searchProducts(){
     const term=document.getElementById('searchInput').value.toLowerCase().trim();
     if(!term){ resetFilters(); return; }
-    const filtered=products.filter(p=>p.name.toLowerCase().includes(term)||p.category.toLowerCase().includes(term)||(p.oem&&p.oem.toLowerCase().includes(term))||(p.partNo&&p.partNo.toLowerCase().includes(term))||p.brand.toLowerCase().includes(term)||p.vehicleMake.toLowerCase().includes(term)||p.vehicleModel.toLowerCase().includes(term)||(p.application&&p.application.toLowerCase().includes(term)));
+    const filtered=products.filter(p=>p.name.toLowerCase().includes(term)||p.category.toLowerCase().includes(term)||(p.oem&&p.oem.toLowerCase().includes(term))||(p.partNo&&p.partNo.toLowerCase().includes(term))||(p.supercedes&&p.supercedes.toLowerCase().includes(term))||p.brand.toLowerCase().includes(term)||p.vehicleMake.toLowerCase().includes(term)||p.vehicleModel.toLowerCase().includes(term)||(p.application&&p.application.toLowerCase().includes(term)));
     displayFilteredProducts(filtered,`Search results for: "${term}"`);
 }
 function shopByCategory(category){const filtered=products.filter(p=>p.category===category);displayFilteredProducts(filtered,`${category} Products`)}
@@ -2764,6 +2826,10 @@ function openQuickAdd(prefill){
             <label style="font-size:13px;font-weight:700;">Part No / OEM</label>
             <input type="text" id="qa_partNo" value="${escapeAttr(p.partNo||p.oem||'')}" placeholder="e.g. 04465-0K340" style="width:100%;padding:10px;margin:5px 0 15px;border:1px solid #ccc;border-radius:5px;">
 
+            <label style="font-size:13px;font-weight:700;">Supercedes (old part numbers)</label>
+            <input type="text" id="qa_supercedes" value="${escapeAttr(p.supercedes||'')}" placeholder="e.g. 04465-0K290, 04465-0K291 (comma separated)" style="width:100%;padding:10px;margin:5px 0 15px;border:1px solid #ccc;border-radius:5px;">
+            <div style="font-size:11px;color:#888;margin:-10px 0 12px;">List old part numbers that this part replaces. Separate multiple with commas.</div>
+
             <label style="font-size:13px;font-weight:700;">Fits (Application)</label>
             <input type="text" id="qa_application" value="${escapeAttr(p.application||'')}" placeholder="e.g. Toyota Hilux 2015-2023" style="width:100%;padding:10px;margin:5px 0 15px;border:1px solid #ccc;border-radius:5px;">
 
@@ -2823,6 +2889,7 @@ async function saveQuickAdd(){
     const name = document.getElementById('qa_name').value.trim();
     if(!name){ alert('Please enter a part name.'); return; }
     const partNo = document.getElementById('qa_partNo').value.trim();
+    const supercedes = document.getElementById('qa_supercedes').value.trim();
     const application = document.getElementById('qa_application').value.trim();
     const brandVal = getComboValue('qa_br');
     const catVal = getComboValue('qa_cat');
@@ -2876,6 +2943,7 @@ async function saveQuickAdd(){
         priceMax: priceData.priceMax,
         partNo: partNo || 'N/A',
         oem: partNo || 'N/A',
+        supercedes: supercedes,
         application: application || `${vMake} ${vModel}`.trim(),
         brand: brandVal,
         category: catVal,
@@ -2925,7 +2993,7 @@ function switchAdminTab(tab){
 function adminMatchesSearch(product){
     if(!adminSearchTerm) return true;
     const q = adminSearchTerm;
-    const fields = [product.name, product.partNo, product.oem, product.brand, product.category, product.sku, product.application, product.vehicleMake, product.vehicleModel, product.description].filter(Boolean).map(v => String(v).toLowerCase());
+    const fields = [product.name, product.partNo, product.oem, product.brand, product.category, product.sku, product.application, product.vehicleMake, product.vehicleModel, product.description, product.supercedes].filter(Boolean).map(v => String(v).toLowerCase());
     return fields.some(f => f.includes(q));
 }
 function renderAdminProductCards(){
@@ -2956,6 +3024,7 @@ function renderAdminProductCards(){
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
                 <div><label style="font-size:12px;">Stock:</label><input type="number" id="stock_${index}" value="${product.stock||0}" style="width:100%;padding:5px;"></div>
                 <div><label style="font-size:12px;">Part No:</label><input type="text" id="partNo_${index}" value="${escapeAttr(product.partNo||product.oem||'')}" style="width:100%;padding:5px;"></div>
+                <div style="grid-column:1/-1;"><label style="font-size:12px;">Supercedes (old part numbers, comma separated):</label><input type="text" id="supercedes_${index}" value="${escapeAttr(product.supercedes||'')}" placeholder="e.g. 04465-0K290, 04465-0K291" style="width:100%;padding:5px;"></div>
                 <div><label style="font-size:12px;">Fits (Application):</label><input type="text" id="application_${index}" value="${escapeAttr(product.application||'')}" style="width:100%;padding:5px;"></div>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
@@ -3401,6 +3470,7 @@ function showAddProductForm(){
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
             <div><label>Product Name:</label><input type="text" id="new_name" style="width:100%;padding:5px;"></div>
             <div><label>Part No / OEM:</label><input type="text" id="new_oem" style="width:100%;padding:5px;"></div>
+            <div><label>Supercedes (old part numbers, comma separated):</label><input type="text" id="new_supercedes" placeholder="e.g. 04465-0K290, 04465-0K291" style="width:100%;padding:5px;"></div>
             <div><label>Fits (Application):</label><input type="text" id="new_application" style="width:100%;padding:5px;" placeholder="e.g. Toyota Hilux 2015-2023"></div>
             <div><label>Stock:</label><input type="number" id="new_stock" value="0" style="width:100%;padding:5px;"></div>
         </div>
@@ -3432,6 +3502,7 @@ function showAddProductForm(){
 async function addNewProduct(){
     const form = document.getElementById('newProductForm');
     const partNo = document.getElementById('new_oem').value;
+    const supercedes = document.getElementById('new_supercedes').value;
     const application = document.getElementById('new_application').value;
     const brandVal = getComboValue('new_br');
     const catVal = getComboValue('new_cat');
@@ -3480,6 +3551,7 @@ async function addNewProduct(){
         priceMax: priceData.priceMax,
         partNo: partNo || 'N/A',
         oem: partNo || 'N/A',
+        supercedes: supercedes || '',
         application: application || 'Universal',
         category: catVal,
         brand: brandVal,
@@ -3508,6 +3580,7 @@ async function updateProduct(index){
     products[index].stock=parseInt(document.getElementById(`stock_${index}`).value);
     products[index].partNo=document.getElementById(`partNo_${index}`).value;
     products[index].oem=products[index].partNo;
+    products[index].supercedes=document.getElementById(`supercedes_${index}`).value.trim();
     products[index].application=document.getElementById(`application_${index}`).value;
     products[index].description=document.getElementById(`desc_${index}`).value;
     const images = readImagePickerValue(`edit_img_${index}`);
@@ -3565,6 +3638,7 @@ function duplicateProduct(index){
     const prefill = {
         name: p.name,
         partNo: p.partNo || p.oem || '',
+        supercedes: p.supercedes || '',
         application: p.application || '',
         category: p.category || '',
         vehicleMake: p.vehicleMake || '',

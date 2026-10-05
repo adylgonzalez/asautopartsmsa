@@ -173,20 +173,38 @@
         /* === INSURANCE PAGE === */
         .insurance-page{padding:50px 20px;background:#fff;display:none}
         .insurance-page.active{display:block}
-        .insurance-inner{max-width:1100px;margin:0 auto}
+        .insurance-inner{max-width:1200px;margin:0 auto}
         .insurance-page h2{text-align:center;color:#1a237e;margin-bottom:10px;font-size:32px}
         .insurance-subtitle{text-align:center;color:#666;font-size:16px;margin-bottom:40px;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.6}
-        .insurance-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:40px}
+        .insurance-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-bottom:40px}
         .insurance-card{background:#f9f9f9;border:2px solid #e0e0e0;border-radius:14px;padding:28px 24px;text-align:center;transition:all .3s;display:flex;flex-direction:column;height:100%}
         .insurance-card:hover{border-color:#ff6f00;transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
         .insurance-logo{font-size:56px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;height:80px}
         .insurance-logo img{max-width:120px;max-height:80px;object-fit:contain;border-radius:8px}
-        .insurance-card h3{color:#1a237e;font-size:18px;margin-bottom:10px;font-weight:800}
-        .insurance-desc{color:#666;font-size:14px;line-height:1.6;margin-bottom:16px;flex:1}
+        .insurance-card h3{color:#1a237e;font-size:20px;margin-bottom:10px;font-weight:800}
+        .insurance-desc{color:#666;font-size:14px;line-height:1.6;margin-bottom:16px}
+        .insurance-pricing{background:#fff8e1;border-radius:8px;padding:14px 16px;margin-bottom:16px;text-align:left;border-left:4px solid #ffc107}
+        .insurance-pricing h4{color:#e65100;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+        .insurance-pricing .price-line{display:flex;justify-content:space-between;gap:8px;font-size:14px;color:#333;padding:5px 0;border-bottom:1px dashed #ffe082}
+        .insurance-pricing .price-line:last-child{border-bottom:none}
+        .insurance-pricing .price-line strong{color:#1a237e;text-align:right}
         .insurance-tags{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
         .insurance-tags .tag{background:#e3f2fd;color:#1565c0;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
-        .insurance-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;background:#25D366;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;font-size:14px;transition:background .2s}
-        .insurance-btn:hover{background:#1eaa53}
+        .insurance-contact-row{display:flex;gap:8px;margin-top:auto}
+        .insurance-btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 14px;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;transition:transform .2s;text-align:center}
+        .insurance-btn:hover{transform:scale(1.03)}
+        .insurance-btn.adil{background:#25D366}
+        .insurance-btn.adil:hover{background:#1eaa53}
+        .insurance-btn.suhayl{background:#128C7E}
+        .insurance-btn.suhayl:hover{background:#0f6d61}
+
+        .insurance-docs{background:#e3f2fd;border:2px solid #90caf9;border-radius:14px;padding:26px 24px;margin-bottom:30px}
+        .insurance-docs h3{color:#1565c0;font-size:20px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+        .insurance-docs .docs-sub{font-size:14px;color:#555;margin-bottom:18px;line-height:1.5}
+        .docs-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+        .docs-list li{background:#fff;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;font-size:15px;color:#333;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+        .docs-list li i{color:#4caf50;font-size:20px;flex-shrink:0}
+
         .insurance-cta{background:#f0f4ff;border-radius:14px;padding:32px 24px;text-align:center;border:2px dashed #c5cae9}
         .insurance-cta h3{color:#1a237e;font-size:22px;margin-bottom:10px}
         .insurance-cta p{color:#555;font-size:15px;line-height:1.6;margin-bottom:20px;max-width:600px;margin-left:auto;margin-right:auto}
@@ -379,7 +397,6 @@
             .admin-section-header h3{font-size:16px}
         }
 
-        /* === INSURANCE ADMIN CARDS === */
         .admin-ins-card{background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:16px;margin-bottom:14px}
         .admin-ins-card .ins-header{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
         .admin-ins-card .ins-logo-preview{width:64px;height:64px;border-radius:10px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0;overflow:hidden;border:1px solid #e0e0e0}
@@ -401,7 +418,16 @@
         .admin-ins-card .ins-actions .move:hover{background:#757575}
         .admin-ins-card .ins-actions .move:disabled{opacity:.3;cursor:not-allowed}
 
-        /* ===== AI CHAT ASSISTANT ===== */
+        .admin-price-rows{background:#fff8e1;border-radius:8px;padding:10px 12px;margin-bottom:10px}
+        .admin-price-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+        .admin-price-row:last-child{margin-bottom:0}
+        .admin-price-row input{flex:1;padding:8px;border:1px solid #ccc;border-radius:5px;font-size:13px}
+        .admin-price-row input:first-child{flex:0 0 40%}
+        .admin-price-row button{background:#f44336;color:#fff;border:none;border-radius:5px;padding:8px 10px;cursor:pointer;font-weight:700;flex-shrink:0}
+        .admin-price-row button:hover{background:#d32f2f}
+        .admin-add-row-btn{background:#4caf50;color:#fff;border:none;border-radius:5px;padding:8px 12px;cursor:pointer;font-weight:700;font-size:12px;margin-top:4px}
+        .admin-add-row-btn:hover{background:#388e3c}
+
         .ai-chat-btn{position:fixed;bottom:100px;right:30px;width:60px;height:60px;border-radius:50%;background:#1a237e;color:#fff;border:none;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:1160;display:flex;align-items:center;justify-content:center;font-size:26px;transition:transform .2s,background .3s}
         .ai-chat-btn:hover{background:#ff6f00;transform:scale(1.05)}
         .ai-chat-btn .pulse-ring{position:absolute;width:100%;height:100%;border-radius:50%;border:3px solid #ff6f00;opacity:.7;animation:pulseRing 2s ease-out infinite;pointer-events:none}
@@ -593,10 +619,12 @@
 
     <div class="insurance-page" id="insurancePage">
         <div class="insurance-inner">
-            <h2><i class="fas fa-shield-alt" style="color:#ff6f00;"></i> Our Trusted Insurance Partners</h2>
+            <h2><i class="fas fa-shield-alt" style="color:#ff6f00;"></i> Motor Insurance Partners</h2>
             <p class="insurance-subtitle">We've partnered with Kenya's leading motor insurance providers so you can protect your car with confidence. Get a free quote today.</p>
 
             <div class="insurance-grid" id="insuranceGrid"></div>
+
+            <div class="insurance-docs" id="insuranceDocs"></div>
 
             <div class="insurance-cta">
                 <h3>Not sure which policy is right for you?</h3>
@@ -793,6 +821,10 @@ const DEFAULT_INSURANCE = [
         name: 'Partner 1 — Coming Soon',
         logo: '🏛️',
         description: 'Description of the insurance provider, their cover options, and why we recommend them.',
+        pricing: [
+            {label: 'Comprehensive', value: '12% of car value'},
+            {label: 'Third Party', value: 'KSh 6,000'}
+        ],
         tags: ['Comprehensive', 'Third Party'],
         whatsappText: 'Hi A&S, I would like a quote for motor insurance'
     },
@@ -801,6 +833,10 @@ const DEFAULT_INSURANCE = [
         name: 'Partner 2 — Coming Soon',
         logo: '🏢',
         description: 'Description of the insurance provider, their cover options, and why we recommend them.',
+        pricing: [
+            {label: 'Comprehensive', value: '12% of car value'},
+            {label: 'Third Party', value: 'KSh 6,000'}
+        ],
         tags: ['Comprehensive', 'PSV'],
         whatsappText: 'Hi A&S, I would like a quote for motor insurance'
     },
@@ -809,9 +845,20 @@ const DEFAULT_INSURANCE = [
         name: 'Partner 3 — Coming Soon',
         logo: '🛡️',
         description: 'Description of the insurance provider, their cover options, and why we recommend them.',
+        pricing: [
+            {label: 'Comprehensive', value: '12% of car value'},
+            {label: 'Third Party', value: 'KSh 6,000'}
+        ],
         tags: ['Comprehensive', 'Commercial'],
         whatsappText: 'Hi A&S, I would like a quote for motor insurance'
     }
+];
+
+const DEFAULT_INSURANCE_DOCS = [
+    { label: 'Copy of Logbook' },
+    { label: 'KRA PIN Certificate' },
+    { label: 'Copy of ID / Passport' },
+    { label: 'Car Valuation (for Comprehensive)' }
 ];
 
 // ==================== CATEGORY DISPLAY HELPERS ====================
@@ -1041,6 +1088,7 @@ let products = [];
 let categories = [...DEFAULT_CATEGORIES];
 let brands = [...DEFAULT_BRANDS];
 let insurancePartners = [...DEFAULT_INSURANCE];
+let insuranceDocs = [...DEFAULT_INSURANCE_DOCS];
 let availability = {adil:true, suhayl:true};
 let cart = JSON.parse(localStorage.getItem('A & SCart')) || [];
 let adminLoggedIn = false;
@@ -1225,25 +1273,56 @@ function renderInsuranceLogoHtml(logo){
 }
 function renderInsurancePage(){
     const grid = document.getElementById('insuranceGrid');
+    const docsEl = document.getElementById('insuranceDocs');
     if(!grid) return;
+
     if(!insurancePartners || insurancePartners.length === 0){
         grid.innerHTML = `<div class="insurance-empty" style="grid-column:1/-1;">Our insurance partners are being added. Check back soon!</div>`;
-        return;
+    } else {
+        grid.innerHTML = insurancePartners.map(p => {
+            const tags = Array.isArray(p.tags) ? p.tags : [];
+            const tagsHTML = tags.map(t => `<span class="tag">${escapeAttr(t)}</span>`).join('');
+            const pricing = Array.isArray(p.pricing) ? p.pricing : [];
+            const pricingHTML = pricing.length > 0 ? `
+                <div class="insurance-pricing">
+                    <h4><i class="fas fa-tag"></i> Cover & Pricing</h4>
+                    ${pricing.map(pr => `<div class="price-line"><span>${escapeAttr(pr.label)}</span><strong>${escapeAttr(pr.value)}</strong></div>`).join('')}
+                </div>` : '';
+
+            const generalWa = encodeURIComponent(p.whatsappText || `Hi, I'd like a quote for motor insurance (${p.name})`);
+            const adilWa = `https://wa.me/254713349554?text=${encodeURIComponent('Hi ADIL, I would like a motor insurance quote — ' + (p.name||''))}`;
+            const suhaylWa = `https://wa.me/254752763924?text=${encodeURIComponent('Hi SUHAYL, I would like a motor insurance quote — ' + (p.name||''))}`;
+
+            return `<div class="insurance-card">
+                <div class="insurance-logo">${renderInsuranceLogoHtml(p.logo)}</div>
+                <h3>${escapeAttr(p.name || '')}</h3>
+                <p class="insurance-desc">${escapeAttr(p.description || '')}</p>
+                ${pricingHTML}
+                <div class="insurance-tags">${tagsHTML}</div>
+                <div class="insurance-contact-row">
+                    <a href="${adilWa}" target="_blank" class="insurance-btn adil" title="Chat with ADIL">
+                        <i class="fab fa-whatsapp"></i> ADIL
+                    </a>
+                    <a href="${suhaylWa}" target="_blank" class="insurance-btn suhayl" title="Chat with SUHAYL">
+                        <i class="fab fa-whatsapp"></i> SUHAYL
+                    </a>
+                </div>
+            </div>`;
+        }).join('');
     }
-    grid.innerHTML = insurancePartners.map(p => {
-        const tags = Array.isArray(p.tags) ? p.tags : [];
-        const tagsHTML = tags.map(t => `<span class="tag">${escapeAttr(t)}</span>`).join('');
-        const waText = encodeURIComponent(p.whatsappText || `Hi A&S, I'd like a quote for motor insurance (${p.name})`);
-        return `<div class="insurance-card">
-            <div class="insurance-logo">${renderInsuranceLogoHtml(p.logo)}</div>
-            <h3>${escapeAttr(p.name || '')}</h3>
-            <p class="insurance-desc">${escapeAttr(p.description || '')}</p>
-            <div class="insurance-tags">${tagsHTML}</div>
-            <a href="https://wa.me/254713349554?text=${waText}" target="_blank" class="insurance-btn">
-                <i class="fab fa-whatsapp"></i> Request Quote
-            </a>
-        </div>`;
-    }).join('');
+
+    if(docsEl){
+        if(!insuranceDocs || insuranceDocs.length === 0){
+            docsEl.innerHTML = '';
+        } else {
+            docsEl.innerHTML = `
+                <h3><i class="fas fa-folder-open"></i> Documents Required</h3>
+                <p class="docs-sub">Have these ready before you request a quote. Send them by WhatsApp and we'll get back to you with the best option.</p>
+                <ul class="docs-list">
+                    ${insuranceDocs.map(d => `<li><i class="fas fa-check-circle"></i> ${escapeAttr(d.label || '')}</li>`).join('')}
+                </ul>`;
+        }
+    }
 }
 
 // ==================== INSURANCE ADMIN ====================
@@ -1252,49 +1331,166 @@ function renderAdminInsuranceCards(){
     if(!container) return;
     if(!insurancePartners || insurancePartners.length === 0){
         container.innerHTML = `<div class="admin-no-results">No insurance partners yet. Click "Add Partner" above to create one.</div>`;
-        return;
-    }
-    let html = '';
-    insurancePartners.forEach((p, i) => {
-        const logoPreview = renderInsuranceLogoHtml(p.logo);
-        const tagsStr = Array.isArray(p.tags) ? p.tags.join(', ') : '';
-        html += `<div class="admin-ins-card" data-index="${i}">
-            <div class="ins-header">
-                <div class="ins-logo-preview">${logoPreview}</div>
-                <div class="ins-head-info">
-                    <h4>${escapeAttr(p.name || 'Untitled Partner')}</h4>
-                    <div class="ins-cat">Partner #${i+1}</div>
+    } else {
+        let html = '';
+        insurancePartners.forEach((p, i) => {
+            const logoPreview = renderInsuranceLogoHtml(p.logo);
+            const tagsStr = Array.isArray(p.tags) ? p.tags.join(', ') : '';
+            const pricing = Array.isArray(p.pricing) ? p.pricing : [];
+            const priceRowsHTML = pricing.map((pr, j) => `
+                <div class="admin-price-row">
+                    <input type="text" id="ins_price_label_${i}_${j}" value="${escapeAttr(pr.label||'')}" placeholder="e.g. Comprehensive">
+                    <input type="text" id="ins_price_value_${i}_${j}" value="${escapeAttr(pr.value||'')}" placeholder="e.g. 12% of car value">
+                    <button type="button" onclick="removeInsurancePriceRow(${i}, ${j})" title="Remove">✕</button>
                 </div>
-            </div>
-            <div class="ins-field">
-                <label>Partner Name</label>
-                <input type="text" id="ins_name_${i}" value="${escapeAttr(p.name || '')}" placeholder="e.g. Jubilee Insurance">
-            </div>
-            <div class="ins-field">
-                <label>Logo (emoji, image URL, or images/xxx.png)</label>
-                <input type="text" id="ins_logo_${i}" value="${escapeAttr(p.logo || '')}" placeholder="e.g. 🏛️ or https://.../logo.png">
-            </div>
-            <div class="ins-field">
-                <label>Description</label>
-                <textarea id="ins_desc_${i}" placeholder="Brief description of the insurer and their cover">${escapeAttr(p.description || '')}</textarea>
-            </div>
-            <div class="ins-field">
-                <label>Cover Tags (comma-separated)</label>
-                <input type="text" id="ins_tags_${i}" value="${escapeAttr(tagsStr)}" placeholder="e.g. Comprehensive, Third Party">
-            </div>
-            <div class="ins-field">
-                <label>WhatsApp Message (pre-filled when customer taps Quote)</label>
-                <input type="text" id="ins_wa_${i}" value="${escapeAttr(p.whatsappText || '')}" placeholder="Hi A&S, I would like a quote for motor insurance">
-            </div>
-            <div class="ins-actions">
-                <button class="move" onclick="moveInsurancePartner(${i}, -1)" ${i===0?'disabled':''} title="Move up">↑</button>
-                <button class="move" onclick="moveInsurancePartner(${i}, 1)" ${i===insurancePartners.length-1?'disabled':''} title="Move down">↓</button>
-                <button class="save" onclick="updateInsurancePartner(${i})">💾 Save</button>
-                <button class="delete" onclick="deleteInsurancePartner(${i})">🗑️ Delete</button>
-            </div>
-        </div>`;
-    });
-    container.innerHTML = html;
+            `).join('');
+            html += `<div class="admin-ins-card" data-index="${i}">
+                <div class="ins-header">
+                    <div class="ins-logo-preview">${logoPreview}</div>
+                    <div class="ins-head-info">
+                        <h4>${escapeAttr(p.name || 'Untitled Partner')}</h4>
+                        <div class="ins-cat">Partner #${i+1}</div>
+                    </div>
+                </div>
+                <div class="ins-field">
+                    <label>Partner Name</label>
+                    <input type="text" id="ins_name_${i}" value="${escapeAttr(p.name || '')}" placeholder="e.g. Jubilee Insurance">
+                </div>
+                <div class="ins-field">
+                    <label>Logo (emoji, image URL, or images/xxx.png)</label>
+                    <input type="text" id="ins_logo_${i}" value="${escapeAttr(p.logo || '')}" placeholder="e.g. 🏛️ or https://.../logo.png">
+                </div>
+                <div class="ins-field">
+                    <label>Description</label>
+                    <textarea id="ins_desc_${i}" placeholder="Brief description of the insurer and their cover">${escapeAttr(p.description || '')}</textarea>
+                </div>
+                <div class="ins-field">
+                    <label>Cover & Pricing (e.g. Comprehensive: 12% of car value, Third Party: KSh 6,000)</label>
+                    <div class="admin-price-rows" id="ins_price_rows_${i}">
+                        ${priceRowsHTML}
+                    </div>
+                    <button type="button" class="admin-add-row-btn" onclick="addInsurancePriceRow(${i})">➕ Add Price Row</button>
+                </div>
+                <div class="ins-field">
+                    <label>Cover Tags (comma-separated)</label>
+                    <input type="text" id="ins_tags_${i}" value="${escapeAttr(tagsStr)}" placeholder="e.g. Comprehensive, Third Party">
+                </div>
+                <div class="ins-field">
+                    <label>WhatsApp Message (pre-filled when customer taps Quote)</label>
+                    <input type="text" id="ins_wa_${i}" value="${escapeAttr(p.whatsappText || '')}" placeholder="Hi A&S, I would like a quote for motor insurance">
+                </div>
+                <div class="ins-actions">
+                    <button class="move" onclick="moveInsurancePartner(${i}, -1)" ${i===0?'disabled':''} title="Move up">↑</button>
+                    <button class="move" onclick="moveInsurancePartner(${i}, 1)" ${i===insurancePartners.length-1?'disabled':''} title="Move down">↓</button>
+                    <button class="save" onclick="updateInsurancePartner(${i})">💾 Save</button>
+                    <button class="delete" onclick="deleteInsurancePartner(${i})">🗑️ Delete</button>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+    }
+
+    // Documents checklist
+    const docsContainer = document.getElementById('adminInsuranceDocsList');
+    if(docsContainer){
+        if(!insuranceDocs || insuranceDocs.length === 0){
+            docsContainer.innerHTML = `<div class="admin-no-results" style="padding:15px;font-size:13px;">No documents listed. Click "Add Document" to add one.</div>`;
+        } else {
+            let docHtml = '';
+            insuranceDocs.forEach((d, i) => {
+                docHtml += `<div class="admin-price-row">
+                    <input type="text" id="ins_doc_${i}" value="${escapeAttr(d.label||'')}" placeholder="e.g. Copy of Logbook">
+                    <button type="button" onclick="removeInsuranceDoc(${i})" title="Remove">✕</button>
+                </div>`;
+            });
+            docsContainer.innerHTML = docHtml;
+        }
+    }
+}
+
+function addInsurancePriceRow(partnerIndex){
+    const p = insurancePartners[partnerIndex];
+    if(!p) return;
+    if(!Array.isArray(p.pricing)) p.pricing = [];
+    // Read current values from DOM first
+    syncInsurancePartnerFromDOM(partnerIndex);
+    p.pricing.push({label: '', value: ''});
+    renderAdminInsuranceCards();
+}
+
+function removeInsurancePriceRow(partnerIndex, rowIndex){
+    const p = insurancePartners[partnerIndex];
+    if(!p || !Array.isArray(p.pricing)) return;
+    syncInsurancePartnerFromDOM(partnerIndex);
+    p.pricing.splice(rowIndex, 1);
+    renderAdminInsuranceCards();
+}
+
+function syncInsurancePartnerFromDOM(i){
+    const p = insurancePartners[i];
+    if(!p) return;
+    const nameEl = document.getElementById(`ins_name_${i}`);
+    const logoEl = document.getElementById(`ins_logo_${i}`);
+    const descEl = document.getElementById(`ins_desc_${i}`);
+    const tagsEl = document.getElementById(`ins_tags_${i}`);
+    const waEl = document.getElementById(`ins_wa_${i}`);
+    if(nameEl) p.name = nameEl.value.trim();
+    if(logoEl) p.logo = logoEl.value.trim();
+    if(descEl) p.description = descEl.value.trim();
+    if(tagsEl) p.tags = tagsEl.value.split(',').map(s => s.trim()).filter(Boolean);
+    if(waEl) p.whatsappText = waEl.value.trim();
+    // Read pricing rows
+    const pricingContainer = document.getElementById(`ins_price_rows_${i}`);
+    if(pricingContainer){
+        const rows = pricingContainer.querySelectorAll('.admin-price-row');
+        const newPricing = [];
+        rows.forEach((row, j) => {
+            const lbl = document.getElementById(`ins_price_label_${i}_${j}`);
+            const val = document.getElementById(`ins_price_value_${i}_${j}`);
+            if(lbl && val){
+                const label = lbl.value.trim();
+                const value = val.value.trim();
+                if(label || value) newPricing.push({label, value});
+            }
+        });
+        p.pricing = newPricing;
+    }
+}
+
+function addNewInsuranceDoc(){
+    if(!Array.isArray(insuranceDocs)) insuranceDocs = [];
+    syncInsuranceDocsFromDOM();
+    insuranceDocs.push({ label: 'New Document' });
+    renderAdminInsuranceCards();
+    showNotification('✅ Added document — edit and click Save Documents');
+}
+
+function removeInsuranceDoc(i){
+    if(!Array.isArray(insuranceDocs)) return;
+    syncInsuranceDocsFromDOM();
+    insuranceDocs.splice(i, 1);
+    renderAdminInsuranceCards();
+}
+
+function syncInsuranceDocsFromDOM(){
+    const docs = [];
+    let i = 0;
+    while(true){
+        const el = document.getElementById(`ins_doc_${i}`);
+        if(!el) break;
+        const label = el.value.trim();
+        if(label) docs.push({label});
+        i++;
+    }
+    insuranceDocs = docs;
+}
+
+async function saveInsuranceDocs(){
+    syncInsuranceDocsFromDOM();
+    renderAdminInsuranceCards();
+    renderInsurancePage();
+    showNotification('⏳ Saving documents list to GitHub...');
+    await saveInsuranceToGitHub();
 }
 
 function addNewInsurancePartner(){
@@ -1303,6 +1499,10 @@ function addNewInsurancePartner(){
         name: 'New Partner',
         logo: '🛡️',
         description: 'Describe the insurer and their cover options.',
+        pricing: [
+            {label: 'Comprehensive', value: '12% of car value'},
+            {label: 'Third Party', value: 'KSh 6,000'}
+        ],
         tags: ['Comprehensive'],
         whatsappText: 'Hi A&S, I would like a quote for motor insurance'
     };
@@ -1318,20 +1518,10 @@ function addNewInsurancePartner(){
 async function updateInsurancePartner(i){
     const p = insurancePartners[i];
     if(!p) return;
-    const nameEl = document.getElementById(`ins_name_${i}`);
-    const logoEl = document.getElementById(`ins_logo_${i}`);
-    const descEl = document.getElementById(`ins_desc_${i}`);
-    const tagsEl = document.getElementById(`ins_tags_${i}`);
-    const waEl = document.getElementById(`ins_wa_${i}`);
-
-    const name = (nameEl ? nameEl.value : '').trim();
-    if(!name){ alert('Please enter a partner name.'); return; }
-
-    p.name = name;
-    p.logo = (logoEl ? logoEl.value : '').trim() || '🛡️';
-    p.description = (descEl ? descEl.value : '').trim();
-    p.tags = (tagsEl ? tagsEl.value : '').split(',').map(s => s.trim()).filter(Boolean);
-    p.whatsappText = (waEl ? waEl.value : '').trim() || 'Hi A&S, I would like a quote for motor insurance';
+    syncInsurancePartnerFromDOM(i);
+    if(!p.name){ alert('Please enter a partner name.'); return; }
+    p.logo = p.logo || '🛡️';
+    p.whatsappText = p.whatsappText || 'Hi A&S, I would like a quote for motor insurance';
 
     renderAdminInsuranceCards();
     renderInsurancePage();
@@ -1477,11 +1667,20 @@ async function fetchOrdersFromGitHub(){
 async function fetchInsuranceFromGitHub(){
     try {
         const res = await axios.get(INSURANCE_URL + '?t=' + Date.now());
-        if(Array.isArray(res.data)){ insurancePartners = res.data; return true; }
-        throw new Error('insurance.json did not return an array');
+        if(Array.isArray(res.data)){
+            insurancePartners = res.data;
+            return true;
+        }
+        if(res.data && Array.isArray(res.data.partners)){
+            insurancePartners = res.data.partners;
+            insuranceDocs = Array.isArray(res.data.documents) ? res.data.documents : [...DEFAULT_INSURANCE_DOCS];
+            return true;
+        }
+        throw new Error('insurance.json did not return an array or object');
     } catch (err){
         console.warn('Could not load insurance.json — using default partners. Error:', err.message);
         insurancePartners = [...DEFAULT_INSURANCE];
+        insuranceDocs = [...DEFAULT_INSURANCE_DOCS];
         return false;
     }
 }
@@ -1579,8 +1778,13 @@ async function saveAvailabilityToGitHub(){
 async function saveInsuranceToGitHub(){
     if(!getToken()){ alert('⚠️ No GitHub token saved.\n\nOpen the Admin Panel and paste your token first.'); return false; }
     try {
-        await putFileToGitHub(INSURANCE_FILE, insurancePartners, `Update insurance.json — ${new Date().toISOString()}`);
-        showNotification('✅ Insurance partners saved to GitHub! Live in ~1 minute.');
+        // Save as object with partners + documents
+        const payload = {
+            partners: insurancePartners,
+            documents: insuranceDocs
+        };
+        await putFileToGitHub(INSURANCE_FILE, payload, `Update insurance.json — ${new Date().toISOString()}`);
+        showNotification('✅ Insurance saved to GitHub! Live in ~1 minute.');
         return true;
     } catch (err){
         console.error('Insurance save failed:', err);
@@ -3093,9 +3297,21 @@ function showAdminPanel(){
                     <button onclick="addNewInsurancePartner()" style="padding:10px 16px;background:#2e7d32;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;">➕ Add Partner</button>
                 </div>
                 <div class="admin-card-box" style="background:#e3f2fd;border-color:#90caf9;font-size:13px;color:#0d47a1;line-height:1.5;">
-                    💡 <strong>Tip:</strong> Logo can be an emoji (🏛️ 🏢 🛡️) or a real image URL. For uploaded logos, put the file in your <code>images/</code> folder on GitHub and use <code>images/your-file.png</code>.
+                    💡 <strong>Tip:</strong> Logo can be an emoji (🏛️ 🏢 🛡️) or a real image URL. Add price rows for each cover type (e.g. Comprehensive: 12% of car value).
                 </div>
                 <div id="adminInsuranceList"></div>
+
+                <div class="admin-card-box" style="background:#fff8e1;border-color:#ffc107;margin-top:20px;">
+                    <h4 style="color:#e65100;font-size:15px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+                        <i class="fas fa-folder-open"></i> Documents Required (shared for all partners)
+                    </h4>
+                    <p style="font-size:12px;color:#666;margin-bottom:12px;">These documents are shown on the Insurance page for all partners.</p>
+                    <div id="adminInsuranceDocsList"></div>
+                    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+                        <button type="button" class="admin-add-row-btn" onclick="addNewInsuranceDoc()">➕ Add Document</button>
+                        <button type="button" class="admin-add-row-btn" style="background:#1a237e;" onclick="saveInsuranceDocs()">💾 Save Documents</button>
+                    </div>
+                </div>
             </div>
 
             <div class="admin-panel-section" data-tab="availability">

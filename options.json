@@ -19,6 +19,7 @@
     "Clutch",
     "Ignition",
     "Sensors",
+    "Accessories",
     "Other",
     "EX JAPAN",
     "Oils & Fluids"
@@ -38,6 +39,8 @@
     "MITSUBISHI Genuine",
     "MAZDA Genuine",
     "SUBARU Genuine",
+    "LEXUS Genuine",
+    "ISUZU Genuine",
     "TYC",
     "KINGMIRROR",
     "TAMA (Japan)",
@@ -51,14 +54,17 @@
     "Advics",
     "NTN",
     "NSK",
-    "Taiho",
-    "NPR",
-    "Musashi",
-    "Exedy",
-    "Other",
+    "NISSAN",
+    "HITACHI",
+    "Hardrace",
+    "Tongshi",
+    "Toyomax",
+    "Kamoka",
+    "Local",
     "JS",
     "BMW",
     "TOYOTA",
-    "NTK"
+    "NTK",
+    "Other"
   ]
 }

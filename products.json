@@ -1636,16 +1636,20 @@
     "application": "Toyota Hilux, Corolla, 1KD/1NZ engines",
     "category": "Cooling",
     "brand": "TOYOTA Genuine",
-    "image": "🌡️",
-    "images": [],
+    "image": "images/thermostat-toyota-hilux-corolla-1kd-1nz-1791218893387.jpg",
+    "images": [
+      "images/thermostat-toyota-hilux-corolla-1kd-1nz-1791218893387.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Hilux, Corolla",
     "yearStart": 2000,
     "yearEnd": 2023,
     "stock": 15,
-    "description": "Engine coolant thermostat. [VERIFY: supplier]",
+    "description": "Engine coolant thermostat.",
     "sku": "TH-TH-0023",
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Shock Absorber - Toyota Hilux (Front, 4WD)",

@@ -356,18 +356,21 @@
     "application": "Prado 120/150, Hilux, Fortuner, FJ Cruiser",
     "category": "Brakes",
     "brand": "TOYOTA Genuine",
-    "image": "images/front-brake-pads-1789937099666.jpg",
+    "image": "https://adylgonzalez.github.io/asautopartsmsa/images/front-brake-pads-1789937099666.jpg",
     "images": [
-      "images/front-brake-pads-1789937099666.jpg"
+      "https://adylgonzalez.github.io/asautopartsmsa/images/front-brake-pads-1789937099666.jpg"
     ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Prado, Hilux, Fortuner",
     "yearStart": 0,
     "yearEnd": 0,
     "stock": 15,
-    "description": "Front brake pads. Also cross-references: 04465-35290, 04465-60210, 04465-0K580, 04465-YZZJ2, 04465-YZZE1",
+    "description": "Front brake pads. ",
     "sku": "SKU-1789935028369",
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "supercedes": "04465-35290, 04465-60210, 04465-0K580, 04465-YZZJ2, 04465-YZZE1",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Air Filter - Toyota Probox / Vitz / Voxy / Noah",

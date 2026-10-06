@@ -991,17 +991,17 @@ function saveVehicleModels(){
     localStorage.setItem('A & SVehicleModels', JSON.stringify(vehicleModels));
 }
 
+// ----- PUBLIC make/model dropdowns (read-only for customers) -----
 function renderMakeOptions(){
     const makeSel = document.getElementById('vehicleMake');
     if(!makeSel) return;
     const makes = Object.keys(vehicleModels).sort((a,b)=>a.localeCompare(b));
     let html = '<option value="">Select Make</option>';
     makes.forEach(m => { html += `<option value="${escapeAttr(m)}">${escapeAttr(m)}</option>`; });
-    html += '<option value="__ADD_NEW_MAKE__">➕ Add new make...</option>';
     makeSel.innerHTML = html;
 }
 
-function renderModelOptions(make, keepValue){
+function renderModelOptions(make){
     const modelSel = document.getElementById('vehicleModel');
     if(!modelSel) return;
     let html = '<option value="">Select Model</option>';
@@ -1009,56 +1009,20 @@ function renderModelOptions(make, keepValue){
         const models = [...vehicleModels[make]].sort((a,b)=>a.localeCompare(b));
         models.forEach(m => { html += `<option value="${escapeAttr(m)}">${escapeAttr(m)}</option>`; });
     }
-    if(make){
-        html += '<option value="__ADD_NEW_MODEL__">➕ Add new model...</option>';
-    }
     modelSel.innerHTML = html;
-    if(keepValue){
-        modelSel.value = keepValue;
-        if(modelSel.value !== keepValue) modelSel.value = '';
-    }
 }
 
-function onMakeChange(){
+// Public change handler — customers just see filtered models, no add options
+function onPublicMakeChange(){
     const make = document.getElementById('vehicleMake').value;
-    if(make === '__ADD_NEW_MAKE__'){
-        const newMake = (prompt('Type the new make (e.g. Lexus, Infiniti, Jeep):') || '').trim();
-        if(!newMake){ renderMakeOptions(); return; }
-        if(!vehicleModels[newMake]) vehicleModels[newMake] = [];
-        saveVehicleModels();
-        renderMakeOptions();
-        document.getElementById('vehicleMake').value = newMake;
-        renderModelOptions(newMake);
-        showNotification(`✅ Added make: ${newMake} — pushing to GitHub...`);
-        saveVehicleModelsToGitHub();
-        return;
-    }
     renderModelOptions(make);
-}
-
-function onModelChange(){
-    const make = document.getElementById('vehicleMake').value;
-    const modelSel = document.getElementById('vehicleModel');
-    const val = modelSel.value;
-    if(val === '__ADD_NEW_MODEL__'){
-        if(!make){ alert('Please select a make first.'); renderModelOptions(''); return; }
-        const newModel = (prompt(`Type the new model for ${make} (e.g. Lexus RX, FJ Cruiser):`) || '').trim();
-        if(!newModel){ renderModelOptions(make); return; }
-        if(!vehicleModels[make]) vehicleModels[make] = [];
-        if(!vehicleModels[make].includes(newModel)) vehicleModels[make].push(newModel);
-        saveVehicleModels();
-        renderModelOptions(make, newModel);
-        showNotification(`✅ Added model: ${newModel} (${make}) — pushing to GitHub...`);
-        saveVehicleModelsToGitHub();
-        return;
-    }
 }
 
 function findParts(){
     const year = parseInt(document.getElementById('vehicleYear').value);
     const make = document.getElementById('vehicleMake').value;
     const model = document.getElementById('vehicleModel').value;
-    if(!year || !make || !model || make === '__ADD_NEW_MAKE__' || model === '__ADD_NEW_MODEL__'){
+    if(!year || !make || !model){
         alert('Please select year, make, and model');
         return;
     }
@@ -1073,6 +1037,45 @@ function findParts(){
         return true;
     });
     displayFilteredProducts(filtered, `Parts for ${year} ${make} ${model}`);
+}
+
+// ==================== ADMIN-ONLY: COMBO WITH "ADD NEW" ====================
+function buildAdminComboHTML(idPrefix, label, options, currentValue, placeholderNew){
+    let opts = [...options];
+    if(currentValue && !opts.includes(currentValue)){ opts.push(currentValue); }
+    let optsHTML = `<option value="">— Select —</option>`;
+    opts.forEach(o => { const sel = (o === currentValue) ? ' selected' : ''; optsHTML += `<option value="${escapeAttr(o)}"${sel}>${escapeAttr(o)}</option>`; });
+    optsHTML += `<option value="__ADD_NEW__">➕ Add New...</option>`;
+    return `<div class="combo-wrap"><label>${escapeAttr(label)}</label><select id="${idPrefix}_select" onchange="handleAdminComboChange('${idPrefix}')">${optsHTML}</select><input type="text" id="${idPrefix}_new" class="combo-new-input" placeholder="${escapeAttr(placeholderNew)}"><div class="combo-hint">Pick from list, or choose "➕ Add New..." to type a new one.</div></div>`;
+}
+
+function handleAdminComboChange(idPrefix){
+    const sel = document.getElementById(idPrefix + '_select');
+    const newInput = document.getElementById(idPrefix + '_new');
+    if(!sel || !newInput) return;
+    if(sel.value === '__ADD_NEW__'){ newInput.classList.add('show'); newInput.focus(); }
+    else { newInput.classList.remove('show'); newInput.value = ''; }
+}
+
+function getAdminComboValue(idPrefix){
+    const sel = document.getElementById(idPrefix + '_select');
+    const newInput = document.getElementById(idPrefix + '_new');
+    if(!sel) return '';
+    if(sel.value === '__ADD_NEW__'){ return (newInput?.value || '').trim(); }
+    return sel.value;
+}
+
+// Admin-only: register a new make/model into the shared vehicleModels map
+function addMakeIfNew(make){
+    if(!make) return false;
+    if(!vehicleModels[make]){ vehicleModels[make] = []; saveVehicleModels(); return true; }
+    return false;
+}
+function addModelIfNew(make, model){
+    if(!make || !model) return false;
+    if(!vehicleModels[make]) vehicleModels[make] = [];
+    if(!vehicleModels[make].includes(model)){ vehicleModels[make].push(model); saveVehicleModels(); return true; }
+    return false;
 }
 
 // ==================== VEHICLE DATABASES ====================
@@ -2200,7 +2203,6 @@ function renderProductCard(product){
 function loadProducts(){
     const productGrid=document.getElementById('productGrid');
     productGrid.innerHTML='';
-    // Show max 8 featured products — one per different category
     const seenCategories = new Set();
     const featured = [];
     products.forEach(p => {
@@ -2413,9 +2415,8 @@ function modelMatches(productModel, selectedModel){
     return productModels.includes(sel);
 }
 
-// ==================== VEHICLE SELECTOR EVENTS ====================
-document.getElementById('vehicleMake').addEventListener('change', onMakeChange);
-document.getElementById('vehicleModel').addEventListener('change', onModelChange);
+// ==================== PUBLIC VEHICLE SELECTOR EVENTS ====================
+document.getElementById('vehicleMake').addEventListener('change', onPublicMakeChange);
 
 function displayFilteredProducts(list,title){
     const grid=document.getElementById('productGrid');
@@ -2492,29 +2493,7 @@ function toggleAllCategories(){
         : `See all ${FIXED_CATEGORIES.length + grid.querySelectorAll('.extra-category').length} categories`;
 }
 
-// ==================== COMBO HELPERS ====================
-function buildComboHTML(idPrefix, label, options, currentValue, placeholderNew){
-    let opts = [...options];
-    if(currentValue && !opts.includes(currentValue)){ opts.push(currentValue); }
-    let optsHTML = `<option value="">— Select —</option>`;
-    opts.forEach(o => { const sel = (o === currentValue) ? ' selected' : ''; optsHTML += `<option value="${escapeAttr(o)}"${sel}>${escapeAttr(o)}</option>`; });
-    optsHTML += `<option value="__ADD_NEW__">➕ Add New...</option>`;
-    return `<div class="combo-wrap"><label>${escapeAttr(label)}</label><select id="${idPrefix}_select" onchange="handleComboChange('${idPrefix}')">${optsHTML}</select><input type="text" id="${idPrefix}_new" class="combo-new-input" placeholder="${escapeAttr(placeholderNew)}"><div class="combo-hint">Pick from list, or choose "➕ Add New..." to type a new one.</div></div>`;
-}
-function handleComboChange(idPrefix){
-    const sel = document.getElementById(idPrefix + '_select');
-    const newInput = document.getElementById(idPrefix + '_new');
-    if(!sel || !newInput) return;
-    if(sel.value === '__ADD_NEW__'){ newInput.classList.add('show'); newInput.focus(); }
-    else { newInput.classList.remove('show'); newInput.value = ''; }
-}
-function getComboValue(idPrefix){
-    const sel = document.getElementById(idPrefix + '_select');
-    const newInput = document.getElementById(idPrefix + '_new');
-    if(!sel) return '';
-    if(sel.value === '__ADD_NEW__'){ return (newInput?.value || '').trim(); }
-    return sel.value;
-}
+// ==================== STOCK SELECT HTML ====================
 function buildStockSelectHTML(id, currentValue){
     const v = normalizeStock(currentValue);
     return `<div class="combo-wrap"><label>Availability</label>
@@ -2772,8 +2751,8 @@ function openQuickAdd(prefill){
     if(!adminLoggedIn){ alert('Please log in via the Admin Panel first.'); return; }
     const catOptions = [...categories].sort((a,b)=>a.localeCompare(b));
     const brandOptions = [...brands].sort((a,b)=>a.localeCompare(b));
-    const catCombo = buildComboHTML('qa_cat', 'Category', catOptions, prefill?.category || '', 'Type new category name');
-    const brandCombo = buildComboHTML('qa_br', 'Brand', brandOptions, '', 'Type new brand name');
+    const catCombo = buildAdminComboHTML('qa_cat', 'Category', catOptions, prefill?.category || '', 'Type new category name');
+    const brandCombo = buildAdminComboHTML('qa_br', 'Brand', brandOptions, '', 'Type new brand name');
     const makeList = Object.keys(vehicleModels).sort();
     const allModels = [...new Set(Object.values(vehicleModels).flat())].sort();
     const p = prefill || {};
@@ -2851,8 +2830,8 @@ async function saveQuickAdd(){
     const partNo = document.getElementById('qa_partNo').value.trim();
     const supercedes = document.getElementById('qa_supercedes').value.trim();
     const application = document.getElementById('qa_application').value.trim();
-    const brandVal = getComboValue('qa_br');
-    const catVal = getComboValue('qa_cat');
+    const brandVal = getAdminComboValue('qa_br');
+    const catVal = getAdminComboValue('qa_cat');
     const images = readImagePickerValue('qa_img');
     const imgVal = images.length > 0 ? images[0] : '🔧';
     const vMake = (document.getElementById('qa_vmake').value || '').trim() || 'Universal';
@@ -2873,6 +2852,14 @@ async function saveQuickAdd(){
 
     if(!brandVal){ alert('Please select or add a brand.'); return; }
     if(!catVal){ alert('Please select or add a category.'); return; }
+
+    // Register new make/model into shared list and push to GitHub
+    const addedMake = addMakeIfNew(vMake);
+    const addedModel = addModelIfNew(vMake, vModel);
+    if(addedMake || addedModel){
+        showNotification('⏳ Saving new make/model to GitHub...');
+        await saveVehicleModelsToGitHub();
+    }
 
     const dup = findDuplicate({ name, partNo, sku: null }, -1);
     if(dup){
@@ -2920,6 +2907,7 @@ async function saveQuickAdd(){
     };
     products.push(newProduct);
     loadProducts();
+    renderMakeOptions();
     cancelQuickAdd();
     showNotification('⏳ Pushing product to GitHub...');
     await saveProductsToGitHub(newSku);
@@ -2971,8 +2959,8 @@ function renderAdminProductCards(){
     const allModels = [...new Set(Object.values(vehicleModels).flat())].sort();
     let html = '';
     list.forEach(({product, index})=>{
-        const catCombo = buildComboHTML(`edit_cat_${index}`, 'Category', catOptions, product.category || '', 'Type new category name');
-        const brandCombo = buildComboHTML(`edit_br_${index}`, 'Brand', brandOptions, product.brand || '', 'Type new brand name');
+        const catCombo = buildAdminComboHTML(`edit_cat_${index}`, 'Category', catOptions, product.category || '', 'Type new category name');
+        const brandCombo = buildAdminComboHTML(`edit_br_${index}`, 'Brand', brandOptions, product.brand || '', 'Type new brand name');
         const imgPicker = buildImagePickerHTML(`edit_img_${index}`, getProductImages(product), product.name || 'product');
         const stockSelect = buildStockSelectHTML(`edit_stock_${index}`, product.availability);
         const priceModeHTML = buildPriceModeHTML(`edit_price_${index}`, product);
@@ -3340,11 +3328,6 @@ function showAdminPanel(){
                         <button onclick="clearTokenFromPanel()" style="flex:1;min-width:140px;padding:12px;background:#f44336;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;">🗑️ Clear Token</button>
                     </div>
                 </div>
-                <div class="admin-card-box" style="background:#e3f2fd;border-color:#90caf9;">
-                    <h4 style="color:#1565c0;margin-bottom:8px;font-size:15px;">🚗 Vehicle Makes & Models</h4>
-                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Push your current vehicle list to GitHub so everyone sees your added makes/models.</p>
-                    <button onclick="saveVehicleModelsToGitHub()" style="width:100%;padding:12px;background:#1565c0;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;">⬆️ Push Vehicle List</button>
-                </div>
                 <div class="admin-card-box" style="background:#e8f5e9;border-color:#c8e6c9;">
                     <h4 style="color:#2e7d32;margin-bottom:8px;font-size:15px;">☁️ Push Everything to GitHub</h4>
                     <p style="font-size:13px;color:#555;margin-bottom:12px;">Push all local changes at once — products, options and availability.</p>
@@ -3385,7 +3368,8 @@ async function pushAllToGitHub(){
     const okProducts = await saveProductsToGitHub();
     const okOptions = await saveOptionsToGitHub();
     const okAvail = await saveAvailabilityToGitHub();
-    if(okProducts && okOptions && okAvail){ showNotification('✅ All changes pushed! Live in ~1 minute.'); }
+    const okVehicles = await saveVehicleModelsToGitHub();
+    if(okProducts && okOptions && okAvail && okVehicles){ showNotification('✅ All changes pushed! Live in ~1 minute.'); }
 }
 async function reloadProductsFromGitHub(){
     showNotification('⏳ Reloading products...');
@@ -3398,8 +3382,8 @@ async function reloadProductsFromGitHub(){
 function showAddProductForm(){
     const catOptions = [...categories].sort((a,b)=>a.localeCompare(b));
     const brandOptions = [...brands].sort((a,b)=>a.localeCompare(b));
-    const catCombo = buildComboHTML('new_cat', 'Category', catOptions, '', 'Type new category name');
-    const brandCombo = buildComboHTML('new_br', 'Brand', brandOptions, '', 'Type new brand name');
+    const catCombo = buildAdminComboHTML('new_cat', 'Category', catOptions, '', 'Type new category name');
+    const brandCombo = buildAdminComboHTML('new_br', 'Brand', brandOptions, '', 'Type new brand name');
     const makeList = Object.keys(vehicleModels).sort();
     const allModels = [...new Set(Object.values(vehicleModels).flat())].sort();
     const formHTML=`<div style="background:#e8f5e9;padding:20px;border-radius:5px;margin-bottom:20px;" id="newProductForm"><h3 style="color:#2e7d32;">➕ Add New Product (Full Form)</h3>
@@ -3440,12 +3424,14 @@ async function addNewProduct(){
     const partNo = document.getElementById('new_oem').value;
     const supercedes = document.getElementById('new_supercedes').value;
     const application = document.getElementById('new_application').value;
-    const brandVal = getComboValue('new_br');
-    const catVal = getComboValue('new_cat');
+    const brandVal = getAdminComboValue('new_br');
+    const catVal = getAdminComboValue('new_cat');
     const images = readImagePickerValue('new_img');
     const imgVal = images.length > 0 ? images[0] : '🔧';
     const nameVal = document.getElementById('new_name').value;
     const stockStatus = normalizeStock(document.getElementById('new_stock_status').value);
+    const vMake = (document.getElementById('new_vmake').value||'Universal').trim();
+    const vModel = (document.getElementById('new_vmodel').value||'All Models').trim();
     if(!brandVal){ alert('Please select or add a brand.'); return; }
     if(!catVal){ alert('Please select or add a category.'); return; }
 
@@ -3457,6 +3443,14 @@ async function addNewProduct(){
     if(priceData.priceMode === PRICE_RANGE && !priceData.priceMin && !priceData.priceMax){
         alert('Please enter at least one of Min / Max, or switch to On request.');
         return;
+    }
+
+    // Register new make/model into shared list and push to GitHub
+    const addedMake = addMakeIfNew(vMake);
+    const addedModel = addModelIfNew(vMake, vModel);
+    if(addedMake || addedModel){
+        showNotification('⏳ Saving new make/model to GitHub...');
+        await saveVehicleModelsToGitHub();
     }
 
     const dup = findDuplicate({ name: nameVal, partNo: partNo, sku: null }, -1);
@@ -3493,8 +3487,8 @@ async function addNewProduct(){
         brand: brandVal,
         image: imgVal,
         images: images,
-        vehicleMake:(document.getElementById('new_vmake').value||'Universal').trim(),
-        vehicleModel:(document.getElementById('new_vmodel').value||'All Models').trim(),
+        vehicleMake: vMake,
+        vehicleModel: vModel,
         yearStart:parseInt(document.getElementById('new_ystart').value)||0,
         yearEnd:parseInt(document.getElementById('new_yend').value)||0,
         stock:parseInt(document.getElementById('new_stock').value)||0,
@@ -3505,6 +3499,7 @@ async function addNewProduct(){
     if(!newProduct.name){alert('Please enter a product name');return}
     products.push(newProduct);
     loadProducts();
+    renderMakeOptions();
     closeAdminPanel(); showAdminPanel();
     showNotification('⏳ Pushing to GitHub...');
     await saveProductsToGitHub(newSku);
@@ -3522,11 +3517,22 @@ async function updateProduct(index){
     const images = readImagePickerValue(`edit_img_${index}`);
     products[index].images = images;
     products[index].image = images.length > 0 ? images[0] : '🔧';
-    products[index].vehicleMake = (document.getElementById(`vmake_${index}`).value || 'Universal').trim();
-    products[index].vehicleModel = (document.getElementById(`vmodel_${index}`).value || 'All Models').trim();
+    const vMake = (document.getElementById(`vmake_${index}`).value || 'Universal').trim();
+    const vModel = (document.getElementById(`vmodel_${index}`).value || 'All Models').trim();
+    products[index].vehicleMake = vMake;
+    products[index].vehicleModel = vModel;
     products[index].yearStart = parseInt(document.getElementById(`ystart_${index}`).value) || 0;
     products[index].yearEnd = parseInt(document.getElementById(`yend_${index}`).value) || 0;
     products[index].availability = normalizeStock(document.getElementById(`edit_stock_${index}`).value);
+
+    // Register new make/model into shared list and push to GitHub
+    const addedMake = addMakeIfNew(vMake);
+    const addedModel = addModelIfNew(vMake, vModel);
+    if(addedMake || addedModel){
+        showNotification('⏳ Saving new make/model to GitHub...');
+        await saveVehicleModelsToGitHub();
+        renderMakeOptions();
+    }
 
     const priceData = readPriceModeValue(`edit_price_${index}`);
     if(priceData.priceMode === PRICE_FIXED && !priceData.price){
@@ -3542,8 +3548,8 @@ async function updateProduct(index){
     products[index].priceMin = priceData.priceMin;
     products[index].priceMax = priceData.priceMax;
 
-    const newBrandVal = getComboValue(`edit_br_${index}`);
-    const newCatVal = getComboValue(`edit_cat_${index}`);
+    const newBrandVal = getAdminComboValue(`edit_br_${index}`);
+    const newCatVal = getAdminComboValue(`edit_cat_${index}`);
     if(!newBrandVal){ alert('Please select or add a brand.'); return; }
     if(!newCatVal){ alert('Please select or add a category.'); return; }
     const dup = findDuplicate({ name: products[index].name, partNo: products[index].partNo, sku: products[index].sku }, index);
@@ -3564,6 +3570,7 @@ async function updateProduct(index){
     products[index].category = newCatVal;
     if(newOptionsAdded){ showNotification('⏳ Saving new brand/category...'); await saveOptionsToGitHub(); buildExtraCategoryCards(); }
     loadProducts();
+    renderMakeOptions();
     closeAdminPanel(); showAdminPanel();
     showNotification('⏳ Pushing to GitHub...');
     await saveProductsToGitHub(products[index].sku);

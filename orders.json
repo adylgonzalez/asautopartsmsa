@@ -1,2 +1,30 @@
 [
+  {
+    "id": "A07457121",
+    "date": "2026-10-06T17:24:17.170Z",
+    "customerName": "0",
+    "customerPhone": "0786545432",
+    "handledBy": "adil",
+    "handledByName": "ADIL",
+    "status": "new",
+    "source": "cart",
+    "hasOnOrderItems": false,
+    "hasQuoteItems": false,
+    "fixedItemsTotal": 5000,
+    "mpesaRef": "A&S-457121",
+    "items": [
+      {
+        "name": "Brake Pads - Toyota Hilux",
+        "sku": "BP-TH-1523",
+        "price": 5000,
+        "priceMode": "fixed",
+        "priceMin": null,
+        "priceMax": null,
+        "quantity": 1,
+        "subtotal": 5000,
+        "availability": "in_stock"
+      }
+    ],
+    "total": 5000
+  }
 ]

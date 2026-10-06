@@ -481,7 +481,6 @@
         .live-dot.red{background:#f44336;box-shadow:0 0 6px #f44336}
         .top-bar .live-status{display:inline-flex;align-items:center;gap:2px;margin:0 6px;font-size:12px}
 
-        /* status dot for cart order buttons */
         .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
         .status-dot.green{background:#4caf50;box-shadow:0 0 5px #4caf50}
         .status-dot.red{background:#f44336;box-shadow:0 0 5px #f44336}
@@ -579,10 +578,15 @@
         <h2>Featured Products</h2>
         <div style="text-align:center;margin-bottom:15px;">
             <button class="reset-filters-btn" id="resetFiltersBtn" onclick="resetFilters()">
-                <i class="fas fa-times-circle"></i> Show All Products
+                <i class="fas fa-arrow-left"></i> Back to Featured
             </button>
         </div>
         <div class="product-grid" id="productGrid"></div>
+        <div id="viewAllProductsWrap" style="text-align:center;margin-top:25px;">
+            <button onclick="showAllProducts()" style="padding:14px 32px;background:#1a237e;color:#fff;border:none;border-radius:50px;cursor:pointer;font-size:15px;font-weight:700;transition:background .3s;" onmouseover="this.style.background='#ff6f00'" onmouseout="this.style.background='#1a237e'">
+                View All Products →
+            </button>
+        </div>
     </div>
 
     <!-- Recently Viewed & Also Bought -->
@@ -2036,11 +2040,11 @@ function renderProductCard(product){
 function loadProducts(){
     const productGrid=document.getElementById('productGrid');
     productGrid.innerHTML='';
-    // Show ONE product per category (featured view)
+    // Show max 8 featured products — one per different category
     const seenCategories = new Set();
     const featured = [];
     products.forEach(p => {
-        if(!seenCategories.has(p.category)){
+        if(!seenCategories.has(p.category) && featured.length < 8){
             seenCategories.add(p.category);
             featured.push(p);
         }
@@ -2048,16 +2052,22 @@ function loadProducts(){
     featured.forEach(product=>{ productGrid.appendChild(renderProductCard(product)); });
     const resetBtn = document.getElementById('resetFiltersBtn');
     if(resetBtn) resetBtn.classList.remove('show');
+    const viewAllBtn = document.getElementById('viewAllProductsWrap');
+    if(viewAllBtn) viewAllBtn.style.display = 'block';
     filtersActive = false;
+    document.querySelector('#products h2').textContent = 'Featured Products';
     renderRecentlyViewed();
     renderAlsoBought();
 }
-        function showAllProducts(){
+
+function showAllProducts(){
     const grid = document.getElementById('productGrid');
     grid.innerHTML = '';
     filtersActive = true;
     const resetBtn = document.getElementById('resetFiltersBtn');
     if(resetBtn) resetBtn.classList.add('show');
+    const viewAllBtn = document.getElementById('viewAllProductsWrap');
+    if(viewAllBtn) viewAllBtn.style.display = 'none';
     document.querySelector('#products h2').textContent = `All Products (${products.length})`;
     products.forEach(product => { grid.appendChild(renderProductCard(product)); });
     document.getElementById('products').scrollIntoView({behavior:'smooth'});
@@ -2170,7 +2180,6 @@ function resetFilters(){
     document.getElementById('vehicleMake').value = '';
     document.getElementById('vehicleModel').innerHTML = '<option value="">Select Model</option>';
     loadProducts();
-    document.querySelector('#products h2').textContent = 'Featured Products';
     document.getElementById('products').scrollIntoView({behavior:'smooth'});
 }
 
@@ -2305,6 +2314,8 @@ function displayFilteredProducts(list,title){
     filtersActive = true;
     const resetBtn = document.getElementById('resetFiltersBtn');
     if(resetBtn) resetBtn.classList.add('show');
+    const viewAllBtn = document.getElementById('viewAllProductsWrap');
+    if(viewAllBtn) viewAllBtn.style.display = 'none';
     document.querySelector('#products h2').textContent = title;
     if(list.length===0){
         grid.innerHTML = `<div style="text-align:center;grid-column:1/-1;"><p style="font-size:18px;color:#666;margin-bottom:20px;">No parts found for "${escapeAttr(title)}".</p></div>` + buildSourceItFallback();

@@ -2791,16 +2791,14 @@ async function saveQuickAdd(){
     await saveProductsToGitHub(newSku);
 }
 
-// ==================== ADMIN PANEL ====================
+// ==================== ADMIN PASSWORD ====================
+const ADMIN_PASSWORD = "AS2026";
+
 function openAdminPanel(){
     if(adminLoggedIn){ showAdminPanel(); return; }
     const password = prompt("Enter Admin Password:");
-    // Uses the saved GitHub token as the password — no hardcoded "1234"
     if(!password){ return; }
-    // Accept either the saved token OR a fallback master password stored in localStorage
-    const savedToken = getToken();
-    const masterPass = localStorage.getItem('AS_adminPass') || 'asautoparts';
-    if(password === masterPass || (savedToken && password === savedToken)){
+    if(password === ADMIN_PASSWORD){
         adminLoggedIn = true;
         showAdminPanel();
     } else {

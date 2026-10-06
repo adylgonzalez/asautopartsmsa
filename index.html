@@ -507,7 +507,7 @@
         <div class="nav" id="mainNav">
             <a onclick="toggleVinSearch()">VIN Search</a>
             <a onclick="scrollToSection('categories')">Categories</a>
-            <a onclick="scrollToSection('products')">Products</a>
+            <a onclick="showAllProducts()">Products</a>
             <a onclick="scrollToSection('contact')">Contact</a>
             <a onclick="viewCart()">🛒 Cart <span class="cart-count" id="cartCount">0</span></a>
             <a onclick="showListWithUs()">🤝 List With Us</a>
@@ -2051,6 +2051,16 @@ function loadProducts(){
     filtersActive = false;
     renderRecentlyViewed();
     renderAlsoBought();
+}
+        function showAllProducts(){
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = '';
+    filtersActive = true;
+    const resetBtn = document.getElementById('resetFiltersBtn');
+    if(resetBtn) resetBtn.classList.add('show');
+    document.querySelector('#products h2').textContent = `All Products (${products.length})`;
+    products.forEach(product => { grid.appendChild(renderProductCard(product)); });
+    document.getElementById('products').scrollIntoView({behavior:'smooth'});
 }
 
 // ==================== GALLERY ====================

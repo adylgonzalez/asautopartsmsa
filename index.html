@@ -480,6 +480,11 @@
         .live-dot.green{background:#4caf50;box-shadow:0 0 6px #4caf50}
         .live-dot.red{background:#f44336;box-shadow:0 0 6px #f44336}
         .top-bar .live-status{display:inline-flex;align-items:center;gap:2px;margin:0 6px;font-size:12px}
+
+        /* status dot for cart order buttons */
+        .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+        .status-dot.green{background:#4caf50;box-shadow:0 0 5px #4caf50}
+        .status-dot.red{background:#f44336;box-shadow:0 0 5px #f44336}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios@1.20.0/dist/axios.min.js"></script>
@@ -771,6 +776,18 @@ const AVAILABILITY_URL = `${PAGES_BASE}/${AVAILABILITY_FILE}`;
 const ORDERS_URL   = `${PAGES_BASE}/${ORDERS_FILE}`;
 const IMAGES_FOLDER = 'images';
 
+// ==================== CATEGORY IMAGES ====================
+let categoryImages = {
+    "Brakes": "",
+    "Suspension": "",
+    "Filters": "",
+    "Electrical": "",
+    "Engine": "",
+    "Cooling": "",
+    "EX JAPAN": "",
+    "Oils & Fluids": ""
+};
+
 // ==================== HOME BUTTON ====================
 function goToHomepage(){
     const listWithUs = document.getElementById('listWithUs');
@@ -931,7 +948,6 @@ function getCategoryDescription(cat){ return CATEGORY_DESCRIPTIONS[cat] || "Brow
 function getCategoryIcon(cat){ return CATEGORY_ICONS[cat] || "fa-cog"; }
 
 // ==================== VEHICLE DATABASES ====================
-// (Abbreviated for brevity - all original model code databases are kept as-is)
 const toyotaModelCodes = {
 "NCP":{make:"Toyota",model:"Corolla/Vios/Yaris",years:[1999,2015]},"NZE":{make:"Toyota",model:"Corolla",years:[2000,2018]},
 "ZRE":{make:"Toyota",model:"Corolla/Auris",years:[2006,2023]},"ZZE":{make:"Toyota",model:"Corolla",years:[1998,2008]},
@@ -1112,7 +1128,6 @@ const audiModelCodes = {
 };
 
 // ==================== DEFAULT PRODUCTS (fallback) ====================
-// (Abbreviated for brevity - all original default products are kept as-is)
 const defaultProducts = [
     {name:"Brake Pads - Toyota Camry",price:4500,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-33470",partNo:"04465-33470",supercedes:"",application:"Toyota Camry 2018-2023",description:"Front brake pads for Toyota Camry. Ceramic compound for smooth stopping.",vehicleMake:"Toyota",vehicleModel:"Camry",yearStart:2018,yearEnd:2023,sku:"BP-TC-1823",stock:25,availability:"in_stock",priceMode:"fixed"},
     {name:"Brake Pads - Toyota Corolla",price:3500,category:"Brakes",image:"🔧",brand:"Akebono",oem:"04465-02480",partNo:"04465-02480",supercedes:"04465-02470",application:"Toyota Corolla 2008-2023",description:"Front brake pads for Toyota Corolla. OEM quality.",vehicleMake:"Toyota",vehicleModel:"Corolla",yearStart:2008,yearEnd:2023,sku:"BP-TC-0823",stock:30,availability:"in_stock",priceMode:"fixed"},
@@ -1745,7 +1760,6 @@ function viewCart(){
         }
         totalElement.innerHTML = totalHTML;
 
-        // M-Pesa panel
         if(mpesaPanel){
             if(totals.fixedTotal > 0){
                 mpesaPanel.classList.add('show');
@@ -1779,8 +1793,8 @@ function viewCart(){
         const adilLabel = availability.adil ? 'Order via ADIL' : 'Order via ADIL (Away)';
         const suhaylLabel = availability.suhayl ? 'Order via SUHAYL' : 'Order via SUHAYL (Away)';
         let btnHTML='';
-        btnHTML+=`<button onclick="checkoutCart('adil')" style="flex:1;padding:12px;background:${adilBg};color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><span class="status-dot ${adilDot}"></span> ${adilLabel}</button>`;
-        btnHTML+=`<button onclick="checkoutCart('suhayl')" style="flex:1;padding:12px;background:${suhaylBg};color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><span class="status-dot ${suhaylDot}"></span> ${suhaylLabel}</button>`;
+        btnHTML+=`<button type="button" onclick="checkoutCart('adil')" style="flex:1;padding:12px;background:${adilBg};color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><span class="status-dot ${adilDot}"></span> ${adilLabel}</button>`;
+        btnHTML+=`<button type="button" onclick="checkoutCart('suhayl')" style="flex:1;padding:12px;background:${suhaylBg};color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><span class="status-dot ${suhaylDot}"></span> ${suhaylLabel}</button>`;
         whatsappButtons.innerHTML=btnHTML;
     }
     modal.style.display='block';
@@ -1795,6 +1809,121 @@ function copyMpesa(text){
         ta.value = text; document.body.appendChild(ta); ta.select();
         try { document.execCommand('copy'); showNotification('Copied: ' + text); } catch(e){}
         ta.remove();
+    });
+}
+
+// ==================== CHECKOUT ====================
+async function checkoutCart(brother){
+    const nameEl = document.getElementById('custName');
+    const phoneEl = document.getElementById('custPhone');
+    const custName = (nameEl ? nameEl.value : '').trim();
+    const custPhone = (phoneEl ? phoneEl.value : '').trim();
+    if(!custName){ alert('Please enter your name before ordering.'); if(nameEl) nameEl.focus(); return; }
+    if(!custPhone){ alert('Please enter your phone number before ordering.'); if(phoneEl) phoneEl.focus(); return; }
+
+    const isAway = (brother === 'adil' && !availability.adil) || (brother === 'suhayl' && !availability.suhayl);
+    const phoneNumber = brother === 'adil' ? '254713349554' : '254752763924';
+    const brotherName = brother === 'adil' ? 'ADIL' : 'SUHAYL';
+
+    const orderId = 'A' + Date.now().toString().slice(-8);
+    const totals = computeCartTotals();
+    const hasOnOrder = cart.some(i => normalizeStock(i.availability) === STOCK_ON_ORDER);
+    const hasQuote = totals.hasQuote;
+
+    let message;
+    if(isAway){
+        message = `Hello ${brotherName} (A & S AUTOPARTS) — I know you may be away, please reply when you're back:\n\n`;
+    } else {
+        message = `Hello ${brotherName} (A & S AUTOPARTS),\n\n`;
+    }
+    message += `NEW ORDER #${orderId}\n`;
+    message += `Customer: ${custName}\n`;
+    message += `Phone: ${custPhone}\n\n`;
+    message += `I want to order:\n\n`;
+    cart.forEach(item => {
+        const st = normalizeStock(item.availability);
+        const statusTag = st === STOCK_ON_ORDER ? '[Shipped on Order ~2 weeks]' : '[In Stock]';
+        message += `📦 ${item.name} ${statusTag}\n`;
+        const mode = getPriceMode(item);
+        if(mode === PRICE_ON_REQUEST){
+            message += `   Price: On request\n`;
+            message += `   Qty: ${item.quantity}\n`;
+        } else if(mode === PRICE_RANGE){
+            const min = Number(item.priceMin) || 0;
+            const max = Number(item.priceMax) || 0;
+            let rangeTxt;
+            if(!min && !max) rangeTxt = 'On request';
+            else if(!min) rangeTxt = `Up to ${formatPrice(max)}`;
+            else if(!max) rangeTxt = `From ${formatPrice(min)}`;
+            else if(min === max) rangeTxt = formatPrice(min);
+            else rangeTxt = `${formatPrice(min)} – ${formatPrice(max)}`;
+            message += `   Price: ${rangeTxt}\n`;
+            message += `   Qty: ${item.quantity}\n`;
+            message += `   (Final price to be confirmed)\n`;
+        } else {
+            const itemTotal = (Number(item.price) || 0) * item.quantity;
+            message += `   Qty: ${item.quantity}\n`;
+            message += `   Price: ${formatPrice(item.price)} each\n`;
+            message += `   Subtotal: ${formatPrice(itemTotal)}\n`;
+        }
+        message += `\n`;
+    });
+    if(hasQuote){
+        message += `💰 Fixed items total: ${formatPrice(totals.fixedTotal)}\n`;
+        message += `ℹ️ Some items require a quote — please confirm final prices.\n\n`;
+    } else {
+        message += `💰 TOTAL: ${formatPrice(totals.fixedTotal)}\n\n`;
+    }
+    if(hasOnOrder){
+        message += `Note: Items marked [Shipped on Order] require a 50% deposit and arrive in ~2 weeks.\n\n`;
+    }
+    message += `Please confirm availability and delivery.`;
+
+    const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    const waWindow = window.open(waUrl, '_blank');
+    if(!waWindow || waWindow.closed || typeof waWindow.closed === 'undefined'){
+        try { window.location.href = waUrl; } catch(e){}
+    }
+
+    const orderSnapshot = {
+        id: orderId,
+        date: new Date().toISOString(),
+        customerName: custName,
+        customerPhone: custPhone,
+        handledBy: brother,
+        handledByName: brotherName,
+        status: 'new',
+        source: 'cart',
+        hasOnOrderItems: hasOnOrder,
+        hasQuoteItems: hasQuote,
+        fixedItemsTotal: totals.fixedTotal,
+        items: cart.map(i => {
+            const mode = getPriceMode(i);
+            return {
+                name: i.name,
+                sku: i.sku,
+                price: mode === PRICE_FIXED ? i.price : null,
+                priceMode: mode,
+                priceMin: mode === PRICE_RANGE ? (Number(i.priceMin) || 0) : null,
+                priceMax: mode === PRICE_RANGE ? (Number(i.priceMax) || 0) : null,
+                quantity: i.quantity,
+                subtotal: mode === PRICE_FIXED ? ((Number(i.price) || 0) * i.quantity) : null,
+                availability: normalizeStock(i.availability)
+            };
+        }),
+        total: totals.fixedTotal
+    };
+
+    cart = [];
+    saveCart();
+    updateCartCount();
+    if(nameEl) nameEl.value = '';
+    if(phoneEl) phoneEl.value = '';
+    closeCart();
+
+    appendOrderToGitHub(orderSnapshot).then(savedOk => {
+        if(savedOk){ console.log('✅ Order saved to records'); }
+        else { console.warn('⚠️ Order not saved to GitHub'); }
     });
 }
 
@@ -1883,7 +2012,6 @@ function renderProductCard(product){
         ? `<div class="product-supercedes" title="Replaces older part numbers"><i class="fas fa-exchange-alt"></i> Replaces: ${escapeAttr(supercedesList.join(', '))}</div>`
         : '';
 
-    // Fit badge
     let fitBadgeHTML = '';
     if(savedVehicle){
         const fits = (product.vehicleMake === 'Universal' || product.vehicleMake === savedVehicle.make) &&
@@ -1908,7 +2036,7 @@ function renderProductCard(product){
 function loadProducts(){
     const productGrid=document.getElementById('productGrid');
     productGrid.innerHTML='';
-    // Show one product per category on initial load (featured view)
+    // Show ONE product per category (featured view)
     const seenCategories = new Set();
     const featured = [];
     products.forEach(p => {
@@ -1917,9 +2045,7 @@ function loadProducts(){
             featured.push(p);
         }
     });
-    // Ensure we have at least some products (fallback to first 8 if too few categories)
-    const toShow = featured.length >= 8 ? featured : products.slice(0, 8);
-    toShow.forEach(product=>{ productGrid.appendChild(renderProductCard(product)); });
+    featured.forEach(product=>{ productGrid.appendChild(renderProductCard(product)); });
     const resetBtn = document.getElementById('resetFiltersBtn');
     if(resetBtn) resetBtn.classList.remove('show');
     filtersActive = false;
@@ -2051,7 +2177,6 @@ function searchByVIN(){
         vinResults.innerHTML=`<button class="vin-results-close" onclick="closeVinResults()" title="Close">✕</button><div style="background:#fff3e0;padding:15px;border-radius:5px;"><strong>Vehicle not found</strong><p>VIN: ${escapeAttr(vin)}</p><a href="https://partsouq.com/en/catalog/genuine/locate?vin=${encodeURIComponent(vin)}" target="_blank" style="display:inline-block;padding:10px 20px;background:#1a237e;color:#fff;text-decoration:none;border-radius:5px;margin-top:10px;">Check PartSouq Catalog</a></div>`;
         return;
     }
-    // Save to garage
     saveVehicleToGarage(matchedVehicle.years[1], matchedVehicle.make, matchedVehicle.model);
     const matchingProducts=products.filter(p=>{
         if(p.vehicleMake==="Universal")return true;
@@ -2152,7 +2277,6 @@ function findParts(){
         alert('Please select year, make, and model');
         return;
     }
-    // Save to garage
     saveVehicleToGarage(year, make, model);
     const filtered = products.filter(p => {
         if(p.vehicleMake === "Universal") return true;
@@ -2188,22 +2312,43 @@ function searchProducts(){
 }
 function shopByCategory(category){const filtered=products.filter(p=>p.category===category);displayFilteredProducts(filtered,`${category} Products`)}
 
-// ==================== EXTRA CATEGORIES ====================
+// ==================== CATEGORY CARDS WITH IMAGES ====================
+function categoryCardHTML(cat, small){
+    const img = categoryImages[cat];
+    const desc = getCategoryDescription(cat);
+    const icon = getCategoryIcon(cat);
+    let visual;
+    if(img && isImageReference(img)){
+        visual = `<img src="${escapeAttr(toAbsoluteImageUrl(img))}" alt="${escapeAttr(cat)}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;margin-bottom:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='block';"><i class="fas ${icon}" style="display:none;font-size:40px;color:#ff6f00;margin-bottom:15px;"></i>`;
+    } else if(img){
+        visual = `<div style="font-size:48px;margin-bottom:12px;">${escapeAttr(img)}</div>`;
+    } else {
+        visual = `<i class="fas ${icon}" style="font-size:40px;color:#ff6f00;margin-bottom:15px;"></i>`;
+    }
+    const cls = small ? 'category-card extra-category small' : 'category-card';
+    return `<div class="${cls}" onclick="shopByCategory('${escapeAttr(cat)}')">
+        ${visual}
+        <h3>${escapeAttr(cat)}</h3>
+        <p>${escapeAttr(desc)}</p>
+    </div>`;
+}
 function buildExtraCategoryCards(){
     const grid = document.getElementById('categoryGrid');
-    grid.querySelectorAll('.extra-category').forEach(el => el.remove());
-    const extras = categories.filter(c => !FIXED_CATEGORIES.includes(c));
-    extras.sort((a,b) => a.localeCompare(b));
-    extras.forEach(cat => {
-        const icon = getCategoryIcon(cat);
-        const desc = getCategoryDescription(cat);
-        const card = document.createElement('div');
-        card.className = 'category-card extra-category small';
-        card.onclick = () => shopByCategory(cat);
-        card.innerHTML = `<i class="fas ${icon}"></i><h3>${escapeAttr(cat)}</h3><p>${escapeAttr(desc)}</p>`;
-        grid.appendChild(card);
+    if(!grid) return;
+    const allCats = [...new Set([...FIXED_CATEGORIES, ...categories.filter(c => !FIXED_CATEGORIES.includes(c))])];
+    allCats.sort((a,b) => {
+        const ai = FIXED_CATEGORIES.indexOf(a);
+        const bi = FIXED_CATEGORIES.indexOf(b);
+        if(ai !== -1 && bi !== -1) return ai - bi;
+        if(ai !== -1) return -1;
+        if(bi !== -1) return 1;
+        return a.localeCompare(b);
     });
-    const total = FIXED_CATEGORIES.length + extras.length;
+    grid.innerHTML = allCats.map(cat => {
+        const isFixed = FIXED_CATEGORIES.includes(cat);
+        return categoryCardHTML(cat, !isFixed);
+    }).join('');
+    const total = allCats.length;
     const seeAllText = document.getElementById('seeAllText');
     if(seeAllText) seeAllText.textContent = `See all ${total} categories`;
 }
@@ -3731,122 +3876,7 @@ function sendAIMessage(){
         }
     }, 400);
 }
-        async function checkoutCart(brother){
-    const nameEl = document.getElementById('custName');
-    const phoneEl = document.getElementById('custPhone');
-    const custName = (nameEl ? nameEl.value : '').trim();
-    const custPhone = (phoneEl ? phoneEl.value : '').trim();
-    if(!custName){ alert('Please enter your name before ordering.'); if(nameEl) nameEl.focus(); return; }
-    if(!custPhone){ alert('Please enter your phone number before ordering.'); if(phoneEl) phoneEl.focus(); return; }
 
-    const isAway = (brother === 'adil' && !availability.adil) || (brother === 'suhayl' && !availability.suhayl);
-    const phoneNumber = brother === 'adil' ? '254713349554' : '254752763924';
-    const brotherName = brother === 'adil' ? 'ADIL' : 'SUHAYL';
-
-    const orderId = 'A' + Date.now().toString().slice(-8);
-    const totals = computeCartTotals();
-    const hasOnOrder = cart.some(i => normalizeStock(i.availability) === STOCK_ON_ORDER);
-    const hasQuote = totals.hasQuote;
-
-    let message;
-    if(isAway){
-        message = `Hello ${brotherName} (A & S AUTOPARTS) — I know you may be away, please reply when you're back:\n\n`;
-    } else {
-        message = `Hello ${brotherName} (A & S AUTOPARTS),\n\n`;
-    }
-    message += `NEW ORDER #${orderId}\n`;
-    message += `Customer: ${custName}\n`;
-    message += `Phone: ${custPhone}\n\n`;
-    message += `I want to order:\n\n`;
-    cart.forEach(item => {
-        const st = normalizeStock(item.availability);
-        const statusTag = st === STOCK_ON_ORDER ? '[Shipped on Order ~2 weeks]' : '[In Stock]';
-        message += `📦 ${item.name} ${statusTag}\n`;
-        const mode = getPriceMode(item);
-        if(mode === PRICE_ON_REQUEST){
-            message += `   Price: On request\n`;
-            message += `   Qty: ${item.quantity}\n`;
-        } else if(mode === PRICE_RANGE){
-            const min = Number(item.priceMin) || 0;
-            const max = Number(item.priceMax) || 0;
-            let rangeTxt;
-            if(!min && !max) rangeTxt = 'On request';
-            else if(!min) rangeTxt = `Up to ${formatPrice(max)}`;
-            else if(!max) rangeTxt = `From ${formatPrice(min)}`;
-            else if(min === max) rangeTxt = formatPrice(min);
-            else rangeTxt = `${formatPrice(min)} – ${formatPrice(max)}`;
-            message += `   Price: ${rangeTxt}\n`;
-            message += `   Qty: ${item.quantity}\n`;
-            message += `   (Final price to be confirmed)\n`;
-        } else {
-            const itemTotal = (Number(item.price) || 0) * item.quantity;
-            message += `   Qty: ${item.quantity}\n`;
-            message += `   Price: ${formatPrice(item.price)} each\n`;
-            message += `   Subtotal: ${formatPrice(itemTotal)}\n`;
-        }
-        message += `\n`;
-    });
-    if(hasQuote){
-        message += `💰 Fixed items total: ${formatPrice(totals.fixedTotal)}\n`;
-        message += `ℹ️ Some items require a quote — please confirm final prices.\n\n`;
-    } else {
-        message += `💰 TOTAL: ${formatPrice(totals.fixedTotal)}\n\n`;
-    }
-    if(hasOnOrder){
-        message += `Note: Items marked [Shipped on Order] require a 50% deposit and arrive in ~2 weeks.\n\n`;
-    }
-    message += `Please confirm availability and delivery.`;
-
-    const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    const waWindow = window.open(waUrl, '_blank');
-    if(!waWindow || waWindow.closed || typeof waWindow.closed === 'undefined'){
-        try { window.location.href = waUrl; } catch(e){}
-    }
-
-    const orderSnapshot = {
-        id: orderId,
-        date: new Date().toISOString(),
-        customerName: custName,
-        customerPhone: custPhone,
-        handledBy: brother,
-        handledByName: brotherName,
-        status: 'new',
-        source: 'cart',
-        hasOnOrderItems: hasOnOrder,
-        hasQuoteItems: hasQuote,
-        fixedItemsTotal: totals.fixedTotal,
-        items: cart.map(i => {
-            const mode = getPriceMode(i);
-            return {
-                name: i.name,
-                sku: i.sku,
-                price: mode === PRICE_FIXED ? i.price : null,
-                priceMode: mode,
-                priceMin: mode === PRICE_RANGE ? (Number(i.priceMin) || 0) : null,
-                priceMax: mode === PRICE_RANGE ? (Number(i.priceMax) || 0) : null,
-                quantity: i.quantity,
-                subtotal: mode === PRICE_FIXED ? ((Number(i.price) || 0) * i.quantity) : null,
-                availability: normalizeStock(i.availability)
-            };
-        }),
-        total: totals.fixedTotal
-    };
-
-    cart = [];
-    saveCart();
-    updateCartCount();
-    if(nameEl) nameEl.value = '';
-    if(phoneEl) phoneEl.value = '';
-    closeCart();
-
-    appendOrderToGitHub(orderSnapshot).then(savedOk => {
-        if(savedOk){ console.log('✅ Order saved to records'); }
-        else { console.warn('⚠️ Order not saved to GitHub'); }
-    });
-}
-.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
-.status-dot.green{background:#4caf50;box-shadow:0 0 5px #4caf50}
-.status-dot.red{background:#f44336;box-shadow:0 0 5px #f44336}
 // ==================== INITIALIZE ====================
 async function init(){
     const grid = document.getElementById('productGrid');

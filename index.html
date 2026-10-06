@@ -542,12 +542,12 @@
         <button onclick="searchProducts()">🔍 Search</button>
     </div>
     <div class="vehicle-selector">
-        <h2><i class="fas fa-car"></i> Find Parts for Your Vehicle</h2>
-        <select id="vehicleYear"><option value="">Select Year</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option><option>2000</option></select>
-        <select id="vehicleMake"><option value="">Select Make</option><option>Toyota</option><option>Nissan</option><option>Honda</option><option>Mitsubishi</option><option>Mazda</option><option>Subaru</option><option>Mercedes-Benz</option><option>BMW</option><option>Land Rover</option><option>Isuzu</option><option>Volkswagen</option><option>Audi</option><option>Ford</option><option>Chevrolet</option><option>Hyundai</option><option>Kia</option><option>Peugeot</option><option>Renault</option><option>Suzuki</option><option>Volvo</option></select>
-        <select id="vehicleModel"><option value="">Select Model</option></select>
-        <button onclick="findParts()">Find Parts</button>
-    </div>
+    <h2><i class="fas fa-car"></i> Find Parts for Your Vehicle</h2>
+    <select id="vehicleYear"><option value="">Select Year</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option><option>2000</option></select>
+    <select id="vehicleMake"></select>
+    <select id="vehicleModel"><option value="">Select Model</option></select>
+    <button onclick="findParts()">Find Parts</button>
+</div>
 
     <div class="trust-strip">
         <div class="trust-item"><i class="fas fa-check-circle"></i> Genuine Parts Only</div>
@@ -2253,8 +2253,8 @@ function modelMatches(productModel, selectedModel){
     return productModels.includes(sel);
 }
 
-// ==================== VEHICLE SELECTOR ====================
-const vehicleModels={
+// ==================== VEHICLE MODELS (editable, persists in localStorage) ====================
+const DEFAULT_VEHICLE_MODELS = {
     Toyota:["Camry","Corolla","RAV4","Land Cruiser","Hilux","Prado","Fortuner","Harrier","Vitz","Passo","Probox","Succeed","Crown","Mark X","Avensis","Yaris","Hiace","Alphard","Voxy","Noah"],
     Nissan:["X-Trail","Patrol","Navara","Sunny","Almera","Teana","Cefiro","Skyline","Tiida","Wingroad","Urvan","Serena","Qashqai","Juke","Murano","Pathfinder"],
     Honda:["Civic","Accord","CR-V","Fit","Vezel","Odyssey","Stepwgn","Freed","Airwave"],
@@ -2276,26 +2276,120 @@ const vehicleModels={
     Suzuki:["Swift","Vitara","Jimny"],
     Volvo:["XC60","XC90","S60"]
 };
-document.getElementById('vehicleMake').addEventListener('change',function(){
-    const make=this.value;
-    const modelSelect=document.getElementById('vehicleModel');
-    modelSelect.innerHTML='<option value="">Select Model</option>';
-    if(make&&vehicleModels[make]){
-        vehicleModels[make].forEach(model=>{
-            const option=document.createElement('option');
-            option.value=model;option.textContent=model;
-            modelSelect.appendChild(option);
-        });
+
+// Load saved vehicle models (or fall back to defaults)
+let vehicleModels = (() => {
+    try {
+        const stored = localStorage.getItem('A & SVehicleModels');
+        if(stored){
+            const parsed = JSON.parse(stored);
+            if(parsed && typeof parsed === 'object') return parsed;
+        }
+    } catch(e){}
+    return JSON.parse(JSON.stringify(DEFAULT_VEHICLE_MODELS));
+})();
+
+function saveVehicleModels(){
+    localStorage.setItem('A & SVehicleModels', JSON.stringify(vehicleModels));
+}
+
+// Build the Make dropdown from vehicleModels
+function renderMakeOptions(){
+    const makeSel = document.getElementById('vehicleMake');
+    if(!makeSel) return;
+    const makes = Object.keys(vehicleModels).sort((a,b)=>a.localeCompare(b));
+    let html = '<option value="">Select Make</option>';
+    makes.forEach(m => { html += `<option value="${escapeAttr(m)}">${escapeAttr(m)}</option>`; });
+    html += '<option value="__ADD_NEW_MAKE__">➕ Add new make...</option>';
+    makeSel.innerHTML = html;
+}
+
+// Build the Model dropdown based on the selected Make
+function renderModelOptions(make, keepValue){
+    const modelSel = document.getElementById('vehicleModel');
+    if(!modelSel) return;
+    let html = '<option value="">Select Model</option>';
+    if(make && vehicleModels[make]){
+        const models = [...vehicleModels[make]].sort((a,b)=>a.localeCompare(b));
+        models.forEach(m => { html += `<option value="${escapeAttr(m)}">${escapeAttr(m)}</option>`; });
     }
+    if(make){
+        html += '<option value="__ADD_NEW_MODEL__">➕ Add new model...</option>';
+    }
+    modelSel.innerHTML = html;
+    if(keepValue){
+        modelSel.value = keepValue;
+        if(modelSel.value !== keepValue) modelSel.value = '';
+    }
+}
+
+// When Make changes: rebuild Model list
+function onMakeChange(){
+    const make = document.getElementById('vehicleMake').value;
+    if(make === '__ADD_NEW_MAKE__'){
+        const newMake = (prompt('Type the new make (e.g. Lexus, Infiniti, Jeep):') || '').trim();
+        if(!newMake){ renderMakeOptions(); return; }
+        if(!vehicleModels[newMake]) vehicleModels[newMake] = [];
+        saveVehicleModels();
+        renderMakeOptions();
+        document.getElementById('vehicleMake').value = newMake;
+        renderModelOptions(newMake);
+        showNotification(`✅ Added make: ${newMake}`);
+        return;
+    }
+    renderModelOptions(make);
+}
+
+// When Model changes: allow adding a new model
+function onModelChange(){
+    const make = document.getElementById('vehicleMake').value;
+    const modelSel = document.getElementById('vehicleModel');
+    const val = modelSel.value;
+    if(val === '__ADD_NEW_MODEL__'){
+        if(!make){ alert('Please select a make first.'); renderModelOptions(''); return; }
+        const newModel = (prompt(`Type the new model for ${make} (e.g. Lexus RX, FJ Cruiser):`) || '').trim();
+        if(!newModel){ renderModelOptions(make); return; }
+        if(!vehicleModels[make]) vehicleModels[make] = [];
+        if(!vehicleModels[make].includes(newModel)) vehicleModels[make].push(newModel);
+        saveVehicleModels();
+        renderModelOptions(make, newModel);
+        showNotification(`✅ Added model: ${newModel} (${make})`);
+        return;
+    }
+    // normal selection — nothing else to do
+}
+
+// Wire up the events
+document.addEventListener('DOMContentLoaded', function(){
+    renderMakeOptions();
+    const makeSel = document.getElementById('vehicleMake');
+    const modelSel = document.getElementById('vehicleModel');
+    if(makeSel) makeSel.addEventListener('change', onMakeChange);
+    if(modelSel) modelSel.addEventListener('change', onModelChange);
 });
+// Also run immediately in case DOMContentLoaded already fired
+renderMakeOptions();
+
 function findParts(){
     const year = parseInt(document.getElementById('vehicleYear').value);
     const make = document.getElementById('vehicleMake').value;
     const model = document.getElementById('vehicleModel').value;
-    if(!year || !make || !model){
+    if(!year || !make || !model || make === '__ADD_NEW_MAKE__' || model === '__ADD_NEW_MODEL__'){
         alert('Please select year, make, and model');
         return;
     }
+    saveVehicleToGarage(year, make, model);
+    const filtered = products.filter(p => {
+        if(p.vehicleMake === "Universal") return true;
+        if(p.vehicleMake !== make) return false;
+        if(!modelMatches(p.vehicleModel, model)) return false;
+        if(p.yearStart > 0 && p.yearEnd > 0){
+            return year >= p.yearStart && year <= p.yearEnd;
+        }
+        return true;
+    });
+    displayFilteredProducts(filtered, `Parts for ${year} ${make} ${model}`);
+}
     saveVehicleToGarage(year, make, model);
     const filtered = products.filter(p => {
         if(p.vehicleMake === "Universal") return true;

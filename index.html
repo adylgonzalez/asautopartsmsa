@@ -3731,7 +3731,122 @@ function sendAIMessage(){
         }
     }, 400);
 }
+        async function checkoutCart(brother){
+    const nameEl = document.getElementById('custName');
+    const phoneEl = document.getElementById('custPhone');
+    const custName = (nameEl ? nameEl.value : '').trim();
+    const custPhone = (phoneEl ? phoneEl.value : '').trim();
+    if(!custName){ alert('Please enter your name before ordering.'); if(nameEl) nameEl.focus(); return; }
+    if(!custPhone){ alert('Please enter your phone number before ordering.'); if(phoneEl) phoneEl.focus(); return; }
 
+    const isAway = (brother === 'adil' && !availability.adil) || (brother === 'suhayl' && !availability.suhayl);
+    const phoneNumber = brother === 'adil' ? '254713349554' : '254752763924';
+    const brotherName = brother === 'adil' ? 'ADIL' : 'SUHAYL';
+
+    const orderId = 'A' + Date.now().toString().slice(-8);
+    const totals = computeCartTotals();
+    const hasOnOrder = cart.some(i => normalizeStock(i.availability) === STOCK_ON_ORDER);
+    const hasQuote = totals.hasQuote;
+
+    let message;
+    if(isAway){
+        message = `Hello ${brotherName} (A & S AUTOPARTS) — I know you may be away, please reply when you're back:\n\n`;
+    } else {
+        message = `Hello ${brotherName} (A & S AUTOPARTS),\n\n`;
+    }
+    message += `NEW ORDER #${orderId}\n`;
+    message += `Customer: ${custName}\n`;
+    message += `Phone: ${custPhone}\n\n`;
+    message += `I want to order:\n\n`;
+    cart.forEach(item => {
+        const st = normalizeStock(item.availability);
+        const statusTag = st === STOCK_ON_ORDER ? '[Shipped on Order ~2 weeks]' : '[In Stock]';
+        message += `📦 ${item.name} ${statusTag}\n`;
+        const mode = getPriceMode(item);
+        if(mode === PRICE_ON_REQUEST){
+            message += `   Price: On request\n`;
+            message += `   Qty: ${item.quantity}\n`;
+        } else if(mode === PRICE_RANGE){
+            const min = Number(item.priceMin) || 0;
+            const max = Number(item.priceMax) || 0;
+            let rangeTxt;
+            if(!min && !max) rangeTxt = 'On request';
+            else if(!min) rangeTxt = `Up to ${formatPrice(max)}`;
+            else if(!max) rangeTxt = `From ${formatPrice(min)}`;
+            else if(min === max) rangeTxt = formatPrice(min);
+            else rangeTxt = `${formatPrice(min)} – ${formatPrice(max)}`;
+            message += `   Price: ${rangeTxt}\n`;
+            message += `   Qty: ${item.quantity}\n`;
+            message += `   (Final price to be confirmed)\n`;
+        } else {
+            const itemTotal = (Number(item.price) || 0) * item.quantity;
+            message += `   Qty: ${item.quantity}\n`;
+            message += `   Price: ${formatPrice(item.price)} each\n`;
+            message += `   Subtotal: ${formatPrice(itemTotal)}\n`;
+        }
+        message += `\n`;
+    });
+    if(hasQuote){
+        message += `💰 Fixed items total: ${formatPrice(totals.fixedTotal)}\n`;
+        message += `ℹ️ Some items require a quote — please confirm final prices.\n\n`;
+    } else {
+        message += `💰 TOTAL: ${formatPrice(totals.fixedTotal)}\n\n`;
+    }
+    if(hasOnOrder){
+        message += `Note: Items marked [Shipped on Order] require a 50% deposit and arrive in ~2 weeks.\n\n`;
+    }
+    message += `Please confirm availability and delivery.`;
+
+    const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    const waWindow = window.open(waUrl, '_blank');
+    if(!waWindow || waWindow.closed || typeof waWindow.closed === 'undefined'){
+        try { window.location.href = waUrl; } catch(e){}
+    }
+
+    const orderSnapshot = {
+        id: orderId,
+        date: new Date().toISOString(),
+        customerName: custName,
+        customerPhone: custPhone,
+        handledBy: brother,
+        handledByName: brotherName,
+        status: 'new',
+        source: 'cart',
+        hasOnOrderItems: hasOnOrder,
+        hasQuoteItems: hasQuote,
+        fixedItemsTotal: totals.fixedTotal,
+        items: cart.map(i => {
+            const mode = getPriceMode(i);
+            return {
+                name: i.name,
+                sku: i.sku,
+                price: mode === PRICE_FIXED ? i.price : null,
+                priceMode: mode,
+                priceMin: mode === PRICE_RANGE ? (Number(i.priceMin) || 0) : null,
+                priceMax: mode === PRICE_RANGE ? (Number(i.priceMax) || 0) : null,
+                quantity: i.quantity,
+                subtotal: mode === PRICE_FIXED ? ((Number(i.price) || 0) * i.quantity) : null,
+                availability: normalizeStock(i.availability)
+            };
+        }),
+        total: totals.fixedTotal
+    };
+
+    cart = [];
+    saveCart();
+    updateCartCount();
+    if(nameEl) nameEl.value = '';
+    if(phoneEl) phoneEl.value = '';
+    closeCart();
+
+    appendOrderToGitHub(orderSnapshot).then(savedOk => {
+        if(savedOk){ console.log('✅ Order saved to records'); }
+        else { console.warn('⚠️ Order not saved to GitHub'); }
+    });
+}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+.status-dot.green{background:#4caf50;box-shadow:0 0 5px #4caf50}
+.status-dot.red{background:#f44336;box-shadow:0 0 5px #f44336}
 // ==================== INITIALIZE ====================
 async function init(){
     const grid = document.getElementById('productGrid');

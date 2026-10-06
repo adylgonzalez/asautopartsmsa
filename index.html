@@ -542,12 +542,12 @@
         <button onclick="searchProducts()">🔍 Search</button>
     </div>
     <div class="vehicle-selector">
-    <h2><i class="fas fa-car"></i> Find Parts for Your Vehicle</h2>
-    <select id="vehicleYear"><option value="">Select Year</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option><option>2000</option></select>
-    <select id="vehicleMake"></select>
-    <select id="vehicleModel"><option value="">Select Model</option></select>
-    <button onclick="findParts()">Find Parts</button>
-</div>
+        <h2><i class="fas fa-car"></i> Find Parts for Your Vehicle</h2>
+        <select id="vehicleYear"><option value="">Select Year</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option><option>2000</option></select>
+        <select id="vehicleMake"></select>
+        <select id="vehicleModel"><option value="">Select Model</option></select>
+        <button onclick="findParts()">Find Parts</button>
+    </div>
 
     <div class="trust-strip">
         <div class="trust-item"><i class="fas fa-check-circle"></i> Genuine Parts Only</div>
@@ -605,13 +605,13 @@
             <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
                 <p>"Ordered Bosch brake pads for my Hilux at 9am, delivered to Nyali by 2pm. Genuine parts, fair price. These guys know their stuff."</p>
-                <div class="author">Abu Majus.</div>
+                <div class="author">Juma M.</div>
                 <div class="location">Nyali, Mombasa</div>
             </div>
             <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p>"Needed a gearbox for my Prado urgently. Adil sourced it in 3 days from UAE and kept me updated the whole time. Very professional."</p>
-                <div class="author">Monica A.</div>
+                <p>"Needed a gearbox for my Prado urgently. Adil sourced it in 3 days from Japan and kept me updated the whole time. Very professional."</p>
+                <div class="author">Fatma A.</div>
                 <div class="location">Mombasa CBD</div>
             </div>
             <div class="testimonial-card">
@@ -623,9 +623,9 @@
         </div>
     </div>
 
-    <!-- Why Buy From A&S Autoparts -->
+    <!-- Why Buy From A&S Online -->
     <div class="why-buy">
-        <h2><i class="fas fa-shield-alt"></i> Why Buy From A&S Autoparts</h2>
+        <h2><i class="fas fa-shield-alt"></i> Why Buy From A&S Online</h2>
         <div class="why-grid">
             <div class="why-item">
                 <i class="fas fa-certificate"></i>
@@ -772,6 +772,7 @@ const GITHUB_FILE  = 'products.json';
 const OPTIONS_FILE = 'options.json';
 const AVAILABILITY_FILE = 'availability.json';
 const ORDERS_FILE  = 'orders.json';
+const VEHICLE_MODELS_FILE = 'vehicleModels.json';
 const GITHUB_BRANCH = 'main';
 const PAGES_BASE = `https://${GITHUB_OWNER}.github.io/${GITHUB_REPO}`;
 const PRODUCTS_URL = `${PAGES_BASE}/${GITHUB_FILE}`;
@@ -950,6 +951,129 @@ const CATEGORY_ICONS = {
 };
 function getCategoryDescription(cat){ return CATEGORY_DESCRIPTIONS[cat] || "Browse parts"; }
 function getCategoryIcon(cat){ return CATEGORY_ICONS[cat] || "fa-cog"; }
+
+// ==================== VEHICLE MAKES & MODELS ====================
+const DEFAULT_VEHICLE_MODELS = {
+    Toyota:["Camry","Corolla","RAV4","Land Cruiser","Hilux","Prado","Fortuner","Harrier","Vitz","Passo","Probox","Succeed","Crown","Mark X","Avensis","Yaris","Hiace","Alphard","Voxy","Noah"],
+    Nissan:["X-Trail","Patrol","Navara","Sunny","Almera","Teana","Cefiro","Skyline","Tiida","Wingroad","Urvan","Serena","Qashqai","Juke","Murano","Pathfinder"],
+    Honda:["Civic","Accord","CR-V","Fit","Vezel","Odyssey","Stepwgn","Freed","Airwave"],
+    Mitsubishi:["Pajero","Lancer","Outlander","Triton","RVR","ASX","Galant"],
+    Mazda:["Demio","CX-5","Atenza","Mazda3","Mazda6","CX-3","BT-50"],
+    Subaru:["Forester","Outback","Impreza","Legacy","XV"],
+    "Mercedes-Benz":["C-Class","E-Class","S-Class","ML-Class","GLE","GL-Class"],
+    BMW:["3 Series","5 Series","X3","X5"],
+    "Land Rover":["Defender","Discovery","Range Rover","Range Rover Sport","Freelander"],
+    Isuzu:["D-Max","MU-X"],
+    Volkswagen:["Golf","Passat","Tiguan"],
+    Audi:["A4","Q5","Q7"],
+    Ford:["F-150","Ranger","Explorer","Escape","Focus"],
+    Chevrolet:["Silverado","Cruze","Malibu"],
+    Hyundai:["Tucson","Santa Fe","Elantra"],
+    Kia:["Sportage","Sorento","Cerato"],
+    Peugeot:["208","308","508"],
+    Renault:["Clio","Megane","Duster"],
+    Suzuki:["Swift","Vitara","Jimny"],
+    Volvo:["XC60","XC90","S60"]
+};
+
+let vehicleModels = (() => {
+    try {
+        const stored = localStorage.getItem('A & SVehicleModels');
+        if(stored){
+            const parsed = JSON.parse(stored);
+            if(parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
+        }
+    } catch(e){}
+    return JSON.parse(JSON.stringify(DEFAULT_VEHICLE_MODELS));
+})();
+
+function saveVehicleModels(){
+    localStorage.setItem('A & SVehicleModels', JSON.stringify(vehicleModels));
+}
+
+function renderMakeOptions(){
+    const makeSel = document.getElementById('vehicleMake');
+    if(!makeSel) return;
+    const makes = Object.keys(vehicleModels).sort((a,b)=>a.localeCompare(b));
+    let html = '<option value="">Select Make</option>';
+    makes.forEach(m => { html += `<option value="${escapeAttr(m)}">${escapeAttr(m)}</option>`; });
+    html += '<option value="__ADD_NEW_MAKE__">➕ Add new make...</option>';
+    makeSel.innerHTML = html;
+}
+
+function renderModelOptions(make, keepValue){
+    const modelSel = document.getElementById('vehicleModel');
+    if(!modelSel) return;
+    let html = '<option value="">Select Model</option>';
+    if(make && vehicleModels[make]){
+        const models = [...vehicleModels[make]].sort((a,b)=>a.localeCompare(b));
+        models.forEach(m => { html += `<option value="${escapeAttr(m)}">${escapeAttr(m)}</option>`; });
+    }
+    if(make){
+        html += '<option value="__ADD_NEW_MODEL__">➕ Add new model...</option>';
+    }
+    modelSel.innerHTML = html;
+    if(keepValue){
+        modelSel.value = keepValue;
+        if(modelSel.value !== keepValue) modelSel.value = '';
+    }
+}
+
+function onMakeChange(){
+    const make = document.getElementById('vehicleMake').value;
+    if(make === '__ADD_NEW_MAKE__'){
+        const newMake = (prompt('Type the new make (e.g. Lexus, Infiniti, Jeep):') || '').trim();
+        if(!newMake){ renderMakeOptions(); return; }
+        if(!vehicleModels[newMake]) vehicleModels[newMake] = [];
+        saveVehicleModels();
+        renderMakeOptions();
+        document.getElementById('vehicleMake').value = newMake;
+        renderModelOptions(newMake);
+        showNotification(`✅ Added make: ${newMake} — pushing to GitHub...`);
+        saveVehicleModelsToGitHub();
+        return;
+    }
+    renderModelOptions(make);
+}
+
+function onModelChange(){
+    const make = document.getElementById('vehicleMake').value;
+    const modelSel = document.getElementById('vehicleModel');
+    const val = modelSel.value;
+    if(val === '__ADD_NEW_MODEL__'){
+        if(!make){ alert('Please select a make first.'); renderModelOptions(''); return; }
+        const newModel = (prompt(`Type the new model for ${make} (e.g. Lexus RX, FJ Cruiser):`) || '').trim();
+        if(!newModel){ renderModelOptions(make); return; }
+        if(!vehicleModels[make]) vehicleModels[make] = [];
+        if(!vehicleModels[make].includes(newModel)) vehicleModels[make].push(newModel);
+        saveVehicleModels();
+        renderModelOptions(make, newModel);
+        showNotification(`✅ Added model: ${newModel} (${make}) — pushing to GitHub...`);
+        saveVehicleModelsToGitHub();
+        return;
+    }
+}
+
+function findParts(){
+    const year = parseInt(document.getElementById('vehicleYear').value);
+    const make = document.getElementById('vehicleMake').value;
+    const model = document.getElementById('vehicleModel').value;
+    if(!year || !make || !model || make === '__ADD_NEW_MAKE__' || model === '__ADD_NEW_MODEL__'){
+        alert('Please select year, make, and model');
+        return;
+    }
+    saveVehicleToGarage(year, make, model);
+    const filtered = products.filter(p => {
+        if(p.vehicleMake === "Universal") return true;
+        if(p.vehicleMake !== make) return false;
+        if(!modelMatches(p.vehicleModel, model)) return false;
+        if(p.yearStart > 0 && p.yearEnd > 0){
+            return year >= p.yearStart && year <= p.yearEnd;
+        }
+        return true;
+    });
+    displayFilteredProducts(filtered, `Parts for ${year} ${make} ${model}`);
+}
 
 // ==================== VEHICLE DATABASES ====================
 const toyotaModelCodes = {
@@ -1443,6 +1567,42 @@ async function fetchOrdersFromGitHub(){
     } catch (err){
         console.warn('Could not load orders.json. Error:', err.message);
         cachedOrders = [];
+        return false;
+    }
+}
+async function fetchVehicleModelsFromGitHub(){
+    const url = `${PAGES_BASE}/${VEHICLE_MODELS_FILE}`;
+    try {
+        const res = await axios.get(url + '?t=' + Date.now());
+        if(res.data && typeof res.data === 'object' && !Array.isArray(res.data)){
+            const merged = JSON.parse(JSON.stringify(DEFAULT_VEHICLE_MODELS));
+            Object.keys(res.data).forEach(make => {
+                if(Array.isArray(res.data[make])){
+                    if(!merged[make]) merged[make] = [];
+                    res.data[make].forEach(m => {
+                        if(!merged[make].includes(m)) merged[make].push(m);
+                    });
+                }
+            });
+            vehicleModels = merged;
+            saveVehicleModels();
+            return true;
+        }
+        throw new Error('vehicleModels.json did not return an object');
+    } catch (err){
+        console.warn('Could not load vehicleModels.json — using defaults. Error:', err.message);
+        return false;
+    }
+}
+async function saveVehicleModelsToGitHub(){
+    if(!getToken()){ alert('⚠️ No GitHub token saved.\n\nOpen the Admin Panel and paste your token first.'); return false; }
+    try {
+        await putFileToGitHub(VEHICLE_MODELS_FILE, vehicleModels, `Update vehicleModels.json — ${new Date().toISOString()}`);
+        showNotification('✅ Vehicle list saved to GitHub! Live in ~1 min for everyone.');
+        return true;
+    } catch (err){
+        console.error('Vehicle models save failed:', err);
+        alert('❌ Save vehicleModels.json failed:\n\n' + (err.response?.data?.message || err.message));
         return false;
     }
 }
@@ -2253,155 +2413,10 @@ function modelMatches(productModel, selectedModel){
     return productModels.includes(sel);
 }
 
-// ==================== VEHICLE MODELS (editable, persists in localStorage) ====================
-const DEFAULT_VEHICLE_MODELS = {
-    Toyota:["Camry","Corolla","RAV4","Land Cruiser","Hilux","Prado","Fortuner","Harrier","Vitz","Passo","Probox","Succeed","Crown","Mark X","Avensis","Yaris","Hiace","Alphard","Voxy","Noah"],
-    Nissan:["X-Trail","Patrol","Navara","Sunny","Almera","Teana","Cefiro","Skyline","Tiida","Wingroad","Urvan","Serena","Qashqai","Juke","Murano","Pathfinder"],
-    Honda:["Civic","Accord","CR-V","Fit","Vezel","Odyssey","Stepwgn","Freed","Airwave"],
-    Mitsubishi:["Pajero","Lancer","Outlander","Triton","RVR","ASX","Galant"],
-    Mazda:["Demio","CX-5","Atenza","Mazda3","Mazda6","CX-3","BT-50"],
-    Subaru:["Forester","Outback","Impreza","Legacy","XV"],
-    "Mercedes-Benz":["C-Class","E-Class","S-Class","ML-Class","GLE","GL-Class"],
-    BMW:["3 Series","5 Series","X3","X5"],
-    "Land Rover":["Defender","Discovery","Range Rover","Range Rover Sport","Freelander"],
-    Isuzu:["D-Max","MU-X"],
-    Volkswagen:["Golf","Passat","Tiguan"],
-    Audi:["A4","Q5","Q7"],
-    Ford:["F-150","Ranger","Explorer","Escape","Focus"],
-    Chevrolet:["Silverado","Cruze","Malibu"],
-    Hyundai:["Tucson","Santa Fe","Elantra"],
-    Kia:["Sportage","Sorento","Cerato"],
-    Peugeot:["208","308","508"],
-    Renault:["Clio","Megane","Duster"],
-    Suzuki:["Swift","Vitara","Jimny"],
-    Volvo:["XC60","XC90","S60"]
-};
+// ==================== VEHICLE SELECTOR EVENTS ====================
+document.getElementById('vehicleMake').addEventListener('change', onMakeChange);
+document.getElementById('vehicleModel').addEventListener('change', onModelChange);
 
-// Load saved vehicle models (or fall back to defaults)
-let vehicleModels = (() => {
-    try {
-        const stored = localStorage.getItem('A & SVehicleModels');
-        if(stored){
-            const parsed = JSON.parse(stored);
-            if(parsed && typeof parsed === 'object') return parsed;
-        }
-    } catch(e){}
-    return JSON.parse(JSON.stringify(DEFAULT_VEHICLE_MODELS));
-})();
-
-function saveVehicleModels(){
-    localStorage.setItem('A & SVehicleModels', JSON.stringify(vehicleModels));
-}
-
-// Build the Make dropdown from vehicleModels
-function renderMakeOptions(){
-    const makeSel = document.getElementById('vehicleMake');
-    if(!makeSel) return;
-    const makes = Object.keys(vehicleModels).sort((a,b)=>a.localeCompare(b));
-    let html = '<option value="">Select Make</option>';
-    makes.forEach(m => { html += `<option value="${escapeAttr(m)}">${escapeAttr(m)}</option>`; });
-    html += '<option value="__ADD_NEW_MAKE__">➕ Add new make...</option>';
-    makeSel.innerHTML = html;
-}
-
-// Build the Model dropdown based on the selected Make
-function renderModelOptions(make, keepValue){
-    const modelSel = document.getElementById('vehicleModel');
-    if(!modelSel) return;
-    let html = '<option value="">Select Model</option>';
-    if(make && vehicleModels[make]){
-        const models = [...vehicleModels[make]].sort((a,b)=>a.localeCompare(b));
-        models.forEach(m => { html += `<option value="${escapeAttr(m)}">${escapeAttr(m)}</option>`; });
-    }
-    if(make){
-        html += '<option value="__ADD_NEW_MODEL__">➕ Add new model...</option>';
-    }
-    modelSel.innerHTML = html;
-    if(keepValue){
-        modelSel.value = keepValue;
-        if(modelSel.value !== keepValue) modelSel.value = '';
-    }
-}
-
-// When Make changes: rebuild Model list
-function onMakeChange(){
-    const make = document.getElementById('vehicleMake').value;
-    if(make === '__ADD_NEW_MAKE__'){
-        const newMake = (prompt('Type the new make (e.g. Lexus, Infiniti, Jeep):') || '').trim();
-        if(!newMake){ renderMakeOptions(); return; }
-        if(!vehicleModels[newMake]) vehicleModels[newMake] = [];
-        saveVehicleModels();
-        renderMakeOptions();
-        document.getElementById('vehicleMake').value = newMake;
-        renderModelOptions(newMake);
-        showNotification(`✅ Added make: ${newMake}`);
-        return;
-    }
-    renderModelOptions(make);
-}
-
-// When Model changes: allow adding a new model
-function onModelChange(){
-    const make = document.getElementById('vehicleMake').value;
-    const modelSel = document.getElementById('vehicleModel');
-    const val = modelSel.value;
-    if(val === '__ADD_NEW_MODEL__'){
-        if(!make){ alert('Please select a make first.'); renderModelOptions(''); return; }
-        const newModel = (prompt(`Type the new model for ${make} (e.g. Lexus RX, FJ Cruiser):`) || '').trim();
-        if(!newModel){ renderModelOptions(make); return; }
-        if(!vehicleModels[make]) vehicleModels[make] = [];
-        if(!vehicleModels[make].includes(newModel)) vehicleModels[make].push(newModel);
-        saveVehicleModels();
-        renderModelOptions(make, newModel);
-        showNotification(`✅ Added model: ${newModel} (${make})`);
-        return;
-    }
-    // normal selection — nothing else to do
-}
-
-// Wire up the events
-document.addEventListener('DOMContentLoaded', function(){
-    renderMakeOptions();
-    const makeSel = document.getElementById('vehicleMake');
-    const modelSel = document.getElementById('vehicleModel');
-    if(makeSel) makeSel.addEventListener('change', onMakeChange);
-    if(modelSel) modelSel.addEventListener('change', onModelChange);
-});
-// Also run immediately in case DOMContentLoaded already fired
-renderMakeOptions();
-
-function findParts(){
-    const year = parseInt(document.getElementById('vehicleYear').value);
-    const make = document.getElementById('vehicleMake').value;
-    const model = document.getElementById('vehicleModel').value;
-    if(!year || !make || !model || make === '__ADD_NEW_MAKE__' || model === '__ADD_NEW_MODEL__'){
-        alert('Please select year, make, and model');
-        return;
-    }
-    saveVehicleToGarage(year, make, model);
-    const filtered = products.filter(p => {
-        if(p.vehicleMake === "Universal") return true;
-        if(p.vehicleMake !== make) return false;
-        if(!modelMatches(p.vehicleModel, model)) return false;
-        if(p.yearStart > 0 && p.yearEnd > 0){
-            return year >= p.yearStart && year <= p.yearEnd;
-        }
-        return true;
-    });
-    displayFilteredProducts(filtered, `Parts for ${year} ${make} ${model}`);
-}
-    saveVehicleToGarage(year, make, model);
-    const filtered = products.filter(p => {
-        if(p.vehicleMake === "Universal") return true;
-        if(p.vehicleMake !== make) return false;
-        if(!modelMatches(p.vehicleModel, model)) return false;
-        if(p.yearStart > 0 && p.yearEnd > 0){
-            return year >= p.yearStart && year <= p.yearEnd;
-        }
-        return true;
-    });
-    displayFilteredProducts(filtered, `Parts for ${year} ${make} ${model}`);
-}
 function displayFilteredProducts(list,title){
     const grid=document.getElementById('productGrid');
     grid.innerHTML='';
@@ -3318,12 +3333,17 @@ function showAdminPanel(){
                     </div>
                 </div>
                 <div class="admin-card-box">
-                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Paste your GitHub Personal Access Token below. It stays on this device only (localStorage). Used to push changes to <code>products.json</code>, <code>options.json</code>, <code>availability.json</code> and <code>orders.json</code>.</p>
+                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Paste your GitHub Personal Access Token below. It stays on this device only (localStorage). Used to push changes to <code>products.json</code>, <code>options.json</code>, <code>availability.json</code>, <code>orders.json</code> and <code>vehicleModels.json</code>.</p>
                     <input type="password" id="tokenInput" placeholder="ghp_..." style="width:100%;padding:12px;border:1px solid #ccc;border-radius:6px;margin-bottom:12px;font-size:14px;">
                     <div style="display:flex;gap:10px;flex-wrap:wrap;">
                         <button onclick="saveTokenFromPanel()" style="flex:1;min-width:140px;padding:12px;background:#1a237e;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;">💾 Save Token</button>
                         <button onclick="clearTokenFromPanel()" style="flex:1;min-width:140px;padding:12px;background:#f44336;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;">🗑️ Clear Token</button>
                     </div>
+                </div>
+                <div class="admin-card-box" style="background:#e3f2fd;border-color:#90caf9;">
+                    <h4 style="color:#1565c0;margin-bottom:8px;font-size:15px;">🚗 Vehicle Makes & Models</h4>
+                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Push your current vehicle list to GitHub so everyone sees your added makes/models.</p>
+                    <button onclick="saveVehicleModelsToGitHub()" style="width:100%;padding:12px;background:#1565c0;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;">⬆️ Push Vehicle List</button>
                 </div>
                 <div class="admin-card-box" style="background:#e8f5e9;border-color:#c8e6c9;">
                     <h4 style="color:#2e7d32;margin-bottom:8px;font-size:15px;">☁️ Push Everything to GitHub</h4>
@@ -4001,6 +4021,8 @@ async function init(){
     await fetchOptionsFromGitHub();
     await fetchAvailabilityFromGitHub();
     await fetchOrdersFromGitHub();
+    await fetchVehicleModelsFromGitHub();
+    renderMakeOptions();
     loadProducts();
     buildExtraCategoryCards();
     updateCartCount();

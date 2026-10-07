@@ -255,22 +255,25 @@
     "price": 14500,
     "priceMode": "fixed",
     "category": "Engine",
-    "image": "images/timing-belt-kit-toyota-1789586302979.jpg",
+    "image": "https://adylgonzalez.github.io/asautopartsmsa/images/timing-belt-kit-toyota-1789586302979.jpg",
     "images": [
-      "images/timing-belt-kit-toyota-1789586302979.jpg"
+      "https://adylgonzalez.github.io/asautopartsmsa/images/timing-belt-kit-toyota-1789586302979.jpg"
     ],
     "brand": "Gates",
     "partNo": "13568-09070",
     "oem": "13568-09070",
-    "application": "Toyota All Models",
-    "description": "Complete timing belt kit with tensioner.",
-    "vehicleMake": "Toyota",
-    "vehicleModel": "All Models",
-    "yearStart": 0,
-    "yearEnd": 0,
+    "application": "",
+    "description": "Complete timing belt kit with tensioner.This timing belt is engineered for heavy-duty Toyota and Lexus V8 engines, specifically the highly reliable 4.7L 2UZ-FE (and select 4.0L/4.3L variations)",
+    "vehicleMake": "Toyota, Lexus",
+    "vehicleModel": "Land Cruiser 100, Prado, Sequoia, Tundra, 4Runner, LX470, GX470",
+    "yearStart": 1998,
+    "yearEnd": 2009,
     "sku": "TB-TY-ALL",
     "stock": 12,
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "supercedes": "13568-59095",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Water Pump - Toyota",

@@ -25,7 +25,11 @@
     "Avalon",
     "ES350",
     "Prius",
-    "Matrix"
+    "Matrix",
+    "Land Cruiser 100",
+    "Sequoia",
+    "Tundra",
+    "4Runner"
   ],
   "Nissan": [
     "X-Trail",
@@ -159,6 +163,8 @@
     "S60"
   ],
   "Lexus": [
-    "CT200H"
+    "CT200H",
+    "LX470",
+    "GX470"
   ]
 }

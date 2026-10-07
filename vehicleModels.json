@@ -5,6 +5,11 @@
     "RAV4",
     "Land Cruiser",
     "Hilux",
+    "Land Cruiser 100",
+    "Prado",
+    "Sequoia",
+    "Tundra",
+    "4Runner",
     "Prado",
     "Fortuner",
     "Harrier",
@@ -25,13 +30,10 @@
     "CT200H",
     "Aurion",
     "Avalon",
-    "ES350",
     "Land Cruiser 100",
     "Sequoia",
     "Tundra",
     "4Runner",
-    "LX470",
-    "GX470"
   ],
   "Nissan": [
     "X-Trail",
@@ -166,22 +168,12 @@
   ],
   "Lexus": [
     "NX200T",
-    "Corolla",
-    "Prius",
-    "Matrix",
-    "Voxy",
-    "Noah",
     "CT200H",
-    "Camry",
-    "Aurion",
-    "Avalon",
     "ES350",
-    "Land Cruiser 100",
-    "Prado",
-    "Sequoia",
-    "Tundra",
-    "4Runner",
     "LX470",
-    "GX470"
+    "GX470",
+    "IS250",
+    "IS300",
+    "IS350"
   ]
 }

@@ -3035,61 +3035,114 @@ function renderOrdersList(){
     }
     let html = '';
     cachedOrders.forEach(o => {
-    const itemsLines = (o.items||[]).map(i => {
-    const st = normalizeStock(i.availability);
-    const tag = st === STOCK_ON_ORDER
-        ? ' <span class="cart-item-status on-order">Shipped on Order</span>'
-        : ' <span class="cart-item-status in-stock">In Stock</span>';
-    const pmode = normalizePriceMode(i.priceMode);
-    let priceText;
-    if(pmode === PRICE_ON_REQUEST){
-        priceText = '<span class="cart-item-status quote">On request</span>';
-    } else if(pmode === PRICE_RANGE){
-        const mn = Number(i.priceMin)||0, mx = Number(i.priceMax)||0;
-        let rTxt;
-        if(!mn && !mx) rTxt = 'On request';
-        else if(!mn) rTxt = `Up to ${formatPrice(mx)}`;
-        else if(!mx) rTxt = `From ${formatPrice(mn)}`;
-        else if(mn === mx) rTxt = formatPrice(mn);
-        else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
-        priceText = `<span class="cart-item-status quote">${escapeAttr(rTxt)}</span>`;
-    } else {
-        priceText = formatPrice(i.subtotal);
-    }
-    const partNo = i.partNo || i.sku || '—';
-    const brand = i.brand || '—';
-    return `• <strong>${escapeAttr(i.name)}</strong>${tag}<br>
-        &nbsp;&nbsp;<span style="color:#1565c0;">Part No:</span> <strong>${escapeAttr(partNo)}</strong>
-        &nbsp;|&nbsp; <span style="color:#1565c0;">Brand:</span> <strong>${escapeAttr(brand)}</strong><br>
-        &nbsp;&nbsp;× ${i.quantity} — ${priceText}`;
-}).join('<br><br>');
+        const itemsRows = (o.items||[]).map(i => {
+            const st = normalizeStock(i.availability);
+            const stockTag = st === STOCK_ON_ORDER
+                ? '<span class="cart-item-status on-order">Shipped on Order</span>'
+                : '<span class="cart-item-status in-stock">In Stock</span>';
+            const pmode = normalizePriceMode(i.priceMode);
+            let priceCell, subtotalCell;
+            if(pmode === PRICE_ON_REQUEST){
+                priceCell = '<span class="cart-item-status quote">On request</span>';
+                subtotalCell = '—';
+            } else if(pmode === PRICE_RANGE){
+                const mn = Number(i.priceMin)||0, mx = Number(i.priceMax)||0;
+                let rTxt;
+                if(!mn && !mx) rTxt = 'On request';
+                else if(!mn) rTxt = `Up to ${formatPrice(mx)}`;
+                else if(!mx) rTxt = `From ${formatPrice(mn)}`;
+                else if(mn === mx) rTxt = formatPrice(mn);
+                else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
+                priceCell = `<span class="cart-item-status quote">${escapeAttr(rTxt)}</span>`;
+                subtotalCell = '—';
+            } else {
+                priceCell = formatPrice(i.price);
+                subtotalCell = formatPrice(i.subtotal);
+            }
+            const partNo = i.partNo || i.sku || '';
+            const brand = i.brand || '';
+            const subline = [partNo ? `Part No: <strong>${escapeAttr(partNo)}</strong>` : '', brand ? `Brand: <strong>${escapeAttr(brand)}</strong>` : ''].filter(Boolean).join(' · ');
+            return `<tr>
+                <td style="padding:10px 12px;border-bottom:1px solid #eee;">
+                    <div style="font-weight:700;color:#333;margin-bottom:3px;">${escapeAttr(i.name)} ${stockTag}</div>
+                    ${subline ? `<div style="font-size:11px;color:#666;">${subline}</div>` : ''}
+                </td>
+                <td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:center;font-weight:700;">${i.quantity}</td>
+                <td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">${priceCell}</td>
+                <td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;font-weight:700;color:#ff6f00;">${subtotalCell}</td>
+            </tr>`;
+        }).join('');
+
         const notes = [];
         if(o.hasOnOrderItems) notes.push('⚠️ Contains Shipped on Order items — 50% deposit required');
         if(o.hasQuoteItems) notes.push('ℹ️ Contains quote items — confirm final prices');
-        const notesHTML = notes.length ? `<div style="font-size:12px;color:#e65100;font-weight:700;margin-top:6px;">${notes.join('<br>')}</div>` : '';
+        const notesHTML = notes.length
+            ? `<div style="background:#fff8e1;border-left:3px solid #ffc107;padding:8px 12px;border-radius:5px;font-size:12px;color:#e65100;margin-top:10px;line-height:1.5;">${notes.join('<br>')}</div>`
+            : '';
+
         const totalLine = o.hasQuoteItems
-            ? `Fixed items total: ${formatPrice(o.total||0)} <small style="color:#1565c0;">+ quote items</small>`
-            : `Total: ${formatPrice(o.total||0)}`;
-        html += `<div class="order-card status-${o.status||'new'}">
-            <div class="order-head">
+            ? `Fixed items total: ${formatPrice(o.total||0)} <small style="color:#1565c0;font-weight:400;">+ quote items</small>`
+            : `${formatPrice(o.total||0)}`;
+
+        const statusColors = {
+            new: { bg: '#e3f2fd', border: '#2196f3', text: '#0d47a1' },
+            confirmed: { bg: '#fff8e1', border: '#ffc107', text: '#e65100' },
+            delivered: { bg: '#e8f5e9', border: '#4caf50', text: '#1b5e20' },
+            cancelled: { bg: '#ffebee', border: '#f44336', text: '#b71c1c' }
+        };
+        const st = o.status || 'new';
+        const c = statusColors[st] || statusColors.new;
+
+        html += `<div style="background:#fff;border-radius:12px;margin-bottom:16px;border-left:5px solid ${c.border};box-shadow:0 2px 8px rgba(0,0,0,.07);overflow:hidden;">
+
+            <!-- HEADER -->
+            <div style="padding:14px 16px;background:linear-gradient(90deg,#f8f9ff 0%,#fff 100%);border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
                 <div>
-                    <div class="order-number">#${escapeAttr(o.id)}</div>
-                    <div class="order-date">${formatOrderDate(o.date)}</div>
+                    <div style="font-weight:700;color:#1a237e;font-size:16px;">Order #${escapeAttr(o.id)}</div>
+                    <div style="font-size:12px;color:#888;margin-top:2px;">🕐 ${formatOrderDate(o.date)}</div>
                 </div>
-                <select onchange="changeOrderStatus('${escapeAttr(o.id)}', this.value)">
-                    <option value="new" ${o.status==='new'?'selected':''}>New</option>
-                    <option value="confirmed" ${o.status==='confirmed'?'selected':''}>Confirmed</option>
-                    <option value="delivered" ${o.status==='delivered'?'selected':''}>Delivered</option>
-                    <option value="cancelled" ${o.status==='cancelled'?'selected':''}>Cancelled</option>
+                <select onchange="changeOrderStatus('${escapeAttr(o.id)}', this.value)" style="padding:7px 12px;border:2px solid ${c.border};border-radius:20px;font-weight:700;font-size:13px;background:${c.bg};color:${c.text};cursor:pointer;">
+                    <option value="new" ${o.status==='new'?'selected':''}>● New</option>
+                    <option value="confirmed" ${o.status==='confirmed'?'selected':''}>● Confirmed</option>
+                    <option value="delivered" ${o.status==='delivered'?'selected':''}>● Delivered</option>
+                    <option value="cancelled" ${o.status==='cancelled'?'selected':''}>● Cancelled</option>
                 </select>
             </div>
-            <div class="order-customer"><strong>${escapeAttr(o.customerName||'')}</strong> · ${escapeAttr(o.customerPhone||'')}</div>
-            <div class="order-customer">Handled by: <strong>${escapeAttr((o.handledByName||o.handledBy||'').toUpperCase())}</strong> · Status: <strong>${statusLabel(o.status)}</strong></div>
-            <div class="order-items">${itemsLines}${notesHTML}</div>
-            <div class="order-total">${totalLine}</div>
-            <div class="order-actions">
-                <button class="btn-print" onclick="printOrder('${escapeAttr(o.id)}')"><i class="fas fa-print"></i> Print</button>
-                <button class="btn-send" onclick="sendOrderToCustomer('${escapeAttr(o.id)}')"><i class="fab fa-whatsapp"></i> Send to customer</button>
+
+            <!-- CUSTOMER BOX -->
+            <div style="padding:12px 16px;background:#f9fafc;border-bottom:1px solid #eee;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;font-size:13px;">
+                <div><span style="color:#888;">Customer:</span> <strong style="color:#1a237e;">${escapeAttr(o.customerName||'—')}</strong></div>
+                <div><span style="color:#888;">Phone:</span> <a href="tel:${escapeAttr(o.customerPhone||'')}" style="color:#1a237e;font-weight:700;text-decoration:none;">📞 ${escapeAttr(o.customerPhone||'—')}</a></div>
+                <div><span style="color:#888;">Handled by:</span> <strong style="color:#1a237e;">${escapeAttr((o.handledByName||o.handledBy||'').toUpperCase()||'—')}</strong></div>
+                <div><span style="color:#888;">Status:</span> <strong style="color:${c.text};">${statusLabel(o.status)}</strong></div>
+            </div>
+
+            <!-- ITEMS TABLE -->
+            <div style="padding:14px 16px 0;">
+                <div style="font-weight:700;color:#1a237e;font-size:13px;margin-bottom:8px;">🛒 Items ordered (${(o.items||[]).length}):</div>
+                <table style="width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:1px solid #eee;border-radius:8px;overflow:hidden;">
+                    <thead>
+                        <tr style="background:#1a237e;color:#fff;">
+                            <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:700;">ITEM</th>
+                            <th style="padding:8px 12px;text-align:center;font-size:11px;font-weight:700;width:60px;">QTY</th>
+                            <th style="padding:8px 12px;text-align:right;font-size:11px;font-weight:700;width:100px;">PRICE</th>
+                            <th style="padding:8px 12px;text-align:right;font-size:11px;font-weight:700;width:110px;">SUBTOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>${itemsRows}</tbody>
+                </table>
+                ${notesHTML}
+            </div>
+
+            <!-- TOTAL -->
+            <div style="padding:14px 16px;text-align:right;font-size:20px;font-weight:700;color:#ff6f00;border-top:1px dashed #ddd;margin-top:10px;">
+                ${totalLine}
+            </div>
+
+            <!-- ACTIONS -->
+            <div style="padding:0 16px 16px;display:flex;gap:8px;flex-wrap:wrap;">
+                <button onclick="printOrder('${escapeAttr(o.id)}')" style="flex:1;min-width:130px;padding:11px 16px;background:#1a237e;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;">🖨️ Print Receipt</button>
+                <button onclick="sendOrderToCustomer('${escapeAttr(o.id)}')" style="flex:1;min-width:130px;padding:11px 16px;background:#25D366;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;">💬 Send to Customer</button>
             </div>
         </div>`;
     });
@@ -3097,9 +3150,6 @@ function renderOrdersList(){
     const cnt = document.getElementById('ordersCount');
     if(cnt) cnt.textContent = `${cachedOrders.length} order${cachedOrders.length===1?'':'s'}`;
 }
-function findOrderById(id){ return cachedOrders.find(o => o.id === id) || null; }
-async function changeOrderStatus(id, newStatus){
-    const o = findOrderById(id);
     if(!o) return;
     o.status = newStatus;
     renderOrdersList();

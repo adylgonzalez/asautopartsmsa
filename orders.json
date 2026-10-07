@@ -1,5 +1,49 @@
 [
   {
+    "id": "A81119806",
+    "date": "2026-10-07T13:51:59.845Z",
+    "customerName": "adil",
+    "customerPhone": "0713349554",
+    "handledBy": "suhayl",
+    "handledByName": "SUHAYL",
+    "status": "new",
+    "source": "cart",
+    "hasOnOrderItems": false,
+    "hasQuoteItems": false,
+    "fixedItemsTotal": 40000,
+    "items": [
+      {
+        "name": "Spark Plugs - DENSO Iridium TT",
+        "sku": "SKU-1789937851009",
+        "partNo": "IKBH20TT",
+        "brand": "DENSO",
+        "image": "images/new-part-1789937846021.jpg",
+        "price": 25000,
+        "priceMode": "fixed",
+        "priceMin": null,
+        "priceMax": null,
+        "quantity": 1,
+        "subtotal": 25000,
+        "availability": "in_stock"
+      },
+      {
+        "name": "Toyota Crown - Front Lip",
+        "sku": "SKU-1789938960916",
+        "partNo": "N/A",
+        "brand": "Other",
+        "image": "images/new-part-1789938936002.jpg",
+        "price": 15000,
+        "priceMode": "fixed",
+        "priceMin": null,
+        "priceMax": null,
+        "quantity": 1,
+        "subtotal": 15000,
+        "availability": "in_stock"
+      }
+    ],
+    "total": 40000
+  },
+  {
     "id": "A79509445",
     "date": "2026-10-07T13:25:09.509Z",
     "customerName": "mca",

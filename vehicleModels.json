@@ -22,7 +22,10 @@
     "Noah",
     "Prius",
     "Matrix",
-    "CT200H"
+    "CT200H",
+    "Aurion",
+    "Avalon",
+    "ES350"
   ],
   "Nissan": [
     "X-Trail",
@@ -162,6 +165,10 @@
     "Matrix",
     "Voxy",
     "Noah",
-    "CT200H"
+    "CT200H",
+    "Camry",
+    "Aurion",
+    "Avalon",
+    "ES350"
   ]
 }

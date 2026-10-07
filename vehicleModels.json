@@ -1,2 +1,158 @@
-[
-]
+{
+  "Toyota": [
+    "Camry",
+    "Corolla",
+    "RAV4",
+    "Land Cruiser",
+    "Hilux",
+    "Prado",
+    "Fortuner",
+    "Harrier",
+    "Vitz",
+    "Passo",
+    "Probox",
+    "Succeed",
+    "Crown",
+    "Mark X",
+    "Avensis",
+    "Yaris",
+    "Hiace",
+    "Alphard",
+    "Voxy",
+    "Noah"
+  ],
+  "Nissan": [
+    "X-Trail",
+    "Patrol",
+    "Navara",
+    "Sunny",
+    "Almera",
+    "Teana",
+    "Cefiro",
+    "Skyline",
+    "Tiida",
+    "Wingroad",
+    "Urvan",
+    "Serena",
+    "Qashqai",
+    "Juke",
+    "Murano",
+    "Pathfinder"
+  ],
+  "Honda": [
+    "Civic",
+    "Accord",
+    "CR-V",
+    "Fit",
+    "Vezel",
+    "Odyssey",
+    "Stepwgn",
+    "Freed",
+    "Airwave"
+  ],
+  "Mitsubishi": [
+    "Pajero",
+    "Lancer",
+    "Outlander",
+    "Triton",
+    "RVR",
+    "ASX",
+    "Galant"
+  ],
+  "Mazda": [
+    "Demio",
+    "CX-5",
+    "Atenza",
+    "Mazda3",
+    "Mazda6",
+    "CX-3",
+    "BT-50"
+  ],
+  "Subaru": [
+    "Forester",
+    "Outback",
+    "Impreza",
+    "Legacy",
+    "XV"
+  ],
+  "Mercedes-Benz": [
+    "C-Class",
+    "E-Class",
+    "S-Class",
+    "ML-Class",
+    "GLE",
+    "GL-Class"
+  ],
+  "BMW": [
+    "3 Series",
+    "5 Series",
+    "X3",
+    "X5"
+  ],
+  "Land Rover": [
+    "Defender",
+    "Discovery",
+    "Range Rover",
+    "Range Rover Sport",
+    "Freelander"
+  ],
+  "Isuzu": [
+    "D-Max",
+    "MU-X"
+  ],
+  "Volkswagen": [
+    "Golf",
+    "Passat",
+    "Tiguan"
+  ],
+  "Audi": [
+    "A4",
+    "Q5",
+    "Q7"
+  ],
+  "Ford": [
+    "F-150",
+    "Ranger",
+    "Explorer",
+    "Escape",
+    "Focus"
+  ],
+  "Chevrolet": [
+    "Silverado",
+    "Cruze",
+    "Malibu"
+  ],
+  "Hyundai": [
+    "Tucson",
+    "Santa Fe",
+    "Elantra"
+  ],
+  "Kia": [
+    "Sportage",
+    "Sorento",
+    "Cerato"
+  ],
+  "Peugeot": [
+    "208",
+    "308",
+    "508"
+  ],
+  "Renault": [
+    "Clio",
+    "Megane",
+    "Duster"
+  ],
+  "Suzuki": [
+    "Swift",
+    "Vitara",
+    "Jimny"
+  ],
+  "Volvo": [
+    "XC60",
+    "XC90",
+    "S60"
+  ],
+  "Lexus": [
+    "NX200T"
+  ]
+}

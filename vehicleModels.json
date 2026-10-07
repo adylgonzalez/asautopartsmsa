@@ -23,7 +23,9 @@
     "All Models",
     "Aurion",
     "Avalon",
-    "ES350"
+    "ES350",
+    "Prius",
+    "Matrix"
   ],
   "Nissan": [
     "X-Trail",
@@ -155,5 +157,8 @@
     "XC60",
     "XC90",
     "S60"
+  ],
+  "Lexus": [
+    "CT200H"
   ]
 }

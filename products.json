@@ -291,7 +291,7 @@
     "brand": "Gates",
     "partNo": "13568-09070",
     "oem": "13568-09070",
-    "application": "",
+    "application": "Toyota Land Cruiser 100, Prado, Sequoia, Tundra, 4Runner | Lexus LX470, GX470",
     "description": "Complete timing belt kit with tensioner.This timing belt is engineered for heavy-duty Toyota and Lexus V8 engines, specifically the highly reliable 4.7L 2UZ-FE (and select 4.0L/4.3L variations)",
     "vehicleMake": "Toyota, Lexus",
     "vehicleModel": "Land Cruiser 100, Prado, Sequoia, Tundra, 4Runner, LX470, GX470",
@@ -302,7 +302,26 @@
     "availability": "in_stock",
     "supercedes": "13568-59095",
     "priceMin": null,
-    "priceMax": null
+    "priceMax": null,
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Land Cruiser 100",
+          "Prado",
+          "Sequoia",
+          "Tundra",
+          "4Runner"
+        ]
+      },
+      {
+        "make": "Lexus",
+        "models": [
+          "LX470",
+          "GX470"
+        ]
+      }
+    ]
   },
   {
     "name": "Water Pump - Toyota",

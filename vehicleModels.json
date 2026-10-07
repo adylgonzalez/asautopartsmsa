@@ -5,11 +5,6 @@
     "RAV4",
     "Land Cruiser",
     "Hilux",
-    "Land Cruiser 100",
-    "Prado",
-    "Sequoia",
-    "Tundra",
-    "4Runner",
     "Prado",
     "Fortuner",
     "Harrier",
@@ -25,14 +20,7 @@
     "Alphard",
     "Voxy",
     "Noah",
-    "Prius",
-    "Matrix",
-    "Aurion",
-    "Avalon",
-    "Land Cruiser 100",
-    "Sequoia",
-    "Tundra",
-    "4Runner",
+    "All Models"
   ],
   "Nissan": [
     "X-Trail",
@@ -164,15 +152,5 @@
     "XC60",
     "XC90",
     "S60"
-  ],
-  "Lexus": [
-    "NX200T",
-    "CT200H",
-    "ES350",
-    "LX470",
-    "GX470",
-    "IS250",
-    "IS300",
-    "IS350"
   ]
 }

@@ -2011,6 +2011,8 @@ async function checkoutCart(brother){
         const st = normalizeStock(item.availability);
         const statusTag = st === STOCK_ON_ORDER ? '[Shipped on Order ~2 weeks]' : '[In Stock]';
         message += `📦 ${item.name} ${statusTag}\n`;
+        if(item.partNo || item.oem) message += `   Part No: ${item.partNo || item.oem}\n`;
+        if(item.brand) message += `   Brand: ${item.brand}\n`;
         const mode = getPriceMode(item);
         if(mode === PRICE_ON_REQUEST){
             message += `   Price: On request\n`;
@@ -2064,20 +2066,23 @@ async function checkoutCart(brother){
         hasOnOrderItems: hasOnOrder,
         hasQuoteItems: hasQuote,
         fixedItemsTotal: totals.fixedTotal,
-        items: cart.map(i => {
-            const mode = getPriceMode(i);
-            return {
-                name: i.name,
-                sku: i.sku,
-                price: mode === PRICE_FIXED ? i.price : null,
-                priceMode: mode,
-                priceMin: mode === PRICE_RANGE ? (Number(i.priceMin) || 0) : null,
-                priceMax: mode === PRICE_RANGE ? (Number(i.priceMax) || 0) : null,
-                quantity: i.quantity,
-                subtotal: mode === PRICE_FIXED ? ((Number(i.price) || 0) * i.quantity) : null,
-                availability: normalizeStock(i.availability)
-            };
-        }),
+       items: cart.map(i => {
+    const mode = getPriceMode(i);
+    return {
+        name: i.name,
+        sku: i.sku,
+        partNo: i.partNo || i.oem || '',
+        brand: i.brand || '',
+        image: i.image || '',
+        price: mode === PRICE_FIXED ? i.price : null,
+        priceMode: mode,
+        priceMin: mode === PRICE_RANGE ? (Number(i.priceMin) || 0) : null,
+        priceMax: mode === PRICE_RANGE ? (Number(i.priceMax) || 0) : null,
+        quantity: i.quantity,
+        subtotal: mode === PRICE_FIXED ? ((Number(i.price) || 0) * i.quantity) : null,
+        availability: normalizeStock(i.availability)
+    };
+}),
         total: totals.fixedTotal
     };
 
@@ -3030,27 +3035,34 @@ function renderOrdersList(){
     }
     let html = '';
     cachedOrders.forEach(o => {
-        const itemsLines = (o.items||[]).map(i => {
-            const st = normalizeStock(i.availability);
-            const tag = st === STOCK_ON_ORDER ? ' <span class="cart-item-status on-order">Shipped on Order</span>' : ' <span class="cart-item-status in-stock">In Stock</span>';
-            const pmode = normalizePriceMode(i.priceMode);
-            let priceText;
-            if(pmode === PRICE_ON_REQUEST){
-                priceText = '<span class="cart-item-status quote">On request</span>';
-            } else if(pmode === PRICE_RANGE){
-                const mn = Number(i.priceMin)||0, mx = Number(i.priceMax)||0;
-                let rTxt;
-                if(!mn && !mx) rTxt = 'On request';
-                else if(!mn) rTxt = `Up to ${formatPrice(mx)}`;
-                else if(!mx) rTxt = `From ${formatPrice(mn)}`;
-                else if(mn === mx) rTxt = formatPrice(mn);
-                else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
-                priceText = `<span class="cart-item-status quote">${escapeAttr(rTxt)}</span>`;
-            } else {
-                priceText = formatPrice(i.subtotal);
-            }
-            return `• ${escapeAttr(i.name)}${tag} × ${i.quantity} — ${priceText}`;
-        }).join('<br>');
+    const itemsLines = (o.items||[]).map(i => {
+    const st = normalizeStock(i.availability);
+    const tag = st === STOCK_ON_ORDER
+        ? ' <span class="cart-item-status on-order">Shipped on Order</span>'
+        : ' <span class="cart-item-status in-stock">In Stock</span>';
+    const pmode = normalizePriceMode(i.priceMode);
+    let priceText;
+    if(pmode === PRICE_ON_REQUEST){
+        priceText = '<span class="cart-item-status quote">On request</span>';
+    } else if(pmode === PRICE_RANGE){
+        const mn = Number(i.priceMin)||0, mx = Number(i.priceMax)||0;
+        let rTxt;
+        if(!mn && !mx) rTxt = 'On request';
+        else if(!mn) rTxt = `Up to ${formatPrice(mx)}`;
+        else if(!mx) rTxt = `From ${formatPrice(mn)}`;
+        else if(mn === mx) rTxt = formatPrice(mn);
+        else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
+        priceText = `<span class="cart-item-status quote">${escapeAttr(rTxt)}</span>`;
+    } else {
+        priceText = formatPrice(i.subtotal);
+    }
+    const partNo = i.partNo || i.sku || '—';
+    const brand = i.brand || '—';
+    return `• <strong>${escapeAttr(i.name)}</strong>${tag}<br>
+        &nbsp;&nbsp;<span style="color:#1565c0;">Part No:</span> <strong>${escapeAttr(partNo)}</strong>
+        &nbsp;|&nbsp; <span style="color:#1565c0;">Brand:</span> <strong>${escapeAttr(brand)}</strong><br>
+        &nbsp;&nbsp;× ${i.quantity} — ${priceText}`;
+}).join('<br><br>');
         const notes = [];
         if(o.hasOnOrderItems) notes.push('⚠️ Contains Shipped on Order items — 50% deposit required');
         if(o.hasQuoteItems) notes.push('ℹ️ Contains quote items — confirm final prices');
@@ -3152,26 +3164,37 @@ function buildReceiptText(o){
 function printOrder(id){
     const o = findOrderById(id);
     if(!o){ alert('Order not found'); return; }
-    const itemsRows = (o.items||[]).map(i => {
-        const st = normalizeStock(i.availability);
-        const tag = st === STOCK_ON_ORDER ? '<br><small style="color:#e65100;font-weight:700;">Shipped on Order ~2 weeks</small>' : '';
-        const pmode = normalizePriceMode(i.priceMode);
-        let priceCell, subtotalCell;
-        if(pmode === PRICE_ON_REQUEST){
-            priceCell = 'On request'; subtotalCell = '—';
-        } else if(pmode === PRICE_RANGE){
-            const mn = Number(i.priceMin)||0, mx = Number(i.priceMax)||0;
-            let rTxt;
-            if(!mn && !mx) rTxt = 'On request';
-            else if(!mn) rTxt = `Up to ${formatPrice(mx)}`;
-            else if(!mx) rTxt = `From ${formatPrice(mn)}`;
-            else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
-            priceCell = rTxt; subtotalCell = '—';
-        } else {
-            priceCell = formatPrice(i.price); subtotalCell = formatPrice(i.subtotal);
-        }
-        return `<tr><td>${escapeHtml(i.name)}${tag}</td><td style="text-align:center">${i.quantity}</td><td style="text-align:right">${priceCell}</td><td style="text-align:right">${subtotalCell}</td></tr>`;
-    }).join('');
+ const itemsRows = (o.items||[]).map(i => {
+    const st = normalizeStock(i.availability);
+    const tag = st === STOCK_ON_ORDER ? '<br><small style="color:#e65100;font-weight:700;">Shipped on Order ~2 weeks</small>' : '';
+    const pmode = normalizePriceMode(i.priceMode);
+    let priceCell, subtotalCell;
+    if(pmode === PRICE_ON_REQUEST){
+        priceCell = 'On request'; subtotalCell = '—';
+    } else if(pmode === PRICE_RANGE){
+        const mn = Number(i.priceMin)||0, mx = Number(i.priceMax)||0;
+        let rTxt;
+        if(!mn && !mx) rTxt = 'On request';
+        else if(!mn) rTxt = `Up to ${formatPrice(mx)}`;
+        else if(!mx) rTxt = `From ${formatPrice(mn)}`;
+        else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
+        priceCell = rTxt; subtotalCell = '—';
+    } else {
+        priceCell = formatPrice(i.price); subtotalCell = formatPrice(i.subtotal);
+    }
+    const partNo = i.partNo || i.sku || '';
+    const brand = i.brand || '';
+    const subline = [partNo ? `Part No: ${escapeHtml(partNo)}` : '', brand ? `Brand: ${escapeHtml(brand)}` : ''].filter(Boolean).join(' · ');
+    return `<tr>
+        <td>
+            ${escapeHtml(i.name)}${tag}
+            ${subline ? `<br><small style="color:#555;font-size:11px;">${subline}</small>` : ''}
+        </td>
+        <td style="text-align:center">${i.quantity}</td>
+        <td style="text-align:right">${priceCell}</td>
+        <td style="text-align:right">${subtotalCell}</td>
+    </tr>`;
+}).join('');
     const notesArr = [];
     if(o.hasOnOrderItems) notesArr.push('Items marked Shipped on Order require a 50% deposit and arrive in ~2 weeks.');
     if(o.hasQuoteItems) notesArr.push('Some items require a quote — final prices will be confirmed.');

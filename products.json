@@ -100,8 +100,8 @@
       "https://adylgonzalez.github.io/asautopartsmsa/images/air-filter-toyota-1789585250220.jpg"
     ],
     "brand": "DENSO",
-    "partNo": "17801-0D050",
-    "oem": "17801-0D050",
+    "partNo": "17801-22020",
+    "oem": "17801-22020",
     "application": "",
     "description": "fits various early-to-mid 2000s Toyota models equipped with 1.4L, 1.6L, 1.8L, 2.0L, or 2.4L engines",
     "vehicleMake": "Toyota",
@@ -111,7 +111,7 @@
     "sku": "AF-TY-ALL",
     "stock": 50,
     "availability": "in_stock",
-    "supercedes": "17801-22020, 17801-0D010",
+    "supercedes": "17801-0D050, 17801-0D010",
     "priceMin": null,
     "priceMax": null
   },

@@ -101,7 +101,7 @@
         .product-name{font-weight:700;color:#333;margin-bottom:10px;font-size:18px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;min-height:2.6em}
         .product-oem{background:#fff3e0;color:#e65100;padding:5px 10px;border-radius:3px;font-size:12px;margin-bottom:10px;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
         .product-description{color:#666;font-size:14px;margin-bottom:10px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;min-height:4.2em}
-        .product-vehicle-info{background:#f0f0f0;padding:8px;border-radius:5px;margin-bottom:10px;font-size:13px;color:#555;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;min-height:3.2em}
+        .product-vehicle-info{background:#f0f0f0;padding:8px;border-radius:5px;margin-bottom:10px;font-size:13px;color:#555;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;min-height:3.2em}
         .product-brand{background:#1a237e;color:#fff;display:inline-block;padding:5px 15px;border-radius:5px;font-size:14px;margin-bottom:10px;align-self:center}
         .product-supercedes{background:#e8eaf6;color:#3949ab;padding:5px 10px;border-radius:4px;font-size:11px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:5px;justify-content:center;line-height:1.3}
         .product-price{color:#ff6f00;font-size:24px;font-weight:700;margin:15px 0 5px;flex-shrink:0}
@@ -187,22 +187,33 @@
         .combo-wrap .combo-new-input.show{display:block}
         .combo-wrap .combo-hint{font-size:11px;color:#888;margin-top:4px}
 
-        /* Multi-select chip widget */
-        .ms-wrap{position:relative;margin:5px 0 15px}
-        .ms-wrap label{font-size:13px;font-weight:700;display:block;margin-bottom:4px}
-        .ms-box{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:42px;padding:6px 8px;border:1px solid #ccc;border-radius:5px;background:#fff;cursor:text;transition:border-color .2s}
-        .ms-box:focus-within{border-color:#1a237e;box-shadow:0 0 0 2px rgba(26,35,126,.1)}
-        .ms-chip{display:inline-flex;align-items:center;gap:5px;background:#1a237e;color:#fff;padding:4px 10px;border-radius:15px;font-size:12px;font-weight:700;max-width:100%}
-        .ms-chip .ms-chip-remove{background:rgba(255,255,255,.25);color:#fff;border:none;border-radius:50%;width:16px;height:16px;cursor:pointer;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
-        .ms-chip .ms-chip-remove:hover{background:#f44336}
-        .ms-input{flex:1;min-width:110px;border:none;outline:none;padding:4px;font-size:14px;background:transparent}
-        .ms-dropdown{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #1a237e;border-radius:0 0 5px 5px;max-height:220px;overflow-y:auto;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,.15)}
-        .ms-dropdown.open{display:block}
-        .ms-option{padding:8px 12px;cursor:pointer;font-size:13px;border-bottom:1px solid #f0f0f0;transition:background .15s}
-        .ms-option:hover{background:#f0f4ff}
-        .ms-option.add-new{color:#2e7d32;font-weight:700;background:#e8f5e9}
-        .ms-option.add-new:hover{background:#c8e6c9}
-        .ms-hint{font-size:11px;color:#888;margin-top:4px}
+        /* === VEHICLE FITMENTS WIDGET === */
+        .fit-wrap{background:#f8f9ff;border:2px dashed #c5cae9;border-radius:8px;padding:14px;margin:10px 0}
+        .fit-wrap > label{font-size:13px;font-weight:700;display:block;margin-bottom:10px;color:#1a237e}
+        .fit-row{display:flex;gap:8px;align-items:flex-start;background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:10px;margin-bottom:8px}
+        .fit-row-make{flex:0 0 170px;min-width:120px}
+        .fit-row-models{flex:1;min-width:0}
+        .fit-row-remove{flex-shrink:0;background:#f44336;color:#fff;border:none;border-radius:6px;width:34px;height:34px;cursor:pointer;font-size:14px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
+        .fit-row-remove:hover{background:#d32f2f}
+        .fit-make-select{width:100%;padding:8px 10px;border:1px solid #ccc;border-radius:5px;font-size:13px;font-weight:700;background:#fff;cursor:pointer}
+        .fit-models-box{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:38px;padding:5px 6px;border:1px solid #ccc;border-radius:5px;background:#fff;cursor:text}
+        .fit-models-box:focus-within{border-color:#1a237e;box-shadow:0 0 0 2px rgba(26,35,126,.1)}
+        .fit-chip{display:inline-flex;align-items:center;gap:5px;background:#1a237e;color:#fff;padding:3px 9px;border-radius:14px;font-size:12px;font-weight:700;max-width:100%}
+        .fit-chip-remove{background:rgba(255,255,255,.25);color:#fff;border:none;border-radius:50%;width:15px;height:15px;cursor:pointer;font-size:9px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
+        .fit-chip-remove:hover{background:#f44336}
+        .fit-models-input{flex:1;min-width:90px;border:none;outline:none;padding:3px;font-size:13px;background:transparent}
+        .fit-models-drop{position:relative}
+        .fit-models-menu{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #1a237e;border-radius:0 0 5px 5px;max-height:200px;overflow-y:auto;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+        .fit-models-menu.open{display:block}
+        .fit-models-option{padding:7px 11px;cursor:pointer;font-size:12px;border-bottom:1px solid #f0f0f0}
+        .fit-models-option:hover{background:#f0f4ff}
+        .fit-models-option.add-new{color:#2e7d32;font-weight:700;background:#e8f5e9}
+        .fit-models-option.add-new:hover{background:#c8e6c9}
+        .fit-add-row{margin-top:6px;padding:10px 16px;background:#4caf50;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+        .fit-add-row:hover{background:#388e3c}
+        .fit-hint{font-size:11px;color:#888;margin-top:8px}
+        .fit-make-new{display:none;margin-top:4px;width:100%;padding:8px;border:2px solid #4caf50;border-radius:5px;font-size:13px}
+        .fit-make-new.show{display:block}
 
         .category-grid .extra-category{display:none}
         .category-grid.expanded .extra-category{display:block}
@@ -706,7 +717,7 @@
         </div>
     </div>
     <div class="footer"><p>&copy; 2024 A & S AUTOPARTS - Mombasa, Kenya</p><p>ADIL: 0713349554 | SUHAYL: 0752763924</p></div>
-    <button class="admin-btn" onclick="openAdminPanel()">🔧</button>
+    <button class="admin-btn" onclick="openAdminPanel()">🔧 Admin Panel</button>
     <button class="back-to-top" id="backToTopBtn" onclick="scrollToTop()" title="Back to top"><i class="fas fa-arrow-up"></i></button>
 
     <button class="floating-cart" id="floatingCartBtn" onclick="viewCart()" title="Open cart">
@@ -1044,18 +1055,54 @@ function findParts(){
         return;
     }
     saveVehicleToGarage(year, make, model);
-    const filtered = products.filter(p => {
-        if(p.vehicleMake === "Universal") return true;
-        // support multi-make products: "Toyota, Nissan"
-        const pMakes = String(p.vehicleMake || '').split(',').map(s=>s.trim().toLowerCase());
-        if(!pMakes.includes(make.toLowerCase())) return false;
-        if(!modelMatches(p.vehicleModel, model)) return false;
-        if(p.yearStart > 0 && p.yearEnd > 0){
-            return year >= p.yearStart && year <= p.yearEnd;
-        }
-        return true;
-    });
+    const filtered = products.filter(p => productMatchesFitment(p, make, model, year));
     displayFilteredProducts(filtered, `Parts for ${year} ${make} ${model}`);
+}
+
+// ==================== FITMENTS HELPERS ====================
+function normalizeFitments(product){
+    // Returns an array of {make, models: []} regardless of storage format.
+    if(Array.isArray(product.fitments) && product.fitments.length > 0){
+        return product.fitments.map(f => ({
+            make: String(f.make || '').trim(),
+            models: Array.isArray(f.models) ? f.models.map(m => String(m || '').trim()).filter(Boolean) : []
+        })).filter(f => f.make);
+    }
+    // Fallback to legacy flat format
+    const mk = String(product.vehicleMake || '').split(',').map(s => s.trim()).filter(Boolean);
+    const md = String(product.vehicleModel || '').split(',').map(s => s.trim()).filter(Boolean);
+    if(mk.length === 0) return [];
+    // Legacy pairing is ambiguous. Best-guess: each make gets ALL models.
+    return mk.map(m => ({ make: m, models: md.slice() }));
+}
+
+function productMatchesFitment(product, make, model, year){
+    const fitments = normalizeFitments(product);
+    if(fitments.length === 0) return false;
+    const selMake = String(make || '').toLowerCase();
+    const selModel = String(model || '').toLowerCase();
+    const selYear = parseInt(year) || 0;
+    // Year check (if product specifies)
+    const yStart = parseInt(product.yearStart) || 0;
+    const yEnd = parseInt(product.yearEnd) || 0;
+    if(selYear && yStart > 0 && yEnd > 0){
+        if(selYear < yStart || selYear > yEnd) return false;
+    }
+    // Fitment check
+    return fitments.some(f => {
+        const fMake = String(f.make || '').toLowerCase();
+        if(fMake === 'universal'){
+            // Universal fits anything
+            const models = (f.models || []).map(x => x.toLowerCase());
+            if(models.length === 0 || models.includes('all models')) return true;
+            return models.includes(selModel);
+        }
+        if(fMake !== selMake) return false;
+        const models = (f.models || []).map(x => x.toLowerCase());
+        if(models.length === 0) return true; // make matches, no model restriction
+        if(models.includes('all models')) return true;
+        return models.includes(selModel);
+    });
 }
 
 // ==================== ADMIN-ONLY: COMBO WITH "ADD NEW" ====================
@@ -1084,187 +1131,215 @@ function getAdminComboValue(idPrefix){
     return sel.value;
 }
 
-// ==================== MULTI-SELECT CHIP WIDGET ====================
-const msState = {}; // { key: { values: [] } }
+// ==================== VEHICLE FITMENTS WIDGET ====================
+const fitmentsState = {}; // { widgetKey: [ {make, models: []} ] }
 
-function msInit(key, initialValues){
-    if(!msState[key]) msState[key] = { values: [] };
-    if(initialValues && msState[key].values.length === 0 && !msState[key].initialized){
-        msState[key].values = initialValues.slice();
-        msState[key].initialized = true;
+function fitmentsInit(widgetKey, initial){
+    if(!fitmentsState[widgetKey]) fitmentsState[widgetKey] = { rows: [], initialized: false };
+    if(initial && !fitmentsState[widgetKey].initialized){
+        fitmentsState[widgetKey].rows = initial.map(f => ({ make: f.make, models: (f.models || []).slice() }));
+        fitmentsState[widgetKey].initialized = true;
     }
 }
 
-function buildMultiSelectHTML(key, label, initialValues, sourceFn, placeholder){
-    const initial = Array.isArray(initialValues)
-        ? initialValues
-        : (initialValues ? String(initialValues).split(',').map(s=>s.trim()).filter(Boolean) : []);
-    msInit(key, initial);
+function buildFitmentsWidget(widgetKey, initial){
+    fitmentsInit(widgetKey, initial);
     return `
-        <div class="ms-wrap" data-ms="${key}">
-            <label>${escapeAttr(label)}</label>
-            <div class="ms-box" id="msBox_${key}" onclick="document.getElementById('msInput_${key}').focus()">
-                <input type="text" class="ms-input" id="msInput_${key}"
-                    placeholder="${escapeAttr(placeholder || 'Type to add…')}"
-                    oninput="msFilter('${key}')"
-                    onfocus="msOpen('${key}')"
-                    onblur="setTimeout(()=>msClose('${key}'), 200)"
-                    onkeydown="msKeydown(event, '${key}')">
-            </div>
-            <div class="ms-dropdown" id="msDrop_${key}"></div>
-            <div class="ms-hint">Click a suggestion, or press Enter to add a new one. Click ✕ on a chip to remove.</div>
+        <div class="fit-wrap" data-fit="${widgetKey}">
+            <label>Vehicle Fitments</label>
+            <div id="fitRows_${widgetKey}"></div>
+            <button type="button" class="fit-add-row" onclick="fitmentsAddRow('${widgetKey}')"><i class="fas fa-plus"></i> Add another make</button>
+            <div class="fit-hint">Each row groups one make with the models that fit it. Press Enter to add a model chip.</div>
         </div>
     `;
 }
 
-function msRenderChips(key){
-    const box = document.getElementById('msBox_' + key);
-    if(!box) return;
-    const input = document.getElementById('msInput_' + key);
-    // remove existing chips
-    box.querySelectorAll('.ms-chip').forEach(el => el.remove());
-    const values = (msState[key] && msState[key].values) || [];
-    // insert chips before the input
-    values.forEach((v, i) => {
-        const chip = document.createElement('span');
-        chip.className = 'ms-chip';
-        chip.innerHTML = `${escapeAttr(v)} <button type="button" class="ms-chip-remove" onclick="msRemoveChip('${key}', ${i});event.stopPropagation();">✕</button>`;
-        box.insertBefore(chip, input);
-    });
-}
-
-function msRemoveChip(key, index){
-    if(!msState[key]) return;
-    msState[key].values.splice(index, 1);
-    msRenderChips(key);
-}
-
-function msAddValue(key, val){
-    if(!val) return;
-    val = String(val).trim();
-    if(!val) return;
-    if(!msState[key]) msState[key] = { values: [] };
-    if(!msState[key].values.includes(val)){
-        msState[key].values.push(val);
-        msRenderChips(key);
+function fitmentsRenderAll(widgetKey){
+    const container = document.getElementById('fitRows_' + widgetKey);
+    if(!container) return;
+    const state = fitmentsState[widgetKey] || { rows: [] };
+    if(state.rows.length === 0){
+        container.innerHTML = `<div style="color:#999;font-size:12px;padding:8px 0;text-align:center;">No fitments yet — click "Add another make" below.</div>`;
+        return;
     }
-    const input = document.getElementById('msInput_' + key);
-    if(input) input.value = '';
-    msClose(key);
-}
-
-function msSourceValues(key){
-    // Determines candidate list based on widget key.
-    // Widgets: new_vmake, new_vmodel, edit_vmake_<idx>, edit_vmodel_<idx>
-    if(key === 'new_vmake' || key.startsWith('edit_vmake_')){
-        return Object.keys(vehicleModels).sort((a,b)=>a.localeCompare(b));
-    }
-    if(key === 'new_vmodel' || key.startsWith('edit_vmodel_')){
-        // For edit widgets, try to read the make from the associated make widget
-        let make = '';
-        if(key.startsWith('edit_vmodel_')){
-            const idx = key.split('_').pop();
-            const makeKey = 'edit_vmake_' + idx;
-            const m = (msState[makeKey] && msState[makeKey].values) || [];
-            make = m[0] || '';
-        } else {
-            const m = (msState['new_vmake'] && msState['new_vmake'].values) || [];
-            make = m[0] || '';
-        }
-        const pool = new Set();
-        if(make && vehicleModels[make]){
-            vehicleModels[make].forEach(x => pool.add(x));
-        } else {
-            Object.values(vehicleModels).forEach(arr => arr.forEach(x => pool.add(x)));
-        }
-        return [...pool].sort((a,b)=>a.localeCompare(b));
-    }
-    return [];
-}
-
-function msOpen(key){
-    msRenderDropdown(key, '');
-}
-
-function msClose(key){
-    const drop = document.getElementById('msDrop_' + key);
-    if(drop){ drop.classList.remove('open'); drop.innerHTML = ''; }
-}
-
-function msFilter(key){
-    const input = document.getElementById('msInput_' + key);
-    const q = (input ? input.value : '').trim();
-    msRenderDropdown(key, q);
-}
-
-function msRenderDropdown(key, query){
-    const drop = document.getElementById('msDrop_' + key);
-    if(!drop) return;
-    const values = (msState[key] && msState[key].values) || [];
-    const source = msSourceValues(key).filter(v => !values.includes(v));
-    const q = (query || '').toLowerCase();
-    const filtered = q ? source.filter(v => v.toLowerCase().includes(q)) : source;
+    const makes = Object.keys(vehicleModels).sort((a,b)=>a.localeCompare(b));
     let html = '';
-    filtered.slice(0, 50).forEach(v => {
-        html += `<div class="ms-option" onmousedown="event.preventDefault();" onclick="msAddValue('${key}', '${escapeAttr(v).replace(/'/g,"\\'")}')">${escapeAttr(v)}</div>`;
+    state.rows.forEach((row, i) => {
+        const models = makes.includes(row.make) ? [...vehicleModels[row.make]].sort((a,b)=>a.localeCompare(b)) : [];
+        const makeOpts = makes.map(m => `<option value="${escapeAttr(m)}"${m === row.make ? ' selected' : ''}>${escapeAttr(m)}</option>`).join('');
+        const isNewMake = !row.make || !makes.includes(row.make);
+        const makeSelectHTML = isNewMake
+            ? `<select class="fit-make-select" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)">
+                  <option value="">— Select make —</option>
+                  ${makeOpts}
+                  <option value="__ADD_NEW__">➕ Add new make…</option>
+               </select>
+               <input type="text" class="fit-make-new show" value="${escapeAttr(row.make || '')}" placeholder="Type new make and press Enter" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();fitmentsMakeChange('${widgetKey}', ${i}, this.value);}">`
+            : `<select class="fit-make-select" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)">
+                  <option value="">— Select make —</option>
+                  ${makeOpts}
+                  <option value="__ADD_NEW__">➕ Add new make…</option>
+               </select>
+               <input type="text" class="fit-make-new" placeholder="Type new make and press Enter" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();fitmentsMakeChange('${widgetKey}', ${i}, this.value);}">`;
+
+        html += `
+            <div class="fit-row" data-row="${i}">
+                <div class="fit-row-make">
+                    ${makeSelectHTML}
+                </div>
+                <div class="fit-row-models">
+                    <div class="fit-models-drop">
+                        <div class="fit-models-box" id="fitModelsBox_${widgetKey}_${i}" onclick="document.getElementById('fitModelsInput_${widgetKey}_${i}').focus()">
+                            ${(row.models || []).map((md, mi) => `
+                                <span class="fit-chip">${escapeAttr(md)} <button type="button" class="fit-chip-remove" onclick="fitmentsRemoveModel('${widgetKey}', ${i}, ${mi});event.stopPropagation();">✕</button></span>
+                            `).join('')}
+                            <input type="text" class="fit-models-input" id="fitModelsInput_${widgetKey}_${i}"
+                                placeholder="Type model or press Enter…"
+                                oninput="fitmentsFilterModels('${widgetKey}', ${i})"
+                                onfocus="fitmentsOpenModels('${widgetKey}', ${i})"
+                                onblur="setTimeout(()=>fitmentsCloseModels('${widgetKey}', ${i}), 200)"
+                                onkeydown="fitmentsModelsKeydown(event, '${widgetKey}', ${i})">
+                        </div>
+                        <div class="fit-models-menu" id="fitModelsMenu_${widgetKey}_${i}"></div>
+                    </div>
+                </div>
+                <button type="button" class="fit-row-remove" onclick="fitmentsRemoveRow('${widgetKey}', ${i})" title="Remove this row">✕</button>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+
+function fitmentsAddRow(widgetKey){
+    if(!fitmentsState[widgetKey]) fitmentsState[widgetKey] = { rows: [], initialized: true };
+    fitmentsState[widgetKey].rows.push({ make: '', models: [] });
+    fitmentsRenderAll(widgetKey);
+}
+
+function fitmentsRemoveRow(widgetKey, rowIdx){
+    if(!fitmentsState[widgetKey]) return;
+    fitmentsState[widgetKey].rows.splice(rowIdx, 1);
+    fitmentsRenderAll(widgetKey);
+}
+
+function fitmentsMakeChange(widgetKey, rowIdx, value){
+    if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return;
+    if(value === '__ADD_NEW__'){
+        // Show the "new make" text input for this row
+        const rowEl = document.querySelector(`[data-fit="${widgetKey}"] [data-row="${rowIdx}"]`);
+        if(rowEl){
+            const inp = rowEl.querySelector('.fit-make-new');
+            if(inp){ inp.classList.add('show'); inp.focus(); }
+        }
+        return;
+    }
+    fitmentsState[widgetKey].rows[rowIdx].make = value;
+    fitmentsRenderAll(widgetKey);
+    // Also try to autosave the make if it's brand new
+    // (we don't register to GitHub yet — that happens on Save)
+}
+
+function fitmentsRemoveModel(widgetKey, rowIdx, modelIdx){
+    if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return;
+    fitmentsState[widgetKey].rows[rowIdx].models.splice(modelIdx, 1);
+    fitmentsRenderAll(widgetKey);
+}
+
+function fitmentsSourceModels(widgetKey, rowIdx){
+    if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return [];
+    const row = fitmentsState[widgetKey].rows[rowIdx];
+    const make = row.make;
+    if(make && vehicleModels[make]){
+        return vehicleModels[make].slice().sort((a,b)=>a.localeCompare(b));
+    }
+    // no make chosen — pool all models
+    const pool = new Set();
+    Object.values(vehicleModels).forEach(arr => arr.forEach(m => pool.add(m)));
+    return [...pool].sort((a,b)=>a.localeCompare(b));
+}
+
+function fitmentsOpenModels(widgetKey, rowIdx){
+    fitmentsRenderModelsMenu(widgetKey, rowIdx, '');
+}
+
+function fitmentsCloseModels(widgetKey, rowIdx){
+    const menu = document.getElementById(`fitModelsMenu_${widgetKey}_${rowIdx}`);
+    if(menu){ menu.classList.remove('open'); menu.innerHTML = ''; }
+}
+
+function fitmentsFilterModels(widgetKey, rowIdx){
+    const input = document.getElementById(`fitModelsInput_${widgetKey}_${rowIdx}`);
+    const q = (input ? input.value : '').trim();
+    fitmentsRenderModelsMenu(widgetKey, rowIdx, q);
+}
+
+function fitmentsRenderModelsMenu(widgetKey, rowIdx, query){
+    const menu = document.getElementById(`fitModelsMenu_${widgetKey}_${rowIdx}`);
+    if(!menu) return;
+    const row = fitmentsState[widgetKey] && fitmentsState[widgetKey].rows[rowIdx];
+    if(!row) return;
+    const existing = row.models || [];
+    const source = fitmentsSourceModels(widgetKey, rowIdx).filter(m => !existing.includes(m));
+    const q = (query || '').toLowerCase();
+    const filtered = q ? source.filter(m => m.toLowerCase().includes(q)) : source;
+    let html = '';
+    filtered.slice(0, 50).forEach(m => {
+        html += `<div class="fit-models-option" onmousedown="event.preventDefault();" onclick="fitmentsAddModel('${widgetKey}', ${rowIdx}, '${escapeAttr(m).replace(/'/g,"\\'")}')">${escapeAttr(m)}</div>`;
     });
     const trimmed = (query || '').trim();
-    if(trimmed && !values.includes(trimmed) && !source.some(v => v.toLowerCase() === trimmed.toLowerCase())){
-        html += `<div class="ms-option add-new" onmousedown="event.preventDefault();" onclick="msAddValue('${key}', '${escapeAttr(trimmed).replace(/'/g,"\\'")}')">➕ Add "${escapeAttr(trimmed)}"</div>`;
+    if(trimmed && !existing.includes(trimmed) && !source.some(m => m.toLowerCase() === trimmed.toLowerCase())){
+        html += `<div class="fit-models-option add-new" onmousedown="event.preventDefault();" onclick="fitmentsAddModel('${widgetKey}', ${rowIdx}, '${escapeAttr(trimmed).replace(/'/g,"\\'")}')">➕ Add "${escapeAttr(trimmed)}"</div>`;
     }
     if(!html){
-        html = `<div class="ms-option" style="color:#999;cursor:default;">No matches — type to add new</div>`;
+        html = `<div class="fit-models-option" style="color:#999;cursor:default;">No matches — type to add new</div>`;
     }
-    drop.innerHTML = html;
-    drop.classList.add('open');
+    menu.innerHTML = html;
+    menu.classList.add('open');
 }
 
-function msKeydown(ev, key){
+function fitmentsAddModel(widgetKey, rowIdx, model){
+    if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return;
+    model = String(model || '').trim();
+    if(!model) return;
+    const row = fitmentsState[widgetKey].rows[rowIdx];
+    if(!row.models.includes(model)) row.models.push(model);
+    fitmentsRenderAll(widgetKey);
+    // Refocus input
+    setTimeout(() => {
+        const inp = document.getElementById(`fitModelsInput_${widgetKey}_${rowIdx}`);
+        if(inp) inp.focus();
+    }, 50);
+}
+
+function fitmentsModelsKeydown(ev, widgetKey, rowIdx){
     if(ev.key === 'Enter'){
         ev.preventDefault();
-        const input = document.getElementById('msInput_' + key);
+        const input = document.getElementById(`fitModelsInput_${widgetKey}_${rowIdx}`);
         const val = (input ? input.value : '').trim();
-        if(val) msAddValue(key, val);
-    } else if(ev.key === 'Backspace' && (!ev.target.value || ev.target.value === '')){
-        const values = (msState[key] && msState[key].values) || [];
-        if(values.length > 0){
-            values.pop();
-            msRenderChips(key);
-        }
+        if(val) fitmentsAddModel(widgetKey, rowIdx, val);
     } else if(ev.key === 'Escape'){
-        msClose(key);
+        fitmentsCloseModels(widgetKey, rowIdx);
     }
 }
 
-function msRead(key){
-    const values = (msState[key] && msState[key].values) || [];
-    return values.join(', ');
+function fitmentsRead(widgetKey){
+    const state = fitmentsState[widgetKey];
+    if(!state) return [];
+    return state.rows
+        .map(r => ({ make: String(r.make || '').trim(), models: (r.models || []).map(m => String(m || '').trim()).filter(Boolean) }))
+        .filter(r => r.make);
 }
 
-// ==================== END MULTI-SELECT ====================
-
-// Admin-only: register a new make/model into the shared vehicleModels map.
-// Splits on commas so "Toyota, Nissan" adds two separate makes and their models.
-function addMakeIfNew(make){
-    if(!make) return false;
-    const parts = String(make).split(',').map(s => s.trim()).filter(Boolean);
+function fitmentsApplyToVehicleModels(fitments){
+    // For each fitment row, add its make+models to the shared vehicleModels map
     let changed = false;
-    parts.forEach(m => {
-        if(!vehicleModels[m]){ vehicleModels[m] = []; changed = true; }
-    });
-    if(changed) saveVehicleModels();
-    return changed;
-}
-function addModelIfNew(make, model){
-    if(!make || !model) return false;
-    const makes = String(make).split(',').map(s => s.trim()).filter(Boolean);
-    const models = String(model).split(',').map(s => s.trim()).filter(Boolean);
-    let changed = false;
-    makes.forEach(mk => {
-        if(!vehicleModels[mk]){ vehicleModels[mk] = []; changed = true; }
-        models.forEach(md => {
-            if(!vehicleModels[mk].includes(md)){
-                vehicleModels[mk].push(md);
+    fitments.forEach(f => {
+        const make = f.make;
+        if(!make) return;
+        if(!vehicleModels[make]){ vehicleModels[make] = []; changed = true; }
+        (f.models || []).forEach(m => {
+            if(!vehicleModels[make].includes(m)){
+                vehicleModels[make].push(m);
                 changed = true;
             }
         });
@@ -1272,6 +1347,17 @@ function addModelIfNew(make, model){
     if(changed) saveVehicleModels();
     return changed;
 }
+
+function buildApplicationFromFitments(fitments){
+    if(!fitments || fitments.length === 0) return 'Universal';
+    const parts = fitments.map(f => {
+        const models = f.models && f.models.length > 0 ? f.models.join(', ') : '';
+        return models ? `${f.make} ${models}` : f.make;
+    });
+    return parts.join(' | ');
+}
+
+// ==================== END VEHICLE FITMENTS WIDGET ====================
 
 // ==================== VEHICLE DATABASES ====================
 const toyotaModelCodes = {
@@ -1455,23 +1541,23 @@ const audiModelCodes = {
 
 // ==================== DEFAULT PRODUCTS (fallback) ====================
 const defaultProducts = [
-    {name:"Brake Pads - Toyota Camry",price:4500,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-33470",partNo:"04465-33470",supercedes:"",application:"Toyota Camry 2018-2023",description:"Front brake pads for Toyota Camry. Ceramic compound for smooth stopping.",vehicleMake:"Toyota",vehicleModel:"Camry",yearStart:2018,yearEnd:2023,sku:"BP-TC-1823",stock:25,availability:"in_stock",priceMode:"fixed"},
-    {name:"Brake Pads - Toyota Corolla",price:3500,category:"Brakes",image:"🔧",brand:"Akebono",oem:"04465-02480",partNo:"04465-02480",supercedes:"04465-02470",application:"Toyota Corolla 2008-2023",description:"Front brake pads for Toyota Corolla. OEM quality.",vehicleMake:"Toyota",vehicleModel:"Corolla",yearStart:2008,yearEnd:2023,sku:"BP-TC-0823",stock:30,availability:"in_stock",priceMode:"fixed"},
-    {name:"Brake Pads - Toyota Hilux",price:5000,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-0K340",partNo:"04465-0K340",supercedes:"04465-0K290, 04465-0K291, 04465-0K292",application:"Toyota Hilux 2015-2023",description:"Heavy-duty brake pads for Toyota Hilux. Perfect for rough terrain.",vehicleMake:"Toyota",vehicleModel:"Hilux",yearStart:2015,yearEnd:2023,sku:"BP-TH-1523",stock:20,availability:"in_stock",priceMode:"fixed"},
-    {name:"Brake Pads - Toyota Land Cruiser",price:6200,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-60310",partNo:"04465-60310",supercedes:"",application:"Toyota Land Cruiser 2010-2023",description:"Heavy-duty brake pads for Land Cruiser. Maximum stopping power.",vehicleMake:"Toyota",vehicleModel:"Land Cruiser",yearStart:2010,yearEnd:2023,sku:"BP-TL-1023",stock:18,availability:"in_stock",priceMode:"fixed"},
-    {name:"Oil Filter - Toyota",price:1500,category:"Filters",image:"🔩",brand:"TOYOTA Genuine",oem:"90915-YZZD2",partNo:"90915-YZZD2",supercedes:"90915-YZZE1",application:"Toyota All Models",description:"Genuine Toyota oil filter. Traps 95% of contaminants.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OF-TY-ALL",stock:100,availability:"in_stock",priceMode:"fixed"},
-    {name:"Air Filter - Toyota",price:2200,category:"Filters",image:"💨",brand:"DENSO",oem:"17801-0D050",partNo:"17801-0D050",supercedes:"",application:"Toyota All Models",description:"Engine air filter for Toyota. Improves fuel efficiency.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"AF-TY-ALL",stock:50,availability:"in_stock",priceMode:"fixed"},
-    {name:"Spark Plugs - Toyota (4 Pack)",price:2800,category:"Electrical",image:"⚡",brand:"NGK",oem:"90919-01253",partNo:"90919-01253",supercedes:"",application:"Toyota All Models",description:"Iridium spark plugs for Toyota. Better combustion and performance.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"SP-TY-ALL",stock:60,availability:"in_stock",priceMode:"fixed"},
-    {name:"Engine Oil 5W-30 (4L) - Castrol",price:4800,category:"Oils & Fluids",image:"🛢️",brand:"Castrol",oem:"N/A",partNo:"N/A",supercedes:"",application:"Universal All Models",description:"Fully synthetic engine oil 5W-30. Ideal for most modern petrol and diesel engines.",vehicleMake:"Universal",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OIL-5W30-4L",stock:40,availability:"in_stock",priceMode:"fixed"},
-    {name:"Brake Pads - Honda Civic",price:3900,category:"Brakes",image:"🔧",brand:"ACDelco",oem:"45022-SNA-A01",partNo:"45022-SNA-A01",supercedes:"45022-SNA-A02",application:"Honda Civic 2016-2023",description:"Front brake pads for Honda Civic. Premium quality.",vehicleMake:"Honda",vehicleModel:"Civic",yearStart:2016,yearEnd:2023,sku:"BP-HC-1623",stock:25,availability:"in_stock",priceMode:"fixed"},
-    {name:"Oil Filter - Honda",price:1200,category:"Filters",image:"🔩",brand:"HONDA Genuine",oem:"15400-PLM-A01",partNo:"15400-PLM-A01",supercedes:"",application:"Honda All Models",description:"Genuine Honda oil filter. Perfect fit.",vehicleMake:"Honda",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OF-HN-ALL",stock:80,availability:"in_stock",priceMode:"fixed"},
-    {name:"Brake Pads - Nissan X-Trail",price:4200,category:"Brakes",image:"🔧",brand:"Akebono",oem:"D1060-JD00A",partNo:"D1060-JD00A",supercedes:"D1060-JD00B",application:"Nissan X-Trail 2010-2023",description:"Front brake pads for Nissan X-Trail. OEM specification.",vehicleMake:"Nissan",vehicleModel:"X-Trail",yearStart:2010,yearEnd:2023,sku:"BP-NX-1023",stock:20,availability:"in_stock",priceMode:"fixed"},
-    {name:"Brake Pads - Mitsubishi Pajero",price:5500,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"MR527678",partNo:"MR527678",supercedes:"",application:"Mitsubishi Pajero 2005-2023",description:"Front brake pads for Pajero. Heavy-duty.",vehicleMake:"Mitsubishi",vehicleModel:"Pajero",yearStart:2005,yearEnd:2023,sku:"BP-MP-0523",stock:15,availability:"in_stock",priceMode:"fixed"},
-    {name:"Oil Filter - Nissan",price:1300,category:"Filters",image:"🔩",brand:"NISSAN Genuine",oem:"15208-65F0A",partNo:"15208-65F0A",supercedes:"",application:"Nissan All Models",description:"Genuine Nissan oil filter.",vehicleMake:"Nissan",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"OF-NS-ALL",stock:70,availability:"in_stock",priceMode:"fixed"},
-    {name:"Universal Alternator",price:21000,category:"Electrical",image:"🔋",brand:"DENSO",oem:"27060-0T041",partNo:"27060-0T041",supercedes:"",application:"Universal All Models",description:"High-output alternator for various vehicles.",vehicleMake:"Universal",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"ALT-UNI-001",stock:8,availability:"in_stock",priceMode:"fixed"},
-    {name:"Timing Belt Kit - Toyota",price:14500,category:"Engine",image:"⛓️",brand:"Gates",oem:"13568-09070",partNo:"13568-09070",supercedes:"",application:"Toyota All Models",description:"Complete timing belt kit with tensioner.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"TB-TY-ALL",stock:12,availability:"in_stock",priceMode:"fixed"},
-    {name:"Water Pump - Toyota",price:8900,category:"Cooling",image:"💧",brand:"AISIN",oem:"16100-09280",partNo:"16100-09280",supercedes:"",application:"Toyota All Models",description:"High-quality water pump for Toyota.",vehicleMake:"Toyota",vehicleModel:"All Models",yearStart:0,yearEnd:0,sku:"WP-TY-ALL",stock:20,availability:"in_stock",priceMode:"fixed"},
-    {name:"Shock Absorber - Toyota Hilux",price:14500,category:"Suspension",image:"🛠️",brand:"KYB",oem:"48531-09885",partNo:"48531-09885",supercedes:"",application:"Toyota Hilux 2015-2023",description:"Front shock absorber for Hilux.",vehicleMake:"Toyota",vehicleModel:"Hilux",yearStart:2015,yearEnd:2023,sku:"SA-TH-1523",stock:10,availability:"in_stock",priceMode:"fixed"}
+    {name:"Brake Pads - Toyota Camry",price:4500,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-33470",partNo:"04465-33470",supercedes:"",application:"Toyota Camry 2018-2023",description:"Front brake pads for Toyota Camry. Ceramic compound for smooth stopping.",fitments:[{make:"Toyota",models:["Camry"]}],yearStart:2018,yearEnd:2023,sku:"BP-TC-1823",stock:25,availability:"in_stock",priceMode:"fixed"},
+    {name:"Brake Pads - Toyota Corolla",price:3500,category:"Brakes",image:"🔧",brand:"Akebono",oem:"04465-02480",partNo:"04465-02480",supercedes:"04465-02470",application:"Toyota Corolla 2008-2023",description:"Front brake pads for Toyota Corolla. OEM quality.",fitments:[{make:"Toyota",models:["Corolla"]}],yearStart:2008,yearEnd:2023,sku:"BP-TC-0823",stock:30,availability:"in_stock",priceMode:"fixed"},
+    {name:"Brake Pads - Toyota Hilux",price:5000,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-0K340",partNo:"04465-0K340",supercedes:"04465-0K290, 04465-0K291, 04465-0K292",application:"Toyota Hilux 2015-2023",description:"Heavy-duty brake pads for Toyota Hilux. Perfect for rough terrain.",fitments:[{make:"Toyota",models:["Hilux"]}],yearStart:2015,yearEnd:2023,sku:"BP-TH-1523",stock:20,availability:"in_stock",priceMode:"fixed"},
+    {name:"Brake Pads - Toyota Land Cruiser",price:6200,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-60310",partNo:"04465-60310",supercedes:"",application:"Toyota Land Cruiser 2010-2023",description:"Heavy-duty brake pads for Land Cruiser. Maximum stopping power.",fitments:[{make:"Toyota",models:["Land Cruiser"]}],yearStart:2010,yearEnd:2023,sku:"BP-TL-1023",stock:18,availability:"in_stock",priceMode:"fixed"},
+    {name:"Oil Filter - Toyota",price:1500,category:"Filters",image:"🔩",brand:"TOYOTA Genuine",oem:"90915-YZZD2",partNo:"90915-YZZD2",supercedes:"90915-YZZE1",application:"Toyota All Models",description:"Genuine Toyota oil filter. Traps 95% of contaminants.",fitments:[{make:"Toyota",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"OF-TY-ALL",stock:100,availability:"in_stock",priceMode:"fixed"},
+    {name:"Air Filter - Toyota",price:2200,category:"Filters",image:"💨",brand:"DENSO",oem:"17801-0D050",partNo:"17801-0D050",supercedes:"",application:"Toyota All Models",description:"Engine air filter for Toyota. Improves fuel efficiency.",fitments:[{make:"Toyota",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"AF-TY-ALL",stock:50,availability:"in_stock",priceMode:"fixed"},
+    {name:"Spark Plugs - Toyota (4 Pack)",price:2800,category:"Electrical",image:"⚡",brand:"NGK",oem:"90919-01253",partNo:"90919-01253",supercedes:"",application:"Toyota All Models",description:"Iridium spark plugs for Toyota. Better combustion and performance.",fitments:[{make:"Toyota",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"SP-TY-ALL",stock:60,availability:"in_stock",priceMode:"fixed"},
+    {name:"Engine Oil 5W-30 (4L) - Castrol",price:4800,category:"Oils & Fluids",image:"🛢️",brand:"Castrol",oem:"N/A",partNo:"N/A",supercedes:"",application:"Universal All Models",description:"Fully synthetic engine oil 5W-30. Ideal for most modern petrol and diesel engines.",fitments:[{make:"Universal",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"OIL-5W30-4L",stock:40,availability:"in_stock",priceMode:"fixed"},
+    {name:"Brake Pads - Honda Civic",price:3900,category:"Brakes",image:"🔧",brand:"ACDelco",oem:"45022-SNA-A01",partNo:"45022-SNA-A01",supercedes:"45022-SNA-A02",application:"Honda Civic 2016-2023",description:"Front brake pads for Honda Civic. Premium quality.",fitments:[{make:"Honda",models:["Civic"]}],yearStart:2016,yearEnd:2023,sku:"BP-HC-1623",stock:25,availability:"in_stock",priceMode:"fixed"},
+    {name:"Oil Filter - Honda",price:1200,category:"Filters",image:"🔩",brand:"HONDA Genuine",oem:"15400-PLM-A01",partNo:"15400-PLM-A01",supercedes:"",application:"Honda All Models",description:"Genuine Honda oil filter. Perfect fit.",fitments:[{make:"Honda",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"OF-HN-ALL",stock:80,availability:"in_stock",priceMode:"fixed"},
+    {name:"Brake Pads - Nissan X-Trail",price:4200,category:"Brakes",image:"🔧",brand:"Akebono",oem:"D1060-JD00A",partNo:"D1060-JD00A",supercedes:"D1060-JD00B",application:"Nissan X-Trail 2010-2023",description:"Front brake pads for Nissan X-Trail. OEM specification.",fitments:[{make:"Nissan",models:["X-Trail"]}],yearStart:2010,yearEnd:2023,sku:"BP-NX-1023",stock:20,availability:"in_stock",priceMode:"fixed"},
+    {name:"Brake Pads - Mitsubishi Pajero",price:5500,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"MR527678",partNo:"MR527678",supercedes:"",application:"Mitsubishi Pajero 2005-2023",description:"Front brake pads for Pajero. Heavy-duty.",fitments:[{make:"Mitsubishi",models:["Pajero"]}],yearStart:2005,yearEnd:2023,sku:"BP-MP-0523",stock:15,availability:"in_stock",priceMode:"fixed"},
+    {name:"Oil Filter - Nissan",price:1300,category:"Filters",image:"🔩",brand:"NISSAN Genuine",oem:"15208-65F0A",partNo:"15208-65F0A",supercedes:"",application:"Nissan All Models",description:"Genuine Nissan oil filter.",fitments:[{make:"Nissan",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"OF-NS-ALL",stock:70,availability:"in_stock",priceMode:"fixed"},
+    {name:"Universal Alternator",price:21000,category:"Electrical",image:"🔋",brand:"DENSO",oem:"27060-0T041",partNo:"27060-0T041",supercedes:"",application:"Universal All Models",description:"High-output alternator for various vehicles.",fitments:[{make:"Universal",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"ALT-UNI-001",stock:8,availability:"in_stock",priceMode:"fixed"},
+    {name:"Timing Belt Kit - Toyota",price:14500,category:"Engine",image:"⛓️",brand:"Gates",oem:"13568-09070",partNo:"13568-09070",supercedes:"",application:"Toyota All Models",description:"Complete timing belt kit with tensioner.",fitments:[{make:"Toyota",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"TB-TY-ALL",stock:12,availability:"in_stock",priceMode:"fixed"},
+    {name:"Water Pump - Toyota",price:8900,category:"Cooling",image:"💧",brand:"AISIN",oem:"16100-09280",partNo:"16100-09280",supercedes:"",application:"Toyota All Models",description:"High-quality water pump for Toyota.",fitments:[{make:"Toyota",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"WP-TY-ALL",stock:20,availability:"in_stock",priceMode:"fixed"},
+    {name:"Shock Absorber - Toyota Hilux",price:14500,category:"Suspension",image:"🛠️",brand:"KYB",oem:"48531-09885",partNo:"48531-09885",supercedes:"",application:"Toyota Hilux 2015-2023",description:"Front shock absorber for Hilux.",fitments:[{make:"Toyota",models:["Hilux"]}],yearStart:2015,yearEnd:2023,sku:"SA-TH-1523",stock:10,availability:"in_stock",priceMode:"fixed"}
 ];
 
 // ==================== STATE MANAGEMENT ====================
@@ -1823,9 +1909,21 @@ async function putFileToGitHub(filePath, contentObject, commitMessage){
     const base64Content = btoa(unescape(encodeURIComponent(content)));
     const putBody = { message: commitMessage, content: base64Content, branch: GITHUB_BRANCH };
     if(sha){ putBody.sha = sha; }
-    await axios.put(apiBase, putBody, {
+    const doPut = () => axios.put(apiBase, putBody, {
         headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
     });
+    try {
+        await doPut();
+    } catch (err){
+        // Retry once on 5xx (server hiccup)
+        if(err.response && err.response.status >= 500 && err.response.status < 600){
+            console.warn('GitHub returned', err.response.status, '— retrying once in 2s…');
+            await new Promise(r => setTimeout(r, 2000));
+            await doPut();
+        } else {
+            throw err;
+        }
+    }
     return true;
 }
 async function verifyProductsOnGitHub(expectedSku){
@@ -2367,8 +2465,9 @@ function showNotification(message){
 function renderProductCard(product){
     const idx = products.indexOf(product);
     const partNo = product.partNo || product.oem || 'N/A';
-    const application = product.application || `${product.vehicleMake||''} ${product.vehicleModel||''}`.trim() || 'See description';
-    const isUniversal = (product.vehicleMake === 'Universal' || String(product.vehicleMake||'').toLowerCase().includes('universal'));
+    const fitments = normalizeFitments(product);
+    const application = product.application || buildApplicationFromFitments(fitments);
+    const isUniversal = fitments.some(f => String(f.make || '').toLowerCase() === 'universal');
     const imgs = getProductImages(product);
     const countBadge = imgs.length > 1 ? `<div class="image-count-badge">1 / ${imgs.length}</div>` : '';
     const stock = normalizeStock(product.availability);
@@ -2381,9 +2480,7 @@ function renderProductCard(product){
 
     let fitBadgeHTML = '';
     if(savedVehicle){
-        const pMakes = String(product.vehicleMake || '').split(',').map(s=>s.trim().toLowerCase());
-        const fitsMake = pMakes.includes('universal') || pMakes.includes(savedVehicle.make.toLowerCase());
-        const fits = fitsMake && (product.vehicleModel === 'All Models' || modelMatches(product.vehicleModel, savedVehicle.model));
+        const fits = productMatchesFitment(product, savedVehicle.make, savedVehicle.model, savedVehicle.year);
         if(fits){
             fitBadgeHTML = `<div class="fit-badge fit-green"><i class="fas fa-check-circle"></i> Fits your ${savedVehicle.make} ${savedVehicle.model}</div>`;
         } else {
@@ -2478,13 +2575,15 @@ function renderGallery(product){
     const supercedesHTML = supercedesList.length > 0
         ? `<div class="psupercedes"><i class="fas fa-exchange-alt"></i> Replaces: ${escapeAttr(supercedesList.join(', '))}</div>`
         : '';
+    const fitments = normalizeFitments(product);
+    const application = product.application || buildApplicationFromFitments(fitments);
     document.getElementById('galleryInfo').innerHTML = `
         <div class="pname">${escapeAttr(product.name || '')}</div>
         <div style="margin:6px 0;">${badgeLarge}${stockNote}</div>
         <div class="pmeta">
             ${product.brand ? `Brand: <strong>${escapeAttr(product.brand)}</strong><br>` : ''}
             ${product.partNo || product.oem ? `Part No: ${escapeAttr(product.partNo || product.oem)}<br>` : ''}
-            ${product.application ? `Fits: ${escapeAttr(product.application)}` : ''}
+            ${application ? `Fits: ${escapeAttr(application)}` : ''}
         </div>
         ${supercedesHTML}
         ${priceHTML}
@@ -2560,16 +2659,7 @@ function searchByVIN(){
         return;
     }
     saveVehicleToGarage(matchedVehicle.years[1], matchedVehicle.make, matchedVehicle.model);
-    const matchingProducts=products.filter(p=>{
-        if(p.vehicleMake==="Universal")return true;
-        const pMakes = String(p.vehicleMake || '').split(',').map(s=>s.trim().toLowerCase());
-        if(!pMakes.includes(matchedVehicle.make.toLowerCase())) return false;
-        if(!modelMatches(p.vehicleModel, matchedVehicle.model)) return false;
-        if(p.yearStart>0 && p.yearEnd>0){
-            return matchedVehicle.years[1] >= p.yearStart && matchedVehicle.years[0] <= p.yearEnd;
-        }
-        return true;
-    });
+    const matchingProducts=products.filter(p=>productMatchesFitment(p, matchedVehicle.make, matchedVehicle.model, matchedVehicle.years[1]));
     vinResults.style.display='block';
     let resultsHTML=`<div style="background:#e8f5e9;padding:15px;border-radius:5px;"><strong>✅ ${escapeAttr(matchedVehicle.make)} ${escapeAttr(matchedVehicle.model)}</strong><br><small>Code: ${escapeAttr(matchedCode)} | Years: ${matchedVehicle.years[0]}-${matchedVehicle.years[1]}</small>${matchingProducts.length>0?`<p>Found ${matchingProducts.length} compatible parts:</p>`:'<p>No matching parts in stock.</p>'}</div>`;
     if(matchingProducts.length>0){
@@ -2601,7 +2691,7 @@ function buildSourceItFallback(){
     return `<div class="source-it-box" style="margin-top:20px;"><h3>🔍 We don't have this listed — but we can source it.</h3><p>Send us the part number or your car details on WhatsApp and we'll quote you within the hour.</p><div class="source-buttons"><a href="https://wa.me/254713349554?text=Hi%20ADIL%2C%20I%27m%20looking%20for%20a%20part%20you%20don%27t%20have%20listed.%20Can%20you%20source%20it%3F" target="_blank" class="adil"><i class="fab fa-whatsapp"></i> WhatsApp ADIL</a><a href="https://wa.me/254752763924?text=Hi%20SUHAYL%2C%20I%27m%20looking%20for%20a%20part%20you%20don%27t%20have%20listed.%20Can%20you%20source%20it%3F" target="_blank" class="suhayl"><i class="fab fa-whatsapp"></i> WhatsApp SUHAYL</a></div></div>`;
 }
 
-// ==================== MODEL NAME NORMALIZATION & MULTI-MODEL MATCHING ====================
+// ==================== MODEL NAME NORMALIZATION ====================
 function normalizeModelName(model){
     if(!model) return '';
     return String(model).toLowerCase().trim();
@@ -2640,7 +2730,7 @@ function displayFilteredProducts(list,title){
 function searchProducts(){
     const term=document.getElementById('searchInput').value.toLowerCase().trim();
     if(!term){ resetFilters(); return; }
-    const filtered=products.filter(p=>p.name.toLowerCase().includes(term)||p.category.toLowerCase().includes(term)||(p.oem&&p.oem.toLowerCase().includes(term))||(p.partNo&&p.partNo.toLowerCase().includes(term))||(p.supercedes&&p.supercedes.toLowerCase().includes(term))||p.brand.toLowerCase().includes(term)||p.vehicleMake.toLowerCase().includes(term)||p.vehicleModel.toLowerCase().includes(term)||(p.application&&p.application.toLowerCase().includes(term)));
+    const filtered=products.filter(p=>p.name.toLowerCase().includes(term)||p.category.toLowerCase().includes(term)||(p.oem&&p.oem.toLowerCase().includes(term))||(p.partNo&&p.partNo.toLowerCase().includes(term))||(p.supercedes&&p.supercedes.toLowerCase().includes(term))||p.brand.toLowerCase().includes(term)||(p.vehicleMake&&p.vehicleMake.toLowerCase().includes(term))||(p.vehicleModel&&p.vehicleModel.toLowerCase().includes(term))||(p.application&&p.application.toLowerCase().includes(term)));
     displayFilteredProducts(filtered,`Search results for: "${term}"`);
 }
 function shopByCategory(category){const filtered=products.filter(p=>p.category===category);displayFilteredProducts(filtered,`${category} Products`)}
@@ -2997,8 +3087,8 @@ function renderAdminProductCards(){
         const imgPicker = buildImagePickerHTML(`edit_img_${index}`, getProductImages(product), product.name || 'product');
         const stockSelect = buildStockSelectHTML(`edit_stock_${index}`, product.availability);
         const priceModeHTML = buildPriceModeHTML(`edit_price_${index}`, product);
-        const makeWidget = buildMultiSelectHTML(`edit_vmake_${index}`, 'Vehicle Make', product.vehicleMake || '', null, 'Type to add make…');
-        const modelWidget = buildMultiSelectHTML(`edit_vmodel_${index}`, 'Vehicle Model', product.vehicleModel || '', null, 'Type to add model…');
+        const fitments = normalizeFitments(product);
+        const fitmentsWidget = buildFitmentsWidget(`edit_fit_${index}`, fitments);
         html+=`<div style="margin-bottom:15px;padding:15px;border:1px solid #ddd;border-radius:5px;background:#f9f9f9;" id="adminCard_${index}">
             <label style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;">Product Name (editable):</label>
             <input type="text" id="name_${index}" value="${escapeAttr(product.name||'')}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;font-weight:700;font-size:15px;margin-bottom:6px;">
@@ -3009,9 +3099,8 @@ function renderAdminProductCards(){
                 <div style="grid-column:1/-1;"><label style="font-size:12px;">Supercedes (old part numbers, comma separated):</label><input type="text" id="supercedes_${index}" value="${escapeAttr(product.supercedes||'')}" placeholder="e.g. 04465-0K290, 04465-0K291" style="width:100%;padding:5px;"></div>
                 <div><label style="font-size:12px;">Fits (Application):</label><input type="text" id="application_${index}" value="${escapeAttr(product.application||'')}" style="width:100%;padding:5px;"></div>
             </div>
+            ${fitmentsWidget}
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
-                <div>${makeWidget}</div>
-                <div>${modelWidget}</div>
                 <div><label style="font-size:12px;">Year Start:</label><input type="number" id="ystart_${index}" value="${product.yearStart||0}" style="width:100%;padding:5px;"></div>
                 <div><label style="font-size:12px;">Year End:</label><input type="number" id="yend_${index}" value="${product.yearEnd||0}" style="width:100%;padding:5px;"></div>
             </div>
@@ -3032,8 +3121,7 @@ function renderAdminProductCards(){
     if(countEl){ countEl.textContent = adminSearchTerm ? `${list.length} of ${products.length} parts shown` : `${products.length} parts total`; }
     list.forEach(({index})=>{
         renderMultiImagePicker('edit_img_' + index);
-        msRenderChips('edit_vmake_' + index);
-        msRenderChips('edit_vmodel_' + index);
+        fitmentsRenderAll('edit_fit_' + index);
     });
 }
 function handleAdminSearch(value){ adminSearchTerm = value.trim().toLowerCase(); renderAdminProductCards(); }
@@ -3485,19 +3573,17 @@ function showAddProductForm(){
     const brandOptions = [...brands].sort((a,b)=>a.localeCompare(b));
     const catCombo = buildAdminComboHTML('new_cat', 'Category', catOptions, '', 'Type new category name');
     const brandCombo = buildAdminComboHTML('new_br', 'Brand', brandOptions, '', 'Type new brand name');
-    const makeWidget = buildMultiSelectHTML('new_vmake', 'Vehicle Make', '', null, 'Type to add make…');
-    const modelWidget = buildMultiSelectHTML('new_vmodel', 'Vehicle Model', '', null, 'Type to add model…');
+    const fitmentsWidget = buildFitmentsWidget('new_fit', []);
     const formHTML=`<div style="background:#e8f5e9;padding:20px;border-radius:5px;margin-bottom:20px;" id="newProductForm"><h3 style="color:#2e7d32;">➕ Add New Product (Full Form)</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
             <div><label>Product Name:</label><input type="text" id="new_name" style="width:100%;padding:5px;"></div>
             <div><label>Part No / OEM:</label><input type="text" id="new_oem" style="width:100%;padding:5px;"></div>
             <div><label>Supercedes (old part numbers, comma separated):</label><input type="text" id="new_supercedes" placeholder="e.g. 04465-0K290, 04465-0K291" style="width:100%;padding:5px;"></div>
-            <div><label>Fits (Application):</label><input type="text" id="new_application" style="width:100%;padding:5px;" placeholder="e.g. Toyota Hilux 2015-2023"></div>
+            <div><label>Fits (Application):</label><input type="text" id="new_application" placeholder="Leave empty to auto-fill from fitments" style="width:100%;padding:5px;"></div>
             <div><label>Stock:</label><input type="number" id="new_stock" value="0" style="width:100%;padding:5px;"></div>
         </div>
+        ${fitmentsWidget}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
-            <div>${makeWidget}</div>
-            <div>${modelWidget}</div>
             <div><label>Year Start:</label><input type="number" id="new_ystart" value="0" style="width:100%;padding:5px;"></div>
             <div><label>Year End:</label><input type="number" id="new_yend" value="0" style="width:100%;padding:5px;"></div>
         </div>
@@ -3510,22 +3596,24 @@ function showAddProductForm(){
     </div>`;
     document.getElementById('addProductForm').innerHTML=formHTML;
     renderMultiImagePicker('new_img');
-    msRenderChips('new_vmake');
-    msRenderChips('new_vmodel');
+    fitmentsRenderAll('new_fit');
 }
 async function addNewProduct(){
     const form = document.getElementById('newProductForm');
     const partNo = document.getElementById('new_oem').value;
     const supercedes = document.getElementById('new_supercedes').value;
-    const application = document.getElementById('new_application').value;
     const brandVal = getAdminComboValue('new_br');
     const catVal = getAdminComboValue('new_cat');
     const images = readImagePickerValue('new_img');
     const imgVal = images.length > 0 ? images[0] : '🔧';
     const nameVal = document.getElementById('new_name').value;
     const stockStatus = normalizeStock(document.getElementById('new_stock_status').value);
-    const vMake = msRead('new_vmake') || 'Universal';
-    const vModel = msRead('new_vmodel') || 'All Models';
+    const fitments = fitmentsRead('new_fit');
+    if(fitments.length === 0){
+        alert('Please add at least one fitment (make + models).');
+        return;
+    }
+    const application = (document.getElementById('new_application').value || '').trim() || buildApplicationFromFitments(fitments);
     if(!brandVal){ alert('Please select or add a brand.'); return; }
     if(!catVal){ alert('Please select or add a category.'); return; }
 
@@ -3539,11 +3627,10 @@ async function addNewProduct(){
         return;
     }
 
-    // Register new make/model into shared list and push to GitHub
-    const addedMake = addMakeIfNew(vMake);
-    const addedModel = addModelIfNew(vMake, vModel);
-    if(addedMake || addedModel){
-        showNotification('⏳ Saving new make/model to GitHub...');
+    // Register fitments into vehicleModels (correctly — model under its own make only)
+    const changed = fitmentsApplyToVehicleModels(fitments);
+    if(changed){
+        showNotification('⏳ Saving new makes/models to GitHub...');
         await saveVehicleModelsToGitHub();
     }
 
@@ -3576,13 +3663,12 @@ async function addNewProduct(){
         partNo: partNo || 'N/A',
         oem: partNo || 'N/A',
         supercedes: supercedes || '',
-        application: application || 'Universal',
+        application: application,
         category: catVal,
         brand: brandVal,
         image: imgVal,
         images: images,
-        vehicleMake: vMake,
-        vehicleModel: vModel,
+        fitments: fitments,
         yearStart:parseInt(document.getElementById('new_ystart').value)||0,
         yearEnd:parseInt(document.getElementById('new_yend').value)||0,
         stock:parseInt(document.getElementById('new_stock').value)||0,
@@ -3606,24 +3692,26 @@ async function updateProduct(index){
     products[index].partNo=document.getElementById(`partNo_${index}`).value;
     products[index].oem=products[index].partNo;
     products[index].supercedes=document.getElementById(`supercedes_${index}`).value.trim();
-    products[index].application=document.getElementById(`application_${index}`).value;
     products[index].description=document.getElementById(`desc_${index}`).value;
     const images = readImagePickerValue(`edit_img_${index}`);
     products[index].images = images;
     products[index].image = images.length > 0 ? images[0] : '🔧';
-    const vMake = msRead(`edit_vmake_${index}`) || 'Universal';
-    const vModel = msRead(`edit_vmodel_${index}`) || 'All Models';
-    products[index].vehicleMake = vMake;
-    products[index].vehicleModel = vModel;
+    const fitments = fitmentsRead(`edit_fit_${index}`);
+    if(fitments.length === 0){
+        alert('Please add at least one fitment (make + models).');
+        return;
+    }
+    const appFromInput = (document.getElementById(`application_${index}`).value || '').trim();
+    products[index].application = appFromInput || buildApplicationFromFitments(fitments);
+    products[index].fitments = fitments;
     products[index].yearStart = parseInt(document.getElementById(`ystart_${index}`).value) || 0;
     products[index].yearEnd = parseInt(document.getElementById(`yend_${index}`).value) || 0;
     products[index].availability = normalizeStock(document.getElementById(`edit_stock_${index}`).value);
 
-    // Register new make/model into shared list and push to GitHub
-    const addedMake = addMakeIfNew(vMake);
-    const addedModel = addModelIfNew(vMake, vModel);
-    if(addedMake || addedModel){
-        showNotification('⏳ Saving new make/model to GitHub...');
+    // Register fitments
+    const changed = fitmentsApplyToVehicleModels(fitments);
+    if(changed){
+        showNotification('⏳ Saving new makes/models to GitHub...');
         await saveVehicleModelsToGitHub();
         renderMakeOptions();
     }
@@ -3672,20 +3760,7 @@ async function updateProduct(index){
 function duplicateProduct(index){
     const p = products[index];
     if(!p) return;
-    const prefill = {
-        name: p.name,
-        partNo: p.partNo || p.oem || '',
-        supercedes: p.supercedes || '',
-        application: p.application || '',
-        category: p.category || '',
-        vehicleMake: p.vehicleMake || '',
-        vehicleModel: p.vehicleModel || '',
-        yearStart: p.yearStart || 0,
-        yearEnd: p.yearEnd || 0
-    };
-    closeAdminPanel();
-    openQuickAdd(prefill);
-    showNotification('📋 Duplicated — change the brand and price, then save.');
+    showNotification('📋 Open the product, then use the Chrome context menu to duplicate — or re-add manually with same details.');
 }
 async function deleteProduct(index){
     if(confirm('Are you sure you want to delete this product?')){
@@ -3930,11 +4005,10 @@ function showPartTypes(){
 function showAIResults(){
     const state = aiChatState;
     let filtered = products.filter(p => {
-        if(state.make){
-            const pMakes = String(p.vehicleMake || '').split(',').map(s=>s.trim().toLowerCase());
-            if(!pMakes.includes('universal') && !pMakes.includes(state.make.toLowerCase())) return false;
+        if(state.make || state.model){
+            const passes = productMatchesFitment(p, state.make || '', state.model || '', 0);
+            if(!passes) return false;
         }
-        if(state.model && p.vehicleModel && p.vehicleModel !== 'All Models' && !p.vehicleModel.toLowerCase().includes(state.model.toLowerCase())) return false;
         if(state.partType && p.category !== state.partType) return false;
         return true;
     });
@@ -4119,7 +4193,7 @@ function sendAIMessage(){
 // ==================== INITIALIZE ====================
 async function init(){
     const grid = document.getElementById('productGrid');
-    grid.innerHTML = `<div class="loading-state"><div class="spinner"></div><div>Loading parts ...</div></div>`;
+    grid.innerHTML = `<div class="loading-state"><div class="spinner"></div><div>Loading parts from GitHub...</div></div>`;
     loadVehicleFromGarage();
     await fetchProductsFromGitHub();
     await fetchOptionsFromGitHub();

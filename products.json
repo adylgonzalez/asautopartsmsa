@@ -114,22 +114,25 @@
     "price": 2800,
     "priceMode": "fixed",
     "category": "Electrical",
-    "image": "images/spark-plugs-toyota-4-pack-1789585354349.jpg",
+    "image": "https://adylgonzalez.github.io/asautopartsmsa/images/spark-plugs-toyota-4-pack-1789585354349.jpg",
     "images": [
-      "images/spark-plugs-toyota-4-pack-1789585354349.jpg"
+      "https://adylgonzalez.github.io/asautopartsmsa/images/spark-plugs-toyota-4-pack-1789585354349.jpg"
     ],
-    "brand": "NGK",
+    "brand": "DENSO",
     "partNo": "90919-01253",
     "oem": "90919-01253",
     "application": "Toyota All Models",
-    "description": "Iridium spark plugs for Toyota. Better combustion and performance.",
-    "vehicleMake": "Toyota",
-    "vehicleModel": "All Models",
-    "yearStart": 0,
-    "yearEnd": 0,
+    "description": "This part fits a wide range of modern Toyota, Lexus, and Scion vehicles with 1.3L, 1.8L, or 2.4L engines",
+    "vehicleMake": "Toyota, Lexus",
+    "vehicleModel": "Corolla, Prius, Matrix, Voxy, Noah, CT200H",
+    "yearStart": 2000,
+    "yearEnd": 2016,
     "sku": "SP-TY-ALL",
     "stock": 60,
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Brake Pads - Honda Civic",

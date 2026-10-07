@@ -187,6 +187,23 @@
         .combo-wrap .combo-new-input.show{display:block}
         .combo-wrap .combo-hint{font-size:11px;color:#888;margin-top:4px}
 
+        /* Multi-select chip widget */
+        .ms-wrap{position:relative;margin:5px 0 15px}
+        .ms-wrap label{font-size:13px;font-weight:700;display:block;margin-bottom:4px}
+        .ms-box{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:42px;padding:6px 8px;border:1px solid #ccc;border-radius:5px;background:#fff;cursor:text;transition:border-color .2s}
+        .ms-box:focus-within{border-color:#1a237e;box-shadow:0 0 0 2px rgba(26,35,126,.1)}
+        .ms-chip{display:inline-flex;align-items:center;gap:5px;background:#1a237e;color:#fff;padding:4px 10px;border-radius:15px;font-size:12px;font-weight:700;max-width:100%}
+        .ms-chip .ms-chip-remove{background:rgba(255,255,255,.25);color:#fff;border:none;border-radius:50%;width:16px;height:16px;cursor:pointer;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
+        .ms-chip .ms-chip-remove:hover{background:#f44336}
+        .ms-input{flex:1;min-width:110px;border:none;outline:none;padding:4px;font-size:14px;background:transparent}
+        .ms-dropdown{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #1a237e;border-radius:0 0 5px 5px;max-height:220px;overflow-y:auto;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+        .ms-dropdown.open{display:block}
+        .ms-option{padding:8px 12px;cursor:pointer;font-size:13px;border-bottom:1px solid #f0f0f0;transition:background .15s}
+        .ms-option:hover{background:#f0f4ff}
+        .ms-option.add-new{color:#2e7d32;font-weight:700;background:#e8f5e9}
+        .ms-option.add-new:hover{background:#c8e6c9}
+        .ms-hint{font-size:11px;color:#888;margin-top:4px}
+
         .category-grid .extra-category{display:none}
         .category-grid.expanded .extra-category{display:block}
         .category-grid .category-card.small{padding:20px}
@@ -1029,7 +1046,9 @@ function findParts(){
     saveVehicleToGarage(year, make, model);
     const filtered = products.filter(p => {
         if(p.vehicleMake === "Universal") return true;
-        if(p.vehicleMake !== make) return false;
+        // support multi-make products: "Toyota, Nissan"
+        const pMakes = String(p.vehicleMake || '').split(',').map(s=>s.trim().toLowerCase());
+        if(!pMakes.includes(make.toLowerCase())) return false;
         if(!modelMatches(p.vehicleModel, model)) return false;
         if(p.yearStart > 0 && p.yearEnd > 0){
             return year >= p.yearStart && year <= p.yearEnd;
@@ -1065,17 +1084,193 @@ function getAdminComboValue(idPrefix){
     return sel.value;
 }
 
-// Admin-only: register a new make/model into the shared vehicleModels map
+// ==================== MULTI-SELECT CHIP WIDGET ====================
+const msState = {}; // { key: { values: [] } }
+
+function msInit(key, initialValues){
+    if(!msState[key]) msState[key] = { values: [] };
+    if(initialValues && msState[key].values.length === 0 && !msState[key].initialized){
+        msState[key].values = initialValues.slice();
+        msState[key].initialized = true;
+    }
+}
+
+function buildMultiSelectHTML(key, label, initialValues, sourceFn, placeholder){
+    const initial = Array.isArray(initialValues)
+        ? initialValues
+        : (initialValues ? String(initialValues).split(',').map(s=>s.trim()).filter(Boolean) : []);
+    msInit(key, initial);
+    return `
+        <div class="ms-wrap" data-ms="${key}">
+            <label>${escapeAttr(label)}</label>
+            <div class="ms-box" id="msBox_${key}" onclick="document.getElementById('msInput_${key}').focus()">
+                <input type="text" class="ms-input" id="msInput_${key}"
+                    placeholder="${escapeAttr(placeholder || 'Type to add…')}"
+                    oninput="msFilter('${key}')"
+                    onfocus="msOpen('${key}')"
+                    onblur="setTimeout(()=>msClose('${key}'), 200)"
+                    onkeydown="msKeydown(event, '${key}')">
+            </div>
+            <div class="ms-dropdown" id="msDrop_${key}"></div>
+            <div class="ms-hint">Click a suggestion, or press Enter to add a new one. Click ✕ on a chip to remove.</div>
+        </div>
+    `;
+}
+
+function msRenderChips(key){
+    const box = document.getElementById('msBox_' + key);
+    if(!box) return;
+    const input = document.getElementById('msInput_' + key);
+    // remove existing chips
+    box.querySelectorAll('.ms-chip').forEach(el => el.remove());
+    const values = (msState[key] && msState[key].values) || [];
+    // insert chips before the input
+    values.forEach((v, i) => {
+        const chip = document.createElement('span');
+        chip.className = 'ms-chip';
+        chip.innerHTML = `${escapeAttr(v)} <button type="button" class="ms-chip-remove" onclick="msRemoveChip('${key}', ${i});event.stopPropagation();">✕</button>`;
+        box.insertBefore(chip, input);
+    });
+}
+
+function msRemoveChip(key, index){
+    if(!msState[key]) return;
+    msState[key].values.splice(index, 1);
+    msRenderChips(key);
+}
+
+function msAddValue(key, val){
+    if(!val) return;
+    val = String(val).trim();
+    if(!val) return;
+    if(!msState[key]) msState[key] = { values: [] };
+    if(!msState[key].values.includes(val)){
+        msState[key].values.push(val);
+        msRenderChips(key);
+    }
+    const input = document.getElementById('msInput_' + key);
+    if(input) input.value = '';
+    msClose(key);
+}
+
+function msSourceValues(key){
+    // Determines candidate list based on widget key.
+    // Widgets: new_vmake, new_vmodel, edit_vmake_<idx>, edit_vmodel_<idx>
+    if(key === 'new_vmake' || key.startsWith('edit_vmake_')){
+        return Object.keys(vehicleModels).sort((a,b)=>a.localeCompare(b));
+    }
+    if(key === 'new_vmodel' || key.startsWith('edit_vmodel_')){
+        // For edit widgets, try to read the make from the associated make widget
+        let make = '';
+        if(key.startsWith('edit_vmodel_')){
+            const idx = key.split('_').pop();
+            const makeKey = 'edit_vmake_' + idx;
+            const m = (msState[makeKey] && msState[makeKey].values) || [];
+            make = m[0] || '';
+        } else {
+            const m = (msState['new_vmake'] && msState['new_vmake'].values) || [];
+            make = m[0] || '';
+        }
+        const pool = new Set();
+        if(make && vehicleModels[make]){
+            vehicleModels[make].forEach(x => pool.add(x));
+        } else {
+            Object.values(vehicleModels).forEach(arr => arr.forEach(x => pool.add(x)));
+        }
+        return [...pool].sort((a,b)=>a.localeCompare(b));
+    }
+    return [];
+}
+
+function msOpen(key){
+    msRenderDropdown(key, '');
+}
+
+function msClose(key){
+    const drop = document.getElementById('msDrop_' + key);
+    if(drop){ drop.classList.remove('open'); drop.innerHTML = ''; }
+}
+
+function msFilter(key){
+    const input = document.getElementById('msInput_' + key);
+    const q = (input ? input.value : '').trim();
+    msRenderDropdown(key, q);
+}
+
+function msRenderDropdown(key, query){
+    const drop = document.getElementById('msDrop_' + key);
+    if(!drop) return;
+    const values = (msState[key] && msState[key].values) || [];
+    const source = msSourceValues(key).filter(v => !values.includes(v));
+    const q = (query || '').toLowerCase();
+    const filtered = q ? source.filter(v => v.toLowerCase().includes(q)) : source;
+    let html = '';
+    filtered.slice(0, 50).forEach(v => {
+        html += `<div class="ms-option" onmousedown="event.preventDefault();" onclick="msAddValue('${key}', '${escapeAttr(v).replace(/'/g,"\\'")}')">${escapeAttr(v)}</div>`;
+    });
+    const trimmed = (query || '').trim();
+    if(trimmed && !values.includes(trimmed) && !source.some(v => v.toLowerCase() === trimmed.toLowerCase())){
+        html += `<div class="ms-option add-new" onmousedown="event.preventDefault();" onclick="msAddValue('${key}', '${escapeAttr(trimmed).replace(/'/g,"\\'")}')">➕ Add "${escapeAttr(trimmed)}"</div>`;
+    }
+    if(!html){
+        html = `<div class="ms-option" style="color:#999;cursor:default;">No matches — type to add new</div>`;
+    }
+    drop.innerHTML = html;
+    drop.classList.add('open');
+}
+
+function msKeydown(ev, key){
+    if(ev.key === 'Enter'){
+        ev.preventDefault();
+        const input = document.getElementById('msInput_' + key);
+        const val = (input ? input.value : '').trim();
+        if(val) msAddValue(key, val);
+    } else if(ev.key === 'Backspace' && (!ev.target.value || ev.target.value === '')){
+        const values = (msState[key] && msState[key].values) || [];
+        if(values.length > 0){
+            values.pop();
+            msRenderChips(key);
+        }
+    } else if(ev.key === 'Escape'){
+        msClose(key);
+    }
+}
+
+function msRead(key){
+    const values = (msState[key] && msState[key].values) || [];
+    return values.join(', ');
+}
+
+// ==================== END MULTI-SELECT ====================
+
+// Admin-only: register a new make/model into the shared vehicleModels map.
+// Splits on commas so "Toyota, Nissan" adds two separate makes and their models.
 function addMakeIfNew(make){
     if(!make) return false;
-    if(!vehicleModels[make]){ vehicleModels[make] = []; saveVehicleModels(); return true; }
-    return false;
+    const parts = String(make).split(',').map(s => s.trim()).filter(Boolean);
+    let changed = false;
+    parts.forEach(m => {
+        if(!vehicleModels[m]){ vehicleModels[m] = []; changed = true; }
+    });
+    if(changed) saveVehicleModels();
+    return changed;
 }
 function addModelIfNew(make, model){
     if(!make || !model) return false;
-    if(!vehicleModels[make]) vehicleModels[make] = [];
-    if(!vehicleModels[make].includes(model)){ vehicleModels[make].push(model); saveVehicleModels(); return true; }
-    return false;
+    const makes = String(make).split(',').map(s => s.trim()).filter(Boolean);
+    const models = String(model).split(',').map(s => s.trim()).filter(Boolean);
+    let changed = false;
+    makes.forEach(mk => {
+        if(!vehicleModels[mk]){ vehicleModels[mk] = []; changed = true; }
+        models.forEach(md => {
+            if(!vehicleModels[mk].includes(md)){
+                vehicleModels[mk].push(md);
+                changed = true;
+            }
+        });
+    });
+    if(changed) saveVehicleModels();
+    return changed;
 }
 
 // ==================== VEHICLE DATABASES ====================
@@ -2066,23 +2261,23 @@ async function checkoutCart(brother){
         hasOnOrderItems: hasOnOrder,
         hasQuoteItems: hasQuote,
         fixedItemsTotal: totals.fixedTotal,
-       items: cart.map(i => {
-    const mode = getPriceMode(i);
-    return {
-        name: i.name,
-        sku: i.sku,
-        partNo: i.partNo || i.oem || '',
-        brand: i.brand || '',
-        image: i.image || '',
-        price: mode === PRICE_FIXED ? i.price : null,
-        priceMode: mode,
-        priceMin: mode === PRICE_RANGE ? (Number(i.priceMin) || 0) : null,
-        priceMax: mode === PRICE_RANGE ? (Number(i.priceMax) || 0) : null,
-        quantity: i.quantity,
-        subtotal: mode === PRICE_FIXED ? ((Number(i.price) || 0) * i.quantity) : null,
-        availability: normalizeStock(i.availability)
-    };
-}),
+        items: cart.map(i => {
+            const mode = getPriceMode(i);
+            return {
+                name: i.name,
+                sku: i.sku,
+                partNo: i.partNo || i.oem || '',
+                brand: i.brand || '',
+                image: i.image || '',
+                price: mode === PRICE_FIXED ? i.price : null,
+                priceMode: mode,
+                priceMin: mode === PRICE_RANGE ? (Number(i.priceMin) || 0) : null,
+                priceMax: mode === PRICE_RANGE ? (Number(i.priceMax) || 0) : null,
+                quantity: i.quantity,
+                subtotal: mode === PRICE_FIXED ? ((Number(i.price) || 0) * i.quantity) : null,
+                availability: normalizeStock(i.availability)
+            };
+        }),
         total: totals.fixedTotal
     };
 
@@ -2173,7 +2368,7 @@ function renderProductCard(product){
     const idx = products.indexOf(product);
     const partNo = product.partNo || product.oem || 'N/A';
     const application = product.application || `${product.vehicleMake||''} ${product.vehicleModel||''}`.trim() || 'See description';
-    const isUniversal = product.vehicleMake === 'Universal';
+    const isUniversal = (product.vehicleMake === 'Universal' || String(product.vehicleMake||'').toLowerCase().includes('universal'));
     const imgs = getProductImages(product);
     const countBadge = imgs.length > 1 ? `<div class="image-count-badge">1 / ${imgs.length}</div>` : '';
     const stock = normalizeStock(product.availability);
@@ -2186,8 +2381,9 @@ function renderProductCard(product){
 
     let fitBadgeHTML = '';
     if(savedVehicle){
-        const fits = (product.vehicleMake === 'Universal' || product.vehicleMake === savedVehicle.make) &&
-                     (product.vehicleModel === 'All Models' || modelMatches(product.vehicleModel, savedVehicle.model));
+        const pMakes = String(product.vehicleMake || '').split(',').map(s=>s.trim().toLowerCase());
+        const fitsMake = pMakes.includes('universal') || pMakes.includes(savedVehicle.make.toLowerCase());
+        const fits = fitsMake && (product.vehicleModel === 'All Models' || modelMatches(product.vehicleModel, savedVehicle.model));
         if(fits){
             fitBadgeHTML = `<div class="fit-badge fit-green"><i class="fas fa-check-circle"></i> Fits your ${savedVehicle.make} ${savedVehicle.model}</div>`;
         } else {
@@ -2366,7 +2562,8 @@ function searchByVIN(){
     saveVehicleToGarage(matchedVehicle.years[1], matchedVehicle.make, matchedVehicle.model);
     const matchingProducts=products.filter(p=>{
         if(p.vehicleMake==="Universal")return true;
-        if(p.vehicleMake!==matchedVehicle.make)return false;
+        const pMakes = String(p.vehicleMake || '').split(',').map(s=>s.trim().toLowerCase());
+        if(!pMakes.includes(matchedVehicle.make.toLowerCase())) return false;
         if(!modelMatches(p.vehicleModel, matchedVehicle.model)) return false;
         if(p.yearStart>0 && p.yearEnd>0){
             return matchedVehicle.years[1] >= p.yearStart && matchedVehicle.years[0] <= p.yearEnd;
@@ -2751,173 +2948,6 @@ function readImagePickerValue(targetKey){
     return state.images.slice();
 }
 
-// ==================== QUICK ADD ====================
-function openQuickAdd(prefill){
-    if(!adminLoggedIn){ alert('Please log in via the Admin Panel first.'); return; }
-    const catOptions = [...categories].sort((a,b)=>a.localeCompare(b));
-    const brandOptions = [...brands].sort((a,b)=>a.localeCompare(b));
-    const catCombo = buildAdminComboHTML('qa_cat', 'Category', catOptions, prefill?.category || '', 'Type new category name');
-    const brandCombo = buildAdminComboHTML('qa_br', 'Brand', brandOptions, '', 'Type new brand name');
-    const makeList = Object.keys(vehicleModels).sort();
-    const allModels = [...new Set(Object.values(vehicleModels).flat())].sort();
-    const p = prefill || {};
-    const html = `<div id="quickAddModal" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:30px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.4);z-index:5000;max-width:520px;width:95%;max-height:90vh;overflow-y:auto;">
-        <h2 style="color:#1a237e;margin-bottom:20px;">➕ ${prefill ? 'Duplicate Part' : 'Quick Add Part'}</h2>
-        <div id="qaForm">
-            <label style="font-size:13px;font-weight:700;">Part Name *</label>
-            <input type="text" id="qa_name" value="${escapeAttr(p.name||'')}" placeholder="e.g. Brake Pads - Toyota Hilux" style="width:100%;padding:10px;margin:5px 0 15px;border:1px solid #ccc;border-radius:5px;">
-
-            <label style="font-size:13px;font-weight:700;">Part No / OEM</label>
-            <input type="text" id="qa_partNo" value="${escapeAttr(p.partNo||p.oem||'')}" placeholder="e.g. 04465-0K340" style="width:100%;padding:10px;margin:5px 0 15px;border:1px solid #ccc;border-radius:5px;">
-
-            <label style="font-size:13px;font-weight:700;">Supercedes (old part numbers)</label>
-            <input type="text" id="qa_supercedes" value="${escapeAttr(p.supercedes||'')}" placeholder="e.g. 04465-0K290, 04465-0K291 (comma separated)" style="width:100%;padding:10px;margin:5px 0 15px;border:1px solid #ccc;border-radius:5px;">
-            <div style="font-size:11px;color:#888;margin:-10px 0 12px;">List old part numbers that this part replaces. Separate multiple with commas.</div>
-
-            <label style="font-size:13px;font-weight:700;">Fits (Application)</label>
-            <input type="text" id="qa_application" value="${escapeAttr(p.application||'')}" placeholder="e.g. Toyota Hilux 2015-2023" style="width:100%;padding:10px;margin:5px 0 15px;border:1px solid #ccc;border-radius:5px;">
-
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                <div>
-                    <label style="font-size:13px;font-weight:700;">Vehicle Make *</label>
-                    <input type="text" id="qa_vmake" list="qa_make_list" value="${escapeAttr(p.vehicleMake||'')}" placeholder="e.g. Toyota" style="width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:5px;">
-                    <datalist id="qa_make_list">${makeList.map(m => `<option value="${escapeAttr(m)}">`).join('')}</datalist>
-                </div>
-                <div>
-                    <label style="font-size:13px;font-weight:700;">Vehicle Model *</label>
-                    <input type="text" id="qa_vmodel" list="qa_model_list" value="${escapeAttr(p.vehicleModel||'')}" placeholder="e.g. Hilux, Fortuner, Prado" style="width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:5px;">
-                    <datalist id="qa_model_list">${allModels.map(m => `<option value="${escapeAttr(m)}">`).join('')}</datalist>
-                    <div class="multi-model-hint">Separate multiple models with commas</div>
-                </div>
-            </div>
-            <div style="font-size:11px;color:#888;margin:4px 0 12px;">Use "Universal" for make + "All Models" for model if it fits anything.</div>
-
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                <div>
-                    <label style="font-size:13px;font-weight:700;">Year Start</label>
-                    <input type="number" id="qa_ystart" value="${p.yearStart||''}" placeholder="e.g. 2015" style="width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:5px;">
-                </div>
-                <div>
-                    <label style="font-size:13px;font-weight:700;">Year End</label>
-                    <input type="number" id="qa_yend" value="${p.yearEnd||''}" placeholder="e.g. 2023" style="width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:5px;">
-                </div>
-            </div>
-
-            ${buildStockSelectHTML('qa_stock', 'in_stock')}
-
-            ${brandCombo}
-
-            ${buildPriceModeHTML('qa_price', {})}
-
-            ${catCombo}
-
-            <label style="font-size:13px;font-weight:700;">Images</label>
-            ${buildImagePickerHTML('qa_img', [], 'new-part')}
-
-            <div style="display:flex;gap:10px;margin-top:10px;">
-                <button onclick="saveQuickAdd()" style="flex:1;padding:12px;background:#4caf50;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:700;">💾 Save & Push to GitHub</button>
-                <button onclick="cancelQuickAdd()" style="flex:1;padding:12px;background:#ccc;color:#333;border:none;border-radius:5px;cursor:pointer;font-weight:700;">Cancel</button>
-            </div>
-        </div>
-    </div>`;
-    document.body.insertAdjacentHTML('beforeend', html);
-    renderMultiImagePicker('qa_img');
-}
-function cancelQuickAdd(){
-    const modal = document.getElementById('quickAddModal');
-    if(modal) modal.remove();
-    delete multiImgState['qa_img'];
-}
-async function saveQuickAdd(){
-    const form = document.getElementById('qaForm');
-    const name = document.getElementById('qa_name').value.trim();
-    if(!name){ alert('Please enter a part name.'); return; }
-    const partNo = document.getElementById('qa_partNo').value.trim();
-    const supercedes = document.getElementById('qa_supercedes').value.trim();
-    const application = document.getElementById('qa_application').value.trim();
-    const brandVal = getAdminComboValue('qa_br');
-    const catVal = getAdminComboValue('qa_cat');
-    const images = readImagePickerValue('qa_img');
-    const imgVal = images.length > 0 ? images[0] : '🔧';
-    const vMake = (document.getElementById('qa_vmake').value || '').trim() || 'Universal';
-    const vModel = (document.getElementById('qa_vmodel').value || '').trim() || 'All Models';
-    const yStart = parseInt(document.getElementById('qa_ystart').value) || 0;
-    const yEnd = parseInt(document.getElementById('qa_yend').value) || 0;
-    const stockVal = normalizeStock(document.getElementById('qa_stock').value);
-
-    const priceData = readPriceModeValue('qa_price');
-    if(priceData.priceMode === PRICE_FIXED && !priceData.price){
-        alert('Please enter a price, or switch Price mode to Range / On request.');
-        return;
-    }
-    if(priceData.priceMode === PRICE_RANGE && !priceData.priceMin && !priceData.priceMax){
-        alert('Please enter at least one of Min / Max, or switch to On request.');
-        return;
-    }
-
-    if(!brandVal){ alert('Please select or add a brand.'); return; }
-    if(!catVal){ alert('Please select or add a category.'); return; }
-
-    // Register new make/model into shared list and push to GitHub
-    const addedMake = addMakeIfNew(vMake);
-    const addedModel = addModelIfNew(vMake, vModel);
-    if(addedMake || addedModel){
-        showNotification('⏳ Saving new make/model to GitHub...');
-        await saveVehicleModelsToGitHub();
-    }
-
-    const dup = findDuplicate({ name, partNo, sku: null }, -1);
-    if(dup){
-        const proceed = await showDuplicateBanner(form, dup, (match) => {
-            cancelQuickAdd();
-            if(adminLoggedIn) showAdminPanel();
-            const idx = products.indexOf(match);
-            if(idx >= 0){
-                setTimeout(() => {
-                    const el = document.getElementById('name_' + idx);
-                    if(el){ el.scrollIntoView({behavior:'smooth', block:'center'}); el.style.transition='background 0.5s'; el.style.background='#fff3e0'; setTimeout(()=>el.style.background='', 1500); }
-                }, 300);
-            }
-        });
-        if(!proceed) return;
-    }
-    let newOptionsAdded = false;
-    if(!brands.includes(brandVal)){ brands.push(brandVal); newOptionsAdded = true; }
-    if(!categories.includes(catVal)){ categories.push(catVal); newOptionsAdded = true; }
-    if(newOptionsAdded){ showNotification('⏳ Saving new brand/category...'); await saveOptionsToGitHub(); buildExtraCategoryCards(); }
-
-    const newSku = 'QA-' + Date.now();
-    const newProduct = {
-        name,
-        price: priceData.price,
-        priceMode: priceData.priceMode,
-        priceMin: priceData.priceMin,
-        priceMax: priceData.priceMax,
-        partNo: partNo || 'N/A',
-        oem: partNo || 'N/A',
-        supercedes: supercedes,
-        application: application || `${vMake} ${vModel}`.trim(),
-        brand: brandVal,
-        category: catVal,
-        image: imgVal,
-        images: images,
-        description: name,
-        vehicleMake: vMake,
-        vehicleModel: vModel,
-        yearStart: yStart,
-        yearEnd: yEnd,
-        availability: stockVal,
-        sku: newSku,
-        stock: 1
-    };
-    products.push(newProduct);
-    loadProducts();
-    renderMakeOptions();
-    cancelQuickAdd();
-    showNotification('⏳ Pushing product to GitHub...');
-    await saveProductsToGitHub(newSku);
-}
-
 // ==================== ADMIN PANEL (TABBED) ====================
 function openAdminPanel(){
     if(adminLoggedIn){ showAdminPanel(); return; }
@@ -2960,8 +2990,6 @@ function renderAdminProductCards(){
     }
     const catOptions = [...categories].sort((a,b)=>a.localeCompare(b));
     const brandOptions = [...brands].sort((a,b)=>a.localeCompare(b));
-    const makeList = Object.keys(vehicleModels).sort();
-    const allModels = [...new Set(Object.values(vehicleModels).flat())].sort();
     let html = '';
     list.forEach(({product, index})=>{
         const catCombo = buildAdminComboHTML(`edit_cat_${index}`, 'Category', catOptions, product.category || '', 'Type new category name');
@@ -2969,6 +2997,8 @@ function renderAdminProductCards(){
         const imgPicker = buildImagePickerHTML(`edit_img_${index}`, getProductImages(product), product.name || 'product');
         const stockSelect = buildStockSelectHTML(`edit_stock_${index}`, product.availability);
         const priceModeHTML = buildPriceModeHTML(`edit_price_${index}`, product);
+        const makeWidget = buildMultiSelectHTML(`edit_vmake_${index}`, 'Vehicle Make', product.vehicleMake || '', null, 'Type to add make…');
+        const modelWidget = buildMultiSelectHTML(`edit_vmodel_${index}`, 'Vehicle Model', product.vehicleModel || '', null, 'Type to add model…');
         html+=`<div style="margin-bottom:15px;padding:15px;border:1px solid #ddd;border-radius:5px;background:#f9f9f9;" id="adminCard_${index}">
             <label style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;">Product Name (editable):</label>
             <input type="text" id="name_${index}" value="${escapeAttr(product.name||'')}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;font-weight:700;font-size:15px;margin-bottom:6px;">
@@ -2980,17 +3010,8 @@ function renderAdminProductCards(){
                 <div><label style="font-size:12px;">Fits (Application):</label><input type="text" id="application_${index}" value="${escapeAttr(product.application||'')}" style="width:100%;padding:5px;"></div>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
-                <div>
-                    <label style="font-size:12px;font-weight:700;">Vehicle Make:</label>
-                    <input type="text" id="vmake_${index}" list="edit_make_list_${index}" value="${escapeAttr(product.vehicleMake||'')}" placeholder="e.g. Toyota" style="width:100%;padding:5px;border:1px solid #ccc;border-radius:5px;">
-                    <datalist id="edit_make_list_${index}">${makeList.map(m => `<option value="${escapeAttr(m)}">`).join('')}</datalist>
-                </div>
-                <div>
-                    <label style="font-size:12px;font-weight:700;">Vehicle Model:</label>
-                    <input type="text" id="vmodel_${index}" list="edit_model_list_${index}" value="${escapeAttr(product.vehicleModel||'')}" placeholder="e.g. Hilux, Fortuner" style="width:100%;padding:5px;border:1px solid #ccc;border-radius:5px;">
-                    <datalist id="edit_model_list_${index}">${allModels.map(m => `<option value="${escapeAttr(m)}">`).join('')}</datalist>
-                    <div class="multi-model-hint">Separate multiple models with commas</div>
-                </div>
+                <div>${makeWidget}</div>
+                <div>${modelWidget}</div>
                 <div><label style="font-size:12px;">Year Start:</label><input type="number" id="ystart_${index}" value="${product.yearStart||0}" style="width:100%;padding:5px;"></div>
                 <div><label style="font-size:12px;">Year End:</label><input type="number" id="yend_${index}" value="${product.yearEnd||0}" style="width:100%;padding:5px;"></div>
             </div>
@@ -3009,7 +3030,11 @@ function renderAdminProductCards(){
     container.innerHTML = html;
     const countEl = document.getElementById('adminSearchCount');
     if(countEl){ countEl.textContent = adminSearchTerm ? `${list.length} of ${products.length} parts shown` : `${products.length} parts total`; }
-    list.forEach(({index})=>{ renderMultiImagePicker('edit_img_' + index); });
+    list.forEach(({index})=>{
+        renderMultiImagePicker('edit_img_' + index);
+        msRenderChips('edit_vmake_' + index);
+        msRenderChips('edit_vmodel_' + index);
+    });
 }
 function handleAdminSearch(value){ adminSearchTerm = value.trim().toLowerCase(); renderAdminProductCards(); }
 function clearAdminSearch(){ adminSearchTerm = ''; const input = document.getElementById('adminSearchInput'); if(input){ input.value = ''; } renderAdminProductCards(); }
@@ -3150,7 +3175,7 @@ function renderOrdersList(){
     const cnt = document.getElementById('ordersCount');
     if(cnt) cnt.textContent = `${cachedOrders.length} order${cachedOrders.length===1?'':'s'}`;
 }
-    function findOrderById(id){ return cachedOrders.find(o => o.id === id) || null; }
+function findOrderById(id){ return cachedOrders.find(o => o.id === id) || null; }
 async function changeOrderStatus(id, newStatus){
     const o = findOrderById(id);
     if(!o) return;
@@ -3217,37 +3242,37 @@ function buildReceiptText(o){
 function printOrder(id){
     const o = findOrderById(id);
     if(!o){ alert('Order not found'); return; }
- const itemsRows = (o.items||[]).map(i => {
-    const st = normalizeStock(i.availability);
-    const tag = st === STOCK_ON_ORDER ? '<br><small style="color:#e65100;font-weight:700;">Shipped on Order ~2 weeks</small>' : '';
-    const pmode = normalizePriceMode(i.priceMode);
-    let priceCell, subtotalCell;
-    if(pmode === PRICE_ON_REQUEST){
-        priceCell = 'On request'; subtotalCell = '—';
-    } else if(pmode === PRICE_RANGE){
-        const mn = Number(i.priceMin)||0, mx = Number(i.priceMax)||0;
-        let rTxt;
-        if(!mn && !mx) rTxt = 'On request';
-        else if(!mn) rTxt = `Up to ${formatPrice(mx)}`;
-        else if(!mx) rTxt = `From ${formatPrice(mn)}`;
-        else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
-        priceCell = rTxt; subtotalCell = '—';
-    } else {
-        priceCell = formatPrice(i.price); subtotalCell = formatPrice(i.subtotal);
-    }
-    const partNo = i.partNo || i.sku || '';
-    const brand = i.brand || '';
-    const subline = [partNo ? `Part No: ${escapeHtml(partNo)}` : '', brand ? `Brand: ${escapeHtml(brand)}` : ''].filter(Boolean).join(' · ');
-    return `<tr>
-        <td>
-            ${escapeHtml(i.name)}${tag}
-            ${subline ? `<br><small style="color:#555;font-size:11px;">${subline}</small>` : ''}
-        </td>
-        <td style="text-align:center">${i.quantity}</td>
-        <td style="text-align:right">${priceCell}</td>
-        <td style="text-align:right">${subtotalCell}</td>
-    </tr>`;
-}).join('');
+    const itemsRows = (o.items||[]).map(i => {
+        const st = normalizeStock(i.availability);
+        const tag = st === STOCK_ON_ORDER ? '<br><small style="color:#e65100;font-weight:700;">Shipped on Order ~2 weeks</small>' : '';
+        const pmode = normalizePriceMode(i.priceMode);
+        let priceCell, subtotalCell;
+        if(pmode === PRICE_ON_REQUEST){
+            priceCell = 'On request'; subtotalCell = '—';
+        } else if(pmode === PRICE_RANGE){
+            const mn = Number(i.priceMin)||0, mx = Number(i.priceMax)||0;
+            let rTxt;
+            if(!mn && !mx) rTxt = 'On request';
+            else if(!mn) rTxt = `Up to ${formatPrice(mx)}`;
+            else if(!mx) rTxt = `From ${formatPrice(mn)}`;
+            else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
+            priceCell = rTxt; subtotalCell = '—';
+        } else {
+            priceCell = formatPrice(i.price); subtotalCell = formatPrice(i.subtotal);
+        }
+        const partNo = i.partNo || i.sku || '';
+        const brand = i.brand || '';
+        const subline = [partNo ? `Part No: ${escapeHtml(partNo)}` : '', brand ? `Brand: ${escapeHtml(brand)}` : ''].filter(Boolean).join(' · ');
+        return `<tr>
+            <td>
+                ${escapeHtml(i.name)}${tag}
+                ${subline ? `<br><small style="color:#555;font-size:11px;">${subline}</small>` : ''}
+            </td>
+            <td style="text-align:center">${i.quantity}</td>
+            <td style="text-align:right">${priceCell}</td>
+            <td style="text-align:right">${subtotalCell}</td>
+        </tr>`;
+    }).join('');
     const notesArr = [];
     if(o.hasOnOrderItems) notesArr.push('Items marked Shipped on Order require a 50% deposit and arrive in ~2 weeks.');
     if(o.hasQuoteItems) notesArr.push('Some items require a quote — final prices will be confirmed.');
@@ -3460,8 +3485,8 @@ function showAddProductForm(){
     const brandOptions = [...brands].sort((a,b)=>a.localeCompare(b));
     const catCombo = buildAdminComboHTML('new_cat', 'Category', catOptions, '', 'Type new category name');
     const brandCombo = buildAdminComboHTML('new_br', 'Brand', brandOptions, '', 'Type new brand name');
-    const makeList = Object.keys(vehicleModels).sort();
-    const allModels = [...new Set(Object.values(vehicleModels).flat())].sort();
+    const makeWidget = buildMultiSelectHTML('new_vmake', 'Vehicle Make', '', null, 'Type to add make…');
+    const modelWidget = buildMultiSelectHTML('new_vmodel', 'Vehicle Model', '', null, 'Type to add model…');
     const formHTML=`<div style="background:#e8f5e9;padding:20px;border-radius:5px;margin-bottom:20px;" id="newProductForm"><h3 style="color:#2e7d32;">➕ Add New Product (Full Form)</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
             <div><label>Product Name:</label><input type="text" id="new_name" style="width:100%;padding:5px;"></div>
@@ -3471,17 +3496,8 @@ function showAddProductForm(){
             <div><label>Stock:</label><input type="number" id="new_stock" value="0" style="width:100%;padding:5px;"></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
-            <div>
-                <label>Vehicle Make:</label>
-                <input type="text" id="new_vmake" list="new_make_list" style="width:100%;padding:5px;" placeholder="Toyota, Universal...">
-                <datalist id="new_make_list">${makeList.map(m => `<option value="${escapeAttr(m)}">`).join('')}</datalist>
-            </div>
-            <div>
-                <label>Vehicle Model:</label>
-                <input type="text" id="new_vmodel" list="new_model_list" style="width:100%;padding:5px;" placeholder="Hilux, Fortuner, Prado">
-                <datalist id="new_model_list">${allModels.map(m => `<option value="${escapeAttr(m)}">`).join('')}</datalist>
-                <div class="multi-model-hint">Separate multiple models with commas</div>
-            </div>
+            <div>${makeWidget}</div>
+            <div>${modelWidget}</div>
             <div><label>Year Start:</label><input type="number" id="new_ystart" value="0" style="width:100%;padding:5px;"></div>
             <div><label>Year End:</label><input type="number" id="new_yend" value="0" style="width:100%;padding:5px;"></div>
         </div>
@@ -3494,6 +3510,8 @@ function showAddProductForm(){
     </div>`;
     document.getElementById('addProductForm').innerHTML=formHTML;
     renderMultiImagePicker('new_img');
+    msRenderChips('new_vmake');
+    msRenderChips('new_vmodel');
 }
 async function addNewProduct(){
     const form = document.getElementById('newProductForm');
@@ -3506,8 +3524,8 @@ async function addNewProduct(){
     const imgVal = images.length > 0 ? images[0] : '🔧';
     const nameVal = document.getElementById('new_name').value;
     const stockStatus = normalizeStock(document.getElementById('new_stock_status').value);
-    const vMake = (document.getElementById('new_vmake').value||'Universal').trim();
-    const vModel = (document.getElementById('new_vmodel').value||'All Models').trim();
+    const vMake = msRead('new_vmake') || 'Universal';
+    const vModel = msRead('new_vmodel') || 'All Models';
     if(!brandVal){ alert('Please select or add a brand.'); return; }
     if(!catVal){ alert('Please select or add a category.'); return; }
 
@@ -3593,8 +3611,8 @@ async function updateProduct(index){
     const images = readImagePickerValue(`edit_img_${index}`);
     products[index].images = images;
     products[index].image = images.length > 0 ? images[0] : '🔧';
-    const vMake = (document.getElementById(`vmake_${index}`).value || 'Universal').trim();
-    const vModel = (document.getElementById(`vmodel_${index}`).value || 'All Models').trim();
+    const vMake = msRead(`edit_vmake_${index}`) || 'Universal';
+    const vModel = msRead(`edit_vmodel_${index}`) || 'All Models';
     products[index].vehicleMake = vMake;
     products[index].vehicleModel = vModel;
     products[index].yearStart = parseInt(document.getElementById(`ystart_${index}`).value) || 0;
@@ -3912,7 +3930,10 @@ function showPartTypes(){
 function showAIResults(){
     const state = aiChatState;
     let filtered = products.filter(p => {
-        if(state.make && p.vehicleMake && p.vehicleMake !== 'Universal' && p.vehicleMake.toLowerCase() !== state.make.toLowerCase()) return false;
+        if(state.make){
+            const pMakes = String(p.vehicleMake || '').split(',').map(s=>s.trim().toLowerCase());
+            if(!pMakes.includes('universal') && !pMakes.includes(state.make.toLowerCase())) return false;
+        }
         if(state.model && p.vehicleModel && p.vehicleModel !== 'All Models' && !p.vehicleModel.toLowerCase().includes(state.model.toLowerCase())) return false;
         if(state.partType && p.category !== state.partType) return false;
         return true;

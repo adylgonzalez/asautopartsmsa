@@ -3150,6 +3150,9 @@ function renderOrdersList(){
     const cnt = document.getElementById('ordersCount');
     if(cnt) cnt.textContent = `${cachedOrders.length} order${cachedOrders.length===1?'':'s'}`;
 }
+    function findOrderById(id){ return cachedOrders.find(o => o.id === id) || null; }
+async function changeOrderStatus(id, newStatus){
+    const o = findOrderById(id);
     if(!o) return;
     o.status = newStatus;
     renderOrdersList();

@@ -4119,7 +4119,7 @@ function sendAIMessage(){
 // ==================== INITIALIZE ====================
 async function init(){
     const grid = document.getElementById('productGrid');
-    grid.innerHTML = `<div class="loading-state"><div class="spinner"></div><div>Loading parts from GitHub...</div></div>`;
+    grid.innerHTML = `<div class="loading-state"><div class="spinner"></div><div>Loading parts ...</div></div>`;
     loadVehicleFromGarage();
     await fetchProductsFromGitHub();
     await fetchOptionsFromGitHub();

@@ -92,22 +92,25 @@
     "price": 2200,
     "priceMode": "fixed",
     "category": "Filters",
-    "image": "images/air-filter-toyota-1789585250220.jpg",
+    "image": "https://adylgonzalez.github.io/asautopartsmsa/images/air-filter-toyota-1789585250220.jpg",
     "images": [
-      "images/air-filter-toyota-1789585250220.jpg"
+      "https://adylgonzalez.github.io/asautopartsmsa/images/air-filter-toyota-1789585250220.jpg"
     ],
     "brand": "DENSO",
     "partNo": "17801-0D050",
     "oem": "17801-0D050",
-    "application": "Toyota All Models",
-    "description": "Engine air filter for Toyota. Improves fuel efficiency.",
+    "application": "",
+    "description": "fits various early-to-mid 2000s Toyota models equipped with 1.4L, 1.6L, 1.8L, 2.0L, or 2.4L engines",
     "vehicleMake": "Toyota",
-    "vehicleModel": "All Models",
-    "yearStart": 0,
-    "yearEnd": 0,
+    "vehicleModel": "Corolla, Avensis, Wish, Allion, Premio, Matrix",
+    "yearStart": 2000,
+    "yearEnd": 2016,
     "sku": "AF-TY-ALL",
     "stock": 50,
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "supercedes": "17801-22020, 17801-0D010",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Spark Plugs - Toyota (4 Pack)",
@@ -130,7 +133,7 @@
     "sku": "SP-TY-ALL",
     "stock": 60,
     "availability": "in_stock",
-    "supercedes": "90919-01275",
+    "supercedes": "",
     "priceMin": null,
     "priceMax": null
   },

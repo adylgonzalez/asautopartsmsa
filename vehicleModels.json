@@ -19,7 +19,10 @@
     "Hiace",
     "Alphard",
     "Voxy",
-    "Noah"
+    "Noah",
+    "Prius",
+    "Matrix",
+    "CT200H"
   ],
   "Nissan": [
     "X-Trail",
@@ -153,6 +156,12 @@
     "S60"
   ],
   "Lexus": [
-    "NX200T"
+    "NX200T",
+    "Corolla",
+    "Prius",
+    "Matrix",
+    "Voxy",
+    "Noah",
+    "CT200H"
   ]
 }

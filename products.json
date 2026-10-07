@@ -4641,5 +4641,28 @@
     "description": "",
     "availability": "in_stock",
     "sku": "SKU-1791403621183"
+  },
+  {
+    "name": "Shock Absorber Front",
+    "price": 7250,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "333258",
+    "oem": "333258",
+    "supercedes": "333407",
+    "application": "Toyota Probox Old Shape,Vitz,IST",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "🔧",
+    "images": [],
+    "vehicleMake": "Toyota",
+    "vehicleModel": "All Models",
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 10,
+    "description": "",
+    "availability": "in_stock",
+    "sku": "SKU-1791403832191"
   }
 ]

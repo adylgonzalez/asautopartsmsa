@@ -11,7 +11,7 @@
     "brand": "BOSCH",
     "partNo": "04465-33470",
     "oem": "04465-33470",
-    "application": "",
+    "application": "Toyota Camry, Aurion, Avalon, ES350",
     "description": "Front brake pads for Toyota Camry. Ceramic compound for smooth stopping.",
     "vehicleMake": "Toyota, Lexus",
     "vehicleModel": "Camry, Aurion, Avalon, ES350",
@@ -22,7 +22,18 @@
     "availability": "in_stock",
     "supercedes": "04465-33471",
     "priceMin": null,
-    "priceMax": null
+    "priceMax": null,
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Camry",
+          "Aurion",
+          "Avalon",
+          "ES350"
+        ]
+      }
+    ]
   },
   {
     "name": "Brake Pads - Toyota Corolla",

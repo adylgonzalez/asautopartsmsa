@@ -4618,5 +4618,28 @@
     "description": "",
     "availability": "in_stock",
     "sku": "SKU-1791342492467"
+  },
+  {
+    "name": "Shock Absorber Rear",
+    "price": 4500,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "343434",
+    "oem": "343434",
+    "supercedes": "",
+    "application": "Toyota Probox ",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "🔧",
+    "images": [],
+    "vehicleMake": "Toyota",
+    "vehicleModel": "All Models",
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 10,
+    "description": "",
+    "availability": "in_stock",
+    "sku": "SKU-1791403621183"
   }
 ]

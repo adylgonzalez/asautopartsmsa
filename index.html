@@ -382,6 +382,66 @@
             .admin-section-header h3{font-size:16px}
         }
 
+        /* === RECONCILIATION === */
+        .recon-controls{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+        .recon-controls button{padding:8px 14px;background:#e8eaf6;color:#1a237e;border:1px solid #c5cae9;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700}
+        .recon-controls button:hover{background:#c5cae9}
+        .recon-controls button.active{background:#1a237e;color:#fff;border-color:#1a237e}
+        .recon-range{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff8e1;padding:10px;border-radius:8px;border-left:3px solid #ffc107;margin-bottom:14px}
+        .recon-range label{font-size:12px;font-weight:700;color:#555}
+        .recon-range input[type="date"]{padding:6px 10px;border:1px solid #ccc;border-radius:5px;font-size:13px}
+        .recon-range button{padding:6px 14px;background:#ff6f00;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:12px;font-weight:700}
+        .recon-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+        .recon-stat{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:12px;text-align:center}
+        .recon-stat .label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+        .recon-stat .value{font-size:20px;font-weight:700;color:#1a237e}
+        .recon-stat .value.revenue{color:#2e7d32}
+        .recon-stat .value.pending{color:#e65100}
+        .recon-stat .sub{font-size:11px;color:#888;margin-top:2px}
+        .recon-table{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border:1px solid #eee;border-radius:8px;overflow:hidden}
+        .recon-table th{background:#1a237e;color:#fff;padding:8px;text-align:left;font-size:11px;font-weight:700}
+        .recon-table td{padding:7px 8px;border-bottom:1px solid #eee}
+        .recon-table tr:hover{background:#f8f9ff}
+        .recon-export{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:#2e7d32;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;margin-bottom:12px}
+        .recon-export:hover{background:#1b5e20}
+
+        /* === MY POINTS (customer) === */
+        .my-points-top-btn{background:linear-gradient(135deg,#ff6f00,#ff8f00);color:#fff;border-radius:50px;padding:7px 14px !important;font-weight:700 !important;margin-left:6px !important}
+        .my-points-top-btn:hover{background:linear-gradient(135deg,#e65100,#ef6c00) !important}
+        .points-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:24px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.4);z-index:3200;max-width:440px;width:95%;max-height:85vh;overflow-y:auto;display:none}
+        .points-modal.open{display:block}
+        .points-modal h2{color:#1a237e;margin-bottom:6px;font-size:22px}
+        .points-modal .sub{color:#666;font-size:13px;margin-bottom:18px}
+        .points-modal input{width:100%;padding:12px;border:2px solid #1a237e;border-radius:6px;font-size:16px;margin-bottom:10px}
+        .points-modal .check-btn{width:100%;padding:12px;background:#1a237e;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:15px}
+        .points-modal .check-btn:hover{background:#ff6f00}
+        .points-modal .close-x{position:absolute;top:12px;right:12px;background:#f44336;color:#fff;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-weight:700;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center}
+        .points-card{background:#f0f4ff;border-radius:10px;padding:16px;margin-top:16px;text-align:center}
+        .points-card .big-points{font-size:42px;font-weight:900;color:#ff6f00;line-height:1}
+        .points-card .pts-label{font-size:13px;color:#666;margin-bottom:12px}
+        .points-card .worth{background:#e8f5e9;border-radius:6px;padding:8px 12px;display:inline-block;font-size:14px;font-weight:700;color:#2e7d32;margin-bottom:10px}
+        .points-card .stats{display:flex;gap:10px;justify-content:center;font-size:12px;color:#555;margin-top:10px}
+        .points-card .stats div{flex:1;background:#fff;border-radius:6px;padding:8px}
+        .points-card .stats strong{color:#1a237e;display:block;font-size:15px}
+        .points-redeem-btn{width:100%;padding:12px;background:#25D366;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:14px;margin-top:12px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+        .points-redeem-btn:hover{background:#1eaa53}
+        .points-none{text-align:center;padding:20px;color:#666;font-size:14px;background:#f9f9f9;border-radius:8px;margin-top:14px}
+        @media(max-width:768px){.points-modal{max-height:90vh;padding:20px}}
+
+        /* === CUSTOMERS TAB (admin) === */
+        .cust-card{background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+        .cust-card .info{flex:1;min-width:180px}
+        .cust-card .info .name{font-weight:700;color:#1a237e;font-size:15px}
+        .cust-card .info .phone{font-size:12px;color:#666;margin-top:2px}
+        .cust-card .info .meta{font-size:11px;color:#888;margin-top:4px}
+        .cust-card .pts{background:#fff3e0;color:#e65100;padding:10px 14px;border-radius:8px;font-weight:900;font-size:18px;min-width:80px;text-align:center}
+        .cust-card .pts .small{display:block;font-size:10px;font-weight:400;opacity:.8}
+        .cust-card .actions{display:flex;gap:6px}
+        .cust-card .actions button{padding:6px 10px;border:none;border-radius:5px;cursor:pointer;font-size:11px;font-weight:700;color:#fff}
+        .cust-card .actions .wa{background:#25D366}
+        .cust-card .actions .edit{background:#1a237e}
+        .cust-card .actions .del{background:#f44336}
+
         .ai-chat-btn{position:fixed;bottom:100px;right:30px;width:60px;height:60px;border-radius:50%;background:#1a237e;color:#fff;border:none;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:1160;display:flex;align-items:center;justify-content:center;font-size:26px;transition:transform .2s,background .3s}
         .ai-chat-btn:hover{background:#ff6f00;transform:scale(1.05)}
         .ai-chat-btn .pulse-ring{position:absolute;width:100%;height:100%;border-radius:50%;border:3px solid #ff6f00;opacity:.7;animation:pulseRing 2s ease-out infinite;pointer-events:none}
@@ -526,6 +586,7 @@
             📍 Mombasa, Kenya
             <span class="live-status"><span class="live-dot green" id="dotAdilTop"></span> ADIL</span>
             <span class="live-status"><span class="live-dot green" id="dotSuhaylTop"></span> SUHAYL</span>
+            <a onclick="openMyPoints()" class="my-points-top-btn" title="Check your points">⭐ My Points</a>
         </div>
         <div class="header" onclick="goToHomepage()" title="Back to top / Main page">
             <h1>A & S <span>AUTOPARTS</span></h1>
@@ -769,6 +830,7 @@
             <input type="text" id="custName" placeholder="e.g. John Mwangi" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;">
             <label style="font-size:13px;font-weight:700;display:block;margin-bottom:4px;">Your Phone *</label>
             <input type="tel" id="custPhone" placeholder="e.g. 0712345678" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;">
+            <div style="background:#e8f5e9;padding:8px 12px;border-radius:5px;font-size:12px;color:#2e7d32;font-weight:700;margin-bottom:8px;">⭐ Earn 1 point per KSh 100 spent. 100 points = KSh 100 off!</div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:20px;font-weight:bold;margin:15px 0;">
             <span>Total:</span>
@@ -776,6 +838,16 @@
         </div>
         <div id="cartWhatsAppButtons" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
         <button onclick="closeCart()" style="width:100%;padding:10px;background:#f44336;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-top:10px;">Close</button>
+    </div>
+
+    <!-- MY POINTS MODAL -->
+    <div class="points-modal" id="pointsModal">
+        <button class="close-x" onclick="closeMyPoints()">✕</button>
+        <h2>⭐ My Points</h2>
+        <p class="sub">Enter your phone number to see your points balance</p>
+        <input type="tel" id="pointsPhone" placeholder="e.g. 0712345678" onkeydown="if(event.key==='Enter')checkMyPoints()">
+        <button class="check-btn" onclick="checkMyPoints()">Check My Points</button>
+        <div id="pointsResult"></div>
     </div>
 
     <div class="gallery-modal" id="galleryModal" onclick="if(event.target===this)closeGallery()">
@@ -801,13 +873,18 @@ const OPTIONS_FILE = 'options.json';
 const AVAILABILITY_FILE = 'availability.json';
 const ORDERS_FILE  = 'orders.json';
 const VEHICLE_MODELS_FILE = 'vehicleModels.json';
+const CUSTOMERS_FILE = 'customers.json';
 const GITHUB_BRANCH = 'main';
 const PAGES_BASE = `https://${GITHUB_OWNER}.github.io/${GITHUB_REPO}`;
 const PRODUCTS_URL = `${PAGES_BASE}/${GITHUB_FILE}`;
 const OPTIONS_URL  = `${PAGES_BASE}/${OPTIONS_FILE}`;
 const AVAILABILITY_URL = `${PAGES_BASE}/${AVAILABILITY_FILE}`;
 const ORDERS_URL   = `${PAGES_BASE}/${ORDERS_FILE}`;
+const CUSTOMERS_URL = `${PAGES_BASE}/${CUSTOMERS_FILE}`;
 const IMAGES_FOLDER = 'images';
+
+const POINTS_PER_KSH = 100; // KSh 100 = 1 point
+const POINTS_REDEEM_VALUE = 1; // 100 points = KSh 100 off (so 1 pt = KSh 1)
 
 // ==================== CATEGORY IMAGES ====================
 let categoryImages = {
@@ -1040,7 +1117,6 @@ function renderModelOptions(make){
     modelSel.innerHTML = html;
 }
 
-// Public change handler — customers just see filtered models, no add options
 function onPublicMakeChange(){
     const make = document.getElementById('vehicleMake').value;
     renderModelOptions(make);
@@ -1061,18 +1137,15 @@ function findParts(){
 
 // ==================== FITMENTS HELPERS ====================
 function normalizeFitments(product){
-    // Returns an array of {make, models: []} regardless of storage format.
     if(Array.isArray(product.fitments) && product.fitments.length > 0){
         return product.fitments.map(f => ({
             make: String(f.make || '').trim(),
             models: Array.isArray(f.models) ? f.models.map(m => String(m || '').trim()).filter(Boolean) : []
         })).filter(f => f.make);
     }
-    // Fallback to legacy flat format
     const mk = String(product.vehicleMake || '').split(',').map(s => s.trim()).filter(Boolean);
     const md = String(product.vehicleModel || '').split(',').map(s => s.trim()).filter(Boolean);
     if(mk.length === 0) return [];
-    // Legacy pairing is ambiguous. Best-guess: each make gets ALL models.
     return mk.map(m => ({ make: m, models: md.slice() }));
 }
 
@@ -1082,24 +1155,21 @@ function productMatchesFitment(product, make, model, year){
     const selMake = String(make || '').toLowerCase();
     const selModel = String(model || '').toLowerCase();
     const selYear = parseInt(year) || 0;
-    // Year check (if product specifies)
     const yStart = parseInt(product.yearStart) || 0;
     const yEnd = parseInt(product.yearEnd) || 0;
     if(selYear && yStart > 0 && yEnd > 0){
         if(selYear < yStart || selYear > yEnd) return false;
     }
-    // Fitment check
     return fitments.some(f => {
         const fMake = String(f.make || '').toLowerCase();
         if(fMake === 'universal'){
-            // Universal fits anything
             const models = (f.models || []).map(x => x.toLowerCase());
             if(models.length === 0 || models.includes('all models')) return true;
             return models.includes(selModel);
         }
         if(fMake !== selMake) return false;
         const models = (f.models || []).map(x => x.toLowerCase());
-        if(models.length === 0) return true; // make matches, no model restriction
+        if(models.length === 0) return true;
         if(models.includes('all models')) return true;
         return models.includes(selModel);
     });
@@ -1132,7 +1202,7 @@ function getAdminComboValue(idPrefix){
 }
 
 // ==================== VEHICLE FITMENTS WIDGET ====================
-const fitmentsState = {}; // { widgetKey: [ {make, models: []} ] }
+const fitmentsState = {};
 
 function fitmentsInit(widgetKey, initial){
     if(!fitmentsState[widgetKey]) fitmentsState[widgetKey] = { rows: [], initialized: false };
@@ -1225,7 +1295,6 @@ function fitmentsRemoveRow(widgetKey, rowIdx){
 function fitmentsMakeChange(widgetKey, rowIdx, value){
     if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return;
     if(value === '__ADD_NEW__'){
-        // Show the "new make" text input for this row
         const rowEl = document.querySelector(`[data-fit="${widgetKey}"] [data-row="${rowIdx}"]`);
         if(rowEl){
             const inp = rowEl.querySelector('.fit-make-new');
@@ -1235,8 +1304,6 @@ function fitmentsMakeChange(widgetKey, rowIdx, value){
     }
     fitmentsState[widgetKey].rows[rowIdx].make = value;
     fitmentsRenderAll(widgetKey);
-    // Also try to autosave the make if it's brand new
-    // (we don't register to GitHub yet — that happens on Save)
 }
 
 function fitmentsRemoveModel(widgetKey, rowIdx, modelIdx){
@@ -1252,7 +1319,6 @@ function fitmentsSourceModels(widgetKey, rowIdx){
     if(make && vehicleModels[make]){
         return vehicleModels[make].slice().sort((a,b)=>a.localeCompare(b));
     }
-    // no make chosen — pool all models
     const pool = new Set();
     Object.values(vehicleModels).forEach(arr => arr.forEach(m => pool.add(m)));
     return [...pool].sort((a,b)=>a.localeCompare(b));
@@ -1304,7 +1370,6 @@ function fitmentsAddModel(widgetKey, rowIdx, model){
     const row = fitmentsState[widgetKey].rows[rowIdx];
     if(!row.models.includes(model)) row.models.push(model);
     fitmentsRenderAll(widgetKey);
-    // Refocus input
     setTimeout(() => {
         const inp = document.getElementById(`fitModelsInput_${widgetKey}_${rowIdx}`);
         if(inp) inp.focus();
@@ -1331,7 +1396,6 @@ function fitmentsRead(widgetKey){
 }
 
 function fitmentsApplyToVehicleModels(fitments){
-    // For each fitment row, add its make+models to the shared vehicleModels map
     let changed = false;
     fitments.forEach(f => {
         const make = f.make;
@@ -1357,7 +1421,119 @@ function buildApplicationFromFitments(fitments){
     return parts.join(' | ');
 }
 
-// ==================== END VEHICLE FITMENTS WIDGET ====================
+// ==================== CUSTOMER POINTS SYSTEM ====================
+let customersData = {}; // { phone: {phone, name, points, totalSpent, ordersCount, lastOrderDate, awardedOrders:[]} }
+
+function normalizePhone(p){
+    if(!p) return '';
+    let digits = String(p).replace(/\D/g, '');
+    if(digits.startsWith('0')) digits = '254' + digits.slice(1);
+    else if(digits.startsWith('7') || digits.startsWith('1')) digits = '254' + digits;
+    return digits;
+}
+
+async function fetchCustomersFromGitHub(){
+    try {
+        const res = await axios.get(CUSTOMERS_URL + '?t=' + Date.now());
+        if(res.data && typeof res.data === 'object' && !Array.isArray(res.data)){
+            customersData = res.data;
+            return true;
+        }
+        throw new Error('customers.json did not return an object');
+    } catch (err){
+        console.warn('Could not load customers.json — starting fresh. Error:', err.message);
+        customersData = {};
+        return false;
+    }
+}
+
+async function saveCustomersToGitHub(){
+    if(!getToken()){ console.warn('No token — customers not saved'); return false; }
+    try {
+        await putFileToGitHub(CUSTOMERS_FILE, customersData, `Update customers.json — ${new Date().toISOString()}`);
+        return true;
+    } catch (err){
+        console.error('Customers save failed:', err);
+        return false;
+    }
+}
+
+function awardPointsForOrder(order){
+    // Only called when order status = delivered
+    const phone = normalizePhone(order.customerPhone);
+    if(!phone) return { awarded: false, reason: 'no phone' };
+    if(!customersData[phone]){
+        customersData[phone] = {
+            phone: phone,
+            name: order.customerName || 'Customer',
+            points: 0,
+            totalSpent: 0,
+            ordersCount: 0,
+            lastOrderDate: order.date || new Date().toISOString(),
+            awardedOrders: []
+        };
+    }
+    const cust = customersData[phone];
+    if(cust.awardedOrders.includes(order.id)){
+        return { awarded: false, reason: 'already awarded', points: cust.points };
+    }
+    const total = Number(order.total) || 0;
+    const points = Math.floor(total / POINTS_PER_KSH);
+    cust.points += points;
+    cust.totalSpent += total;
+    cust.ordersCount += 1;
+    cust.lastOrderDate = order.date || new Date().toISOString();
+    cust.awardedOrders.push(order.id);
+    if(order.customerName) cust.name = order.customerName;
+    return { awarded: true, points: cust.points, earned: points };
+}
+
+function openMyPoints(){
+    document.getElementById('pointsModal').classList.add('open');
+    document.getElementById('pointsResult').innerHTML = '';
+    document.getElementById('pointsPhone').value = '';
+    setTimeout(() => document.getElementById('pointsPhone').focus(), 200);
+}
+
+function closeMyPoints(){
+    document.getElementById('pointsModal').classList.remove('open');
+}
+
+function checkMyPoints(){
+    const input = document.getElementById('pointsPhone');
+    const phone = normalizePhone(input.value);
+    const result = document.getElementById('pointsResult');
+    if(!phone){ result.innerHTML = `<div class="points-none">Please enter your phone number.</div>`; return; }
+    const cust = customersData[phone];
+    if(!cust){
+        result.innerHTML = `<div class="points-none">No points yet for <strong>${escapeAttr(input.value)}</strong>.<br><br>Your points start earning on your first delivered order. ⭐</div>`;
+        return;
+    }
+    const worth = (cust.points * POINTS_REDEEM_VALUE).toFixed(0);
+    result.innerHTML = `
+        <div class="points-card">
+            <div class="big-points">${cust.points}</div>
+            <div class="pts-label">POINTS</div>
+            <div class="worth">💰 Worth KSh ${worth} off</div>
+            <div style="font-weight:700;color:#1a237e;margin:6px 0 4px;">${escapeAttr(cust.name || 'Customer')}</div>
+            <div class="stats">
+                <div><strong>${cust.ordersCount || 0}</strong>Orders</div>
+                <div><strong>KSh ${(cust.totalSpent||0).toLocaleString()}</strong>Spent</div>
+            </div>
+            <button class="points-redeem-btn" onclick="redeemPointsWhatsApp('${phone}')">
+                <i class="fab fa-whatsapp"></i> Redeem on WhatsApp
+            </button>
+        </div>
+    `;
+}
+
+function redeemPointsWhatsApp(phone){
+    const cust = customersData[phone];
+    if(!cust) return;
+    const worth = (cust.points * POINTS_REDEEM_VALUE).toFixed(0);
+    const msg = `Hello A & S AUTOPARTS,\n\nI'd like to redeem my loyalty points.\n\nName: ${cust.name}\nPhone: ${phone}\nPoints: ${cust.points}\nValue: KSh ${worth} off\n\nPlease confirm my redemption. Thank you!`;
+    window.open(`https://wa.me/254713349554?text=${encodeURIComponent(msg)}`, '_blank');
+}
 
 // ==================== VEHICLE DATABASES ====================
 const toyotaModelCodes = {
@@ -1575,6 +1751,9 @@ let galleryIndex = 0;
 let currentAdminTab = 'orders';
 let recentlyViewed = JSON.parse(localStorage.getItem('A & SRecentlyViewed')) || [];
 let alsoBought = JSON.parse(localStorage.getItem('A & SAlsoBought')) || [];
+let reconPeriod = 'today';
+let reconFrom = '';
+let reconTo = '';
 
 function saveCart(){localStorage.setItem('A & SCart', JSON.stringify(cart))}
 function formatPrice(price){return 'KSh '+Number(price||0).toLocaleString('en-KE')}
@@ -1915,7 +2094,6 @@ async function putFileToGitHub(filePath, contentObject, commitMessage){
     try {
         await doPut();
     } catch (err){
-        // Retry once on 5xx (server hiccup)
         if(err.response && err.response.status >= 500 && err.response.status < 600){
             console.warn('GitHub returned', err.response.status, '— retrying once in 2s…');
             await new Promise(r => setTimeout(r, 2000));
@@ -2339,6 +2517,7 @@ async function checkoutCart(brother){
     if(hasOnOrder){
         message += `Note: Items marked [Shipped on Order] require a 50% deposit and arrive in ~2 weeks.\n\n`;
     }
+    message += `⭐ Loyalty: You'll earn ${Math.floor(totals.fixedTotal/POINTS_PER_KSH)} points when this order is delivered!\n\n`;
     message += `Please confirm availability and delivery.`;
 
     const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -3056,6 +3235,8 @@ function switchAdminTab(tab){
     });
     if(tab === 'parts') renderAdminProductCards();
     if(tab === 'orders') renderOrdersList();
+    if(tab === 'customers') renderCustomersList();
+    if(tab === 'recon') renderReconciliation();
     if(tab === 'add'){
         const container = document.getElementById('addProductForm');
         if(container && !container.innerHTML.trim()) showAddProductForm();
@@ -3111,7 +3292,6 @@ function renderAdminProductCards(){
             <div style="margin-top:10px;"><label style="font-size:12px;">Description:</label><textarea id="desc_${index}" style="width:100%;padding:5px;height:40px;">${escapeAttr(product.description||'')}</textarea></div>
             <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
                 <button onclick="updateProduct(${index})" style="padding:8px 15px;background:#4caf50;color:#fff;border:none;border-radius:3px;cursor:pointer;">💾 Save</button>
-                <button onclick="duplicateProduct(${index})" style="padding:8px 15px;background:#ff6f00;color:#fff;border:none;border-radius:3px;cursor:pointer;">📋 Duplicate</button>
                 <button onclick="deleteProduct(${index})" style="padding:8px 15px;background:#f44336;color:#fff;border:none;border-radius:3px;cursor:pointer;">🗑️ Delete</button>
             </div>
         </div>`;
@@ -3126,6 +3306,267 @@ function renderAdminProductCards(){
 }
 function handleAdminSearch(value){ adminSearchTerm = value.trim().toLowerCase(); renderAdminProductCards(); }
 function clearAdminSearch(){ adminSearchTerm = ''; const input = document.getElementById('adminSearchInput'); if(input){ input.value = ''; } renderAdminProductCards(); }
+
+// ==================== CUSTOMERS LIST ====================
+function renderCustomersList(){
+    const container = document.getElementById('customersList');
+    if(!container) return;
+    const phones = Object.keys(customersData);
+    if(phones.length === 0){
+        container.innerHTML = `<div class="admin-no-results">No customers yet. Customers appear here when their orders are marked Delivered.</div>`;
+        const cnt = document.getElementById('customersCount');
+        if(cnt) cnt.textContent = '0 customers';
+        return;
+    }
+    // Sort by points desc
+    const sorted = phones
+        .map(p => customersData[p])
+        .sort((a,b) => (b.points||0) - (a.points||0));
+    let html = '';
+    sorted.forEach(c => {
+        html += `<div class="cust-card">
+            <div class="info">
+                <div class="name">${escapeAttr(c.name || 'Customer')}</div>
+                <div class="phone">📞 ${escapeAttr(c.phone)}</div>
+                <div class="meta">${c.ordersCount || 0} orders · KSh ${(c.totalSpent||0).toLocaleString()} spent · Last: ${c.lastOrderDate ? new Date(c.lastOrderDate).toLocaleDateString() : '—'}</div>
+            </div>
+            <div class="pts">${c.points || 0}<span class="small">points</span></div>
+            <div class="actions">
+                <button class="wa" onclick="window.open('https://wa.me/${escapeAttr(c.phone)}?text=Hello%20${encodeURIComponent(c.name||'')}%2C%20you%20have%20${c.points||0}%20loyalty%20points%20at%20A%26S%20Autoparts%20worth%20KSh%20${(c.points||0)*POINTS_REDEEM_VALUE}!','_blank')">💬</button>
+                <button class="del" onclick="deleteCustomer('${escapeAttr(c.phone)}')">🗑️</button>
+            </div>
+        </div>`;
+    });
+    container.innerHTML = html;
+    const cnt = document.getElementById('customersCount');
+    if(cnt) cnt.textContent = `${phones.length} customer${phones.length===1?'':'s'}`;
+}
+
+async function deleteCustomer(phone){
+    if(!confirm(`Delete customer ${phone} and all their points?`)) return;
+    delete customersData[phone];
+    renderCustomersList();
+    await saveCustomersToGitHub();
+    showNotification('✅ Customer deleted');
+}
+
+// ==================== RECONCILIATION ====================
+function setReconPeriod(period){
+    reconPeriod = period;
+    // Clear custom range
+    reconFrom = '';
+    reconTo = '';
+    document.getElementById('reconFrom').value = '';
+    document.getElementById('reconTo').value = '';
+    document.querySelectorAll('.recon-controls button').forEach(b => {
+        b.classList.toggle('active', b.dataset.period === period);
+    });
+    renderReconciliation();
+}
+
+function applyReconRange(){
+    const from = document.getElementById('reconFrom').value;
+    const to = document.getElementById('reconTo').value;
+    if(!from || !to){ alert('Please select both From and To dates.'); return; }
+    if(from > to){ alert('"From" date must be before "To" date.'); return; }
+    reconPeriod = 'custom';
+    reconFrom = from;
+    reconTo = to;
+    document.querySelectorAll('.recon-controls button').forEach(b => b.classList.remove('active'));
+    renderReconciliation();
+}
+
+function getReconDateRange(){
+    const now = new Date();
+    const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0);
+    const endOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999);
+    if(reconPeriod === 'today'){
+        return { from: startOfDay(now), to: endOfDay(now), label: 'Today (' + now.toLocaleDateString() + ')' };
+    }
+    if(reconPeriod === 'week'){
+        const dayOfWeek = now.getDay(); // 0=Sun
+        const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Monday start
+        const monday = new Date(now);
+        monday.setDate(now.getDate() - diff);
+        return { from: startOfDay(monday), to: endOfDay(now), label: 'This Week' };
+    }
+    if(reconPeriod === 'month'){
+        const first = new Date(now.getFullYear(), now.getMonth(), 1);
+        return { from: startOfDay(first), to: endOfDay(now), label: 'This Month (' + now.toLocaleString('en', { month: 'long', year: 'numeric' }) + ')' };
+    }
+    if(reconPeriod === 'year'){
+        const first = new Date(now.getFullYear(), 0, 1);
+        return { from: startOfDay(first), to: endOfDay(now), label: 'This Year (' + now.getFullYear() + ')' };
+    }
+    if(reconPeriod === 'all'){
+        return { from: new Date(0), to: endOfDay(now), label: 'All Time' };
+    }
+    if(reconPeriod === 'custom' && reconFrom && reconTo){
+        const fromD = new Date(reconFrom + 'T00:00:00');
+        const toD = new Date(reconTo + 'T23:59:59');
+        return { from: fromD, to: toD, label: reconFrom + ' → ' + reconTo };
+    }
+    // default: today
+    return { from: startOfDay(now), to: endOfDay(now), label: 'Today' };
+}
+
+function renderReconciliation(){
+    const container = document.getElementById('reconContent');
+    if(!container) return;
+    const range = getReconDateRange();
+    const filtered = cachedOrders.filter(o => {
+        const d = new Date(o.date);
+        return d >= range.from && d <= range.to;
+    });
+    // Categorize
+    const delivered = filtered.filter(o => o.status === 'delivered');
+    const cancelled = filtered.filter(o => o.status === 'cancelled');
+    const pending = filtered.filter(o => o.status !== 'delivered' && o.status !== 'cancelled');
+
+    const totalRevenue = delivered.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+    const pendingRevenue = pending.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+    const cancelledRevenue = cancelled.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+
+    // Top products
+    const productStats = {};
+    delivered.forEach(o => {
+        (o.items || []).forEach(i => {
+            const key = i.name || 'Unknown';
+            if(!productStats[key]) productStats[key] = { name: key, count: 0, revenue: 0 };
+            productStats[key].count += i.quantity || 0;
+            productStats[key].revenue += (Number(i.subtotal) || 0);
+        });
+    });
+    const topProducts = Object.values(productStats).sort((a,b) => b.revenue - a.revenue).slice(0, 10);
+
+    let html = `
+        <div class="recon-range">
+            <label>From:</label>
+            <input type="date" id="reconFrom" value="${escapeAttr(reconFrom)}">
+            <label>To:</label>
+            <input type="date" id="reconTo" value="${escapeAttr(reconTo)}">
+            <button onclick="applyReconRange()">Apply Custom Range</button>
+            <span style="font-size:12px;color:#888;margin-left:auto;">📅 ${escapeAttr(range.label)}</span>
+        </div>
+
+        <div class="recon-stats">
+            <div class="recon-stat">
+                <div class="label">Revenue</div>
+                <div class="value revenue">KSh ${totalRevenue.toLocaleString()}</div>
+                <div class="sub">${delivered.length} delivered</div>
+            </div>
+            <div class="recon-stat">
+                <div class="label">Pending</div>
+                <div class="value pending">KSh ${pendingRevenue.toLocaleString()}</div>
+                <div class="sub">${pending.length} orders</div>
+            </div>
+            <div class="recon-stat">
+                <div class="label">Cancelled</div>
+                <div class="value" style="color:#c62828;">KSh ${cancelledRevenue.toLocaleString()}</div>
+                <div class="sub">${cancelled.length} orders</div>
+            </div>
+            <div class="recon-stat">
+                <div class="label">Total Orders</div>
+                <div class="value">${filtered.length}</div>
+                <div class="sub">in period</div>
+            </div>
+        </div>
+
+        <button class="recon-export" onclick="exportReconCSV()"><i class="fas fa-download"></i> Export CSV</button>
+
+        <h4 style="color:#1a237e;margin:14px 0 8px;">📋 All Orders in Period (${filtered.length})</h4>
+        <div style="overflow-x:auto;margin-bottom:20px;">
+            <table class="recon-table">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Phone</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Handled</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    if(filtered.length === 0){
+        html += `<tr><td colspan="8" style="text-align:center;color:#999;padding:20px;">No orders in this period</td></tr>`;
+    } else {
+        filtered.forEach(o => {
+            const stColor = o.status === 'delivered' ? '#2e7d32' : o.status === 'cancelled' ? '#c62828' : '#e65100';
+            html += `<tr>
+                <td><strong>#${escapeAttr(o.id)}</strong></td>
+                <td>${new Date(o.date).toLocaleDateString()}</td>
+                <td>${escapeAttr(o.customerName || '—')}</td>
+                <td>${escapeAttr(o.customerPhone || '—')}</td>
+                <td style="text-align:center;">${(o.items || []).length}</td>
+                <td style="text-align:right;font-weight:700;">KSh ${(Number(o.total)||0).toLocaleString()}</td>
+                <td style="color:${stColor};font-weight:700;">${statusLabel(o.status)}</td>
+                <td>${escapeAttr((o.handledByName || o.handledBy || '').toUpperCase() || '—')}</td>
+            </tr>`;
+        });
+    }
+    html += `</tbody></table></div>`;
+
+    // Top products
+    html += `<h4 style="color:#1a237e;margin:14px 0 8px;">🏆 Top Products (delivered orders)</h4>`;
+    if(topProducts.length === 0){
+        html += `<div class="admin-no-results">No delivered orders yet.</div>`;
+    } else {
+        html += `<div style="overflow-x:auto;"><table class="recon-table">
+            <thead><tr><th>#</th><th>Product</th><th>Qty</th><th>Revenue</th></tr></thead><tbody>`;
+        topProducts.forEach((p, i) => {
+            html += `<tr>
+                <td>${i+1}</td>
+                <td>${escapeAttr(p.name)}</td>
+                <td style="text-align:center;">${p.count}</td>
+                <td style="text-align:right;font-weight:700;color:#2e7d32;">KSh ${p.revenue.toLocaleString()}</td>
+            </tr>`;
+        });
+        html += `</tbody></table></div>`;
+    }
+
+    container.innerHTML = html;
+}
+
+function exportReconCSV(){
+    const range = getReconDateRange();
+    const filtered = cachedOrders.filter(o => {
+        const d = new Date(o.date);
+        return d >= range.from && d <= range.to;
+    });
+    if(filtered.length === 0){ alert('No orders in this period to export.'); return; }
+    const rows = [
+        ['Order #', 'Date', 'Customer', 'Phone', 'Items', 'Total (KSh)', 'Status', 'Handled By']
+    ];
+    filtered.forEach(o => {
+        rows.push([
+            o.id,
+            new Date(o.date).toISOString(),
+            o.customerName || '',
+            o.customerPhone || '',
+            (o.items || []).length,
+            Number(o.total) || 0,
+            statusLabel(o.status),
+            (o.handledByName || o.handledBy || '').toUpperCase()
+        ]);
+    });
+    const csv = rows.map(r => r.map(v => {
+        const s = String(v ?? '');
+        return s.includes(',') || s.includes('"') ? `"${s.replace(/"/g, '""')}"` : s;
+    }).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `as-autoparts-recon-${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+}
 
 // ==================== ORDERS UI ====================
 function formatOrderDate(iso){
@@ -3205,6 +3646,9 @@ function renderOrdersList(){
         };
         const st = o.status || 'new';
         const c = statusColors[st] || statusColors.new;
+        const pointsNote = (st === 'delivered')
+            ? `<div style="font-size:11px;color:#2e7d32;font-weight:700;margin-top:6px;">⭐ Points awarded: ${Math.floor((Number(o.total)||0)/POINTS_PER_KSH)} (customer ${escapeAttr(o.customerPhone||'')})</div>`
+            : '';
 
         html += `<div style="background:#fff;border-radius:12px;margin-bottom:16px;border-left:5px solid ${c.border};box-shadow:0 2px 8px rgba(0,0,0,.07);overflow:hidden;">
 
@@ -3229,6 +3673,7 @@ function renderOrdersList(){
                 <div><span style="color:#888;">Handled by:</span> <strong style="color:#1a237e;">${escapeAttr((o.handledByName||o.handledBy||'').toUpperCase()||'—')}</strong></div>
                 <div><span style="color:#888;">Status:</span> <strong style="color:${c.text};">${statusLabel(o.status)}</strong></div>
             </div>
+            ${pointsNote ? `<div style="padding:6px 16px;background:#e8f5e9;border-bottom:1px solid #eee;">${pointsNote}</div>` : ''}
 
             <!-- ITEMS TABLE -->
             <div style="padding:14px 16px 0;">
@@ -3267,10 +3712,27 @@ function findOrderById(id){ return cachedOrders.find(o => o.id === id) || null; 
 async function changeOrderStatus(id, newStatus){
     const o = findOrderById(id);
     if(!o) return;
+    const prevStatus = o.status;
     o.status = newStatus;
     renderOrdersList();
     const token = getToken();
     if(!token){ alert('No GitHub token saved. Status changed on this device only.'); return; }
+
+    // Award points if newly delivered
+    if(newStatus === 'delivered' && prevStatus !== 'delivered'){
+        const result = awardPointsForOrder(o);
+        if(result.awarded){
+            showNotification(`⭐ ${result.earned} points awarded to ${o.customerName} (${o.customerPhone})`);
+            // Save customers
+            const saved = await saveCustomersToGitHub();
+            if(!saved){
+                showNotification('⚠️ Points awarded locally but not saved to GitHub — check token');
+            }
+        } else if(result.reason === 'already awarded'){
+            showNotification('ℹ️ Points already awarded for this order (not double-counted)');
+        }
+    }
+
     showNotification('⏳ Saving status...');
     await saveOrdersToGitHub();
     showNotification('✅ Status updated');
@@ -3422,7 +3884,10 @@ function escapeHtml(s){
 async function refreshOrdersFromGitHub(){
     showNotification('⏳ Refreshing orders...');
     await fetchOrdersFromGitHub();
+    await fetchCustomersFromGitHub();
     renderOrdersList();
+    if(currentAdminTab === 'customers') renderCustomersList();
+    if(currentAdminTab === 'recon') renderReconciliation();
     showNotification('✅ Orders refreshed');
 }
 
@@ -3432,7 +3897,7 @@ function showAdminPanel(){
     const tokenBadgeCls = getToken() ? 'ok' : 'warn';
 
     let html = `<div id="adminPanel" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:2000;overflow-y:auto;">
-        <div style="max-width:760px;margin:0 auto;padding:20px;">
+        <div style="max-width:900px;margin:0 auto;padding:20px;">
 
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                 <h2 style="color:#1a237e;margin:0;">🔧 Admin Panel</h2>
@@ -3441,6 +3906,8 @@ function showAdminPanel(){
 
             <div class="admin-tabs">
                 <button class="admin-tab" data-tab="orders" onclick="switchAdminTab('orders')">📋 Orders</button>
+                <button class="admin-tab" data-tab="recon" onclick="switchAdminTab('recon')">💰 Reconciliation</button>
+                <button class="admin-tab" data-tab="customers" onclick="switchAdminTab('customers')">👥 Customers</button>
                 <button class="admin-tab" data-tab="parts" onclick="switchAdminTab('parts')">🔩 Parts</button>
                 <button class="admin-tab" data-tab="add" onclick="switchAdminTab('add')">➕ Add New</button>
                 <button class="admin-tab" data-tab="availability" onclick="switchAdminTab('availability')">🟢 Availability</button>
@@ -3457,6 +3924,42 @@ function showAdminPanel(){
                     <button onclick="refreshOrdersFromGitHub()" style="padding:10px 16px;background:#2196f3;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;">🔄 Refresh</button>
                 </div>
                 <div id="ordersList"></div>
+            </div>
+
+            <div class="admin-panel-section" data-tab="recon">
+                <div class="admin-section-header">
+                    <div>
+                        <h3>💰 Reconciliation</h3>
+                        <div class="admin-section-sub">Sales summary for any period you choose</div>
+                    </div>
+                    <button onclick="refreshOrdersFromGitHub()" style="padding:10px 16px;background:#2196f3;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;">🔄 Refresh</button>
+                </div>
+                <div class="recon-controls">
+                    <button data-period="today" onclick="setReconPeriod('today')">Today</button>
+                    <button data-period="week" onclick="setReconPeriod('week')">This Week</button>
+                    <button data-period="month" onclick="setReconPeriod('month')">This Month</button>
+                    <button data-period="year" onclick="setReconPeriod('year')">This Year</button>
+                    <button data-period="all" onclick="setReconPeriod('all')">All Time</button>
+                </div>
+                <div id="reconContent"></div>
+            </div>
+
+            <div class="admin-panel-section" data-tab="customers">
+                <div class="admin-section-header">
+                    <div>
+                        <h3>👥 Customers (Loyalty)</h3>
+                        <div class="admin-section-sub" id="customersCount">Loading…</div>
+                    </div>
+                    <button onclick="refreshOrdersFromGitHub()" style="padding:10px 16px;background:#2196f3;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;">🔄 Refresh</button>
+                </div>
+                <div class="admin-card-box" style="background:#fff3e0;border-color:#ffcc80;">
+                    <div style="font-size:13px;color:#e65100;line-height:1.5;">
+                        ⭐ <strong>Points system:</strong> KSh 100 spent = 1 point. 100 points = KSh 100 off.
+                        Points are awarded automatically when you mark an order <strong>Delivered</strong>.
+                        Customers check their points using the "⭐ My Points" button in the top bar.
+                    </div>
+                </div>
+                <div id="customersList"></div>
             </div>
 
             <div class="admin-panel-section" data-tab="parts">
@@ -3510,7 +4013,7 @@ function showAdminPanel(){
                     </div>
                 </div>
                 <div class="admin-card-box">
-                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Paste your GitHub Personal Access Token below. It stays on this device only (localStorage). Used to push changes to <code>products.json</code>, <code>options.json</code>, <code>availability.json</code>, <code>orders.json</code> and <code>vehicleModels.json</code>.</p>
+                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Paste your GitHub Personal Access Token below. It stays on this device only (localStorage). Used to push changes to <code>products.json</code>, <code>options.json</code>, <code>availability.json</code>, <code>orders.json</code>, <code>customers.json</code> and <code>vehicleModels.json</code>.</p>
                     <input type="password" id="tokenInput" placeholder="ghp_..." style="width:100%;padding:12px;border:1px solid #ccc;border-radius:6px;margin-bottom:12px;font-size:14px;">
                     <div style="display:flex;gap:10px;flex-wrap:wrap;">
                         <button onclick="saveTokenFromPanel()" style="flex:1;min-width:140px;padding:12px;background:#1a237e;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;">💾 Save Token</button>
@@ -3519,7 +4022,7 @@ function showAdminPanel(){
                 </div>
                 <div class="admin-card-box" style="background:#e8f5e9;border-color:#c8e6c9;">
                     <h4 style="color:#2e7d32;margin-bottom:8px;font-size:15px;">☁️ Push Everything to GitHub</h4>
-                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Push all local changes at once — products, options and availability.</p>
+                    <p style="font-size:13px;color:#555;margin-bottom:12px;">Push all local changes at once — products, options, availability, vehicle models, and customers.</p>
                     <button onclick="pushAllToGitHub()" style="width:100%;padding:12px;background:#2e7d32;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;">⬆️ Push All Changes</button>
                 </div>
             </div>
@@ -3546,6 +4049,12 @@ function showAdminPanel(){
     if(!cachedOrders || cachedOrders.length === 0){
         fetchOrdersFromGitHub().then(() => {
             if(currentAdminTab === 'orders') renderOrdersList();
+            if(currentAdminTab === 'recon') renderReconciliation();
+        });
+    }
+    if(!customersData || Object.keys(customersData).length === 0){
+        fetchCustomersFromGitHub().then(() => {
+            if(currentAdminTab === 'customers') renderCustomersList();
         });
     }
 }
@@ -3558,7 +4067,8 @@ async function pushAllToGitHub(){
     const okOptions = await saveOptionsToGitHub();
     const okAvail = await saveAvailabilityToGitHub();
     const okVehicles = await saveVehicleModelsToGitHub();
-    if(okProducts && okOptions && okAvail && okVehicles){ showNotification('✅ All changes pushed! Live in ~1 minute.'); }
+    const okCustomers = await saveCustomersToGitHub();
+    if(okProducts && okOptions && okAvail && okVehicles && okCustomers){ showNotification('✅ All changes pushed! Live in ~1 minute.'); }
 }
 async function reloadProductsFromGitHub(){
     showNotification('⏳ Reloading products...');
@@ -3627,7 +4137,6 @@ async function addNewProduct(){
         return;
     }
 
-    // Register fitments into vehicleModels (correctly — model under its own make only)
     const changed = fitmentsApplyToVehicleModels(fitments);
     if(changed){
         showNotification('⏳ Saving new makes/models to GitHub...');
@@ -3708,7 +4217,6 @@ async function updateProduct(index){
     products[index].yearEnd = parseInt(document.getElementById(`yend_${index}`).value) || 0;
     products[index].availability = normalizeStock(document.getElementById(`edit_stock_${index}`).value);
 
-    // Register fitments
     const changed = fitmentsApplyToVehicleModels(fitments);
     if(changed){
         showNotification('⏳ Saving new makes/models to GitHub...');
@@ -3756,11 +4264,6 @@ async function updateProduct(index){
     closeAdminPanel(); showAdminPanel();
     showNotification('⏳ Pushing to GitHub...');
     await saveProductsToGitHub(products[index].sku);
-}
-function duplicateProduct(index){
-    const p = products[index];
-    if(!p) return;
-    showNotification('📋 Open the product, then use the Chrome context menu to duplicate — or re-add manually with same details.');
 }
 async function deleteProduct(index){
     if(confirm('Are you sure you want to delete this product?')){
@@ -4150,6 +4653,12 @@ function sendAIMessage(){
                 {label: '🔧 Find filters', action: 'start_find'},
                 {label: '💬 WhatsApp us', href: 'https://wa.me/254713349554?text=Hi%2C%20I%20need%20filters', wa: true}
             ]);
+        } else if(lower.includes('points') || lower.includes('loyalty') || lower.includes('reward')){
+            aiBotSay(`⭐ You earn 1 point for every KSh 100 spent. 100 points = KSh 100 off!<br><br>To check your points, tap the <strong>⭐ My Points</strong> button at the top of the page and enter your phone number.`, [
+                {label: '⭐ Open My Points', action: 'manual_points'},
+                {label: '💬 Ask on WhatsApp', href: 'https://wa.me/254713349554?text=Hi%2C%20I%20want%20to%20know%20about%20loyalty%20points', wa: true}
+            ]);
+            break;
         } else if(lower.includes('price') || lower.includes('cost') || lower.includes('how much')){
             aiBotSay(`For pricing, please tell me the exact part or WhatsApp us with your car details — we'll quote you right away.`, [
                 {label: '🔧 Find a part', action: 'start_find'},
@@ -4200,6 +4709,7 @@ async function init(){
     await fetchAvailabilityFromGitHub();
     await fetchOrdersFromGitHub();
     await fetchVehicleModelsFromGitHub();
+    await fetchCustomersFromGitHub();
     renderMakeOptions();
     loadProducts();
     buildExtraCategoryCards();

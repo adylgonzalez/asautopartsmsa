@@ -369,7 +369,7 @@
     "priceMode": "fixed",
     "partNo": "N/A",
     "oem": "N/A",
-    "application": "Toyota Crown, Mark X, Lexus IS250/IS350",
+    "application": "Lexus IS250, IS350 | Toyota Crown, Mark X, Mark X Zio",
     "category": "Electrical",
     "brand": "DENSO",
     "vehicleMake": "Lexus",
@@ -377,13 +377,33 @@
     "yearStart": 0,
     "yearEnd": 0,
     "stock": 5,
-    "image": "images/alternator-1789123527469.jpg",
+    "image": "https://adylgonzalez.github.io/asautopartsmsa/images/alternator-1789123527469.jpg",
     "images": [
-      "images/alternator-1789123527469.jpg"
+      "https://adylgonzalez.github.io/asautopartsmsa/images/alternator-1789123527469.jpg"
     ],
     "description": "Alternator for Toyota Crown, Mark X, and Lexus IS/GS models.",
     "sku": "SKU-1789066296841",
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "supercedes": "",
+    "fitments": [
+      {
+        "make": "Lexus",
+        "models": [
+          "IS250",
+          "IS350"
+        ]
+      },
+      {
+        "make": "Toyota",
+        "models": [
+          "Crown",
+          "Mark X",
+          "Mark X Zio"
+        ]
+      }
+    ],
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Radiator - Toyota Crown / Mark X / Lexus IS250",

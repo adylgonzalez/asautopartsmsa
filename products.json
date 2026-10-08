@@ -411,21 +411,42 @@
     "priceMode": "fixed",
     "partNo": "N/A",
     "oem": "N/A",
-    "application": "Toyota Crown, Mark X, Lexus IS250",
+    "application": "Toyota Mark X, Crown, Mark X Zio | Lexus IS250, IS350, IS300",
     "brand": "Tongshi",
     "category": "Cooling",
-    "image": "images/new-part-1789922536279.jpg",
+    "image": "https://adylgonzalez.github.io/asautopartsmsa/images/new-part-1789922536279.jpg",
     "images": [
-      "images/new-part-1789922536279.jpg"
+      "https://adylgonzalez.github.io/asautopartsmsa/images/new-part-1789922536279.jpg"
     ],
     "description": "Radiator for Toyota Crown, Mark X, and Lexus IS250.",
     "vehicleMake": "Toyota",
     "vehicleModel": "Mark X, Crown",
-    "yearStart": 0,
-    "yearEnd": 0,
+    "yearStart": 2004,
+    "yearEnd": 2012,
     "sku": "QA-1789922547253",
     "stock": 1,
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "supercedes": "",
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Mark X",
+          "Crown",
+          "Mark X Zio"
+        ]
+      },
+      {
+        "make": "Lexus",
+        "models": [
+          "IS250",
+          "IS350",
+          "IS300"
+        ]
+      }
+    ],
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Front Brake Pads - Toyota Land Cruiser Prado / Hilux / Fortuner",

@@ -4464,6 +4464,10 @@ function handleAIAction(action, value){
             aiBotSay(`Please type the part you need in the message box 👇`);
             aiChatState.stage = 'part_typed';
             break;
+         case 'manual_points':
+            toggleAIChat();
+            openMyPoints();
+            break;
         case 'manual_search':
             toggleAIChat();
             scrollToSection('products');
@@ -4658,7 +4662,6 @@ function sendAIMessage(){
                 {label: '⭐ Open My Points', action: 'manual_points'},
                 {label: '💬 Ask on WhatsApp', href: 'https://wa.me/254713349554?text=Hi%2C%20I%20want%20to%20know%20about%20loyalty%20points', wa: true}
             ]);
-            break;
         } else if(lower.includes('price') || lower.includes('cost') || lower.includes('how much')){
             aiBotSay(`For pricing, please tell me the exact part or WhatsApp us with your car details — we'll quote you right away.`, [
                 {label: '🔧 Find a part', action: 'start_find'},

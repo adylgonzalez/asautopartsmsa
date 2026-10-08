@@ -680,9 +680,9 @@
     "application": "Crown, Lexus IS250, Mark X",
     "category": "EX JAPAN",
     "brand": "TOYOTA Genuine",
-    "image": "images/new-part-1790510775643.jpg",
+    "image": "https://adylgonzalez.github.io/asautopartsmsa/images/new-part-1790510775643.jpg",
     "images": [
-      "images/new-part-1790510775643.jpg"
+      "https://adylgonzalez.github.io/asautopartsmsa/images/new-part-1790510775643.jpg"
     ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Crown, Mark X",
@@ -691,7 +691,23 @@
     "stock": 0,
     "description": "Used engine, 4GR-FSE. Price depends on condition and mileage.",
     "availability": "on_order",
-    "sku": "SKU-1790510797047"
+    "sku": "SKU-1790510797047",
+    "supercedes": "",
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Crown",
+          "Mark X"
+        ]
+      },
+      {
+        "make": "Lexus",
+        "models": [
+          "IS250"
+        ]
+      }
+    ]
   },
   {
     "name": "OIL FILTER - AQUA",

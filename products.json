@@ -504,18 +504,38 @@
     "application": "All 4GR Engines",
     "category": "Ignition",
     "brand": "DENSO",
-    "image": "images/new-part-1789937846021.jpg",
+    "image": "https://adylgonzalez.github.io/asautopartsmsa/images/new-part-1789937846021.jpg",
     "images": [
-      "images/new-part-1789937846021.jpg"
+      "https://adylgonzalez.github.io/asautopartsmsa/images/new-part-1789937846021.jpg"
     ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Crown grs180,grs182,grs200, Mark x, Lexus IS250, Lexus GS250",
-    "yearStart": 0,
-    "yearEnd": 0,
+    "yearStart": 2004,
+    "yearEnd": 2012,
     "stock": 10,
     "description": "Iridium TT spark plugs for 4GR-FSE engines.",
     "sku": "SKU-1789937851009",
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "supercedes": "",
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Mark x",
+          "Crown",
+          "Mark X Zio"
+        ]
+      },
+      {
+        "make": "Lexus",
+        "models": [
+          "IS250",
+          "IS300"
+        ]
+      }
+    ],
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Toyota Crown - Front Lip",

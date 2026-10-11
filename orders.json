@@ -1,5 +1,51 @@
 [
   {
+    "id": "A22150011",
+    "date": "2026-10-11T12:35:50.044Z",
+    "customerName": "adil",
+    "customerPhone": "0713349554",
+    "handledBy": "adil",
+    "handledByName": "ADIL",
+    "status": "new",
+    "source": "cart",
+    "hasOnOrderItems": false,
+    "hasQuoteItems": false,
+    "fixedItemsTotal": 39500,
+    "items": [
+      {
+        "name": "Spark Plugs - DENSO Iridium TT",
+        "sku": "SKU-1789937851009",
+        "partNo": "IKBH20TT",
+        "brand": "DENSO",
+        "image": "https://adylgonzalez.github.io/asautopartsmsa/images/new-part-1789937846021.jpg",
+        "price": 25000,
+        "priceMode": "fixed",
+        "priceMin": null,
+        "priceMax": null,
+        "quantity": 1,
+        "subtotal": 25000,
+        "availability": "in_stock",
+        "pointsLocked": false
+      },
+      {
+        "name": "Shock Absorber - Toyota Hilux",
+        "sku": "SA-TH-1523",
+        "partNo": "48531-09885",
+        "brand": "KYB",
+        "image": "🛠️",
+        "price": 14500,
+        "priceMode": "fixed",
+        "priceMin": null,
+        "priceMax": null,
+        "quantity": 1,
+        "subtotal": 14500,
+        "availability": "in_stock",
+        "pointsLocked": false
+      }
+    ],
+    "total": 39500
+  },
+  {
     "id": "A41110107",
     "date": "2026-10-10T14:05:10.142Z",
     "customerName": "Adil",

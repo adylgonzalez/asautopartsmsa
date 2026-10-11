@@ -423,8 +423,6 @@
         .points-card .stats{display:flex;gap:10px;justify-content:center;font-size:12px;color:#555;margin-top:10px}
         .points-card .stats div{flex:1;background:#fff;border-radius:6px;padding:8px}
         .points-card .stats strong{color:#1a237e;display:block;font-size:15px}
-        .points-redeem-btn{width:100%;padding:12px;background:#25D366;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:14px;margin-top:12px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
-        .points-redeem-btn:hover{background:#1eaa53}
         .points-none{text-align:center;padding:20px;color:#666;font-size:14px;background:#f9f9f9;border-radius:8px;margin-top:14px}
         @media(max-width:768px){.points-modal{max-height:90vh;padding:20px}}
 
@@ -572,6 +570,16 @@
         .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
         .status-dot.green{background:#4caf50;box-shadow:0 0 5px #4caf50}
         .status-dot.red{background:#f44336;box-shadow:0 0 5px #f44336}
+
+        /* === CART LOYALTY REDEMPTION === */
+        .cart-loyalty-box{background:#fff3e0;border:2px solid #ff9800;border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#e65100}
+        .cart-loyalty-box .loyalty-line{display:flex;align-items:center;gap:8px;font-weight:700}
+        .cart-loyalty-box label{display:flex;align-items:center;gap:8px;margin-top:10px;cursor:pointer;font-weight:700;color:#1a237e;font-size:14px}
+        .cart-loyalty-box label input{width:18px;height:18px;accent-color:#4caf50;cursor:pointer}
+        .cart-loyalty-box .loyalty-locked{background:#ffebee;color:#c62828;padding:8px 12px;border-radius:6px;font-size:12px;font-weight:700;margin-top:8px;text-align:center}
+        .cart-loyalty-box .loyalty-none{color:#888;font-size:12px;font-style:italic;margin-top:6px}
+        .cart-discount-line{color:#2e7d32;font-weight:700;font-size:14px;display:flex;justify-content:space-between;margin-top:4px}
+        .cart-total-final{display:flex;justify-content:space-between;font-size:20px;font-weight:bold;margin:15px 0;border-top:1px dashed #ddd;padding-top:10px}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios@1.20.0/dist/axios.min.js"></script>
@@ -828,8 +836,9 @@
             <label style="font-size:13px;font-weight:700;display:block;margin-bottom:4px;">Your Name *</label>
             <input type="text" id="custName" placeholder="e.g. John Mwangi" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;">
             <label style="font-size:13px;font-weight:700;display:block;margin-bottom:4px;">Your Phone *</label>
-            <input type="tel" id="custPhone" placeholder="e.g. 0712345678" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;">
-            <div style="background:#e8f5e9;padding:8px 12px;border-radius:5px;font-size:12px;color:#2e7d32;font-weight:700;margin-bottom:8px;">⭐ Earn 1 point per KSh 100 spent. 100 points = KSh 100 off!</div>
+            <input type="tel" id="custPhone" placeholder="e.g. 0712345678" oninput="onCustPhoneInput()" onblur="onCustPhoneBlur()" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:6px;">
+            <div id="loyaltyBoxWrap"></div>
+            <div style="background:#e8f5e9;padding:8px 12px;border-radius:5px;font-size:12px;color:#2e7d32;font-weight:700;margin-bottom:8px;margin-top:8px;">⭐ Earn 1 point per KSh 100 spent. 100 points = KSh 100 off!</div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:20px;font-weight:bold;margin:15px 0;">
             <span>Total:</span>
@@ -1496,6 +1505,13 @@ function awardPointsForOrder(order){
     cust.lastOrderDate = order.date || new Date().toISOString();
     cust.awardedOrders.push(order.id);
     if(order.customerName) cust.name = order.customerName;
+
+    // If the customer redeemed points on this order, deduct them
+    if(order.pointsRedeemed && order.pointsRedeemed > 0){
+        cust.points -= order.pointsRedeemed;
+        if(cust.points < 0) cust.points = 0;
+    }
+
     return { awarded: true, points: cust.points, earned: points };
 }
 
@@ -1521,11 +1537,6 @@ function checkMyPoints(){
         return;
     }
     const worth = (cust.points * POINTS_REDEEM_VALUE).toFixed(0);
-    const redeemButton = pointsRedemptionLocked
-        ? `<div style="background:#ffebee;color:#c62828;padding:10px;border-radius:6px;font-size:13px;font-weight:700;margin-top:12px;">🔒 Points redemption is temporarily locked. Please check back later.</div>`
-        : `<button class="points-redeem-btn" onclick="redeemPointsWhatsApp('${phone}')">
-                <i class="fab fa-whatsapp"></i> Redeem on WhatsApp
-           </button>`;
     result.innerHTML = `
         <div class="points-card">
             <div class="big-points">${cust.points}</div>
@@ -1536,21 +1547,12 @@ function checkMyPoints(){
                 <div><strong>${cust.ordersCount || 0}</strong>Orders</div>
                 <div><strong>KSh ${(cust.totalSpent||0).toLocaleString()}</strong>Spent</div>
             </div>
-            ${redeemButton}
+            <div style="background:#e3f2fd;color:#1565c0;padding:10px;border-radius:6px;font-size:12px;margin-top:12px;text-align:left;line-height:1.5;">
+                ℹ️ To redeem your points, open your <strong>Cart</strong>, enter this same phone number, and tick the "Redeem points" checkbox.
+            </div>
+            ${pointsRedemptionLocked ? `<div style="background:#ffebee;color:#c62828;padding:10px;border-radius:6px;font-size:12px;font-weight:700;margin-top:10px;">🔒 Points redemption is temporarily locked. Please check back later.</div>` : ''}
         </div>
     `;
-}
-
-function redeemPointsWhatsApp(phone){
-    if(pointsRedemptionLocked){
-        alert('Points redemption is currently locked. Please check back later.');
-        return;
-    }
-    const cust = customersData[phone];
-    if(!cust) return;
-    const worth = (cust.points * POINTS_REDEEM_VALUE).toFixed(0);
-    const msg = `Hello A & S AUTOPARTS,\n\nI'd like to redeem my loyalty points.\n\nName: ${cust.name}\nPhone: ${phone}\nPoints: ${cust.points}\nValue: KSh ${worth} off\n\nPlease confirm my redemption. Thank you!`;
-    window.open(`https://wa.me/254713349554?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 // ==================== VEHICLE DATABASES ====================
@@ -1772,6 +1774,10 @@ let alsoBought = JSON.parse(localStorage.getItem('A & SAlsoBought')) || [];
 let reconPeriod = 'today';
 let reconFrom = '';
 let reconTo = '';
+
+// Cart-level loyalty redemption state
+let cartRedeemApplied = false; // whether customer ticked the redeem box
+let cartRedeemPoints = 0;      // how many points to deduct on this order
 
 function saveCart(){localStorage.setItem('A & SCart', JSON.stringify(cart))}
 function formatPrice(price){return 'KSh '+Number(price||0).toLocaleString('en-KE')}
@@ -2407,6 +2413,7 @@ function viewCart(){
         if(mpesaPanel) mpesaPanel.classList.remove('show');
         const quoteWrap = document.getElementById('quotationButtonWrap');
         if(quoteWrap) quoteWrap.innerHTML = '';
+        document.getElementById('loyaltyBoxWrap').innerHTML = '';
     }else{
         let itemsHTML='';
         const totals = computeCartTotals();
@@ -2421,16 +2428,29 @@ function viewCart(){
         });
         itemsContainer.innerHTML=itemsHTML;
 
+        // Calculate discount if redemption is applied
+        const custPhoneRaw = (document.getElementById('custPhone')?.value || '').trim();
+        const custPhoneNorm = normalizePhone(custPhoneRaw);
+        const cust = custPhoneNorm ? customersData[custPhoneNorm] : null;
+        const availablePoints = cust ? (Number(cust.points)||0) : 0;
+        const maxRedeemable = Math.min(availablePoints * POINTS_REDEEM_VALUE, totals.fixedTotal);
+        const discount = (cartRedeemApplied && cust && !pointsRedemptionLocked) ? maxRedeemable : 0;
+        const finalTotal = Math.max(0, totals.fixedTotal - discount);
+
         let totalHTML = '';
         if(totals.hasQuote){
             totalHTML = formatPrice(totals.fixedTotal) + ` <small style="font-size:11px;color:#1565c0;font-weight:400;display:block;">+ quote items</small>`;
         } else {
             totalHTML = formatPrice(totals.fixedTotal);
         }
+        if(discount > 0){
+            totalHTML += `<div style="font-size:13px;color:#2e7d32;font-weight:700;margin-top:4px;">− ${formatPrice(discount)} (points)</div>`;
+            totalHTML += `<div style="font-size:16px;color:#1a237e;font-weight:700;margin-top:2px;">= ${formatPrice(finalTotal)}</div>`;
+        }
         totalElement.innerHTML = totalHTML;
 
         if(mpesaPanel){
-            if(totals.fixedTotal > 0){
+            if(finalTotal > 0){
                 mpesaPanel.classList.add('show');
                 const refEl = document.getElementById('mpesaRef');
                 if(refEl) refEl.textContent = 'A&S-' + Date.now().toString().slice(-6);
@@ -2455,6 +2475,9 @@ function viewCart(){
                 : '';
         }
 
+        // Loyalty box
+        renderCartLoyaltyBox();
+
         const adilBg = availability.adil ? '#128C7E' : '#9e9e9e';
         const suhaylBg = availability.suhayl ? '#128C7E' : '#9e9e9e';
         const adilDot = availability.adil ? 'green' : 'red';
@@ -2477,6 +2500,87 @@ function viewCart(){
     }
     modal.style.display='block';
 }
+
+// ==================== CART LOYALTY BOX ====================
+function renderCartLoyaltyBox(){
+    const box = document.getElementById('loyaltyBoxWrap');
+    if(!box) return;
+    const phoneRaw = (document.getElementById('custPhone')?.value || '').trim();
+    const phoneNorm = normalizePhone(phoneRaw);
+    if(!phoneNorm){
+        box.innerHTML = `<div class="cart-loyalty-box"><div class="loyalty-line">⭐ Loyalty points</div><div class="loyalty-none">Enter your phone number above to check your points and redeem.</div></div>`;
+        return;
+    }
+    const cust = customersData[phoneNorm];
+    if(!cust || (cust.points||0) === 0){
+        box.innerHTML = `<div class="cart-loyalty-box"><div class="loyalty-line">⭐ Loyalty points</div><div class="loyalty-none">No points yet for this number. Points are earned on delivered orders.</div></div>`;
+        return;
+    }
+    const points = Number(cust.points)||0;
+    const worth = points * POINTS_REDEEM_VALUE;
+    if(pointsRedemptionLocked){
+        box.innerHTML = `<div class="cart-loyalty-box">
+            <div class="loyalty-line">⭐ You have <strong>${points}</strong> points (worth ${formatPrice(worth)})</div>
+            <div class="loyalty-locked">🔒 Points redemption is temporarily locked by the shop. Please check back later.</div>
+        </div>`;
+        return;
+    }
+    // Unlocked — show checkbox
+    const checked = cartRedeemApplied ? 'checked' : '';
+    box.innerHTML = `<div class="cart-loyalty-box">
+        <div class="loyalty-line">⭐ You have <strong>${points}</strong> points — worth <strong>${formatPrice(worth)}</strong> off</div>
+        <label>
+            <input type="checkbox" id="cartRedeemCheckbox" ${checked} onchange="onCartRedeemToggle(this.checked)">
+            Redeem my points on this order
+        </label>
+    </div>`;
+}
+
+function onCustPhoneInput(){
+    // Re-render loyalty box on every change but keep the checkbox state
+    renderCartLoyaltyBox();
+    refreshCartTotalsInline();
+}
+function onCustPhoneBlur(){
+    renderCartLoyaltyBox();
+    refreshCartTotalsInline();
+}
+function onCartRedeemToggle(checked){
+    cartRedeemApplied = !!checked;
+    refreshCartTotalsInline();
+}
+
+// Re-render just the totals + WhatsApp buttons without rebuilding the whole modal
+function refreshCartTotalsInline(){
+    const totalElement = document.getElementById('cartTotal');
+    const mpesaPanel = document.getElementById('mpesaPanel');
+    if(!totalElement) return;
+    const totals = computeCartTotals();
+    const phoneNorm = normalizePhone((document.getElementById('custPhone')?.value || '').trim());
+    const cust = phoneNorm ? customersData[phoneNorm] : null;
+    const availablePoints = cust ? (Number(cust.points)||0) : 0;
+    const maxRedeemable = Math.min(availablePoints * POINTS_REDEEM_VALUE, totals.fixedTotal);
+    const discount = (cartRedeemApplied && cust && !pointsRedemptionLocked) ? maxRedeemable : 0;
+    const finalTotal = Math.max(0, totals.fixedTotal - discount);
+
+    let totalHTML = '';
+    if(totals.hasQuote){
+        totalHTML = formatPrice(totals.fixedTotal) + ` <small style="font-size:11px;color:#1565c0;font-weight:400;display:block;">+ quote items</small>`;
+    } else {
+        totalHTML = formatPrice(totals.fixedTotal);
+    }
+    if(discount > 0){
+        totalHTML += `<div style="font-size:13px;color:#2e7d32;font-weight:700;margin-top:4px;">− ${formatPrice(discount)} (points)</div>`;
+        totalHTML += `<div style="font-size:16px;color:#1a237e;font-weight:700;margin-top:2px;">= ${formatPrice(finalTotal)}</div>`;
+    }
+    totalElement.innerHTML = totalHTML;
+
+    if(mpesaPanel){
+        if(finalTotal > 0){ mpesaPanel.classList.add('show'); }
+        else { mpesaPanel.classList.remove('show'); }
+    }
+}
+
 function increaseQuantity(index){cart[index].quantity++;saveCart();updateCartCount();viewCart();}
 function decreaseQuantity(index){if(cart[index].quantity>1){cart[index].quantity--}else{cart.splice(index,1)}saveCart();updateCartCount();viewCart();}
 function removeFromCart(index){cart.splice(index,1);saveCart();updateCartCount();viewCart();}
@@ -2640,6 +2744,15 @@ async function checkoutCart(brother){
     const hasOnOrder = cart.some(i => normalizeStock(i.availability) === STOCK_ON_ORDER);
     const hasQuote = totals.hasQuote;
 
+    // Calculate loyalty discount
+    const phoneNorm = normalizePhone(custPhone);
+    const cust = phoneNorm ? customersData[phoneNorm] : null;
+    const availablePoints = cust ? (Number(cust.points)||0) : 0;
+    const maxRedeemable = Math.min(availablePoints * POINTS_REDEEM_VALUE, totals.fixedTotal);
+    const discount = (cartRedeemApplied && cust && !pointsRedemptionLocked) ? maxRedeemable : 0;
+    const pointsRedeemed = (cartRedeemApplied && cust && !pointsRedemptionLocked) ? Math.min(availablePoints, Math.floor(maxRedeemable / POINTS_REDEEM_VALUE)) : 0;
+    const finalTotal = Math.max(0, totals.fixedTotal - discount);
+
     let message;
     if(isAway){
         message = `Hello ${brotherName} (A & S AUTOPARTS) — I know you may be away, please reply when you're back:\n\n`;
@@ -2686,10 +2799,16 @@ async function checkoutCart(brother){
     } else {
         message += `💰 TOTAL: ${formatPrice(totals.fixedTotal)}\n\n`;
     }
+    if(discount > 0){
+        message += `⭐ Loyalty points redeemed: ${pointsRedeemed} points = ${formatPrice(discount)} off\n`;
+        message += `💰 NEW TOTAL AFTER REDEMPTION: ${formatPrice(finalTotal)}\n\n`;
+    }
     if(hasOnOrder){
         message += `Note: Items marked [Shipped on Order] require a 50% deposit and arrive in ~2 weeks.\n\n`;
     }
-    message += `⭐ Loyalty: You'll earn ${Math.floor(totals.fixedTotal/POINTS_PER_KSH)} points when this order is delivered!\n\n`;
+    if(!cartRedeemApplied){
+        message += `⭐ Loyalty: You'll earn ${Math.floor(totals.fixedTotal/POINTS_PER_KSH)} points when this order is delivered!\n\n`;
+    }
     message += `Please confirm availability and delivery.`;
 
     const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -2710,6 +2829,9 @@ async function checkoutCart(brother){
         hasOnOrderItems: hasOnOrder,
         hasQuoteItems: hasQuote,
         fixedItemsTotal: totals.fixedTotal,
+        pointsRedeemed: pointsRedeemed,
+        pointsDiscount: discount,
+        total: finalTotal,
         items: cart.map(i => {
             const mode = getPriceMode(i);
             return {
@@ -2727,11 +2849,12 @@ async function checkoutCart(brother){
                 availability: normalizeStock(i.availability),
                 pointsLocked: !!i.pointsLocked
             };
-        }),
-        total: totals.fixedTotal
+        })
     };
 
     cart = [];
+    cartRedeemApplied = false;
+    cartRedeemPoints = 0;
     saveCart();
     updateCartCount();
     if(nameEl) nameEl.value = '';
@@ -3813,6 +3936,7 @@ function renderOrdersList(){
         const notes = [];
         if(o.hasOnOrderItems) notes.push('⚠️ Contains Shipped on Order items — 50% deposit required');
         if(o.hasQuoteItems) notes.push('ℹ️ Contains quote items — confirm final prices');
+        if(o.pointsRedeemed > 0) notes.push(`⭐ Customer redeemed ${o.pointsRedeemed} points = ${formatPrice(o.pointsDiscount||0)} off`);
         const notesHTML = notes.length
             ? `<div style="background:#fff8e1;border-left:3px solid #ffc107;padding:8px 12px;border-radius:5px;font-size:12px;color:#e65100;margin-top:10px;line-height:1.5;">${notes.join('<br>')}</div>`
             : '';
@@ -3954,9 +4078,12 @@ function buildReceiptText(o){
     });
     lines.push(``);
     if(o.hasQuoteItems){
-        lines.push(`Fixed items total: ${formatPrice(o.total||0)} (+ quote items)`);
+        lines.push(`Fixed items total: ${formatPrice(o.fixedItemsTotal||o.total||0)} (+ quote items)`);
     } else {
         lines.push(`TOTAL: ${formatPrice(o.total||0)}`);
+    }
+    if(o.pointsRedeemed > 0){
+        lines.push(`⭐ Loyalty redemption: ${o.pointsRedeemed} points = ${formatPrice(o.pointsDiscount||0)} off`);
     }
     if(o.hasOnOrderItems){
         lines.push(``);
@@ -4009,6 +4136,7 @@ function printOrder(id){
     const notesArr = [];
     if(o.hasOnOrderItems) notesArr.push('Items marked Shipped on Order require a 50% deposit and arrive in ~2 weeks.');
     if(o.hasQuoteItems) notesArr.push('Some items require a quote — final prices will be confirmed.');
+    if(o.pointsRedeemed > 0) notesArr.push(`Loyalty: ${o.pointsRedeemed} points redeemed = ${formatPrice(o.pointsDiscount||0)} off.`);
     const notesHTML = notesArr.length ? `<div style="background:#fff8e1;border-left:3px solid #ffc107;padding:8px 12px;border-radius:5px;font-size:12px;color:#e65100;margin-top:10px;"><strong>Note:</strong> ${notesArr.join(' ')}</div>` : '';
     const totalHTML = o.hasQuoteItems
         ? `Fixed items total: ${formatPrice(o.total||0)} <span style="font-size:12px;color:#1565c0;">+ quote items</span>`
@@ -4139,7 +4267,7 @@ function showAdminPanel(){
                     <div style="font-size:13px;color:#e65100;line-height:1.5;">
                         ⭐ <strong>Points system:</strong> KSh 100 spent = 1 point. 100 points = KSh 100 off.
                         Points are awarded automatically when you mark an order <strong>Delivered</strong>.
-                        Customers check their points using the "⭐ My Points" button in the top bar.
+                        Customers redeem their points in the <strong>Cart</strong> by entering their phone number.
                     </div>
                 </div>
                 <div id="customersList"></div>
@@ -4189,7 +4317,7 @@ function showAdminPanel(){
                 <div class="admin-card-box" style="margin-top:16px;">
                     <h4 style="color:#1a237e;margin-bottom:10px;font-size:15px;">🔒 Loyalty Points Redemption Lock</h4>
                     <p style="font-size:13px;color:#555;line-height:1.5;margin-bottom:12px;">
-                        When <strong>locked</strong>, customers cannot redeem points for discounts (the "Redeem on WhatsApp" button will be hidden).
+                        When <strong>locked</strong>, customers cannot redeem points for discounts in the cart.
                         Points still accumulate, but redemption is blocked.
                     </p>
                     <button onclick="togglePointsRedemptionLock()" id="pointsRedemptionLockBtn" style="width:100%;padding:14px;background:${pointsRedemptionLocked ? '#f44336' : '#4caf50'};color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:15px;">
@@ -4871,8 +4999,8 @@ function sendAIMessage(){
                 {label: '💬 WhatsApp us', href: 'https://wa.me/254713349554?text=Hi%2C%20I%20need%20filters', wa: true}
             ]);
         } else if(lower.includes('points') || lower.includes('loyalty') || lower.includes('reward')){
-            aiBotSay(`⭐ You earn 1 point for every KSh 100 spent. 100 points = KSh 100 off!<br><br>To check your points, tap the <strong>⭐ My Points</strong> button at the top of the page and enter your phone number.`, [
-                {label: '⭐ Open My Points', action: 'manual_points'},
+            aiBotSay(`⭐ You earn 1 point for every KSh 100 spent. 100 points = KSh 100 off!<br><br>To redeem points, open your <strong>Cart</strong>, enter your phone number, and tick the redeem checkbox.`, [
+                {label: '🛒 Open Cart', action: 'manual_cart'},
                 {label: '💬 Ask on WhatsApp', href: 'https://wa.me/254713349554?text=Hi%2C%20I%20want%20to%20know%20about%20loyalty%20points', wa: true}
             ]);
         } else if(lower.includes('price') || lower.includes('cost') || lower.includes('how much')){
@@ -4914,6 +5042,17 @@ function sendAIMessage(){
         }
     }, 400);
 }
+
+// Add manual_cart handler
+const _origHandleAIAction = handleAIAction;
+handleAIAction = function(action, value){
+    if(action === 'manual_cart'){
+        toggleAIChat();
+        viewCart();
+        return;
+    }
+    return _origHandleAIAction(action, value);
+};
 
 // ==================== INITIALIZE ====================
 async function init(){

@@ -789,7 +789,6 @@
     <div class="mobile-call-bar">
         <a href="https://wa.me/254713349554?text=Hello%20ADIL%2C%20A%20%26%20S%20AUTOPARTS" target="_blank" class="wa"><i class="fab fa-whatsapp"></i> WA ADIL</a>
         <a href="https://wa.me/254752763924?text=Hello%20SUHAYL%2C%20A%20%26%20S%20AUTOPARTS" target="_blank" class="wa"><i class="fab fa-whatsapp"></i> WA SUHAYL</a>
-        <a href="tel:+254713349554" class="call"><i class="fas fa-phone"></i> Call</a>
     </div>
 
     <button class="ai-chat-btn" id="aiChatBtn" onclick="toggleAIChat()" title="Chat with A&S Assistant">
@@ -837,6 +836,7 @@
             <span id="cartTotal" style="color:#ff6f00;">KSh 0</span>
         </div>
         <div id="cartWhatsAppButtons" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
+        <div id="quotationButtonWrap" style="margin-top:12px;"></div>
         <button onclick="closeCart()" style="width:100%;padding:10px;background:#f44336;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-top:10px;">Close</button>
     </div>
 
@@ -1423,6 +1423,7 @@ function buildApplicationFromFitments(fitments){
 
 // ==================== CUSTOMER POINTS SYSTEM ====================
 let customersData = {}; // { phone: {phone, name, points, totalSpent, ordersCount, lastOrderDate, awardedOrders:[]} }
+let pointsRedemptionLocked = false; // global lock for redemption
 
 function normalizePhone(p){
     if(!p) return '';
@@ -1477,10 +1478,20 @@ function awardPointsForOrder(order){
     if(cust.awardedOrders.includes(order.id)){
         return { awarded: false, reason: 'already awarded', points: cust.points };
     }
-    const total = Number(order.total) || 0;
-    const points = Math.floor(total / POINTS_PER_KSH);
+    
+    // Calculate points only from unlocked items (per-item lock) and only fixed-price items
+    let pointsEligibleTotal = 0;
+    (order.items || []).forEach(item => {
+        if(item.pointsLocked) return; // skip locked items
+        const pmode = normalizePriceMode(item.priceMode);
+        if(pmode === PRICE_FIXED){
+            pointsEligibleTotal += Number(item.subtotal) || 0;
+        }
+    });
+    
+    const points = Math.floor(pointsEligibleTotal / POINTS_PER_KSH);
     cust.points += points;
-    cust.totalSpent += total;
+    cust.totalSpent += Number(order.total) || 0;
     cust.ordersCount += 1;
     cust.lastOrderDate = order.date || new Date().toISOString();
     cust.awardedOrders.push(order.id);
@@ -1510,6 +1521,11 @@ function checkMyPoints(){
         return;
     }
     const worth = (cust.points * POINTS_REDEEM_VALUE).toFixed(0);
+    const redeemButton = pointsRedemptionLocked
+        ? `<div style="background:#ffebee;color:#c62828;padding:10px;border-radius:6px;font-size:13px;font-weight:700;margin-top:12px;">🔒 Points redemption is temporarily locked. Please check back later.</div>`
+        : `<button class="points-redeem-btn" onclick="redeemPointsWhatsApp('${phone}')">
+                <i class="fab fa-whatsapp"></i> Redeem on WhatsApp
+           </button>`;
     result.innerHTML = `
         <div class="points-card">
             <div class="big-points">${cust.points}</div>
@@ -1520,14 +1536,16 @@ function checkMyPoints(){
                 <div><strong>${cust.ordersCount || 0}</strong>Orders</div>
                 <div><strong>KSh ${(cust.totalSpent||0).toLocaleString()}</strong>Spent</div>
             </div>
-            <button class="points-redeem-btn" onclick="redeemPointsWhatsApp('${phone}')">
-                <i class="fab fa-whatsapp"></i> Redeem on WhatsApp
-            </button>
+            ${redeemButton}
         </div>
     `;
 }
 
 function redeemPointsWhatsApp(phone){
+    if(pointsRedemptionLocked){
+        alert('Points redemption is currently locked. Please check back later.');
+        return;
+    }
     const cust = customersData[phone];
     if(!cust) return;
     const worth = (cust.points * POINTS_REDEEM_VALUE).toFixed(0);
@@ -2010,14 +2028,20 @@ async function fetchAvailabilityFromGitHub(){
     try {
         const res = await axios.get(AVAILABILITY_URL + '?t=' + Date.now());
         if(res.data && typeof res.data === 'object'){
-            availability = { adil: res.data.adil !== false, suhayl: res.data.suhayl !== false };
+            availability = { 
+                adil: res.data.adil !== false, 
+                suhayl: res.data.suhayl !== false,
+                pointsRedemptionLocked: res.data.pointsRedemptionLocked === true
+            };
+            pointsRedemptionLocked = availability.pointsRedemptionLocked;
             updateLiveDots();
             return true;
         }
         throw new Error('availability.json did not return an object');
     } catch (err){
         console.warn('Could not load availability.json — defaulting to both available. Error:', err.message);
-        availability = {adil:true, suhayl:true};
+        availability = {adil:true,suhayl:true,pointsRedemptionLocked:false};
+        pointsRedemptionLocked = false;
         updateLiveDots();
         return false;
     }
@@ -2161,7 +2185,11 @@ async function saveOptionsToGitHub(){
 async function saveAvailabilityToGitHub(){
     if(!getToken()){ alert('⚠️ No GitHub token saved.\n\nOpen the Admin Panel and paste your token first.'); return false; }
     try {
-        const payload = { adil: !!availability.adil, suhayl: !!availability.suhayl };
+        const payload = { 
+            adil: !!availability.adil, 
+            suhayl: !!availability.suhayl,
+            pointsRedemptionLocked: !!availability.pointsRedemptionLocked
+        };
         await putFileToGitHub(AVAILABILITY_FILE, payload, `Update availability.json — ${new Date().toISOString()}`);
         updateLiveDots();
         showNotification('✅ Availability saved to GitHub! Live in ~1 minute.');
@@ -2305,7 +2333,8 @@ function addToCart(index){
             ...product,
             quantity: 1,
             availability: normalizeStock(product.availability),
-            priceMode: mode
+            priceMode: mode,
+            pointsLocked: !!product.pointsLocked
         });
     }
     saveCart(); updateCartCount();
@@ -2376,6 +2405,8 @@ function viewCart(){
         whatsappButtons.innerHTML='';
         if(noteEl) noteEl.innerHTML='';
         if(mpesaPanel) mpesaPanel.classList.remove('show');
+        const quoteWrap = document.getElementById('quotationButtonWrap');
+        if(quoteWrap) quoteWrap.innerHTML = '';
     }else{
         let itemsHTML='';
         const totals = computeCartTotals();
@@ -2434,6 +2465,15 @@ function viewCart(){
         btnHTML+=`<button type="button" onclick="checkoutCart('adil')" style="flex:1;padding:12px;background:${adilBg};color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><span class="status-dot ${adilDot}"></span> ${adilLabel}</button>`;
         btnHTML+=`<button type="button" onclick="checkoutCart('suhayl')" style="flex:1;padding:12px;background:${suhaylBg};color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><span class="status-dot ${suhaylDot}"></span> ${suhaylLabel}</button>`;
         whatsappButtons.innerHTML=btnHTML;
+
+        const quoteWrap = document.getElementById('quotationButtonWrap');
+        if(quoteWrap){
+            quoteWrap.innerHTML = `
+                <button onclick="printCartQuotation()" style="width:100%;padding:12px;background:#1a237e;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;">
+                    🖨️ Print Quotation
+                </button>
+            `;
+        }
     }
     modal.style.display='block';
 }
@@ -2448,6 +2488,138 @@ function copyMpesa(text){
         try { document.execCommand('copy'); showNotification('Copied: ' + text); } catch(e){}
         ta.remove();
     });
+}
+
+// ==================== PRINT CART QUOTATION ====================
+function printCartQuotation(){
+    if(cart.length === 0){ alert('Your cart is empty.'); return; }
+    
+    const custName = (document.getElementById('custName')?.value || '').trim() || '_________________';
+    const custPhone = (document.getElementById('custPhone')?.value || '').trim() || '_________________';
+    
+    const quoteId = 'Q' + Date.now().toString().slice(-8);
+    const today = new Date();
+    const validUntil = new Date(today);
+    validUntil.setDate(validUntil.getDate() + 7);
+    
+    const fmtDate = (d) => d.toLocaleDateString('en-KE', { day: '2-digit', month: 'long', year: 'numeric' });
+    
+    const totals = computeCartTotals();
+    
+    let itemsRows = '';
+    cart.forEach(item => {
+        const st = normalizeStock(item.availability);
+        const stockTag = st === STOCK_ON_ORDER 
+            ? '<span style="color:#e65100;font-weight:700;font-size:11px;">Shipped on Order ~2 weeks</span>' 
+            : '<span style="color:#2e7d32;font-weight:700;font-size:11px;">In Stock</span>';
+        const pmode = getPriceMode(item);
+        let priceCell, subtotalCell;
+        if(pmode === PRICE_ON_REQUEST){
+            priceCell = '<em>On request</em>';
+            subtotalCell = '—';
+        } else if(pmode === PRICE_RANGE){
+            const mn = Number(item.priceMin)||0, mx = Number(item.priceMax)||0;
+            let rTxt;
+            if(!mn && !mx) rTxt = 'On request';
+            else if(!mn) rTxt = `Up to ${formatPrice(mx)}`;
+            else if(!mx) rTxt = `From ${formatPrice(mn)}`;
+            else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
+            priceCell = `<em>${rTxt}</em>`;
+            subtotalCell = '—';
+        } else {
+            priceCell = formatPrice(item.price);
+            subtotalCell = formatPrice((Number(item.price)||0) * item.quantity);
+        }
+        const partNo = item.partNo || item.oem || 'N/A';
+        const brand = item.brand || '';
+        itemsRows += `<tr>
+            <td style="padding:8px;border-bottom:1px solid #eee;">
+                <strong>${escapeHtml(item.name)}</strong><br>
+                <small style="color:#666;">Part No: ${escapeHtml(partNo)}${brand ? ' · Brand: ' + escapeHtml(brand) : ''}</small>
+            </td>
+            <td style="padding:8px;border-bottom:1px solid #eee;text-align:center;">${item.quantity}</td>
+            <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;">${priceCell}</td>
+            <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;">${subtotalCell}</td>
+        </tr>`;
+        if(st === STOCK_ON_ORDER){
+            itemsRows += `<tr><td colspan="4" style="padding:2px 8px 8px;border-bottom:1px solid #eee;font-size:11px;color:#e65100;">⚠️ This item is Shipped on Order — requires 50% deposit, arrives in ~2 weeks.</td></tr>`;
+        }
+    });
+    
+    const totalLine = totals.hasQuote
+        ? `<div style="text-align:right;font-size:18px;font-weight:700;color:#ff6f00;padding-top:10px;">Fixed items total: ${formatPrice(totals.fixedTotal)} <span style="font-size:12px;color:#1565c0;">+ quote items</span></div>`
+        : `<div style="text-align:right;font-size:20px;font-weight:700;color:#ff6f00;padding-top:10px;">TOTAL: ${formatPrice(totals.fixedTotal)}</div>`;
+    
+    let notesHTML = '';
+    const notes = [];
+    if(cart.some(i => normalizeStock(i.availability) === STOCK_ON_ORDER)){
+        notes.push('Items marked "Shipped on Order" require a 50% deposit and arrive in ~2 weeks.');
+    }
+    if(totals.hasQuote){
+        notes.push('Some items require a quote — final prices will be confirmed.');
+    }
+    if(notes.length){
+        notesHTML = `<div style="background:#fff8e1;border-left:3px solid #ffc107;padding:10px 14px;border-radius:5px;font-size:12px;color:#e65100;margin-top:12px;">
+            <strong>Note:</strong> ${notes.join(' ')}
+        </div>`;
+    }
+    
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Quotation ${escapeHtml(quoteId)} — A & S AUTOPARTS</title>
+    <style>
+        body{font-family:Arial,sans-serif;padding:24px;max-width:640px;margin:0 auto;color:#222;font-size:14px}
+        h1{color:#1a237e;text-align:center;margin-bottom:2px;font-size:26px}
+        .sub{text-align:center;color:#666;font-size:13px;margin-bottom:6px}
+        .contact{text-align:center;font-size:12px;color:#555;margin-bottom:20px}
+        .quote-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;padding:12px;background:#f0f4ff;border-radius:8px;}
+        .quote-head div{font-size:13px}
+        .customer-box{border:1px solid #ddd;padding:12px;border-radius:8px;margin-bottom:16px;font-size:14px}
+        .customer-box strong{color:#1a237e}
+        table{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:13px}
+        th{background:#1a237e;color:#fff;padding:8px;text-align:left;font-size:11px;font-weight:700}
+        .validity{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;margin-top:14px;font-size:13px;color:#2e7d32;text-align:center;font-weight:700;}
+        .footer{text-align:center;font-size:12px;color:#666;margin-top:24px;padding-top:12px;border-top:1px solid #ddd}
+        @media print { body{padding:0} }
+    </style></head><body>
+        <h1>A & S AUTOPARTS</h1>
+        <div class="sub">Two Brothers, One Mission: Quality Parts</div>
+        <div class="contact">Mombasa, Kenya · ADIL: 0713349554 · SUHAYL: 0752763924</div>
+        
+        <div class="quote-head">
+            <div><strong>Quotation #:</strong> ${escapeHtml(quoteId)}</div>
+            <div><strong>Date:</strong> ${fmtDate(today)}</div>
+        </div>
+        
+        <div class="customer-box">
+            <div><strong>Customer:</strong> ${escapeHtml(custName)}</div>
+            <div><strong>Phone:</strong> ${escapeHtml(custPhone)}</div>
+        </div>
+        
+        <table>
+            <thead><tr>
+                <th>Item</th>
+                <th style="text-align:center;width:50px;">Qty</th>
+                <th style="text-align:right;width:110px;">Price</th>
+                <th style="text-align:right;width:120px;">Subtotal</th>
+            </tr></thead>
+            <tbody>${itemsRows}</tbody>
+        </table>
+        
+        ${totalLine}
+        ${notesHTML}
+        
+        <div class="validity">⏳ This quotation is valid for 7 days — until ${fmtDate(validUntil)}</div>
+        
+        <div class="footer">
+            Thank you for choosing A & S AUTOPARTS<br>
+            ADIL: 0713349554 · SUHAYL: 0752763924 · Mombasa, Kenya
+        </div>
+        <script>window.onload=function(){setTimeout(function(){window.print();},300);};<\/script>
+    </body></html>`;
+    
+    const w = window.open('', '_blank');
+    if(!w){ alert('Pop-up blocked. Please allow pop-ups to print the quotation.'); return; }
+    w.document.write(html);
+    w.document.close();
 }
 
 // ==================== CHECKOUT ====================
@@ -2552,7 +2724,8 @@ async function checkoutCart(brother){
                 priceMax: mode === PRICE_RANGE ? (Number(i.priceMax) || 0) : null,
                 quantity: i.quantity,
                 subtotal: mode === PRICE_FIXED ? ((Number(i.price) || 0) * i.quantity) : null,
-                availability: normalizeStock(i.availability)
+                availability: normalizeStock(i.availability),
+                pointsLocked: !!i.pointsLocked
             };
         }),
         total: totals.fixedTotal
@@ -3268,6 +3441,15 @@ function renderAdminProductCards(){
         const imgPicker = buildImagePickerHTML(`edit_img_${index}`, getProductImages(product), product.name || 'product');
         const stockSelect = buildStockSelectHTML(`edit_stock_${index}`, product.availability);
         const priceModeHTML = buildPriceModeHTML(`edit_price_${index}`, product);
+        const pointsLockHTML = `
+            <div style="background:#f3e5f5;padding:10px;border-radius:6px;margin:10px 0;border-left:3px solid #9c27b0;">
+                <label style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" id="pointsLock_${index}" ${product.pointsLocked ? 'checked' : ''}>
+                    🔒 Lock loyalty points for this item
+                </label>
+                <div style="font-size:11px;color:#666;margin-top:4px;font-style:italic;">When locked, this item will not earn points even if the order is delivered.</div>
+            </div>
+        `;
         const fitments = normalizeFitments(product);
         const fitmentsWidget = buildFitmentsWidget(`edit_fit_${index}`, fitments);
         html+=`<div style="margin-bottom:15px;padding:15px;border:1px solid #ddd;border-radius:5px;background:#f9f9f9;" id="adminCard_${index}">
@@ -3287,6 +3469,7 @@ function renderAdminProductCards(){
             </div>
             ${stockSelect}
             ${priceModeHTML}
+            ${pointsLockHTML}
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">${brandCombo}${catCombo}</div>
             <div style="margin-top:10px;"><label style="font-size:12px;font-weight:700;">Images (photos, URLs, or emojis):</label>${imgPicker}</div>
             <div style="margin-top:10px;"><label style="font-size:12px;">Description:</label><textarea id="desc_${index}" style="width:100%;padding:5px;height:40px;">${escapeAttr(product.description||'')}</textarea></div>
@@ -4003,6 +4186,16 @@ function showAdminPanel(){
                     </div>
                     <p style="font-size:12px;color:#666;margin-top:12px;font-style:italic;">Changes push to GitHub automatically in ~1 minute.</p>
                 </div>
+                <div class="admin-card-box" style="margin-top:16px;">
+                    <h4 style="color:#1a237e;margin-bottom:10px;font-size:15px;">🔒 Loyalty Points Redemption Lock</h4>
+                    <p style="font-size:13px;color:#555;line-height:1.5;margin-bottom:12px;">
+                        When <strong>locked</strong>, customers cannot redeem points for discounts (the "Redeem on WhatsApp" button will be hidden).
+                        Points still accumulate, but redemption is blocked.
+                    </p>
+                    <button onclick="togglePointsRedemptionLock()" id="pointsRedemptionLockBtn" style="width:100%;padding:14px;background:${pointsRedemptionLocked ? '#f44336' : '#4caf50'};color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:15px;">
+                        ${pointsRedemptionLocked ? '🔒 Redemption LOCKED — Click to Unlock' : '🔓 Redemption UNLOCKED — Click to Lock'}
+                    </button>
+                </div>
             </div>
 
             <div class="admin-panel-section" data-tab="github">
@@ -4084,6 +4277,15 @@ function showAddProductForm(){
     const catCombo = buildAdminComboHTML('new_cat', 'Category', catOptions, '', 'Type new category name');
     const brandCombo = buildAdminComboHTML('new_br', 'Brand', brandOptions, '', 'Type new brand name');
     const fitmentsWidget = buildFitmentsWidget('new_fit', []);
+    const pointsLockNewHTML = `
+        <div style="background:#f3e5f5;padding:10px;border-radius:6px;margin:10px 0;border-left:3px solid #9c27b0;">
+            <label style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer;">
+                <input type="checkbox" id="new_pointsLock">
+                🔒 Lock loyalty points for this item
+            </label>
+            <div style="font-size:11px;color:#666;margin-top:4px;font-style:italic;">When locked, this item will not earn points even if the order is delivered.</div>
+        </div>
+    `;
     const formHTML=`<div style="background:#e8f5e9;padding:20px;border-radius:5px;margin-bottom:20px;" id="newProductForm"><h3 style="color:#2e7d32;">➕ Add New Product (Full Form)</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
             <div><label>Product Name:</label><input type="text" id="new_name" style="width:100%;padding:5px;"></div>
@@ -4099,6 +4301,7 @@ function showAddProductForm(){
         </div>
         ${buildStockSelectHTML('new_stock_status', 'in_stock')}
         ${buildPriceModeHTML('new_price', {})}
+        ${pointsLockNewHTML}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">${brandCombo}${catCombo}</div>
         <div style="margin-top:10px;"><label style="font-weight:700;">Images (photos, URLs, or emojis):</label>${buildImagePickerHTML('new_img', [], 'new-part')}</div>
         <div style="margin-top:10px;"><label>Description:</label><textarea id="new_description" style="width:100%;padding:5px;height:40px;"></textarea></div>
@@ -4183,6 +4386,7 @@ async function addNewProduct(){
         stock:parseInt(document.getElementById('new_stock').value)||0,
         description:document.getElementById('new_description').value,
         availability: stockStatus,
+        pointsLocked: document.getElementById('new_pointsLock')?.checked || false,
         sku:newSku
     };
     if(!newProduct.name){alert('Please enter a product name');return}
@@ -4238,6 +4442,8 @@ async function updateProduct(index){
     products[index].priceMin = priceData.priceMin;
     products[index].priceMax = priceData.priceMax;
 
+    products[index].pointsLocked = document.getElementById(`pointsLock_${index}`)?.checked || false;
+
     const newBrandVal = getAdminComboValue(`edit_br_${index}`);
     const newCatVal = getAdminComboValue(`edit_cat_${index}`);
     if(!newBrandVal){ alert('Please select or add a brand.'); return; }
@@ -4281,6 +4487,13 @@ async function toggleAvailability(brother){
     loadProducts();
     closeAdminPanel(); showAdminPanel();
     showNotification('⏳ Saving availability to GitHub...');
+    await saveAvailabilityToGitHub();
+}
+async function togglePointsRedemptionLock(){
+    availability.pointsRedemptionLocked = !availability.pointsRedemptionLocked;
+    pointsRedemptionLocked = availability.pointsRedemptionLocked;
+    closeAdminPanel(); showAdminPanel();
+    showNotification('⏳ Saving loyalty lock to GitHub...');
     await saveAvailabilityToGitHub();
 }
 function closeAdminPanel(){ const panel=document.getElementById('adminPanel'); if(panel)panel.remove(); }

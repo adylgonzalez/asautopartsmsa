@@ -5047,5 +5047,35 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1791823815087"
+  },
+  {
+    "name": "Rear Shock Absorber",
+    "price": 4850,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "348030",
+    "oem": "348030",
+    "supercedes": "",
+    "application": "Toyota Ractis 4WD",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "🔧",
+    "images": [],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "NCP95/NZE164/NCP125/NSP135"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 4,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1791824181338"
   }
 ]

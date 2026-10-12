@@ -4897,5 +4897,35 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1791821359048"
+  },
+  {
+    "name": "Rear Shock Absorber",
+    "price": 4850,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "349024",
+    "oem": "349024",
+    "supercedes": "",
+    "application": "Toyota Rav4",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "🔧",
+    "images": [],
+    "fitments": [
+      {
+        "make": "Lexus",
+        "models": [
+          "ACA30/ACA31/ACA33/ACA38/ZSU60/ZSU65/LEXUS NS SERIES"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 4,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1791821689866"
   }
 ]

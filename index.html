@@ -1506,13 +1506,22 @@ function awardPointsForOrder(order){
     cust.awardedOrders.push(order.id);
     if(order.customerName) cust.name = order.customerName;
 
-    // If the customer redeemed points on this order, deduct them
-    if(order.pointsRedeemed && order.pointsRedeemed > 0){
-        cust.points -= order.pointsRedeemed;
-        if(cust.points < 0) cust.points = 0;
-    }
+    // NOTE: Points redeemed on this order were already deducted at order placement.
+    // Do NOT deduct again here.
 
     return { awarded: true, points: cust.points, earned: points };
+}
+
+// Deduct redeemed points immediately when the order is placed
+async function deductRedeemedPointsOnOrder(custPhoneNorm, pointsRedeemed, orderId){
+    if(!pointsRedeemed || pointsRedeemed <= 0) return false;
+    if(!custPhoneNorm) return false;
+    const cust = customersData[custPhoneNorm];
+    if(!cust) return false;
+    cust.points = Math.max(0, (Number(cust.points)||0) - pointsRedeemed);
+    if(!cust.redeemedOrders) cust.redeemedOrders = [];
+    if(!cust.redeemedOrders.includes(orderId)) cust.redeemedOrders.push(orderId);
+    return await saveCustomersToGitHub();
 }
 
 function openMyPoints(){
@@ -2851,6 +2860,17 @@ async function checkoutCart(brother){
             };
         })
     };
+
+    // IMPORTANT: Deduct redeemed points IMMEDIATELY at order placement
+    // (so the customer can't double-redeem while the order awaits delivery)
+    if(pointsRedeemed > 0 && phoneNorm){
+        const deducted = await deductRedeemedPointsOnOrder(phoneNorm, pointsRedeemed, orderId);
+        if(deducted){
+            showNotification(`⭐ ${pointsRedeemed} points redeemed — balance updated.`);
+        } else {
+            showNotification('⚠️ Order placed, but points deduction could not be saved. Please check your GitHub token.');
+        }
+    }
 
     cart = [];
     cartRedeemApplied = false;

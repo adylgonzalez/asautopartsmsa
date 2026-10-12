@@ -4957,5 +4957,35 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1791822479564"
+  },
+  {
+    "name": "Front Shock Absorbers Set",
+    "price": 24000,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "334399/334400",
+    "oem": "334399/334400",
+    "supercedes": "",
+    "application": "Toyota Harrier",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "🔧",
+    "images": [],
+    "fitments": [
+      {
+        "make": "Lexus",
+        "models": [
+          "Harrier(ACU30/ACU35/MCU35/GSU35/MCU30)Kluger(ACU20/ACU25/MCU28/MHU28)Lexus RX300/RX350/RX400"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 2,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1791823231250"
   }
 ]

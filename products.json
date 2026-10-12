@@ -4837,5 +4837,35 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1791820345115"
+  },
+  {
+    "name": "Front Shock Absorbers Set",
+    "price": 19900,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "339031/2",
+    "oem": "339031/2",
+    "supercedes": "",
+    "application": "Toyota Rav4",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "🔧",
+    "images": [],
+    "fitments": [
+      {
+        "make": "Lexus",
+        "models": [
+          "ACA30/ACA31/ACA33/ACA38/ZSU60/ZSU65/LEXUS NS SERIES"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 4,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1791820931217"
   }
 ]

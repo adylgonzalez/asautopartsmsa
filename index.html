@@ -104,6 +104,8 @@
         .product-vehicle-info{background:#f0f0f0;padding:8px;border-radius:5px;margin-bottom:10px;font-size:13px;color:#555;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;min-height:3.2em}
         .product-brand{background:#1a237e;color:#fff;display:inline-block;padding:5px 15px;border-radius:5px;font-size:14px;margin-bottom:10px;align-self:center}
         .product-supercedes{background:#e8eaf6;color:#3949ab;padding:5px 10px;border-radius:4px;font-size:11px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:5px;justify-content:center;line-height:1.3}
+        .product-chassis{background:#f3e5f5;color:#6a1b9a;padding:5px 10px;border-radius:4px;font-size:11px;font-weight:700;margin-bottom:10px;display:flex;align-items:flex-start;gap:5px;justify-content:center;line-height:1.4;text-align:left}
+        .product-chassis i{margin-top:2px;flex-shrink:0}
         .product-price{color:#ff6f00;font-size:24px;font-weight:700;margin:15px 0 5px;flex-shrink:0}
         .product-price-note{font-size:11px;color:#888;margin-bottom:10px;font-style:italic;min-height:14px}
         .product-buttons{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
@@ -215,6 +217,25 @@
         .fit-make-new{display:none;margin-top:4px;width:100%;padding:8px;border:2px solid #4caf50;border-radius:5px;font-size:13px}
         .fit-make-new.show{display:block}
 
+        /* === CHASSIS CODES WIDGET === */
+        .chassis-wrap{background:#f3e5f5;border:2px dashed #ce93d8;border-radius:8px;padding:14px;margin:10px 0}
+        .chassis-wrap > label{font-size:13px;font-weight:700;display:block;margin-bottom:10px;color:#6a1b9a}
+        .chassis-hint{font-size:11px;color:#888;margin-top:8px}
+        .chassis-row{display:flex;gap:8px;align-items:flex-start;background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:10px;margin-bottom:8px}
+        .chassis-row-model{flex:0 0 170px;min-width:120px}
+        .chassis-row-codes{flex:1;min-width:0}
+        .chassis-row-remove{flex-shrink:0;background:#f44336;color:#fff;border:none;border-radius:6px;width:34px;height:34px;cursor:pointer;font-size:14px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
+        .chassis-row-remove:hover{background:#d32f2f}
+        .chassis-model-select{width:100%;padding:8px 10px;border:1px solid #ccc;border-radius:5px;font-size:13px;font-weight:700;background:#fff;cursor:pointer}
+        .chassis-codes-box{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:38px;padding:5px 6px;border:1px solid #ccc;border-radius:5px;background:#fff;cursor:text}
+        .chassis-codes-box:focus-within{border-color:#6a1b9a;box-shadow:0 0 0 2px rgba(106,27,154,.1)}
+        .chassis-chip{display:inline-flex;align-items:center;gap:5px;background:#6a1b9a;color:#fff;padding:3px 9px;border-radius:14px;font-size:12px;font-weight:700;max-width:100%}
+        .chassis-chip-remove{background:rgba(255,255,255,.25);color:#fff;border:none;border-radius:50%;width:15px;height:15px;cursor:pointer;font-size:9px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
+        .chassis-chip-remove:hover{background:#f44336}
+        .chassis-codes-input{flex:1;min-width:90px;border:none;outline:none;padding:3px;font-size:13px;background:transparent;text-transform:uppercase}
+        .chassis-add-row{margin-top:6px;padding:10px 16px;background:#6a1b9a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+        .chassis-add-row:hover{background:#4a148c}
+
         .category-grid .extra-category{display:none}
         .category-grid.expanded .extra-category{display:block}
         .category-grid .category-card.small{padding:20px}
@@ -320,6 +341,7 @@
         .gallery-info .pmeta{font-size:13px;color:#666;line-height:1.5}
         .gallery-info .pprice{color:#ff6f00;font-weight:700;font-size:20px;margin-top:6px}
         .gallery-info .psupercedes{background:#e8eaf6;color:#3949ab;padding:6px 10px;border-radius:5px;font-size:12px;font-weight:700;margin-top:8px;display:inline-block}
+        .gallery-info .pchassis{background:#f3e5f5;color:#6a1b9a;padding:6px 10px;border-radius:5px;font-size:12px;font-weight:700;margin-top:8px;display:block;text-align:left;line-height:1.5}
         @media(max-width:768px){
             .gallery-inner{max-height:95vh}
             .gallery-main{max-height:50vh;min-height:220px}
@@ -635,7 +657,7 @@
     </div>
 
     <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search parts, OEM numbers, vehicles...">
+        <input type="text" id="searchInput" placeholder="Search parts, OEM numbers, vehicles, chassis codes...">
         <button onclick="searchProducts()">🔍 Search</button>
     </div>
     <div class="vehicle-selector">
@@ -892,10 +914,9 @@ const ORDERS_URL   = `${PAGES_BASE}/${ORDERS_FILE}`;
 const CUSTOMERS_URL = `${PAGES_BASE}/${CUSTOMERS_FILE}`;
 const IMAGES_FOLDER = 'images';
 
-const POINTS_PER_KSH = 100; // KSh 100 = 1 point
-const POINTS_REDEEM_VALUE = 1; // 100 points = KSh 100 off (so 1 pt = KSh 1)
+const POINTS_PER_KSH = 100;
+const POINTS_REDEEM_VALUE = 1;
 
-// ==================== CATEGORY IMAGES ====================
 let categoryImages = {
     "Brakes": "images/brakes.jpg",
     "Suspension": "images/suspension.jpeg",
@@ -907,15 +928,10 @@ let categoryImages = {
     "Oils & Fluids": "images/oil.jpg"
 };
 
-// ==================== HOME BUTTON ====================
 function goToHomepage(){
     const listWithUs = document.getElementById('listWithUs');
-    if(listWithUs && listWithUs.classList.contains('active')){
-        hideListWithUs();
-    }
-    if(filtersActive){
-        resetFilters();
-    }
+    if(listWithUs && listWithUs.classList.contains('active')){ hideListWithUs(); }
+    if(filtersActive){ resetFilters(); }
     const searchInput = document.getElementById('searchInput');
     if(searchInput) searchInput.value = '';
     const vinSec = document.getElementById('vinSection');
@@ -927,7 +943,6 @@ function goToHomepage(){
     window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-// ==================== HERO GARAGE ====================
 let savedVehicle = null;
 function saveVehicleToGarage(year, make, model){
     savedVehicle = { year, make, model };
@@ -963,7 +978,6 @@ function updateGarageBar(){
     }
 }
 
-// ==================== AVAILABILITY HELPERS ====================
 const STOCK_IN = 'in_stock';
 const STOCK_ON_ORDER = 'on_order';
 function normalizeStock(v){
@@ -982,7 +996,6 @@ function stockBadgeHTML(v, large){
     return `<span class="stock-badge ${cls}${large?' large':''}">${lbl}</span>`;
 }
 
-// ==================== SUPERCEDES HELPERS ====================
 function parseSupercedes(v){
     if(!v) return [];
     return String(v).split(',').map(s => s.trim()).filter(Boolean);
@@ -993,7 +1006,44 @@ function supercedesDisplayText(supersedes){
     return list.join(', ');
 }
 
-// ==================== PRICE MODE HELPERS ====================
+// ==================== CHASSIS HELPERS ====================
+// Chassis data shape: [ { model: "Vitz", codes: ["NCP91","NCP95"] }, ... ]
+function normalizeChassis(product){
+    if(Array.isArray(product.chassisCodes) && product.chassisCodes.length > 0){
+        return product.chassisCodes.map(c => ({
+            model: String(c.model || '').trim(),
+            codes: Array.isArray(c.codes) ? c.codes.map(x => String(x||'').trim().toUpperCase()).filter(Boolean) : []
+        })).filter(c => c.model && c.codes.length > 0);
+    }
+    // legacy string form: "NCP91, NCP95" — no model association, treat as a pseudo-model "All"
+    if(typeof product.chassisCodes === 'string' && product.chassisCodes.trim()){
+        const codes = product.chassisCodes.split(/[,\s\/]+/).map(s => s.trim().toUpperCase()).filter(Boolean);
+        if(codes.length > 0) return [{ model: 'All', codes }];
+    }
+    return [];
+}
+function getAllChassisCodes(product){
+    const list = normalizeChassis(product);
+    const out = [];
+    list.forEach(c => c.codes.forEach(code => out.push(code)));
+    return out;
+}
+function chassisDisplayText(product){
+    const list = normalizeChassis(product);
+    if(list.length === 0) return '';
+    return list.map(c => `${c.model}: ${c.codes.join(', ')}`).join(' | ');
+}
+function productMatchesChassis(product, searchCode){
+    if(!searchCode) return false;
+    const q = String(searchCode).toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if(!q) return false;
+    const all = getAllChassisCodes(product);
+    return all.some(code => {
+        const c = code.replace(/[^A-Z0-9]/g, '');
+        return c === q || c.startsWith(q) || q.startsWith(c);
+    });
+}
+
 const PRICE_FIXED = 'fixed';
 const PRICE_RANGE = 'range';
 const PRICE_ON_REQUEST = 'on_request';
@@ -1008,15 +1058,11 @@ function getPriceMode(product){ return normalizePriceMode(product.priceMode); }
 
 function priceDisplay(product){
     const mode = getPriceMode(product);
-    if(mode === PRICE_ON_REQUEST){
-        return { text: 'Price on request', note: 'Contact us on WhatsApp for a quote' };
-    }
+    if(mode === PRICE_ON_REQUEST){ return { text: 'Price on request', note: 'Contact us on WhatsApp for a quote' }; }
     if(mode === PRICE_RANGE){
         const min = Number(product.priceMin) || 0;
         const max = Number(product.priceMax) || 0;
-        if(!min && !max){
-            return { text: 'Price on request', note: 'Contact us on WhatsApp for a quote' };
-        }
+        if(!min && !max){ return { text: 'Price on request', note: 'Contact us on WhatsApp for a quote' }; }
         if(!min) return { text: `Up to ${formatPrice(max)}`, note: 'Final price confirmed on order' };
         if(!max) return { text: `From ${formatPrice(min)}`, note: 'Final price confirmed on order' };
         if(min === max) return { text: formatPrice(min), note: '' };
@@ -1030,7 +1076,6 @@ function priceDisplayHTML(product, large){
     return `<div class="product-price" style="${style}">${escapeAttr(text)}</div><div class="product-price-note">${escapeAttr(note||'')}</div>`;
 }
 
-// ==================== DEFAULT OPTIONS (fallback) ====================
 const DEFAULT_CATEGORIES = [
     "Brakes","Suspension","Filters","Electrical","Engine","Cooling",
     "Transmission","Body & Exterior","Interior","Lighting","Steering",
@@ -1045,7 +1090,6 @@ const DEFAULT_BRANDS = [
     "NTN","NSK","Taiho","NPR","Musashi","Exedy","Castrol","Total","Shell","Other"
 ];
 
-// ==================== CATEGORY DISPLAY HELPERS ====================
 const FIXED_CATEGORIES = ["Brakes","Suspension","Filters","Electrical","Engine","Cooling","EX JAPAN","Oils & Fluids"];
 const CATEGORY_DESCRIPTIONS = {
     "Brakes":"Pads, Rotors","Suspension":"Struts, Springs","Filters":"Oil, Air Filters",
@@ -1066,7 +1110,6 @@ const CATEGORY_ICONS = {
 function getCategoryDescription(cat){ return CATEGORY_DESCRIPTIONS[cat] || "Browse parts"; }
 function getCategoryIcon(cat){ return CATEGORY_ICONS[cat] || "fa-cog"; }
 
-// ==================== VEHICLE MAKES & MODELS ====================
 const DEFAULT_VEHICLE_MODELS = {
     Toyota:["Camry","Corolla","RAV4","Land Cruiser","Hilux","Prado","Fortuner","Harrier","Vitz","Passo","Probox","Succeed","Crown","Mark X","Avensis","Yaris","Hiace","Alphard","Voxy","Noah"],
     Nissan:["X-Trail","Patrol","Navara","Sunny","Almera","Teana","Cefiro","Skyline","Tiida","Wingroad","Urvan","Serena","Qashqai","Juke","Murano","Pathfinder"],
@@ -1100,12 +1143,8 @@ let vehicleModels = (() => {
     } catch(e){}
     return JSON.parse(JSON.stringify(DEFAULT_VEHICLE_MODELS));
 })();
+function saveVehicleModels(){ localStorage.setItem('A & SVehicleModels', JSON.stringify(vehicleModels)); }
 
-function saveVehicleModels(){
-    localStorage.setItem('A & SVehicleModels', JSON.stringify(vehicleModels));
-}
-
-// ----- PUBLIC make/model dropdowns (read-only for customers) -----
 function renderMakeOptions(){
     const makeSel = document.getElementById('vehicleMake');
     if(!makeSel) return;
@@ -1114,7 +1153,6 @@ function renderMakeOptions(){
     makes.forEach(m => { html += `<option value="${escapeAttr(m)}">${escapeAttr(m)}</option>`; });
     makeSel.innerHTML = html;
 }
-
 function renderModelOptions(make){
     const modelSel = document.getElementById('vehicleModel');
     if(!modelSel) return;
@@ -1125,26 +1163,20 @@ function renderModelOptions(make){
     }
     modelSel.innerHTML = html;
 }
-
 function onPublicMakeChange(){
     const make = document.getElementById('vehicleMake').value;
     renderModelOptions(make);
 }
-
 function findParts(){
     const year = parseInt(document.getElementById('vehicleYear').value);
     const make = document.getElementById('vehicleMake').value;
     const model = document.getElementById('vehicleModel').value;
-    if(!year || !make || !model){
-        alert('Please select year, make, and model');
-        return;
-    }
+    if(!year || !make || !model){ alert('Please select year, make, and model'); return; }
     saveVehicleToGarage(year, make, model);
     const filtered = products.filter(p => productMatchesFitment(p, make, model, year));
     displayFilteredProducts(filtered, `Parts for ${year} ${make} ${model}`);
 }
 
-// ==================== FITMENTS HELPERS ====================
 function normalizeFitments(product){
     if(Array.isArray(product.fitments) && product.fitments.length > 0){
         return product.fitments.map(f => ({
@@ -1157,7 +1189,6 @@ function normalizeFitments(product){
     if(mk.length === 0) return [];
     return mk.map(m => ({ make: m, models: md.slice() }));
 }
-
 function productMatchesFitment(product, make, model, year){
     const fitments = normalizeFitments(product);
     if(fitments.length === 0) return false;
@@ -1184,7 +1215,6 @@ function productMatchesFitment(product, make, model, year){
     });
 }
 
-// ==================== ADMIN-ONLY: COMBO WITH "ADD NEW" ====================
 function buildAdminComboHTML(idPrefix, label, options, currentValue, placeholderNew){
     let opts = [...options];
     if(currentValue && !opts.includes(currentValue)){ opts.push(currentValue); }
@@ -1193,7 +1223,6 @@ function buildAdminComboHTML(idPrefix, label, options, currentValue, placeholder
     optsHTML += `<option value="__ADD_NEW__">➕ Add New...</option>`;
     return `<div class="combo-wrap"><label>${escapeAttr(label)}</label><select id="${idPrefix}_select" onchange="handleAdminComboChange('${idPrefix}')">${optsHTML}</select><input type="text" id="${idPrefix}_new" class="combo-new-input" placeholder="${escapeAttr(placeholderNew)}"><div class="combo-hint">Pick from list, or choose "➕ Add New..." to type a new one.</div></div>`;
 }
-
 function handleAdminComboChange(idPrefix){
     const sel = document.getElementById(idPrefix + '_select');
     const newInput = document.getElementById(idPrefix + '_new');
@@ -1201,7 +1230,6 @@ function handleAdminComboChange(idPrefix){
     if(sel.value === '__ADD_NEW__'){ newInput.classList.add('show'); newInput.focus(); }
     else { newInput.classList.remove('show'); newInput.value = ''; }
 }
-
 function getAdminComboValue(idPrefix){
     const sel = document.getElementById(idPrefix + '_select');
     const newInput = document.getElementById(idPrefix + '_new');
@@ -1212,7 +1240,6 @@ function getAdminComboValue(idPrefix){
 
 // ==================== VEHICLE FITMENTS WIDGET ====================
 const fitmentsState = {};
-
 function fitmentsInit(widgetKey, initial){
     if(!fitmentsState[widgetKey]) fitmentsState[widgetKey] = { rows: [], initialized: false };
     if(initial && !fitmentsState[widgetKey].initialized){
@@ -1220,7 +1247,6 @@ function fitmentsInit(widgetKey, initial){
         fitmentsState[widgetKey].initialized = true;
     }
 }
-
 function buildFitmentsWidget(widgetKey, initial){
     fitmentsInit(widgetKey, initial);
     return `
@@ -1232,7 +1258,6 @@ function buildFitmentsWidget(widgetKey, initial){
         </div>
     `;
 }
-
 function fitmentsRenderAll(widgetKey){
     const container = document.getElementById('fitRows_' + widgetKey);
     if(!container) return;
@@ -1244,7 +1269,6 @@ function fitmentsRenderAll(widgetKey){
     const makes = Object.keys(vehicleModels).sort((a,b)=>a.localeCompare(b));
     let html = '';
     state.rows.forEach((row, i) => {
-        const models = makes.includes(row.make) ? [...vehicleModels[row.make]].sort((a,b)=>a.localeCompare(b)) : [];
         const makeOpts = makes.map(m => `<option value="${escapeAttr(m)}"${m === row.make ? ' selected' : ''}>${escapeAttr(m)}</option>`).join('');
         const isNewMake = !row.make || !makes.includes(row.make);
         const makeSelectHTML = isNewMake
@@ -1260,12 +1284,9 @@ function fitmentsRenderAll(widgetKey){
                   <option value="__ADD_NEW__">➕ Add new make…</option>
                </select>
                <input type="text" class="fit-make-new" placeholder="Type new make and press Enter" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();fitmentsMakeChange('${widgetKey}', ${i}, this.value);}">`;
-
         html += `
             <div class="fit-row" data-row="${i}">
-                <div class="fit-row-make">
-                    ${makeSelectHTML}
-                </div>
+                <div class="fit-row-make">${makeSelectHTML}</div>
                 <div class="fit-row-models">
                     <div class="fit-models-drop">
                         <div class="fit-models-box" id="fitModelsBox_${widgetKey}_${i}" onclick="document.getElementById('fitModelsInput_${widgetKey}_${i}').focus()">
@@ -1288,19 +1309,16 @@ function fitmentsRenderAll(widgetKey){
     });
     container.innerHTML = html;
 }
-
 function fitmentsAddRow(widgetKey){
     if(!fitmentsState[widgetKey]) fitmentsState[widgetKey] = { rows: [], initialized: true };
     fitmentsState[widgetKey].rows.push({ make: '', models: [] });
     fitmentsRenderAll(widgetKey);
 }
-
 function fitmentsRemoveRow(widgetKey, rowIdx){
     if(!fitmentsState[widgetKey]) return;
     fitmentsState[widgetKey].rows.splice(rowIdx, 1);
     fitmentsRenderAll(widgetKey);
 }
-
 function fitmentsMakeChange(widgetKey, rowIdx, value){
     if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return;
     if(value === '__ADD_NEW__'){
@@ -1314,40 +1332,30 @@ function fitmentsMakeChange(widgetKey, rowIdx, value){
     fitmentsState[widgetKey].rows[rowIdx].make = value;
     fitmentsRenderAll(widgetKey);
 }
-
 function fitmentsRemoveModel(widgetKey, rowIdx, modelIdx){
     if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return;
     fitmentsState[widgetKey].rows[rowIdx].models.splice(modelIdx, 1);
     fitmentsRenderAll(widgetKey);
 }
-
 function fitmentsSourceModels(widgetKey, rowIdx){
     if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return [];
     const row = fitmentsState[widgetKey].rows[rowIdx];
     const make = row.make;
-    if(make && vehicleModels[make]){
-        return vehicleModels[make].slice().sort((a,b)=>a.localeCompare(b));
-    }
+    if(make && vehicleModels[make]){ return vehicleModels[make].slice().sort((a,b)=>a.localeCompare(b)); }
     const pool = new Set();
     Object.values(vehicleModels).forEach(arr => arr.forEach(m => pool.add(m)));
     return [...pool].sort((a,b)=>a.localeCompare(b));
 }
-
-function fitmentsOpenModels(widgetKey, rowIdx){
-    fitmentsRenderModelsMenu(widgetKey, rowIdx, '');
-}
-
+function fitmentsOpenModels(widgetKey, rowIdx){ fitmentsRenderModelsMenu(widgetKey, rowIdx, ''); }
 function fitmentsCloseModels(widgetKey, rowIdx){
     const menu = document.getElementById(`fitModelsMenu_${widgetKey}_${rowIdx}`);
     if(menu){ menu.classList.remove('open'); menu.innerHTML = ''; }
 }
-
 function fitmentsFilterModels(widgetKey, rowIdx){
     const input = document.getElementById(`fitModelsInput_${widgetKey}_${rowIdx}`);
     const q = (input ? input.value : '').trim();
     fitmentsRenderModelsMenu(widgetKey, rowIdx, q);
 }
-
 function fitmentsRenderModelsMenu(widgetKey, rowIdx, query){
     const menu = document.getElementById(`fitModelsMenu_${widgetKey}_${rowIdx}`);
     if(!menu) return;
@@ -1365,13 +1373,10 @@ function fitmentsRenderModelsMenu(widgetKey, rowIdx, query){
     if(trimmed && !existing.includes(trimmed) && !source.some(m => m.toLowerCase() === trimmed.toLowerCase())){
         html += `<div class="fit-models-option add-new" onmousedown="event.preventDefault();" onclick="fitmentsAddModel('${widgetKey}', ${rowIdx}, '${escapeAttr(trimmed).replace(/'/g,"\\'")}')">➕ Add "${escapeAttr(trimmed)}"</div>`;
     }
-    if(!html){
-        html = `<div class="fit-models-option" style="color:#999;cursor:default;">No matches — type to add new</div>`;
-    }
+    if(!html){ html = `<div class="fit-models-option" style="color:#999;cursor:default;">No matches — type to add new</div>`; }
     menu.innerHTML = html;
     menu.classList.add('open');
 }
-
 function fitmentsAddModel(widgetKey, rowIdx, model){
     if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return;
     model = String(model || '').trim();
@@ -1384,18 +1389,14 @@ function fitmentsAddModel(widgetKey, rowIdx, model){
         if(inp) inp.focus();
     }, 50);
 }
-
 function fitmentsModelsKeydown(ev, widgetKey, rowIdx){
     if(ev.key === 'Enter'){
         ev.preventDefault();
         const input = document.getElementById(`fitModelsInput_${widgetKey}_${rowIdx}`);
         const val = (input ? input.value : '').trim();
         if(val) fitmentsAddModel(widgetKey, rowIdx, val);
-    } else if(ev.key === 'Escape'){
-        fitmentsCloseModels(widgetKey, rowIdx);
-    }
+    } else if(ev.key === 'Escape'){ fitmentsCloseModels(widgetKey, rowIdx); }
 }
-
 function fitmentsRead(widgetKey){
     const state = fitmentsState[widgetKey];
     if(!state) return [];
@@ -1403,7 +1404,6 @@ function fitmentsRead(widgetKey){
         .map(r => ({ make: String(r.make || '').trim(), models: (r.models || []).map(m => String(m || '').trim()).filter(Boolean) }))
         .filter(r => r.make);
 }
-
 function fitmentsApplyToVehicleModels(fitments){
     let changed = false;
     fitments.forEach(f => {
@@ -1411,16 +1411,12 @@ function fitmentsApplyToVehicleModels(fitments){
         if(!make) return;
         if(!vehicleModels[make]){ vehicleModels[make] = []; changed = true; }
         (f.models || []).forEach(m => {
-            if(!vehicleModels[make].includes(m)){
-                vehicleModels[make].push(m);
-                changed = true;
-            }
+            if(!vehicleModels[make].includes(m)){ vehicleModels[make].push(m); changed = true; }
         });
     });
     if(changed) saveVehicleModels();
     return changed;
 }
-
 function buildApplicationFromFitments(fitments){
     if(!fitments || fitments.length === 0) return 'Universal';
     const parts = fitments.map(f => {
@@ -1430,9 +1426,150 @@ function buildApplicationFromFitments(fitments){
     return parts.join(' | ');
 }
 
+// ==================== CHASSIS CODES WIDGET ====================
+const chassisState = {};
+function chassisInit(widgetKey, initial){
+    if(!chassisState[widgetKey]) chassisState[widgetKey] = { rows: [], initialized: false };
+    if(initial && !chassisState[widgetKey].initialized){
+        chassisState[widgetKey].rows = initial.map(r => ({ model: r.model || '', codes: (r.codes || []).slice() }));
+        chassisState[widgetKey].initialized = true;
+    }
+}
+function buildChassisWidget(widgetKey, initial){
+    chassisInit(widgetKey, initial);
+    return `
+        <div class="chassis-wrap" data-chassis="${widgetKey}">
+            <label>Chassis Codes (optional)</label>
+            <div id="chassisRows_${widgetKey}"></div>
+            <button type="button" class="chassis-add-row" onclick="chassisAddRow('${widgetKey}')"><i class="fas fa-plus"></i> Add another model</button>
+            <div class="chassis-hint">Optional. Group chassis codes per model (e.g. Vitz: NCP91, NCP95). Press Enter to add a code chip. Uppercase is automatic.</div>
+        </div>
+    `;
+}
+function chassisRenderAll(widgetKey){
+    const container = document.getElementById('chassisRows_' + widgetKey);
+    if(!container) return;
+    const state = chassisState[widgetKey] || { rows: [] };
+    if(state.rows.length === 0){
+        container.innerHTML = `<div style="color:#999;font-size:12px;padding:8px 0;text-align:center;">No chassis codes yet — click "Add another model" below if you want them.</div>`;
+        return;
+    }
+    // Build model options from the fitments state if available (so only relevant models show),
+    // falling back to global model pool.
+    const fitKey = widgetKey; // fitments widget uses same widget key
+    const fitState = fitmentsState[fitKey];
+    let modelPool = [];
+    if(fitState && fitState.rows && fitState.rows.length > 0){
+        const set = new Set();
+        fitState.rows.forEach(r => (r.models || []).forEach(m => set.add(m)));
+        modelPool = [...set];
+    }
+    if(modelPool.length === 0){
+        const set = new Set();
+        Object.values(vehicleModels).forEach(arr => arr.forEach(m => set.add(m)));
+        modelPool = [...set];
+    }
+    modelPool.sort((a,b)=>a.localeCompare(b));
+    let html = '';
+    state.rows.forEach((row, i) => {
+        const opts = modelPool.map(m => `<option value="${escapeAttr(m)}"${m === row.model ? ' selected' : ''}>${escapeAttr(m)}</option>`).join('');
+        const isNewModel = !row.model || !modelPool.includes(row.model);
+        const modelSelectHTML = isNewModel
+            ? `<select class="chassis-model-select" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)">
+                  <option value="">— Select model —</option>
+                  ${opts}
+                  <option value="__ADD_NEW__">➕ Add new model…</option>
+               </select>
+               <input type="text" class="fit-make-new show" value="${escapeAttr(row.model || '')}" placeholder="Type new model and press Enter" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();chassisModelChange('${widgetKey}', ${i}, this.value);}">`
+            : `<select class="chassis-model-select" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)">
+                  <option value="">— Select model —</option>
+                  ${opts}
+                  <option value="__ADD_NEW__">➕ Add new model…</option>
+               </select>
+               <input type="text" class="fit-make-new" placeholder="Type new model and press Enter" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();chassisModelChange('${widgetKey}', ${i}, this.value);}">`;
+        html += `
+            <div class="chassis-row" data-crow="${i}">
+                <div class="chassis-row-model">${modelSelectHTML}</div>
+                <div class="chassis-row-codes">
+                    <div class="chassis-codes-box" id="chassisBox_${widgetKey}_${i}" onclick="document.getElementById('chassisInput_${widgetKey}_${i}').focus()">
+                        ${(row.codes || []).map((cd, ci) => `
+                            <span class="chassis-chip">${escapeAttr(cd)} <button type="button" class="chassis-chip-remove" onclick="chassisRemoveCode('${widgetKey}', ${i}, ${ci});event.stopPropagation();">✕</button></span>
+                        `).join('')}
+                        <input type="text" class="chassis-codes-input" id="chassisInput_${widgetKey}_${i}"
+                            placeholder="Type code + Enter…"
+                            onkeydown="chassisInputKeydown(event, '${widgetKey}', ${i})">
+                    </div>
+                </div>
+                <button type="button" class="chassis-row-remove" onclick="chassisRemoveRow('${widgetKey}', ${i})" title="Remove this row">✕</button>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+function chassisAddRow(widgetKey){
+    if(!chassisState[widgetKey]) chassisState[widgetKey] = { rows: [], initialized: true };
+    chassisState[widgetKey].rows.push({ model: '', codes: [] });
+    chassisRenderAll(widgetKey);
+}
+function chassisRemoveRow(widgetKey, rowIdx){
+    if(!chassisState[widgetKey]) return;
+    chassisState[widgetKey].rows.splice(rowIdx, 1);
+    chassisRenderAll(widgetKey);
+}
+function chassisModelChange(widgetKey, rowIdx, value){
+    if(!chassisState[widgetKey] || !chassisState[widgetKey].rows[rowIdx]) return;
+    if(value === '__ADD_NEW__'){
+        const rowEl = document.querySelector(`[data-chassis="${widgetKey}"] [data-crow="${rowIdx}"]`);
+        if(rowEl){
+            const inp = rowEl.querySelector('.fit-make-new');
+            if(inp){ inp.classList.add('show'); inp.focus(); }
+        }
+        return;
+    }
+    chassisState[widgetKey].rows[rowIdx].model = value;
+    chassisRenderAll(widgetKey);
+}
+function chassisRemoveCode(widgetKey, rowIdx, codeIdx){
+    if(!chassisState[widgetKey] || !chassisState[widgetKey].rows[rowIdx]) return;
+    chassisState[widgetKey].rows[rowIdx].codes.splice(codeIdx, 1);
+    chassisRenderAll(widgetKey);
+}
+function chassisAddCode(widgetKey, rowIdx, code){
+    if(!chassisState[widgetKey] || !chassisState[widgetKey].rows[rowIdx]) return;
+    code = String(code || '').toUpperCase().trim().replace(/\s+/g, '');
+    if(!code) return;
+    const row = chassisState[widgetKey].rows[rowIdx];
+    if(!row.codes.includes(code)) row.codes.push(code);
+    chassisRenderAll(widgetKey);
+    setTimeout(() => {
+        const inp = document.getElementById(`chassisInput_${widgetKey}_${rowIdx}`);
+        if(inp) inp.focus();
+    }, 50);
+}
+function chassisInputKeydown(ev, widgetKey, rowIdx){
+    if(ev.key === 'Enter' || ev.key === ',' || ev.key === ' '){
+        ev.preventDefault();
+        const input = document.getElementById(`chassisInput_${widgetKey}_${rowIdx}`);
+        const val = (input ? input.value : '').trim();
+        if(val){
+            // allow pasting multiple separated by , / or whitespace
+            const parts = val.split(/[,\/\s]+/).map(s => s.trim()).filter(Boolean);
+            parts.forEach(p => chassisAddCode(widgetKey, rowIdx, p));
+        }
+        if(input) input.value = '';
+    }
+}
+function chassisRead(widgetKey){
+    const state = chassisState[widgetKey];
+    if(!state) return [];
+    return state.rows
+        .map(r => ({ model: String(r.model || '').trim(), codes: (r.codes || []).map(c => String(c||'').toUpperCase().trim()).filter(Boolean) }))
+        .filter(r => r.model && r.codes.length > 0);
+}
+
 // ==================== CUSTOMER POINTS SYSTEM ====================
-let customersData = {}; // { phone: {phone, name, points, totalSpent, ordersCount, lastOrderDate, awardedOrders:[]} }
-let pointsRedemptionLocked = false; // global lock for redemption
+let customersData = {};
+let pointsRedemptionLocked = false;
 
 function normalizePhone(p){
     if(!p) return '';
@@ -1441,30 +1578,19 @@ function normalizePhone(p){
     else if(digits.startsWith('7') || digits.startsWith('1')) digits = '254' + digits;
     return digits;
 }
-
-// Find a customer by phone number, scanning ALL keys in customersData so any stored
-// format (0712..., 254712..., +254712..., 712...) matches.
 function findCustomerByPhone(phoneRaw){
     if(!phoneRaw) return null;
     const norm = normalizePhone(phoneRaw);
     if(!norm) return null;
-    // 1. Direct hit
     if(customersData[norm]) return customersData[norm];
-    // 2. Scan keys and compare normalized
     const keys = Object.keys(customersData);
-    for(const k of keys){
-        if(normalizePhone(k) === norm) return customersData[k];
-    }
+    for(const k of keys){ if(normalizePhone(k) === norm) return customersData[k]; }
     return null;
 }
-
 async function fetchCustomersFromGitHub(){
     try {
         const res = await axios.get(CUSTOMERS_URL + '?t=' + Date.now());
-        if(res.data && typeof res.data === 'object' && !Array.isArray(res.data)){
-            customersData = res.data;
-            return true;
-        }
+        if(res.data && typeof res.data === 'object' && !Array.isArray(res.data)){ customersData = res.data; return true; }
         throw new Error('customers.json did not return an object');
     } catch (err){
         console.warn('Could not load customers.json — starting fresh. Error:', err.message);
@@ -1472,7 +1598,6 @@ async function fetchCustomersFromGitHub(){
         return false;
     }
 }
-
 async function saveCustomersToGitHub(){
     if(!getToken()){ console.warn('No token — customers not saved'); return false; }
     try {
@@ -1483,46 +1608,25 @@ async function saveCustomersToGitHub(){
         return false;
     }
 }
-
 function awardPointsForOrder(order){
-    // Only called when order status = delivered
     const phoneNorm = normalizePhone(order.customerPhone);
     if(!phoneNorm) return { awarded: false, reason: 'no phone' };
-    // Find customer by any format
     let cust = findCustomerByPhone(order.customerPhone);
     let custKey = null;
-    if(cust){
-        // Find the key that matched, so we can update the correct entry
-        custKey = Object.keys(customersData).find(k => customersData[k] === cust);
-    }
+    if(cust){ custKey = Object.keys(customersData).find(k => customersData[k] === cust); }
     if(!cust){
         custKey = phoneNorm;
-        customersData[custKey] = {
-            phone: phoneNorm,
-            name: order.customerName || 'Customer',
-            points: 0,
-            totalSpent: 0,
-            ordersCount: 0,
-            lastOrderDate: order.date || new Date().toISOString(),
-            awardedOrders: []
-        };
+        customersData[custKey] = { phone: phoneNorm, name: order.customerName || 'Customer', points: 0, totalSpent: 0, ordersCount: 0, lastOrderDate: order.date || new Date().toISOString(), awardedOrders: [] };
         cust = customersData[custKey];
     }
     if(!cust.awardedOrders) cust.awardedOrders = [];
-    if(cust.awardedOrders.includes(order.id)){
-        return { awarded: false, reason: 'already awarded', points: cust.points };
-    }
-
-    // Calculate points only from unlocked items (per-item lock) and only fixed-price items
+    if(cust.awardedOrders.includes(order.id)){ return { awarded: false, reason: 'already awarded', points: cust.points }; }
     let pointsEligibleTotal = 0;
     (order.items || []).forEach(item => {
-        if(item.pointsLocked) return; // skip locked items
+        if(item.pointsLocked) return;
         const pmode = normalizePriceMode(item.priceMode);
-        if(pmode === PRICE_FIXED){
-            pointsEligibleTotal += Number(item.subtotal) || 0;
-        }
+        if(pmode === PRICE_FIXED){ pointsEligibleTotal += Number(item.subtotal) || 0; }
     });
-
     const points = Math.floor(pointsEligibleTotal / POINTS_PER_KSH);
     cust.points = (Number(cust.points)||0) + points;
     cust.totalSpent = (Number(cust.totalSpent)||0) + (Number(order.total) || 0);
@@ -1531,15 +1635,8 @@ function awardPointsForOrder(order){
     cust.awardedOrders.push(order.id);
     if(order.customerName) cust.name = order.customerName;
     if(!cust.phone) cust.phone = phoneNorm;
-
-    // NOTE: Points redeemed on this order were already deducted at order placement.
-    // Do NOT deduct again here.
-
     return { awarded: true, points: cust.points, earned: points };
 }
-
-// Deduct redeemed points immediately when the order is placed.
-// Uses findCustomerByPhone so any stored phone format matches.
 async function deductRedeemedPointsOnOrder(custPhoneRaw, pointsRedeemed, orderId){
     if(!pointsRedeemed || pointsRedeemed <= 0) return false;
     if(!custPhoneRaw) return false;
@@ -1549,21 +1646,15 @@ async function deductRedeemedPointsOnOrder(custPhoneRaw, pointsRedeemed, orderId
     cust.points = Math.max(0, before - pointsRedeemed);
     if(!cust.redeemedOrders) cust.redeemedOrders = [];
     if(!cust.redeemedOrders.includes(orderId)) cust.redeemedOrders.push(orderId);
-    console.log(`⭐ Points deducted: ${before} → ${cust.points} (−${pointsRedeemed}) for order ${orderId}`);
     return await saveCustomersToGitHub();
 }
-
 function openMyPoints(){
     document.getElementById('pointsModal').classList.add('open');
     document.getElementById('pointsResult').innerHTML = '';
     document.getElementById('pointsPhone').value = '';
     setTimeout(() => document.getElementById('pointsPhone').focus(), 200);
 }
-
-function closeMyPoints(){
-    document.getElementById('pointsModal').classList.remove('open');
-}
-
+function closeMyPoints(){ document.getElementById('pointsModal').classList.remove('open'); }
 function checkMyPoints(){
     const input = document.getElementById('pointsPhone');
     const result = document.getElementById('pointsResult');
@@ -1593,7 +1684,6 @@ function checkMyPoints(){
     `;
 }
 
-// ==================== VEHICLE DATABASES ====================
 const toyotaModelCodes = {
 "NCP":{make:"Toyota",model:"Corolla/Vios/Yaris",years:[1999,2015]},"NZE":{make:"Toyota",model:"Corolla",years:[2000,2018]},
 "ZRE":{make:"Toyota",model:"Corolla/Auris",years:[2006,2023]},"ZZE":{make:"Toyota",model:"Corolla",years:[1998,2008]},
@@ -1773,7 +1863,6 @@ const audiModelCodes = {
 "M4":{make:"Audi",model:"Q7",years:[2015,2023]}
 };
 
-// ==================== DEFAULT PRODUCTS (fallback) ====================
 const defaultProducts = [
     {name:"Brake Pads - Toyota Camry",price:4500,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"04465-33470",partNo:"04465-33470",supercedes:"",application:"Toyota Camry 2018-2023",description:"Front brake pads for Toyota Camry. Ceramic compound for smooth stopping.",fitments:[{make:"Toyota",models:["Camry"]}],yearStart:2018,yearEnd:2023,sku:"BP-TC-1823",stock:25,availability:"in_stock",priceMode:"fixed"},
     {name:"Brake Pads - Toyota Corolla",price:3500,category:"Brakes",image:"🔧",brand:"Akebono",oem:"04465-02480",partNo:"04465-02480",supercedes:"04465-02470",application:"Toyota Corolla 2008-2023",description:"Front brake pads for Toyota Corolla. OEM quality.",fitments:[{make:"Toyota",models:["Corolla"]}],yearStart:2008,yearEnd:2023,sku:"BP-TC-0823",stock:30,availability:"in_stock",priceMode:"fixed"},
@@ -1794,7 +1883,6 @@ const defaultProducts = [
     {name:"Shock Absorber - Toyota Hilux",price:14500,category:"Suspension",image:"🛠️",brand:"KYB",oem:"48531-09885",partNo:"48531-09885",supercedes:"",application:"Toyota Hilux 2015-2023",description:"Front shock absorber for Hilux.",fitments:[{make:"Toyota",models:["Hilux"]}],yearStart:2015,yearEnd:2023,sku:"SA-TH-1523",stock:10,availability:"in_stock",priceMode:"fixed"}
 ];
 
-// ==================== STATE MANAGEMENT ====================
 let products = [];
 let categories = [...DEFAULT_CATEGORIES];
 let brands = [...DEFAULT_BRANDS];
@@ -1812,10 +1900,8 @@ let alsoBought = JSON.parse(localStorage.getItem('A & SAlsoBought')) || [];
 let reconPeriod = 'today';
 let reconFrom = '';
 let reconTo = '';
-
-// Cart-level loyalty redemption state
-let cartRedeemApplied = false; // whether customer ticked the redeem box
-let cartRedeemPoints = 0;      // how many points to deduct on this order
+let cartRedeemApplied = false;
+let cartRedeemPoints = 0;
 
 function saveCart(){localStorage.setItem('A & SCart', JSON.stringify(cart))}
 function formatPrice(price){return 'KSh '+Number(price||0).toLocaleString('en-KE')}
@@ -1842,15 +1928,8 @@ function toggleVinSearch(){
     }
 }
 
-// ==================== DUPLICATE DETECTION ====================
-function normalizeForCompare(str){
-    if(!str) return '';
-    return String(str).toLowerCase().trim().replace(/\s+/g, ' ').replace(/[^a-z0-9 ]/g, '');
-}
-function normalizePartNo(str){
-    if(!str) return '';
-    return String(str).toLowerCase().replace(/[^a-z0-9]/g, '');
-}
+function normalizeForCompare(str){ if(!str) return ''; return String(str).toLowerCase().trim().replace(/\s+/g, ' ').replace(/[^a-z0-9 ]/g, ''); }
+function normalizePartNo(str){ if(!str) return ''; return String(str).toLowerCase().replace(/[^a-z0-9]/g, ''); }
 function nameSimilarity(a, b){
     const A = normalizeForCompare(a);
     const B = normalizeForCompare(b);
@@ -1858,19 +1937,12 @@ function nameSimilarity(a, b){
     if(A === B) return 1;
     const bigrams = (s) => {
         const set = new Map();
-        for(let i = 0; i < s.length - 1; i++){
-            const g = s.substring(i, i + 2);
-            set.set(g, (set.get(g) || 0) + 1);
-        }
+        for(let i = 0; i < s.length - 1; i++){ const g = s.substring(i, i + 2); set.set(g, (set.get(g) || 0) + 1); }
         return set;
     };
     const A2 = bigrams(A), B2 = bigrams(B);
     let intersection = 0, total = 0;
-    A2.forEach((count, g) => {
-        const bCount = B2.get(g) || 0;
-        intersection += Math.min(count, bCount);
-        total += count;
-    });
+    A2.forEach((count, g) => { const bCount = B2.get(g) || 0; intersection += Math.min(count, bCount); total += count; });
     B2.forEach((count) => { total += count; });
     return (2 * intersection) / total;
 }
@@ -1885,18 +1957,9 @@ function findDuplicate({name, partNo, sku}, excludeIndex = -1){
         const pPart = normalizePartNo(p.partNo || p.oem || '');
         const pSku = (p.sku || '').trim();
         if(nSku && pSku && nSku === pSku){ return { type:'block', match:p, reason:'Same SKU' }; }
-        if(nPart && pPart && nPart === pPart && nName && pName && nName === pName){
-            return { type:'block', match:p, reason:'Same Part No and Name' };
-        }
-        if(nPart && pPart && nPart === pPart && nName !== pName){
-            return { type:'warn', match:p, reason:'Same Part No, different Name' };
-        }
-        if(nPart && pPart && nPart === pPart){
-            const sim = nameSimilarity(name, p.name);
-            if(sim >= 0.85){
-                return { type:'warn', match:p, reason:'Very similar Name and same Part No' };
-            }
-        }
+        if(nPart && pPart && nPart === pPart && nName && pName && nName === pName){ return { type:'block', match:p, reason:'Same Part No and Name' }; }
+        if(nPart && pPart && nPart === pPart && nName !== pName){ return { type:'warn', match:p, reason:'Same Part No, different Name' }; }
+        if(nPart && pPart && nPart === pPart){ const sim = nameSimilarity(name, p.name); if(sim >= 0.85){ return { type:'warn', match:p, reason:'Very similar Name and same Part No' }; } }
     }
     return null;
 }
@@ -1922,22 +1985,13 @@ function showDuplicateBanner(formEl, dup, onOpenExisting){
         formEl.insertBefore(banner, formEl.firstChild);
         banner.classList.add('show');
         banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        banner.querySelector('.open').onclick = () => {
-            if(typeof onOpenExisting === 'function') onOpenExisting(dup.match);
-            banner.remove();
-            resolve(false);
-        };
+        banner.querySelector('.open').onclick = () => { if(typeof onOpenExisting === 'function') onOpenExisting(dup.match); banner.remove(); resolve(false); };
         banner.querySelector('.cancel').onclick = () => { banner.remove(); resolve(false); };
-        if(dup.type === 'warn'){
-            banner.querySelector('.confirm').onclick = () => { banner.remove(); resolve(true); };
-        }
+        if(dup.type === 'warn'){ banner.querySelector('.confirm').onclick = () => { banner.remove(); resolve(true); }; }
     });
 }
 
-// ==================== IMAGE HELPERS (XSS-SAFE) ====================
-function escapeAttr(str){
-    return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function escapeAttr(str){ return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function isImageReference(val){
     if(!val || typeof val !== 'string') return false;
     const v = val.trim();
@@ -1975,13 +2029,10 @@ function renderImageHTML(product){
 }
 function renderSingleImage(img){
     if(!img) return '📦';
-    if(isImageReference(img)){
-        return `<img src="${escapeAttr(img)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">`;
-    }
+    if(isImageReference(img)){ return `<img src="${escapeAttr(img)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">`; }
     return `<span class="gallery-emoji">${escapeAttr(img)}</span>`;
 }
 
-// ==================== IMAGE UPLOAD TO GITHUB ====================
 function shrinkImage(file, maxWidth, quality){
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -2014,29 +2065,19 @@ function shrinkImage(file, maxWidth, quality){
         reader.readAsDataURL(file);
     });
 }
-function slugify(str){
-    return String(str||'').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'image';
-}
+function slugify(str){ return String(str||'').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'image'; }
 async function uploadImageToGitHub(base64, ext, baseName){
     const token = getToken();
     if(!token) throw new Error('No GitHub token saved');
     const filename = `${slugify(baseName)}-${Date.now()}.${ext}`;
     const path = `${IMAGES_FOLDER}/${filename}`;
     const apiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
-    await axios.put(apiBase, {
-        message: `Upload ${filename}`,
-        content: base64,
-        branch: GITHUB_BRANCH
-    }, {
-        headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json'
-        }
+    await axios.put(apiBase, { message: `Upload ${filename}`, content: base64, branch: GITHUB_BRANCH }, {
+        headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
     });
     return path;
 }
 
-// ==================== GITHUB SYNC ====================
 function getToken(){ return localStorage.getItem('A & SGitHubToken') || ''; }
 function setToken(t){ localStorage.setItem('A & SGitHubToken', t); }
 function clearToken(){ localStorage.removeItem('A & SGitHubToken'); }
@@ -2055,11 +2096,7 @@ async function fetchProductsFromGitHub(){
 async function fetchOptionsFromGitHub(){
     try {
         const res = await axios.get(OPTIONS_URL + '?t=' + Date.now());
-        if(res.data && Array.isArray(res.data.categories) && Array.isArray(res.data.brands)){
-            categories = res.data.categories;
-            brands = res.data.brands;
-            return true;
-        }
+        if(res.data && Array.isArray(res.data.categories) && Array.isArray(res.data.brands)){ categories = res.data.categories; brands = res.data.brands; return true; }
         throw new Error('options.json did not have categories/brands arrays');
     } catch (err){
         console.warn('Could not load options.json — using default lists. Error:', err.message);
@@ -2072,11 +2109,7 @@ async function fetchAvailabilityFromGitHub(){
     try {
         const res = await axios.get(AVAILABILITY_URL + '?t=' + Date.now());
         if(res.data && typeof res.data === 'object'){
-            availability = { 
-                adil: res.data.adil !== false, 
-                suhayl: res.data.suhayl !== false,
-                pointsRedemptionLocked: res.data.pointsRedemptionLocked === true
-            };
+            availability = { adil: res.data.adil !== false, suhayl: res.data.suhayl !== false, pointsRedemptionLocked: res.data.pointsRedemptionLocked === true };
             pointsRedemptionLocked = availability.pointsRedemptionLocked;
             updateLiveDots();
             return true;
@@ -2108,12 +2141,7 @@ async function fetchVehicleModelsFromGitHub(){
         if(res.data && typeof res.data === 'object' && !Array.isArray(res.data)){
             const merged = JSON.parse(JSON.stringify(DEFAULT_VEHICLE_MODELS));
             Object.keys(res.data).forEach(make => {
-                if(Array.isArray(res.data[make])){
-                    if(!merged[make]) merged[make] = [];
-                    res.data[make].forEach(m => {
-                        if(!merged[make].includes(m)) merged[make].push(m);
-                    });
-                }
+                if(Array.isArray(res.data[make])){ if(!merged[make]) merged[make] = []; res.data[make].forEach(m => { if(!merged[make].includes(m)) merged[make].push(m); }); }
             });
             vehicleModels = merged;
             saveVehicleModels();
@@ -2143,32 +2171,21 @@ async function putFileToGitHub(filePath, contentObject, commitMessage){
     const apiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`;
     let sha = null;
     try {
-        const getRes = await axios.get(apiBase, {
-            headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' },
-            params: { ref: GITHUB_BRANCH, t: Date.now() }
-        });
+        const getRes = await axios.get(apiBase, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, params: { ref: GITHUB_BRANCH, t: Date.now() } });
         sha = getRes.data.sha;
-    } catch (getErr){
-        if(getErr.response && getErr.response.status === 404){ sha = null; }
-        else { throw getErr; }
-    }
+    } catch (getErr){ if(getErr.response && getErr.response.status === 404){ sha = null; } else { throw getErr; } }
     const content = JSON.stringify(contentObject, null, 2);
     const base64Content = btoa(unescape(encodeURIComponent(content)));
     const putBody = { message: commitMessage, content: base64Content, branch: GITHUB_BRANCH };
     if(sha){ putBody.sha = sha; }
-    const doPut = () => axios.put(apiBase, putBody, {
-        headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
-    });
-    try {
-        await doPut();
-    } catch (err){
+    const doPut = () => axios.put(apiBase, putBody, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } });
+    try { await doPut(); }
+    catch (err){
         if(err.response && err.response.status >= 500 && err.response.status < 600){
             console.warn('GitHub returned', err.response.status, '— retrying once in 2s…');
             await new Promise(r => setTimeout(r, 2000));
             await doPut();
-        } else {
-            throw err;
-        }
+        } else { throw err; }
     }
     return true;
 }
@@ -2177,36 +2194,23 @@ async function verifyProductsOnGitHub(expectedSku){
     if(!token) return false;
     try {
         const apiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
-        const res = await axios.get(apiBase, {
-            headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' },
-            params: { ref: GITHUB_BRANCH, t: Date.now() }
-        });
+        const res = await axios.get(apiBase, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, params: { ref: GITHUB_BRANCH, t: Date.now() } });
         const decoded = decodeURIComponent(escape(atob(res.data.content.replace(/\s/g, ''))));
         const remote = JSON.parse(decoded);
         if(!Array.isArray(remote)) return false;
         if(!expectedSku) return true;
         return remote.some(p => p.sku === expectedSku);
-    } catch (err){
-        console.warn('Verify failed:', err.message);
-        return false;
-    }
+    } catch (err){ console.warn('Verify failed:', err.message); return false; }
 }
-function syncProductMainImage(product){
-    if(Array.isArray(product.images) && product.images.length > 0){
-        product.image = product.images[0];
-    }
-}
+function syncProductMainImage(product){ if(Array.isArray(product.images) && product.images.length > 0){ product.image = product.images[0]; } }
 async function saveProductsToGitHub(expectedSku){
     if(!getToken()){ alert('⚠️ No GitHub token saved.\n\nOpen the Admin Panel and paste your token first.'); return false; }
     try {
         products.forEach(syncProductMainImage);
         await putFileToGitHub(GITHUB_FILE, products, `Update products.json — ${new Date().toISOString()}`);
         const verified = expectedSku ? await verifyProductsOnGitHub(expectedSku) : true;
-        if(verified){
-            showNotification('✅ Saved to GitHub! Site updates in ~1 min.');
-        } else {
-            showNotification('⚠️ Saved but not verified yet — try "Reload Products" in 1 min');
-        }
+        if(verified){ showNotification('✅ Saved to GitHub! Site updates in ~1 min.'); }
+        else { showNotification('⚠️ Saved but not verified yet — try "Reload Products" in 1 min'); }
         return true;
     } catch (err){
         console.error('GitHub save failed:', err);
@@ -2229,11 +2233,7 @@ async function saveOptionsToGitHub(){
 async function saveAvailabilityToGitHub(){
     if(!getToken()){ alert('⚠️ No GitHub token saved.\n\nOpen the Admin Panel and paste your token first.'); return false; }
     try {
-        const payload = { 
-            adil: !!availability.adil, 
-            suhayl: !!availability.suhayl,
-            pointsRedemptionLocked: !!availability.pointsRedemptionLocked
-        };
+        const payload = { adil: !!availability.adil, suhayl: !!availability.suhayl, pointsRedemptionLocked: !!availability.pointsRedemptionLocked };
         await putFileToGitHub(AVAILABILITY_FILE, payload, `Update availability.json — ${new Date().toISOString()}`);
         updateLiveDots();
         showNotification('✅ Availability saved to GitHub! Live in ~1 minute.');
@@ -2257,33 +2257,22 @@ async function appendOrderToGitHub(order){
         const apiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${ORDERS_FILE}`;
         let sha = null, existing = [];
         try {
-            const getRes = await axios.get(apiBase, {
-                headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' },
-                params: { ref: GITHUB_BRANCH, t: Date.now() }
-            });
+            const getRes = await axios.get(apiBase, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, params: { ref: GITHUB_BRANCH, t: Date.now() } });
             sha = getRes.data.sha;
             const decoded = decodeURIComponent(escape(atob(getRes.data.content.replace(/\s/g, ''))));
             existing = JSON.parse(decoded);
             if(!Array.isArray(existing)) existing = [];
-        } catch (getErr){
-            if(getErr.response && getErr.response.status === 404){ sha = null; existing = []; }
-            else { throw getErr; }
-        }
+        } catch (getErr){ if(getErr.response && getErr.response.status === 404){ sha = null; existing = []; } else { throw getErr; } }
         existing.unshift(order);
         if(existing.length > 500) existing = existing.slice(0, 500);
         const content = JSON.stringify(existing, null, 2);
         const base64Content = btoa(unescape(encodeURIComponent(content)));
         const putBody = { message: `New order ${order.id}`, content: base64Content, branch: GITHUB_BRANCH };
         if(sha){ putBody.sha = sha; }
-        await axios.put(apiBase, putBody, {
-            headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
-        });
+        await axios.put(apiBase, putBody, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } });
         cachedOrders = existing;
         return true;
-    } catch (err){
-        console.error('Failed to save order:', err);
-        return false;
-    }
+    } catch (err){ console.error('Failed to save order:', err); return false; }
 }
 async function saveOrdersToGitHub(){
     const token = getToken();
@@ -2292,25 +2281,15 @@ async function saveOrdersToGitHub(){
         const apiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${ORDERS_FILE}`;
         let latest = [];
         try {
-            const getRes = await axios.get(apiBase, {
-                headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' },
-                params: { ref: GITHUB_BRANCH, t: Date.now() }
-            });
+            const getRes = await axios.get(apiBase, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, params: { ref: GITHUB_BRANCH, t: Date.now() } });
             const decoded = decodeURIComponent(escape(atob(getRes.data.content.replace(/\s/g, ''))));
             latest = JSON.parse(decoded);
             if(!Array.isArray(latest)) latest = [];
-        } catch (getErr){
-            if(getErr.response && getErr.response.status === 404){ latest = []; }
-            else { throw getErr; }
-        }
+        } catch (getErr){ if(getErr.response && getErr.response.status === 404){ latest = []; } else { throw getErr; } }
         const latestById = new Map(latest.map(o => [o.id, o]));
         cachedOrders.forEach(local => {
-            if(latestById.has(local.id)){
-                const remote = latestById.get(local.id);
-                remote.status = local.status;
-            } else {
-                latestById.set(local.id, local);
-            }
+            if(latestById.has(local.id)){ const remote = latestById.get(local.id); remote.status = local.status; }
+            else { latestById.set(local.id, local); }
         });
         const merged = Array.from(latestById.values()).sort((a,b) => new Date(b.date) - new Date(a.date));
         cachedOrders = merged;
@@ -2318,20 +2297,12 @@ async function saveOrdersToGitHub(){
         const base64Content = btoa(unescape(encodeURIComponent(content)));
         let sha = null;
         try {
-            const shaRes = await axios.get(apiBase, {
-                headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' },
-                params: { ref: GITHUB_BRANCH, t: Date.now() }
-            });
+            const shaRes = await axios.get(apiBase, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, params: { ref: GITHUB_BRANCH, t: Date.now() } });
             sha = shaRes.data.sha;
-        } catch (shaErr){
-            if(shaErr.response && shaErr.response.status === 404){ sha = null; }
-            else { throw shaErr; }
-        }
+        } catch (shaErr){ if(shaErr.response && shaErr.response.status === 404){ sha = null; } else { throw shaErr; } }
         const putBody = { message: `Update orders.json — ${new Date().toISOString()}`, content: base64Content, branch: GITHUB_BRANCH };
         if(sha){ putBody.sha = sha; }
-        await axios.put(apiBase, putBody, {
-            headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
-        });
+        await axios.put(apiBase, putBody, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } });
         return true;
     } catch (err){
         console.error('Orders save failed:', err);
@@ -2340,7 +2311,6 @@ async function saveOrdersToGitHub(){
     }
 }
 
-// ==================== LIST WITH US PAGE ====================
 function showListWithUs(){
     document.querySelector('.search-section').style.display='none';
     document.querySelector('.search-bar').style.display='none';
@@ -2366,61 +2336,40 @@ function hideListWithUs(){
     document.getElementById('products').scrollIntoView({behavior:'smooth'});
 }
 
-// ==================== CART FUNCTIONS ====================
 function addToCart(index){
     const product=products[index];
     const mode = getPriceMode(product);
     const existingItem=cart.find(item=>item.sku===product.sku);
     if(existingItem){ existingItem.quantity++; }
     else {
-        cart.push({
-            ...product,
-            quantity: 1,
-            availability: normalizeStock(product.availability),
-            priceMode: mode,
-            pointsLocked: !!product.pointsLocked
-        });
+        cart.push({ ...product, quantity: 1, availability: normalizeStock(product.availability), priceMode: mode, pointsLocked: !!product.pointsLocked });
     }
     saveCart(); updateCartCount();
     recordAlsoBought(product.sku);
     showNotification(`${product.name} added to cart!`);
 }
-function orderNow(index){
-    addToCart(index);
-    viewCart();
-}
+function orderNow(index){ addToCart(index); viewCart(); }
 function updateCartCount(){
     const count=cart.reduce((total,item)=>total+item.quantity,0);
     document.getElementById('cartCount').textContent=count;
     const badge = document.getElementById('floatingCartBadge');
-    if(badge){
-        if(count > 0){ badge.textContent = count; badge.style.display = 'flex'; }
-        else { badge.style.display = 'none'; }
-    }
+    if(badge){ if(count > 0){ badge.textContent = count; badge.style.display = 'flex'; } else { badge.style.display = 'none'; } }
 }
-
 function computeCartTotals(){
     let fixedTotal = 0;
     let rangeCount = 0;
     let onRequestCount = 0;
     cart.forEach(item => {
         const mode = getPriceMode(item);
-        if(mode === PRICE_FIXED){
-            fixedTotal += (Number(item.price)||0) * item.quantity;
-        } else if(mode === PRICE_RANGE){
-            rangeCount += item.quantity;
-        } else {
-            onRequestCount += item.quantity;
-        }
+        if(mode === PRICE_FIXED){ fixedTotal += (Number(item.price)||0) * item.quantity; }
+        else if(mode === PRICE_RANGE){ rangeCount += item.quantity; }
+        else { onRequestCount += item.quantity; }
     });
     return { fixedTotal, rangeCount, onRequestCount, hasQuote: (rangeCount + onRequestCount) > 0 };
 }
-
 function cartItemPriceLine(item){
     const mode = getPriceMode(item);
-    if(mode === PRICE_ON_REQUEST){
-        return `<span style="color:#1565c0;font-weight:700;">Price on request</span> <span class="cart-item-status quote">Quote</span>`;
-    }
+    if(mode === PRICE_ON_REQUEST){ return `<span style="color:#1565c0;font-weight:700;">Price on request</span> <span class="cart-item-status quote">Quote</span>`; }
     if(mode === PRICE_RANGE){
         const min = Number(item.priceMin)||0;
         const max = Number(item.priceMax)||0;
@@ -2435,7 +2384,6 @@ function cartItemPriceLine(item){
     const itemTotal = (Number(item.price)||0) * item.quantity;
     return `<span>${formatPrice(item.price)} x ${item.quantity} = ${formatPrice(itemTotal)}</span>`;
 }
-
 function viewCart(){
     const modal=document.getElementById('cartModal');
     const itemsContainer=document.getElementById('cartItems');
@@ -2465,56 +2413,37 @@ function viewCart(){
             itemsHTML+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee;gap:8px;flex-wrap:wrap;"><div style="flex:1;min-width:180px;"><strong>${item.image} ${escapeAttr(item.name)}</strong><span class="cart-item-status ${statusClass}">${statusText}</span><br><small>${priceLine}</small></div><div style="display:flex;align-items:center;gap:5px;"><button onclick="decreaseQuantity(${index})" style="padding:5px 10px;background:#ff6f00;color:#fff;border:none;border-radius:3px;cursor:pointer;">-</button><span style="font-weight:bold;">${item.quantity}</span><button onclick="increaseQuantity(${index})" style="padding:5px 10px;background:#4caf50;color:#fff;border:none;border-radius:3px;cursor:pointer;">+</button><button onclick="removeFromCart(${index})" style="padding:5px 10px;background:#f44336;color:#fff;border:none;border-radius:3px;cursor:pointer;">🗑️</button></div></div>`;
         });
         itemsContainer.innerHTML=itemsHTML;
-
-        // Calculate discount if redemption is applied
         const custPhoneRaw = (document.getElementById('custPhone')?.value || '').trim();
         const cust = findCustomerByPhone(custPhoneRaw);
         const availablePoints = cust ? (Number(cust.points)||0) : 0;
         const maxRedeemable = Math.min(availablePoints * POINTS_REDEEM_VALUE, totals.fixedTotal);
         const discount = (cartRedeemApplied && cust && !pointsRedemptionLocked) ? maxRedeemable : 0;
         const finalTotal = Math.max(0, totals.fixedTotal - discount);
-
         let totalHTML = '';
-        if(totals.hasQuote){
-            totalHTML = formatPrice(totals.fixedTotal) + ` <small style="font-size:11px;color:#1565c0;font-weight:400;display:block;">+ quote items</small>`;
-        } else {
-            totalHTML = formatPrice(totals.fixedTotal);
-        }
+        if(totals.hasQuote){ totalHTML = formatPrice(totals.fixedTotal) + ` <small style="font-size:11px;color:#1565c0;font-weight:400;display:block;">+ quote items</small>`; }
+        else { totalHTML = formatPrice(totals.fixedTotal); }
         if(discount > 0){
             totalHTML += `<div style="font-size:13px;color:#2e7d32;font-weight:700;margin-top:4px;">− ${formatPrice(discount)} (points)</div>`;
             totalHTML += `<div style="font-size:16px;color:#1a237e;font-weight:700;margin-top:2px;">= ${formatPrice(finalTotal)}</div>`;
         }
         totalElement.innerHTML = totalHTML;
-
         if(mpesaPanel){
             if(finalTotal > 0){
                 mpesaPanel.classList.add('show');
                 const refEl = document.getElementById('mpesaRef');
                 if(refEl) refEl.textContent = 'A&S-' + Date.now().toString().slice(-6);
-            } else {
-                mpesaPanel.classList.remove('show');
-            }
+            } else { mpesaPanel.classList.remove('show'); }
         }
-
         const notes = [];
-        if(hasOnOrder){
-            notes.push(`⚠️ Some items are <strong>Shipped on Order (~2 weeks)</strong> and require a 50% deposit. We'll confirm on WhatsApp.`);
-        }
+        if(hasOnOrder){ notes.push(`⚠️ Some items are <strong>Shipped on Order (~2 weeks)</strong> and require a 50% deposit. We'll confirm on WhatsApp.`); }
         if(totals.hasQuote){
             const parts = [];
             if(totals.rangeCount) parts.push(`${totals.rangeCount} item${totals.rangeCount>1?'s':''} with range pricing`);
             if(totals.onRequestCount) parts.push(`${totals.onRequestCount} item${totals.onRequestCount>1?'s':''} with price on request`);
             notes.push(`ℹ️ ${parts.join(' and ')} — final price will be confirmed on WhatsApp.`);
         }
-        if(noteEl){
-            noteEl.innerHTML = notes.length
-                ? notes.map(n => `<div class="cart-note">${n}</div>`).join('')
-                : '';
-        }
-
-        // Loyalty box
+        if(noteEl){ noteEl.innerHTML = notes.length ? notes.map(n => `<div class="cart-note">${n}</div>`).join('') : ''; }
         renderCartLoyaltyBox();
-
         const adilBg = availability.adil ? '#128C7E' : '#9e9e9e';
         const suhaylBg = availability.suhayl ? '#128C7E' : '#9e9e9e';
         const adilDot = availability.adil ? 'green' : 'red';
@@ -2525,28 +2454,18 @@ function viewCart(){
         btnHTML+=`<button type="button" onclick="checkoutCart('adil')" style="flex:1;padding:12px;background:${adilBg};color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><span class="status-dot ${adilDot}"></span> ${adilLabel}</button>`;
         btnHTML+=`<button type="button" onclick="checkoutCart('suhayl')" style="flex:1;padding:12px;background:${suhaylBg};color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><span class="status-dot ${suhaylDot}"></span> ${suhaylLabel}</button>`;
         whatsappButtons.innerHTML=btnHTML;
-
         const quoteWrap = document.getElementById('quotationButtonWrap');
         if(quoteWrap){
-            quoteWrap.innerHTML = `
-                <button onclick="printCartQuotation()" style="width:100%;padding:12px;background:#1a237e;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;">
-                    🖨️ Print Quotation
-                </button>
-            `;
+            quoteWrap.innerHTML = `<button onclick="printCartQuotation()" style="width:100%;padding:12px;background:#1a237e;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;">🖨️ Print Quotation</button>`;
         }
     }
     modal.style.display='block';
 }
-
-// ==================== CART LOYALTY BOX ====================
 function renderCartLoyaltyBox(){
     const box = document.getElementById('loyaltyBoxWrap');
     if(!box) return;
     const phoneRaw = (document.getElementById('custPhone')?.value || '').trim();
-    if(!phoneRaw){
-        box.innerHTML = `<div class="cart-loyalty-box"><div class="loyalty-line">⭐ Loyalty points</div><div class="loyalty-none">Enter your phone number above to check your points and redeem.</div></div>`;
-        return;
-    }
+    if(!phoneRaw){ box.innerHTML = `<div class="cart-loyalty-box"><div class="loyalty-line">⭐ Loyalty points</div><div class="loyalty-none">Enter your phone number above to check your points and redeem.</div></div>`; return; }
     const cust = findCustomerByPhone(phoneRaw);
     if(!cust || (cust.points||0) === 0){
         box.innerHTML = `<div class="cart-loyalty-box"><div class="loyalty-line">⭐ Loyalty points</div><div class="loyalty-none">No points yet for this number. Points are earned on delivered orders.</div></div>`;
@@ -2555,38 +2474,18 @@ function renderCartLoyaltyBox(){
     const points = Number(cust.points)||0;
     const worth = points * POINTS_REDEEM_VALUE;
     if(pointsRedemptionLocked){
-        box.innerHTML = `<div class="cart-loyalty-box">
-            <div class="loyalty-line">⭐ You have <strong>${points}</strong> points (worth ${formatPrice(worth)})</div>
-            <div class="loyalty-locked">🔒 Points redemption is temporarily locked by the shop. Please check back later.</div>
-        </div>`;
+        box.innerHTML = `<div class="cart-loyalty-box"><div class="loyalty-line">⭐ You have <strong>${points}</strong> points (worth ${formatPrice(worth)})</div><div class="loyalty-locked">🔒 Points redemption is temporarily locked by the shop. Please check back later.</div></div>`;
         return;
     }
-    // Unlocked — show checkbox
     const checked = cartRedeemApplied ? 'checked' : '';
     box.innerHTML = `<div class="cart-loyalty-box">
         <div class="loyalty-line">⭐ You have <strong>${points}</strong> points — worth <strong>${formatPrice(worth)}</strong> off</div>
-        <label>
-            <input type="checkbox" id="cartRedeemCheckbox" ${checked} onchange="onCartRedeemToggle(this.checked)">
-            Redeem my points on this order
-        </label>
+        <label><input type="checkbox" id="cartRedeemCheckbox" ${checked} onchange="onCartRedeemToggle(this.checked)"> Redeem my points on this order</label>
     </div>`;
 }
-
-function onCustPhoneInput(){
-    // Re-render loyalty box on every change but keep the checkbox state
-    renderCartLoyaltyBox();
-    refreshCartTotalsInline();
-}
-function onCustPhoneBlur(){
-    renderCartLoyaltyBox();
-    refreshCartTotalsInline();
-}
-function onCartRedeemToggle(checked){
-    cartRedeemApplied = !!checked;
-    refreshCartTotalsInline();
-}
-
-// Re-render just the totals + WhatsApp buttons without rebuilding the whole modal
+function onCustPhoneInput(){ renderCartLoyaltyBox(); refreshCartTotalsInline(); }
+function onCustPhoneBlur(){ renderCartLoyaltyBox(); refreshCartTotalsInline(); }
+function onCartRedeemToggle(checked){ cartRedeemApplied = !!checked; refreshCartTotalsInline(); }
 function refreshCartTotalsInline(){
     const totalElement = document.getElementById('cartTotal');
     const mpesaPanel = document.getElementById('mpesaPanel');
@@ -2597,25 +2496,16 @@ function refreshCartTotalsInline(){
     const maxRedeemable = Math.min(availablePoints * POINTS_REDEEM_VALUE, totals.fixedTotal);
     const discount = (cartRedeemApplied && cust && !pointsRedemptionLocked) ? maxRedeemable : 0;
     const finalTotal = Math.max(0, totals.fixedTotal - discount);
-
     let totalHTML = '';
-    if(totals.hasQuote){
-        totalHTML = formatPrice(totals.fixedTotal) + ` <small style="font-size:11px;color:#1565c0;font-weight:400;display:block;">+ quote items</small>`;
-    } else {
-        totalHTML = formatPrice(totals.fixedTotal);
-    }
+    if(totals.hasQuote){ totalHTML = formatPrice(totals.fixedTotal) + ` <small style="font-size:11px;color:#1565c0;font-weight:400;display:block;">+ quote items</small>`; }
+    else { totalHTML = formatPrice(totals.fixedTotal); }
     if(discount > 0){
         totalHTML += `<div style="font-size:13px;color:#2e7d32;font-weight:700;margin-top:4px;">− ${formatPrice(discount)} (points)</div>`;
         totalHTML += `<div style="font-size:16px;color:#1a237e;font-weight:700;margin-top:2px;">= ${formatPrice(finalTotal)}</div>`;
     }
     totalElement.innerHTML = totalHTML;
-
-    if(mpesaPanel){
-        if(finalTotal > 0){ mpesaPanel.classList.add('show'); }
-        else { mpesaPanel.classList.remove('show'); }
-    }
+    if(mpesaPanel){ if(finalTotal > 0){ mpesaPanel.classList.add('show'); } else { mpesaPanel.classList.remove('show'); } }
 }
-
 function increaseQuantity(index){cart[index].quantity++;saveCart();updateCartCount();viewCart();}
 function decreaseQuantity(index){if(cart[index].quantity>1){cart[index].quantity--}else{cart.splice(index,1)}saveCart();updateCartCount();viewCart();}
 function removeFromCart(index){cart.splice(index,1);saveCart();updateCartCount();viewCart();}
@@ -2628,47 +2518,32 @@ function copyMpesa(text){
         ta.remove();
     });
 }
-
-// ==================== PRINT CART QUOTATION ====================
 function printCartQuotation(){
     if(cart.length === 0){ alert('Your cart is empty.'); return; }
-    
     const custName = (document.getElementById('custName')?.value || '').trim() || '_________________';
     const custPhone = (document.getElementById('custPhone')?.value || '').trim() || '_________________';
-    
     const quoteId = 'Q' + Date.now().toString().slice(-8);
     const today = new Date();
     const validUntil = new Date(today);
     validUntil.setDate(validUntil.getDate() + 7);
-    
     const fmtDate = (d) => d.toLocaleDateString('en-KE', { day: '2-digit', month: 'long', year: 'numeric' });
-    
     const totals = computeCartTotals();
-    
     let itemsRows = '';
     cart.forEach(item => {
         const st = normalizeStock(item.availability);
-        const stockTag = st === STOCK_ON_ORDER 
-            ? '<span style="color:#e65100;font-weight:700;font-size:11px;">Shipped on Order ~2 weeks</span>' 
-            : '<span style="color:#2e7d32;font-weight:700;font-size:11px;">In Stock</span>';
+        const stockTag = st === STOCK_ON_ORDER ? '<span style="color:#e65100;font-weight:700;font-size:11px;">Shipped on Order ~2 weeks</span>' : '<span style="color:#2e7d32;font-weight:700;font-size:11px;">In Stock</span>';
         const pmode = getPriceMode(item);
         let priceCell, subtotalCell;
-        if(pmode === PRICE_ON_REQUEST){
-            priceCell = '<em>On request</em>';
-            subtotalCell = '—';
-        } else if(pmode === PRICE_RANGE){
+        if(pmode === PRICE_ON_REQUEST){ priceCell = '<em>On request</em>'; subtotalCell = '—'; }
+        else if(pmode === PRICE_RANGE){
             const mn = Number(item.priceMin)||0, mx = Number(item.priceMax)||0;
             let rTxt;
             if(!mn && !mx) rTxt = 'On request';
             else if(!mn) rTxt = `Up to ${formatPrice(mx)}`;
             else if(!mx) rTxt = `From ${formatPrice(mn)}`;
             else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
-            priceCell = `<em>${rTxt}</em>`;
-            subtotalCell = '—';
-        } else {
-            priceCell = formatPrice(item.price);
-            subtotalCell = formatPrice((Number(item.price)||0) * item.quantity);
-        }
+            priceCell = `<em>${rTxt}</em>`; subtotalCell = '—';
+        } else { priceCell = formatPrice(item.price); subtotalCell = formatPrice((Number(item.price)||0) * item.quantity); }
         const partNo = item.partNo || item.oem || 'N/A';
         const brand = item.brand || '';
         itemsRows += `<tr>
@@ -2680,29 +2555,16 @@ function printCartQuotation(){
             <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;">${priceCell}</td>
             <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;">${subtotalCell}</td>
         </tr>`;
-        if(st === STOCK_ON_ORDER){
-            itemsRows += `<tr><td colspan="4" style="padding:2px 8px 8px;border-bottom:1px solid #eee;font-size:11px;color:#e65100;">⚠️ This item is Shipped on Order — requires 50% deposit, arrives in ~2 weeks.</td></tr>`;
-        }
+        if(st === STOCK_ON_ORDER){ itemsRows += `<tr><td colspan="4" style="padding:2px 8px 8px;border-bottom:1px solid #eee;font-size:11px;color:#e65100;">⚠️ This item is Shipped on Order — requires 50% deposit, arrives in ~2 weeks.</td></tr>`; }
     });
-    
     const totalLine = totals.hasQuote
         ? `<div style="text-align:right;font-size:18px;font-weight:700;color:#ff6f00;padding-top:10px;">Fixed items total: ${formatPrice(totals.fixedTotal)} <span style="font-size:12px;color:#1565c0;">+ quote items</span></div>`
         : `<div style="text-align:right;font-size:20px;font-weight:700;color:#ff6f00;padding-top:10px;">TOTAL: ${formatPrice(totals.fixedTotal)}</div>`;
-    
     let notesHTML = '';
     const notes = [];
-    if(cart.some(i => normalizeStock(i.availability) === STOCK_ON_ORDER)){
-        notes.push('Items marked "Shipped on Order" require a 50% deposit and arrive in ~2 weeks.');
-    }
-    if(totals.hasQuote){
-        notes.push('Some items require a quote — final prices will be confirmed.');
-    }
-    if(notes.length){
-        notesHTML = `<div style="background:#fff8e1;border-left:3px solid #ffc107;padding:10px 14px;border-radius:5px;font-size:12px;color:#e65100;margin-top:12px;">
-            <strong>Note:</strong> ${notes.join(' ')}
-        </div>`;
-    }
-    
+    if(cart.some(i => normalizeStock(i.availability) === STOCK_ON_ORDER)){ notes.push('Items marked "Shipped on Order" require a 50% deposit and arrive in ~2 weeks.'); }
+    if(totals.hasQuote){ notes.push('Some items require a quote — final prices will be confirmed.'); }
+    if(notes.length){ notesHTML = `<div style="background:#fff8e1;border-left:3px solid #ffc107;padding:10px 14px;border-radius:5px;font-size:12px;color:#e65100;margin-top:12px;"><strong>Note:</strong> ${notes.join(' ')}</div>`; }
     const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Quotation ${escapeHtml(quoteId)} — A & S AUTOPARTS</title>
     <style>
         body{font-family:Arial,sans-serif;padding:24px;max-width:640px;margin:0 auto;color:#222;font-size:14px}
@@ -2722,46 +2584,32 @@ function printCartQuotation(){
         <h1>A & S AUTOPARTS</h1>
         <div class="sub">Two Brothers, One Mission: Quality Parts</div>
         <div class="contact">Mombasa, Kenya · ADIL: 0713349554 · SUHAYL: 0752763924</div>
-        
         <div class="quote-head">
             <div><strong>Quotation #:</strong> ${escapeHtml(quoteId)}</div>
             <div><strong>Date:</strong> ${fmtDate(today)}</div>
         </div>
-        
         <div class="customer-box">
             <div><strong>Customer:</strong> ${escapeHtml(custName)}</div>
             <div><strong>Phone:</strong> ${escapeHtml(custPhone)}</div>
         </div>
-        
         <table>
-            <thead><tr>
-                <th>Item</th>
-                <th style="text-align:center;width:50px;">Qty</th>
-                <th style="text-align:right;width:110px;">Price</th>
-                <th style="text-align:right;width:120px;">Subtotal</th>
-            </tr></thead>
+            <thead><tr><th>Item</th><th style="text-align:center;width:50px;">Qty</th><th style="text-align:right;width:110px;">Price</th><th style="text-align:right;width:120px;">Subtotal</th></tr></thead>
             <tbody>${itemsRows}</tbody>
         </table>
-        
         ${totalLine}
         ${notesHTML}
-        
         <div class="validity">⏳ This quotation is valid for 7 days — until ${fmtDate(validUntil)}</div>
-        
         <div class="footer">
             Thank you for choosing A & S AUTOPARTS<br>
             ADIL: 0713349554 · SUHAYL: 0752763924 · Mombasa, Kenya
         </div>
         <script>window.onload=function(){setTimeout(function(){window.print();},300);};<\/script>
     </body></html>`;
-    
     const w = window.open('', '_blank');
     if(!w){ alert('Pop-up blocked. Please allow pop-ups to print the quotation.'); return; }
     w.document.write(html);
     w.document.close();
 }
-
-// ==================== CHECKOUT ====================
 async function checkoutCart(brother){
     const nameEl = document.getElementById('custName');
     const phoneEl = document.getElementById('custPhone');
@@ -2769,30 +2617,22 @@ async function checkoutCart(brother){
     const custPhone = (phoneEl ? phoneEl.value : '').trim();
     if(!custName){ alert('Please enter your name before ordering.'); if(nameEl) nameEl.focus(); return; }
     if(!custPhone){ alert('Please enter your phone number before ordering.'); if(phoneEl) phoneEl.focus(); return; }
-
     const isAway = (brother === 'adil' && !availability.adil) || (brother === 'suhayl' && !availability.suhayl);
     const phoneNumber = brother === 'adil' ? '254713349554' : '254752763924';
     const brotherName = brother === 'adil' ? 'ADIL' : 'SUHAYL';
-
     const orderId = 'A' + Date.now().toString().slice(-8);
     const totals = computeCartTotals();
     const hasOnOrder = cart.some(i => normalizeStock(i.availability) === STOCK_ON_ORDER);
     const hasQuote = totals.hasQuote;
-
-    // Calculate loyalty discount — find customer by any stored phone format
     const cust = findCustomerByPhone(custPhone);
     const availablePoints = cust ? (Number(cust.points)||0) : 0;
     const maxRedeemable = Math.min(availablePoints * POINTS_REDEEM_VALUE, totals.fixedTotal);
     const discount = (cartRedeemApplied && cust && !pointsRedemptionLocked) ? maxRedeemable : 0;
     const pointsRedeemed = (cartRedeemApplied && cust && !pointsRedemptionLocked) ? Math.min(availablePoints, Math.floor(maxRedeemable / POINTS_REDEEM_VALUE)) : 0;
     const finalTotal = Math.max(0, totals.fixedTotal - discount);
-
     let message;
-    if(isAway){
-        message = `Hello ${brotherName} (A & S AUTOPARTS) — I know you may be away, please reply when you're back:\n\n`;
-    } else {
-        message = `Hello ${brotherName} (A & S AUTOPARTS),\n\n`;
-    }
+    if(isAway){ message = `Hello ${brotherName} (A & S AUTOPARTS) — I know you may be away, please reply when you're back:\n\n`; }
+    else { message = `Hello ${brotherName} (A & S AUTOPARTS),\n\n`; }
     message += `NEW ORDER #${orderId}\n`;
     message += `Customer: ${custName}\n`;
     message += `Phone: ${custPhone}\n\n`;
@@ -2804,10 +2644,8 @@ async function checkoutCart(brother){
         if(item.partNo || item.oem) message += `   Part No: ${item.partNo || item.oem}\n`;
         if(item.brand) message += `   Brand: ${item.brand}\n`;
         const mode = getPriceMode(item);
-        if(mode === PRICE_ON_REQUEST){
-            message += `   Price: On request\n`;
-            message += `   Qty: ${item.quantity}\n`;
-        } else if(mode === PRICE_RANGE){
+        if(mode === PRICE_ON_REQUEST){ message += `   Price: On request\n   Qty: ${item.quantity}\n`; }
+        else if(mode === PRICE_RANGE){
             const min = Number(item.priceMin) || 0;
             const max = Number(item.priceMax) || 0;
             let rangeTxt;
@@ -2816,41 +2654,25 @@ async function checkoutCart(brother){
             else if(!max) rangeTxt = `From ${formatPrice(min)}`;
             else if(min === max) rangeTxt = formatPrice(min);
             else rangeTxt = `${formatPrice(min)} – ${formatPrice(max)}`;
-            message += `   Price: ${rangeTxt}\n`;
-            message += `   Qty: ${item.quantity}\n`;
-            message += `   (Final price to be confirmed)\n`;
+            message += `   Price: ${rangeTxt}\n   Qty: ${item.quantity}\n   (Final price to be confirmed)\n`;
         } else {
             const itemTotal = (Number(item.price) || 0) * item.quantity;
-            message += `   Qty: ${item.quantity}\n`;
-            message += `   Price: ${formatPrice(item.price)} each\n`;
-            message += `   Subtotal: ${formatPrice(itemTotal)}\n`;
+            message += `   Qty: ${item.quantity}\n   Price: ${formatPrice(item.price)} each\n   Subtotal: ${formatPrice(itemTotal)}\n`;
         }
         message += `\n`;
     });
-    if(hasQuote){
-        message += `💰 Fixed items total: ${formatPrice(totals.fixedTotal)}\n`;
-        message += `ℹ️ Some items require a quote — please confirm final prices.\n\n`;
-    } else {
-        message += `💰 TOTAL: ${formatPrice(totals.fixedTotal)}\n\n`;
-    }
+    if(hasQuote){ message += `💰 Fixed items total: ${formatPrice(totals.fixedTotal)}\nℹ️ Some items require a quote — please confirm final prices.\n\n`; }
+    else { message += `💰 TOTAL: ${formatPrice(totals.fixedTotal)}\n\n`; }
     if(discount > 0){
         message += `⭐ Loyalty points redeemed: ${pointsRedeemed} points = ${formatPrice(discount)} off\n`;
         message += `💰 NEW TOTAL AFTER REDEMPTION: ${formatPrice(finalTotal)}\n\n`;
     }
-    if(hasOnOrder){
-        message += `Note: Items marked [Shipped on Order] require a 50% deposit and arrive in ~2 weeks.\n\n`;
-    }
-    if(!cartRedeemApplied){
-        message += `⭐ Loyalty: You'll earn ${Math.floor(totals.fixedTotal/POINTS_PER_KSH)} points when this order is delivered!\n\n`;
-    }
+    if(hasOnOrder){ message += `Note: Items marked [Shipped on Order] require a 50% deposit and arrive in ~2 weeks.\n\n`; }
+    if(!cartRedeemApplied){ message += `⭐ Loyalty: You'll earn ${Math.floor(totals.fixedTotal/POINTS_PER_KSH)} points when this order is delivered!\n\n`; }
     message += `Please confirm availability and delivery.`;
-
     const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     const waWindow = window.open(waUrl, '_blank');
-    if(!waWindow || waWindow.closed || typeof waWindow.closed === 'undefined'){
-        try { window.location.href = waUrl; } catch(e){}
-    }
-
+    if(!waWindow || waWindow.closed || typeof waWindow.closed === 'undefined'){ try { window.location.href = waUrl; } catch(e){} }
     const orderSnapshot = {
         id: orderId,
         date: new Date().toISOString(),
@@ -2869,11 +2691,7 @@ async function checkoutCart(brother){
         items: cart.map(i => {
             const mode = getPriceMode(i);
             return {
-                name: i.name,
-                sku: i.sku,
-                partNo: i.partNo || i.oem || '',
-                brand: i.brand || '',
-                image: i.image || '',
+                name: i.name, sku: i.sku, partNo: i.partNo || i.oem || '', brand: i.brand || '', image: i.image || '',
                 price: mode === PRICE_FIXED ? i.price : null,
                 priceMode: mode,
                 priceMin: mode === PRICE_RANGE ? (Number(i.priceMin) || 0) : null,
@@ -2885,18 +2703,11 @@ async function checkoutCart(brother){
             };
         })
     };
-
-    // IMPORTANT: Deduct redeemed points IMMEDIATELY at order placement
-    // (so the customer can't double-redeem while the order awaits delivery)
     if(pointsRedeemed > 0 && custPhone){
         const deducted = await deductRedeemedPointsOnOrder(custPhone, pointsRedeemed, orderId);
-        if(deducted){
-            showNotification(`⭐ ${pointsRedeemed} points redeemed — balance updated.`);
-        } else {
-            showNotification('⚠️ Order placed, but points could not be saved to GitHub.');
-        }
+        if(deducted){ showNotification(`⭐ ${pointsRedeemed} points redeemed — balance updated.`); }
+        else { showNotification('⚠️ Order placed, but points could not be saved to GitHub.'); }
     }
-
     cart = [];
     cartRedeemApplied = false;
     cartRedeemPoints = 0;
@@ -2905,14 +2716,12 @@ async function checkoutCart(brother){
     if(nameEl) nameEl.value = '';
     if(phoneEl) phoneEl.value = '';
     closeCart();
-
     appendOrderToGitHub(orderSnapshot).then(savedOk => {
         if(savedOk){ console.log('✅ Order saved to records'); }
         else { console.warn('⚠️ Order not saved to GitHub'); }
     });
 }
 
-// ==================== RECENTLY VIEWED & ALSO BOUGHT ====================
 function recordRecentlyViewed(sku){
     if(!sku) return;
     recentlyViewed = recentlyViewed.filter(s => s !== sku);
@@ -2935,11 +2744,7 @@ function renderRecentlyViewed(){
             ? `<img src="${escapeAttr(first)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">`
             : `<span class="rv-emoji">${escapeAttr(first)}</span>`;
         const { text: priceTxt } = priceDisplay(p);
-        return `<div class="mini-card" onclick="openGallery(${products.indexOf(p)})">
-            ${imgHtml}
-            <div class="rv-name">${escapeAttr(p.name)}</div>
-            <div class="rv-price">${escapeAttr(priceTxt)}</div>
-        </div>`;
+        return `<div class="mini-card" onclick="openGallery(${products.indexOf(p)})">${imgHtml}<div class="rv-name">${escapeAttr(p.name)}</div><div class="rv-price">${escapeAttr(priceTxt)}</div></div>`;
     }).join('');
 }
 function recordAlsoBought(sku){
@@ -2964,15 +2769,10 @@ function renderAlsoBought(){
             ? `<img src="${escapeAttr(first)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">`
             : `<span class="ab-emoji">${escapeAttr(first)}</span>`;
         const { text: priceTxt } = priceDisplay(p);
-        return `<div class="mini-card" onclick="openGallery(${products.indexOf(p)})">
-            ${imgHtml}
-            <div class="ab-name">${escapeAttr(p.name)}</div>
-            <div class="ab-price">${escapeAttr(priceTxt)}</div>
-        </div>`;
+        return `<div class="mini-card" onclick="openGallery(${products.indexOf(p)})">${imgHtml}<div class="ab-name">${escapeAttr(p.name)}</div><div class="ab-price">${escapeAttr(priceTxt)}</div></div>`;
     }).join('');
 }
 
-// ==================== NOTIFICATION ====================
 function showNotification(message){
     const notification=document.createElement('div');
     notification.style.cssText=`position:fixed;top:20px;right:20px;background:#4caf50;color:#fff;padding:15px 20px;border-radius:5px;z-index:4000;box-shadow:0 4px 10px rgba(0,0,0,.3);`;
@@ -2981,7 +2781,6 @@ function showNotification(message){
     setTimeout(()=>{notification.remove()},3500);
 }
 
-// ==================== RENDER PRODUCTS ====================
 function renderProductCard(product){
     const idx = products.indexOf(product);
     const partNo = product.partNo || product.oem || 'N/A';
@@ -2997,25 +2796,22 @@ function renderProductCard(product){
     const supercedesHTML = supercedesList.length > 0
         ? `<div class="product-supercedes" title="Replaces older part numbers"><i class="fas fa-exchange-alt"></i> Replaces: ${escapeAttr(supercedesList.join(', '))}</div>`
         : '';
-
+    const chassisList = normalizeChassis(product);
+    let chassisHTML = '';
+    if(chassisList.length > 0){
+        const text = chassisList.map(c => `${c.model}: ${c.codes.join(', ')}`).join(' | ');
+        chassisHTML = `<div class="product-chassis"><i class="fas fa-barcode"></i> <span>Chassis: ${escapeAttr(text)}</span></div>`;
+    }
     let fitBadgeHTML = '';
     if(savedVehicle){
         const fits = productMatchesFitment(product, savedVehicle.make, savedVehicle.model, savedVehicle.year);
-        if(fits){
-            fitBadgeHTML = `<div class="fit-badge fit-green"><i class="fas fa-check-circle"></i> Fits your ${savedVehicle.make} ${savedVehicle.model}</div>`;
-        } else {
-            fitBadgeHTML = `<div class="fit-badge fit-red"><i class="fas fa-times-circle"></i> Doesn't fit your car</div>`;
-        }
+        if(fits){ fitBadgeHTML = `<div class="fit-badge fit-green"><i class="fas fa-check-circle"></i> Fits your ${savedVehicle.make} ${savedVehicle.model}</div>`; }
+        else { fitBadgeHTML = `<div class="fit-badge fit-red"><i class="fas fa-times-circle"></i> Doesn't fit your car</div>`; }
     }
-
     const card=document.createElement('div');
     card.className='product-card';
-    card.onclick = (ev) => {
-        if(ev.target.closest('button')) return;
-        recordRecentlyViewed(product.sku);
-        openGallery(idx);
-    };
-    card.innerHTML=`<div class="product-image">${renderImageHTML(product)}${countBadge}</div><div class="product-name">${escapeAttr(product.name)}${isUniversal?' <span class="universal-badge">Universal</span>':''}</div>${fitBadgeHTML}<div>${stockBadge}</div><div class="product-oem">Part No: ${escapeAttr(partNo)}</div>${supercedesHTML}<div class="product-vehicle-info"><i class="fas fa-car"></i> Fits: ${escapeAttr(application)}</div><div class="product-description">${escapeAttr(product.description||'')}</div><div class="product-brand">${escapeAttr(product.brand||'')}</div>${priceHTML}<div class="product-buttons"><button class="add-to-cart-btn" onclick="addToCart(${idx})"><i class="fas fa-cart-plus"></i> Add to Cart</button><button class="order-now-btn" onclick="orderNow(${idx})"><i class="fas fa-bolt"></i> Order Now</button></div>`;
+    card.onclick = (ev) => { if(ev.target.closest('button')) return; recordRecentlyViewed(product.sku); openGallery(idx); };
+    card.innerHTML=`<div class="product-image">${renderImageHTML(product)}${countBadge}</div><div class="product-name">${escapeAttr(product.name)}${isUniversal?' <span class="universal-badge">Universal</span>':''}</div>${fitBadgeHTML}<div>${stockBadge}</div><div class="product-oem">Part No: ${escapeAttr(partNo)}</div>${supercedesHTML}${chassisHTML}<div class="product-vehicle-info"><i class="fas fa-car"></i> Fits: ${escapeAttr(application)}</div><div class="product-description">${escapeAttr(product.description||'')}</div><div class="product-brand">${escapeAttr(product.brand||'')}</div>${priceHTML}<div class="product-buttons"><button class="add-to-cart-btn" onclick="addToCart(${idx})"><i class="fas fa-cart-plus"></i> Add to Cart</button><button class="order-now-btn" onclick="orderNow(${idx})"><i class="fas fa-bolt"></i> Order Now</button></div>`;
     return card;
 }
 function loadProducts(){
@@ -3023,12 +2819,7 @@ function loadProducts(){
     productGrid.innerHTML='';
     const seenCategories = new Set();
     const featured = [];
-    products.forEach(p => {
-        if(!seenCategories.has(p.category) && featured.length < 8){
-            seenCategories.add(p.category);
-            featured.push(p);
-        }
-    });
+    products.forEach(p => { if(!seenCategories.has(p.category) && featured.length < 8){ seenCategories.add(p.category); featured.push(p); } });
     featured.forEach(product=>{ productGrid.appendChild(renderProductCard(product)); });
     const resetBtn = document.getElementById('resetFiltersBtn');
     if(resetBtn) resetBtn.classList.remove('show');
@@ -3039,7 +2830,6 @@ function loadProducts(){
     renderRecentlyViewed();
     renderAlsoBought();
 }
-
 function showAllProducts(){
     const grid = document.getElementById('productGrid');
     grid.innerHTML = '';
@@ -3053,7 +2843,6 @@ function showAllProducts(){
     document.getElementById('products').scrollIntoView({behavior:'smooth'});
 }
 
-// ==================== GALLERY ====================
 function openGallery(productIndex){
     const product = products[productIndex];
     if(!product) return;
@@ -3073,9 +2862,8 @@ function renderGallery(product){
     document.getElementById('galleryPrev').disabled = (galleryIndex === 0);
     document.getElementById('galleryNext').disabled = (galleryIndex === galleryImages.length - 1);
     const thumbs = document.getElementById('galleryThumbs');
-    if(galleryImages.length <= 1){
-        thumbs.style.display = 'none';
-    } else {
+    if(galleryImages.length <= 1){ thumbs.style.display = 'none'; }
+    else {
         thumbs.style.display = 'flex';
         thumbs.innerHTML = galleryImages.map((img, i) => {
             const active = (i === galleryIndex) ? ' active' : '';
@@ -3087,13 +2875,15 @@ function renderGallery(product){
     }
     const stock = normalizeStock(product.availability);
     const badgeLarge = stockBadgeHTML(stock, true);
-    const stockNote = (stock === STOCK_ON_ORDER)
-        ? `<div class="stock-note">50% Deposit required — arrives in about 2 weeks.</div>`
-        : '';
+    const stockNote = (stock === STOCK_ON_ORDER) ? `<div class="stock-note">50% Deposit required — arrives in about 2 weeks.</div>` : '';
     const priceHTML = priceDisplayHTML(product, true);
     const supercedesList = parseSupercedes(product.supercedes);
     const supercedesHTML = supercedesList.length > 0
         ? `<div class="psupercedes"><i class="fas fa-exchange-alt"></i> Replaces: ${escapeAttr(supercedesList.join(', '))}</div>`
+        : '';
+    const chassisList = normalizeChassis(product);
+    const chassisHTML = chassisList.length > 0
+        ? `<div class="pchassis"><i class="fas fa-barcode"></i> <strong>Chassis:</strong> ${escapeAttr(chassisList.map(c => `${c.model} → ${c.codes.join(', ')}`).join(' | '))}</div>`
         : '';
     const fitments = normalizeFitments(product);
     const application = product.application || buildApplicationFromFitments(fitments);
@@ -3106,6 +2896,7 @@ function renderGallery(product){
             ${application ? `Fits: ${escapeAttr(application)}` : ''}
         </div>
         ${supercedesHTML}
+        ${chassisHTML}
         ${priceHTML}
     `;
 }
@@ -3131,11 +2922,7 @@ document.addEventListener('keydown', function(ev){
 (function(){
     let startX = 0, startY = 0;
     const main = document.getElementById('galleryMain');
-    main.addEventListener('touchstart', (e) => {
-        if(e.touches.length !== 1) return;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-    }, {passive:true});
+    main.addEventListener('touchstart', (e) => { if(e.touches.length !== 1) return; startX = e.touches[0].clientX; startY = e.touches[0].clientY; }, {passive:true});
     main.addEventListener('touchend', (e) => {
         if(!e.changedTouches || e.changedTouches.length !== 1) return;
         const dx = e.changedTouches[0].clientX - startX;
@@ -3147,7 +2934,6 @@ document.addEventListener('keydown', function(ev){
     }, {passive:true});
 })();
 
-// ==================== RESET FILTERS ====================
 function resetFilters(){
     filtersActive = false;
     const searchInput = document.getElementById('searchInput');
@@ -3165,7 +2951,6 @@ function resetFilters(){
     document.getElementById('products').scrollIntoView({behavior:'smooth'});
 }
 
-// ==================== VIN SEARCH ====================
 function searchByVIN(){
     const vin=document.getElementById('vinInput').value.trim().toUpperCase();
     if(!vin||vin.length<3){alert('Please enter a valid VIN or Chassis number');return}
@@ -3174,12 +2959,38 @@ function searchByVIN(){
     for(const db of allDBs){for(const code in db){if(vin.startsWith(code)){matchedVehicle=db[code];matchedCode=code;break}}if(matchedVehicle)break}
     const vinResults=document.getElementById('vinResults');
     if(!matchedVehicle){
+        // Fall back: search products by chassis code match
+        const productHits = products.filter(p => productMatchesChassis(p, vin));
+        if(productHits.length > 0){
+            vinResults.style.display='block';
+            let html = `<button class="vin-results-close" onclick="closeVinResults()" title="Close">✕</button><div style="background:#f3e5f5;padding:15px;border-radius:5px;"><strong>🔍 Chassis match: ${escapeAttr(vin)}</strong><p>Found ${productHits.length} part${productHits.length===1?'':'s'} with this chassis code:</p></div><div style="margin-top:10px;text-align:left;">`;
+            productHits.forEach(product=>{
+                const idx=products.indexOf(product);
+                const partNo = product.partNo || product.oem || 'N/A';
+                const stock = normalizeStock(product.availability);
+                const stockTag = stock === STOCK_ON_ORDER ? ' <span class="cart-item-status on-order">Shipped on Order</span>' : ' <span class="cart-item-status in-stock">In Stock</span>';
+                const { text: priceText } = priceDisplay(product);
+                html+=`<div style="background:#fff;padding:15px;border:1px solid #ddd;border-radius:8px;margin-bottom:10px;"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;"><div style="flex:1;min-width:200px;"><strong style="font-size:16px;">${renderImageHTML(product)} ${escapeAttr(product.name)}</strong>${stockTag}<br><small>Part No: ${escapeAttr(partNo)} | Brand: ${escapeAttr(product.brand)}</small><br><small>Fits: ${escapeAttr(product.application||'')}</small></div><div style="text-align:right;"><div style="color:#ff6f00;font-size:20px;font-weight:bold;">${escapeAttr(priceText)}</div></div></div><div class="product-buttons" style="margin-top:10px;"><button class="add-to-cart-btn" onclick="addToCart(${idx})"><i class="fas fa-cart-plus"></i> Add to Cart</button><button class="order-now-btn" onclick="orderNow(${idx})"><i class="fas fa-bolt"></i> Order Now</button></div></div>`;
+            });
+            html += `</div>`;
+            vinResults.innerHTML = html;
+            vinResults.scrollIntoView({behavior:'smooth',block:'nearest'});
+            return;
+        }
         vinResults.style.display='block';
         vinResults.innerHTML=`<button class="vin-results-close" onclick="closeVinResults()" title="Close">✕</button><div style="background:#fff3e0;padding:15px;border-radius:5px;"><strong>Vehicle not found</strong><p>VIN: ${escapeAttr(vin)}</p><a href="https://partsouq.com/en/catalog/genuine/locate?vin=${encodeURIComponent(vin)}" target="_blank" style="display:inline-block;padding:10px 20px;background:#1a237e;color:#fff;text-decoration:none;border-radius:5px;margin-top:10px;">Check PartSouq Catalog</a></div>`;
         return;
     }
     saveVehicleToGarage(matchedVehicle.years[1], matchedVehicle.make, matchedVehicle.model);
-    const matchingProducts=products.filter(p=>productMatchesFitment(p, matchedVehicle.make, matchedVehicle.model, matchedVehicle.years[1]));
+    // Include products matching fitment AND products with matching chassis codes
+    const seen = new Set();
+    const matchingProducts = products.filter(p => {
+        if(seen.has(p.sku)) return false;
+        const byFit = productMatchesFitment(p, matchedVehicle.make, matchedVehicle.model, matchedVehicle.years[1]);
+        const byChassis = productMatchesChassis(p, vin);
+        if(byFit || byChassis){ seen.add(p.sku); return true; }
+        return false;
+    });
     vinResults.style.display='block';
     let resultsHTML=`<div style="background:#e8f5e9;padding:15px;border-radius:5px;"><strong>✅ ${escapeAttr(matchedVehicle.make)} ${escapeAttr(matchedVehicle.model)}</strong><br><small>Code: ${escapeAttr(matchedCode)} | Years: ${matchedVehicle.years[0]}-${matchedVehicle.years[1]}</small>${matchingProducts.length>0?`<p>Found ${matchingProducts.length} compatible parts:</p>`:'<p>No matching parts in stock.</p>'}</div>`;
     if(matchingProducts.length>0){
@@ -3205,29 +3016,17 @@ function closeVinResults(){
     document.getElementById('vinInput').value='';
     window.scrollTo({top: 0, behavior: 'smooth'});
 }
-
-// ==================== SOURCE-IT FALLBACK ====================
 function buildSourceItFallback(){
     return `<div class="source-it-box" style="margin-top:20px;"><h3>🔍 We don't have this listed — but we can source it.</h3><p>Send us the part number or your car details on WhatsApp and we'll quote you within the hour.</p><div class="source-buttons"><a href="https://wa.me/254713349554?text=Hi%20ADIL%2C%20I%27m%20looking%20for%20a%20part%20you%20don%27t%20have%20listed.%20Can%20you%20source%20it%3F" target="_blank" class="adil"><i class="fab fa-whatsapp"></i> WhatsApp ADIL</a><a href="https://wa.me/254752763924?text=Hi%20SUHAYL%2C%20I%27m%20looking%20for%20a%20part%20you%20don%27t%20have%20listed.%20Can%20you%20source%20it%3F" target="_blank" class="suhayl"><i class="fab fa-whatsapp"></i> WhatsApp SUHAYL</a></div></div>`;
 }
-
-// ==================== MODEL NAME NORMALIZATION ====================
-function normalizeModelName(model){
-    if(!model) return '';
-    return String(model).toLowerCase().trim();
-}
+function normalizeModelName(model){ if(!model) return ''; return String(model).toLowerCase().trim(); }
 function modelMatches(productModel, selectedModel){
     if(!productModel) return false;
     if(productModel === "All Models") return true;
-    const productModels = String(productModel)
-        .split(/[,\/]/)
-        .map(s => normalizeModelName(s))
-        .filter(Boolean);
+    const productModels = String(productModel).split(/[,\/]/).map(s => normalizeModelName(s)).filter(Boolean);
     const sel = normalizeModelName(selectedModel);
     return productModels.includes(sel);
 }
-
-// ==================== PUBLIC VEHICLE SELECTOR EVENTS ====================
 document.getElementById('vehicleMake').addEventListener('change', onPublicMakeChange);
 
 function displayFilteredProducts(list,title){
@@ -3250,12 +3049,30 @@ function displayFilteredProducts(list,title){
 function searchProducts(){
     const term=document.getElementById('searchInput').value.toLowerCase().trim();
     if(!term){ resetFilters(); return; }
-    const filtered=products.filter(p=>p.name.toLowerCase().includes(term)||p.category.toLowerCase().includes(term)||(p.oem&&p.oem.toLowerCase().includes(term))||(p.partNo&&p.partNo.toLowerCase().includes(term))||(p.supercedes&&p.supercedes.toLowerCase().includes(term))||p.brand.toLowerCase().includes(term)||(p.vehicleMake&&p.vehicleMake.toLowerCase().includes(term))||(p.vehicleModel&&p.vehicleModel.toLowerCase().includes(term))||(p.application&&p.application.toLowerCase().includes(term)));
+    const termU = term.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    const filtered=products.filter(p => {
+        // Standard text match
+        const stdMatch = p.name.toLowerCase().includes(term)
+            || p.category.toLowerCase().includes(term)
+            || (p.oem && p.oem.toLowerCase().includes(term))
+            || (p.partNo && p.partNo.toLowerCase().includes(term))
+            || (p.supercedes && p.supercedes.toLowerCase().includes(term))
+            || p.brand.toLowerCase().includes(term)
+            || (p.vehicleMake && p.vehicleMake.toLowerCase().includes(term))
+            || (p.vehicleModel && p.vehicleModel.toLowerCase().includes(term))
+            || (p.application && p.application.toLowerCase().includes(term));
+        if(stdMatch) return true;
+        // Chassis codes match (loose prefix)
+        if(termU && getAllChassisCodes(p).some(code => {
+            const c = String(code).toUpperCase().replace(/[^A-Z0-9]/g, '');
+            return c === termU || c.includes(termU) || termU.includes(c);
+        })) return true;
+        return false;
+    });
     displayFilteredProducts(filtered,`Search results for: "${term}"`);
 }
 function shopByCategory(category){const filtered=products.filter(p=>p.category===category);displayFilteredProducts(filtered,`${category} Products`)}
 
-// ==================== CATEGORY CARDS WITH IMAGES ====================
 function categoryCardHTML(cat, small){
     const img = categoryImages[cat];
     const desc = getCategoryDescription(cat);
@@ -3263,17 +3080,10 @@ function categoryCardHTML(cat, small){
     let visual;
     if(img && isImageReference(img)){
         visual = `<img src="${escapeAttr(toAbsoluteImageUrl(img))}" alt="${escapeAttr(cat)}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;margin-bottom:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='block';"><i class="fas ${icon}" style="display:none;font-size:40px;color:#ff6f00;margin-bottom:15px;"></i>`;
-    } else if(img){
-        visual = `<div style="font-size:48px;margin-bottom:12px;">${escapeAttr(img)}</div>`;
-    } else {
-        visual = `<i class="fas ${icon}" style="font-size:40px;color:#ff6f00;margin-bottom:15px;"></i>`;
-    }
+    } else if(img){ visual = `<div style="font-size:48px;margin-bottom:12px;">${escapeAttr(img)}</div>`; }
+    else { visual = `<i class="fas ${icon}" style="font-size:40px;color:#ff6f00;margin-bottom:15px;"></i>`; }
     const cls = small ? 'category-card extra-category small' : 'category-card';
-    return `<div class="${cls}" onclick="shopByCategory('${escapeAttr(cat)}')">
-        ${visual}
-        <h3>${escapeAttr(cat)}</h3>
-        <p>${escapeAttr(desc)}</p>
-    </div>`;
+    return `<div class="${cls}" onclick="shopByCategory('${escapeAttr(cat)}')">${visual}<h3>${escapeAttr(cat)}</h3><p>${escapeAttr(desc)}</p></div>`;
 }
 function buildExtraCategoryCards(){
     const grid = document.getElementById('categoryGrid');
@@ -3287,10 +3097,7 @@ function buildExtraCategoryCards(){
         if(bi !== -1) return 1;
         return a.localeCompare(b);
     });
-    grid.innerHTML = allCats.map(cat => {
-        const isFixed = FIXED_CATEGORIES.includes(cat);
-        return categoryCardHTML(cat, !isFixed);
-    }).join('');
+    grid.innerHTML = allCats.map(cat => { const isFixed = FIXED_CATEGORIES.includes(cat); return categoryCardHTML(cat, !isFixed); }).join('');
     const total = allCats.length;
     const seeAllText = document.getElementById('seeAllText');
     if(seeAllText) seeAllText.textContent = `See all ${total} categories`;
@@ -3300,12 +3107,9 @@ function toggleAllCategories(){
     const btn = document.getElementById('seeAllBtn');
     const isExpanded = grid.classList.toggle('expanded');
     btn.classList.toggle('expanded', isExpanded);
-    document.getElementById('seeAllText').textContent = isExpanded
-        ? 'Show fewer categories'
-        : `See all ${FIXED_CATEGORIES.length + grid.querySelectorAll('.extra-category').length} categories`;
+    document.getElementById('seeAllText').textContent = isExpanded ? 'Show fewer categories' : `See all ${FIXED_CATEGORIES.length + grid.querySelectorAll('.extra-category').length} categories`;
 }
 
-// ==================== STOCK SELECT HTML ====================
 function buildStockSelectHTML(id, currentValue){
     const v = normalizeStock(currentValue);
     return `<div class="combo-wrap"><label>Availability</label>
@@ -3316,8 +3120,6 @@ function buildStockSelectHTML(id, currentValue){
         <div class="combo-hint">Shipped on Order shows a badge and reminds the customer about the 50% deposit in WhatsApp.</div>
     </div>`;
 }
-
-// ==================== PRICE MODE UI ====================
 function buildPriceModeHTML(idPrefix, product){
     const p = product || {};
     const mode = getPriceMode(p);
@@ -3328,9 +3130,7 @@ function buildPriceModeHTML(idPrefix, product){
             <option value="range" ${mode===PRICE_RANGE?'selected':''}>Price range (min – max)</option>
             <option value="on_request" ${mode===PRICE_ON_REQUEST?'selected':''}>Price on request</option>
         </select>
-        <div class="price-mode-inputs" id="${idPrefix}_inputs">
-            ${priceModeInputsInnerHTML(idPrefix, p)}
-        </div>
+        <div class="price-mode-inputs" id="${idPrefix}_inputs">${priceModeInputsInnerHTML(idPrefix, p)}</div>
     </div>`;
 }
 function priceModeInputsInnerHTML(idPrefix, product){
@@ -3339,9 +3139,7 @@ function priceModeInputsInnerHTML(idPrefix, product){
     const priceVal = (p.price !== undefined && p.price !== null && p.price !== '') ? p.price : '';
     const minVal = (p.priceMin !== undefined && p.priceMin !== null && p.priceMin !== '') ? p.priceMin : '';
     const maxVal = (p.priceMax !== undefined && p.priceMax !== null && p.priceMax !== '') ? p.priceMax : '';
-    if(mode === PRICE_ON_REQUEST){
-        return `<div class="hint">Customer will see <strong>"Price on request"</strong>. No price stored.</div>`;
-    }
+    if(mode === PRICE_ON_REQUEST){ return `<div class="hint">Customer will see <strong>"Price on request"</strong>. No price stored.</div>`; }
     if(mode === PRICE_RANGE){
         return `<div class="row2">
             <div><label style="font-size:12px;font-weight:700;">Min (KSh)</label><input type="number" id="${idPrefix}_min" value="${escapeAttr(minVal)}" placeholder="e.g. 150000"></div>
@@ -3349,22 +3147,14 @@ function priceModeInputsInnerHTML(idPrefix, product){
         </div>
         <div class="hint">Customer sees e.g. <em>KSh 150,000 – 450,000</em> and is told final price is confirmed on order.</div>`;
     }
-    return `<div>
-        <label style="font-size:12px;font-weight:700;">Price (KSh)</label>
-        <input type="number" id="${idPrefix}_price" value="${escapeAttr(priceVal)}" placeholder="e.g. 5000">
-    </div>`;
+    return `<div><label style="font-size:12px;font-weight:700;">Price (KSh)</label><input type="number" id="${idPrefix}_price" value="${escapeAttr(priceVal)}" placeholder="e.g. 5000"></div>`;
 }
 function handlePriceModeChange(idPrefix){
     const sel = document.getElementById(idPrefix + '_mode');
     const inputs = document.getElementById(idPrefix + '_inputs');
     if(!sel || !inputs) return;
     const currentData = readPriceModeRaw(idPrefix);
-    const fakeProduct = {
-        priceMode: sel.value,
-        price: currentData.price,
-        priceMin: currentData.priceMin,
-        priceMax: currentData.priceMax
-    };
+    const fakeProduct = { priceMode: sel.value, price: currentData.price, priceMin: currentData.priceMin, priceMax: currentData.priceMax };
     inputs.innerHTML = priceModeInputsInnerHTML(idPrefix, fakeProduct);
 }
 function readPriceModeRaw(idPrefix){
@@ -3381,16 +3171,11 @@ function readPriceModeRaw(idPrefix){
 }
 function readPriceModeValue(idPrefix){
     const raw = readPriceModeRaw(idPrefix);
-    if(raw.mode === PRICE_ON_REQUEST){
-        return { priceMode: PRICE_ON_REQUEST, price: 0, priceMin: null, priceMax: null };
-    }
-    if(raw.mode === PRICE_RANGE){
-        return { priceMode: PRICE_RANGE, price: 0, priceMin: raw.priceMin || 0, priceMax: raw.priceMax || 0 };
-    }
+    if(raw.mode === PRICE_ON_REQUEST){ return { priceMode: PRICE_ON_REQUEST, price: 0, priceMin: null, priceMax: null }; }
+    if(raw.mode === PRICE_RANGE){ return { priceMode: PRICE_RANGE, price: 0, priceMin: raw.priceMin || 0, priceMax: raw.priceMax || 0 }; }
     return { priceMode: PRICE_FIXED, price: raw.price || 0, priceMin: null, priceMax: null };
 }
 
-// ==================== MULTI-IMAGE PICKER ====================
 const multiImgState = {};
 function getImagesForPicker(key, initial){
     if(!multiImgState[key]) multiImgState[key] = { images: [] };
@@ -3403,11 +3188,8 @@ function getImagesForPicker(key, initial){
 }
 function buildImagePickerHTML(targetKey, currentValueOrArray, productName){
     let initial = [];
-    if(Array.isArray(currentValueOrArray)){
-        initial = currentValueOrArray;
-    } else if(currentValueOrArray){
-        initial = [currentValueOrArray];
-    }
+    if(Array.isArray(currentValueOrArray)){ initial = currentValueOrArray; }
+    else if(currentValueOrArray){ initial = [currentValueOrArray]; }
     getImagesForPicker(targetKey, initial);
     return `
         <div class="img-picker" data-picker="${targetKey}">
@@ -3425,21 +3207,17 @@ function renderMultiImagePicker(targetKey){
     if(!list || !addArea) return;
     const state = multiImgState[targetKey] || { images: [] };
     const imgs = state.images;
-    if(imgs.length === 0){
-        list.innerHTML = `<div class="img-picker-empty">No images yet</div>`;
-    } else {
+    if(imgs.length === 0){ list.innerHTML = `<div class="img-picker-empty">No images yet</div>`; }
+    else {
         list.innerHTML = imgs.map((img, i) => {
             const isImg = isImageReference(img);
             const isPending = isImg && state.pending && state.pending[i];
             let inner;
-            if(isPending){
-                inner = `<div class="pending-text">Uploading…<br>1 min</div>`;
-            } else if(isImg){
+            if(isPending){ inner = `<div class="pending-text">Uploading…<br>1 min</div>`; }
+            else if(isImg){
                 const abs = toAbsoluteImageUrl(img);
                 inner = `<img src="${escapeAttr(abs)}" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'pending-text\\'>Photo added<br>Loading…</div>';">`;
-            } else {
-                inner = `<span>${escapeAttr(img)}</span>`;
-            }
+            } else { inner = `<span>${escapeAttr(img)}</span>`; }
             const isMain = (i === 0);
             const pendingClass = isPending ? ' pending' : '';
             return `<div class="img-slot${isMain?' main':''}">
@@ -3498,10 +3276,8 @@ async function handleMultiImageFile(ev, targetKey, productName){
             if(st && st.pending){ delete st.pending[newIndex]; }
             renderMultiImagePicker(targetKey);
         }, 45000);
-    } catch(err){
-        console.error(err);
-        setStatus('❌ ' + (err.message || 'Upload failed'), 'error');
-    } finally {
+    } catch(err){ console.error(err); setStatus('❌ ' + (err.message || 'Upload failed'), 'error'); }
+    finally {
         ev.target.value = '';
         const menu = document.getElementById('imgChoice_' + targetKey);
         if(menu) menu.remove();
@@ -3558,22 +3334,16 @@ function readImagePickerValue(targetKey){
     return state.images.slice();
 }
 
-// ==================== ADMIN PANEL (TABBED) ====================
 function openAdminPanel(){
     if(adminLoggedIn){ showAdminPanel(); return; }
     const password=prompt("Enter Admin Password:");
     if(password==="1234"){ adminLoggedIn = true; showAdminPanel(); }
     else { alert("Wrong password!"); }
 }
-
 function switchAdminTab(tab){
     currentAdminTab = tab;
-    document.querySelectorAll('.admin-tab').forEach(t => {
-        t.classList.toggle('active', t.dataset.tab === tab);
-    });
-    document.querySelectorAll('.admin-panel-section').forEach(s => {
-        s.classList.toggle('active', s.dataset.tab === tab);
-    });
+    document.querySelectorAll('.admin-tab').forEach(t => { t.classList.toggle('active', t.dataset.tab === tab); });
+    document.querySelectorAll('.admin-panel-section').forEach(s => { s.classList.toggle('active', s.dataset.tab === tab); });
     if(tab === 'parts') renderAdminProductCards();
     if(tab === 'orders') renderOrdersList();
     if(tab === 'customers') renderCustomersList();
@@ -3583,12 +3353,14 @@ function switchAdminTab(tab){
         if(container && !container.innerHTML.trim()) showAddProductForm();
     }
 }
-
 function adminMatchesSearch(product){
     if(!adminSearchTerm) return true;
     const q = adminSearchTerm;
+    const chassisCodes = getAllChassisCodes(product).map(c => c.toLowerCase());
     const fields = [product.name, product.partNo, product.oem, product.brand, product.category, product.sku, product.application, product.vehicleMake, product.vehicleModel, product.description, product.supercedes].filter(Boolean).map(v => String(v).toLowerCase());
-    return fields.some(f => f.includes(q));
+    if(fields.some(f => f.includes(q))) return true;
+    if(chassisCodes.some(c => c.includes(q))) return true;
+    return false;
 }
 function renderAdminProductCards(){
     const container = document.getElementById('adminProductList');
@@ -3620,6 +3392,8 @@ function renderAdminProductCards(){
         `;
         const fitments = normalizeFitments(product);
         const fitmentsWidget = buildFitmentsWidget(`edit_fit_${index}`, fitments);
+        const chassisData = normalizeChassis(product);
+        const chassisWidget = buildChassisWidget(`edit_fit_${index}`, chassisData); // SAME KEY so it can read fitments models
         html+=`<div style="margin-bottom:15px;padding:15px;border:1px solid #ddd;border-radius:5px;background:#f9f9f9;" id="adminCard_${index}">
             <label style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;">Product Name (editable):</label>
             <input type="text" id="name_${index}" value="${escapeAttr(product.name||'')}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;font-weight:700;font-size:15px;margin-bottom:6px;">
@@ -3631,6 +3405,7 @@ function renderAdminProductCards(){
                 <div><label style="font-size:12px;">Fits (Application):</label><input type="text" id="application_${index}" value="${escapeAttr(product.application||'')}" style="width:100%;padding:5px;"></div>
             </div>
             ${fitmentsWidget}
+            ${chassisWidget}
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
                 <div><label style="font-size:12px;">Year Start:</label><input type="number" id="ystart_${index}" value="${product.yearStart||0}" style="width:100%;padding:5px;"></div>
                 <div><label style="font-size:12px;">Year End:</label><input type="number" id="yend_${index}" value="${product.yearEnd||0}" style="width:100%;padding:5px;"></div>
@@ -3653,12 +3428,12 @@ function renderAdminProductCards(){
     list.forEach(({index})=>{
         renderMultiImagePicker('edit_img_' + index);
         fitmentsRenderAll('edit_fit_' + index);
+        chassisRenderAll('edit_fit_' + index);
     });
 }
 function handleAdminSearch(value){ adminSearchTerm = value.trim().toLowerCase(); renderAdminProductCards(); }
 function clearAdminSearch(){ adminSearchTerm = ''; const input = document.getElementById('adminSearchInput'); if(input){ input.value = ''; } renderAdminProductCards(); }
 
-// ==================== CUSTOMERS LIST ====================
 function renderCustomersList(){
     const container = document.getElementById('customersList');
     if(!container) return;
@@ -3669,10 +3444,7 @@ function renderCustomersList(){
         if(cnt) cnt.textContent = '0 customers';
         return;
     }
-    // Sort by points desc
-    const sorted = phones
-        .map(p => customersData[p])
-        .sort((a,b) => (b.points||0) - (a.points||0));
+    const sorted = phones.map(p => customersData[p]).sort((a,b) => (b.points||0) - (a.points||0));
     let html = '';
     sorted.forEach(c => {
         html += `<div class="cust-card">
@@ -3692,7 +3464,6 @@ function renderCustomersList(){
     const cnt = document.getElementById('customersCount');
     if(cnt) cnt.textContent = `${phones.length} customer${phones.length===1?'':'s'}`;
 }
-
 async function deleteCustomer(phone){
     if(!confirm(`Delete customer ${phone} and all their points?`)) return;
     delete customersData[phone];
@@ -3701,20 +3472,15 @@ async function deleteCustomer(phone){
     showNotification('✅ Customer deleted');
 }
 
-// ==================== RECONCILIATION ====================
 function setReconPeriod(period){
     reconPeriod = period;
-    // Clear custom range
     reconFrom = '';
     reconTo = '';
     document.getElementById('reconFrom').value = '';
     document.getElementById('reconTo').value = '';
-    document.querySelectorAll('.recon-controls button').forEach(b => {
-        b.classList.toggle('active', b.dataset.period === period);
-    });
+    document.querySelectorAll('.recon-controls button').forEach(b => { b.classList.toggle('active', b.dataset.period === period); });
     renderReconciliation();
 }
-
 function applyReconRange(){
     const from = document.getElementById('reconFrom').value;
     const to = document.getElementById('reconTo').value;
@@ -3726,59 +3492,39 @@ function applyReconRange(){
     document.querySelectorAll('.recon-controls button').forEach(b => b.classList.remove('active'));
     renderReconciliation();
 }
-
 function getReconDateRange(){
     const now = new Date();
     const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0);
     const endOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999);
-    if(reconPeriod === 'today'){
-        return { from: startOfDay(now), to: endOfDay(now), label: 'Today (' + now.toLocaleDateString() + ')' };
-    }
+    if(reconPeriod === 'today'){ return { from: startOfDay(now), to: endOfDay(now), label: 'Today (' + now.toLocaleDateString() + ')' }; }
     if(reconPeriod === 'week'){
-        const dayOfWeek = now.getDay(); // 0=Sun
-        const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Monday start
+        const dayOfWeek = now.getDay();
+        const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
         const monday = new Date(now);
         monday.setDate(now.getDate() - diff);
         return { from: startOfDay(monday), to: endOfDay(now), label: 'This Week' };
     }
-    if(reconPeriod === 'month'){
-        const first = new Date(now.getFullYear(), now.getMonth(), 1);
-        return { from: startOfDay(first), to: endOfDay(now), label: 'This Month (' + now.toLocaleString('en', { month: 'long', year: 'numeric' }) + ')' };
-    }
-    if(reconPeriod === 'year'){
-        const first = new Date(now.getFullYear(), 0, 1);
-        return { from: startOfDay(first), to: endOfDay(now), label: 'This Year (' + now.getFullYear() + ')' };
-    }
-    if(reconPeriod === 'all'){
-        return { from: new Date(0), to: endOfDay(now), label: 'All Time' };
-    }
+    if(reconPeriod === 'month'){ const first = new Date(now.getFullYear(), now.getMonth(), 1); return { from: startOfDay(first), to: endOfDay(now), label: 'This Month (' + now.toLocaleString('en', { month: 'long', year: 'numeric' }) + ')' }; }
+    if(reconPeriod === 'year'){ const first = new Date(now.getFullYear(), 0, 1); return { from: startOfDay(first), to: endOfDay(now), label: 'This Year (' + now.getFullYear() + ')' }; }
+    if(reconPeriod === 'all'){ return { from: new Date(0), to: endOfDay(now), label: 'All Time' }; }
     if(reconPeriod === 'custom' && reconFrom && reconTo){
         const fromD = new Date(reconFrom + 'T00:00:00');
         const toD = new Date(reconTo + 'T23:59:59');
         return { from: fromD, to: toD, label: reconFrom + ' → ' + reconTo };
     }
-    // default: today
     return { from: startOfDay(now), to: endOfDay(now), label: 'Today' };
 }
-
 function renderReconciliation(){
     const container = document.getElementById('reconContent');
     if(!container) return;
     const range = getReconDateRange();
-    const filtered = cachedOrders.filter(o => {
-        const d = new Date(o.date);
-        return d >= range.from && d <= range.to;
-    });
-    // Categorize
+    const filtered = cachedOrders.filter(o => { const d = new Date(o.date); return d >= range.from && d <= range.to; });
     const delivered = filtered.filter(o => o.status === 'delivered');
     const cancelled = filtered.filter(o => o.status === 'cancelled');
     const pending = filtered.filter(o => o.status !== 'delivered' && o.status !== 'cancelled');
-
     const totalRevenue = delivered.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
     const pendingRevenue = pending.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
     const cancelledRevenue = cancelled.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
-
-    // Top products
     const productStats = {};
     delivered.forEach(o => {
         (o.items || []).forEach(i => {
@@ -3789,7 +3535,6 @@ function renderReconciliation(){
         });
     });
     const topProducts = Object.values(productStats).sort((a,b) => b.revenue - a.revenue).slice(0, 10);
-
     let html = `
         <div class="recon-range">
             <label>From:</label>
@@ -3799,52 +3544,21 @@ function renderReconciliation(){
             <button onclick="applyReconRange()">Apply Custom Range</button>
             <span style="font-size:12px;color:#888;margin-left:auto;">📅 ${escapeAttr(range.label)}</span>
         </div>
-
         <div class="recon-stats">
-            <div class="recon-stat">
-                <div class="label">Revenue</div>
-                <div class="value revenue">KSh ${totalRevenue.toLocaleString()}</div>
-                <div class="sub">${delivered.length} delivered</div>
-            </div>
-            <div class="recon-stat">
-                <div class="label">Pending</div>
-                <div class="value pending">KSh ${pendingRevenue.toLocaleString()}</div>
-                <div class="sub">${pending.length} orders</div>
-            </div>
-            <div class="recon-stat">
-                <div class="label">Cancelled</div>
-                <div class="value" style="color:#c62828;">KSh ${cancelledRevenue.toLocaleString()}</div>
-                <div class="sub">${cancelled.length} orders</div>
-            </div>
-            <div class="recon-stat">
-                <div class="label">Total Orders</div>
-                <div class="value">${filtered.length}</div>
-                <div class="sub">in period</div>
-            </div>
+            <div class="recon-stat"><div class="label">Revenue</div><div class="value revenue">KSh ${totalRevenue.toLocaleString()}</div><div class="sub">${delivered.length} delivered</div></div>
+            <div class="recon-stat"><div class="label">Pending</div><div class="value pending">KSh ${pendingRevenue.toLocaleString()}</div><div class="sub">${pending.length} orders</div></div>
+            <div class="recon-stat"><div class="label">Cancelled</div><div class="value" style="color:#c62828;">KSh ${cancelledRevenue.toLocaleString()}</div><div class="sub">${cancelled.length} orders</div></div>
+            <div class="recon-stat"><div class="label">Total Orders</div><div class="value">${filtered.length}</div><div class="sub">in period</div></div>
         </div>
-
         <button class="recon-export" onclick="exportReconCSV()"><i class="fas fa-download"></i> Export CSV</button>
-
         <h4 style="color:#1a237e;margin:14px 0 8px;">📋 All Orders in Period (${filtered.length})</h4>
         <div style="overflow-x:auto;margin-bottom:20px;">
             <table class="recon-table">
-                <thead>
-                    <tr>
-                        <th>Order #</th>
-                        <th>Date</th>
-                        <th>Customer</th>
-                        <th>Phone</th>
-                        <th>Items</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                        <th>Handled</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>Order #</th><th>Date</th><th>Customer</th><th>Phone</th><th>Items</th><th>Total</th><th>Status</th><th>Handled</th></tr></thead>
                 <tbody>
     `;
-    if(filtered.length === 0){
-        html += `<tr><td colspan="8" style="text-align:center;color:#999;padding:20px;">No orders in this period</td></tr>`;
-    } else {
+    if(filtered.length === 0){ html += `<tr><td colspan="8" style="text-align:center;color:#999;padding:20px;">No orders in this period</td></tr>`; }
+    else {
         filtered.forEach(o => {
             const stColor = o.status === 'delivered' ? '#2e7d32' : o.status === 'cancelled' ? '#c62828' : '#e65100';
             html += `<tr>
@@ -3860,49 +3574,24 @@ function renderReconciliation(){
         });
     }
     html += `</tbody></table></div>`;
-
-    // Top products
     html += `<h4 style="color:#1a237e;margin:14px 0 8px;">🏆 Top Products (delivered orders)</h4>`;
-    if(topProducts.length === 0){
-        html += `<div class="admin-no-results">No delivered orders yet.</div>`;
-    } else {
-        html += `<div style="overflow-x:auto;"><table class="recon-table">
-            <thead><tr><th>#</th><th>Product</th><th>Qty</th><th>Revenue</th></tr></thead><tbody>`;
+    if(topProducts.length === 0){ html += `<div class="admin-no-results">No delivered orders yet.</div>`; }
+    else {
+        html += `<div style="overflow-x:auto;"><table class="recon-table"><thead><tr><th>#</th><th>Product</th><th>Qty</th><th>Revenue</th></tr></thead><tbody>`;
         topProducts.forEach((p, i) => {
-            html += `<tr>
-                <td>${i+1}</td>
-                <td>${escapeAttr(p.name)}</td>
-                <td style="text-align:center;">${p.count}</td>
-                <td style="text-align:right;font-weight:700;color:#2e7d32;">KSh ${p.revenue.toLocaleString()}</td>
-            </tr>`;
+            html += `<tr><td>${i+1}</td><td>${escapeAttr(p.name)}</td><td style="text-align:center;">${p.count}</td><td style="text-align:right;font-weight:700;color:#2e7d32;">KSh ${p.revenue.toLocaleString()}</td></tr>`;
         });
         html += `</tbody></table></div>`;
     }
-
     container.innerHTML = html;
 }
-
 function exportReconCSV(){
     const range = getReconDateRange();
-    const filtered = cachedOrders.filter(o => {
-        const d = new Date(o.date);
-        return d >= range.from && d <= range.to;
-    });
+    const filtered = cachedOrders.filter(o => { const d = new Date(o.date); return d >= range.from && d <= range.to; });
     if(filtered.length === 0){ alert('No orders in this period to export.'); return; }
-    const rows = [
-        ['Order #', 'Date', 'Customer', 'Phone', 'Items', 'Total (KSh)', 'Status', 'Handled By']
-    ];
+    const rows = [['Order #', 'Date', 'Customer', 'Phone', 'Items', 'Total (KSh)', 'Status', 'Handled By']];
     filtered.forEach(o => {
-        rows.push([
-            o.id,
-            new Date(o.date).toISOString(),
-            o.customerName || '',
-            o.customerPhone || '',
-            (o.items || []).length,
-            Number(o.total) || 0,
-            statusLabel(o.status),
-            (o.handledByName || o.handledBy || '').toUpperCase()
-        ]);
+        rows.push([o.id, new Date(o.date).toISOString(), o.customerName || '', o.customerPhone || '', (o.items || []).length, Number(o.total) || 0, statusLabel(o.status), (o.handledByName || o.handledBy || '').toUpperCase()]);
     });
     const csv = rows.map(r => r.map(v => {
         const s = String(v ?? '');
@@ -3919,16 +3608,11 @@ function exportReconCSV(){
     URL.revokeObjectURL(url);
 }
 
-// ==================== ORDERS UI ====================
 function formatOrderDate(iso){
-    try {
-        const d = new Date(iso);
-        return d.toLocaleString('en-KE', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-    } catch(e){ return iso; }
+    try { const d = new Date(iso); return d.toLocaleString('en-KE', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+    catch(e){ return iso; }
 }
-function statusLabel(s){
-    return ({ new: 'New', confirmed: 'Confirmed', delivered: 'Delivered', cancelled: 'Cancelled' })[s] || 'New';
-}
+function statusLabel(s){ return ({ new: 'New', confirmed: 'Confirmed', delivered: 'Delivered', cancelled: 'Cancelled' })[s] || 'New'; }
 function renderOrdersList(){
     const container = document.getElementById('ordersList');
     if(!container) return;
@@ -3942,15 +3626,11 @@ function renderOrdersList(){
     cachedOrders.forEach(o => {
         const itemsRows = (o.items||[]).map(i => {
             const st = normalizeStock(i.availability);
-            const stockTag = st === STOCK_ON_ORDER
-                ? '<span class="cart-item-status on-order">Shipped on Order</span>'
-                : '<span class="cart-item-status in-stock">In Stock</span>';
+            const stockTag = st === STOCK_ON_ORDER ? '<span class="cart-item-status on-order">Shipped on Order</span>' : '<span class="cart-item-status in-stock">In Stock</span>';
             const pmode = normalizePriceMode(i.priceMode);
             let priceCell, subtotalCell;
-            if(pmode === PRICE_ON_REQUEST){
-                priceCell = '<span class="cart-item-status quote">On request</span>';
-                subtotalCell = '—';
-            } else if(pmode === PRICE_RANGE){
+            if(pmode === PRICE_ON_REQUEST){ priceCell = '<span class="cart-item-status quote">On request</span>'; subtotalCell = '—'; }
+            else if(pmode === PRICE_RANGE){
                 const mn = Number(i.priceMin)||0, mx = Number(i.priceMax)||0;
                 let rTxt;
                 if(!mn && !mx) rTxt = 'On request';
@@ -3958,12 +3638,8 @@ function renderOrdersList(){
                 else if(!mx) rTxt = `From ${formatPrice(mn)}`;
                 else if(mn === mx) rTxt = formatPrice(mn);
                 else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
-                priceCell = `<span class="cart-item-status quote">${escapeAttr(rTxt)}</span>`;
-                subtotalCell = '—';
-            } else {
-                priceCell = formatPrice(i.price);
-                subtotalCell = formatPrice(i.subtotal);
-            }
+                priceCell = `<span class="cart-item-status quote">${escapeAttr(rTxt)}</span>`; subtotalCell = '—';
+            } else { priceCell = formatPrice(i.price); subtotalCell = formatPrice(i.subtotal); }
             const partNo = i.partNo || i.sku || '';
             const brand = i.brand || '';
             const subline = [partNo ? `Part No: <strong>${escapeAttr(partNo)}</strong>` : '', brand ? `Brand: <strong>${escapeAttr(brand)}</strong>` : ''].filter(Boolean).join(' · ');
@@ -3977,19 +3653,12 @@ function renderOrdersList(){
                 <td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;font-weight:700;color:#ff6f00;">${subtotalCell}</td>
             </tr>`;
         }).join('');
-
         const notes = [];
         if(o.hasOnOrderItems) notes.push('⚠️ Contains Shipped on Order items — 50% deposit required');
         if(o.hasQuoteItems) notes.push('ℹ️ Contains quote items — confirm final prices');
         if(o.pointsRedeemed > 0) notes.push(`⭐ Customer redeemed ${o.pointsRedeemed} points = ${formatPrice(o.pointsDiscount||0)} off`);
-        const notesHTML = notes.length
-            ? `<div style="background:#fff8e1;border-left:3px solid #ffc107;padding:8px 12px;border-radius:5px;font-size:12px;color:#e65100;margin-top:10px;line-height:1.5;">${notes.join('<br>')}</div>`
-            : '';
-
-        const totalLine = o.hasQuoteItems
-            ? `Fixed items total: ${formatPrice(o.total||0)} <small style="color:#1565c0;font-weight:400;">+ quote items</small>`
-            : `${formatPrice(o.total||0)}`;
-
+        const notesHTML = notes.length ? `<div style="background:#fff8e1;border-left:3px solid #ffc107;padding:8px 12px;border-radius:5px;font-size:12px;color:#e65100;margin-top:10px;line-height:1.5;">${notes.join('<br>')}</div>` : '';
+        const totalLine = o.hasQuoteItems ? `Fixed items total: ${formatPrice(o.total||0)} <small style="color:#1565c0;font-weight:400;">+ quote items</small>` : `${formatPrice(o.total||0)}`;
         const statusColors = {
             new: { bg: '#e3f2fd', border: '#2196f3', text: '#0d47a1' },
             confirmed: { bg: '#fff8e1', border: '#ffc107', text: '#e65100' },
@@ -3998,13 +3667,8 @@ function renderOrdersList(){
         };
         const st = o.status || 'new';
         const c = statusColors[st] || statusColors.new;
-        const pointsNote = (st === 'delivered')
-            ? `<div style="font-size:11px;color:#2e7d32;font-weight:700;margin-top:6px;">⭐ Points awarded: ${Math.floor((Number(o.total)||0)/POINTS_PER_KSH)} (customer ${escapeAttr(o.customerPhone||'')})</div>`
-            : '';
-
+        const pointsNote = (st === 'delivered') ? `<div style="font-size:11px;color:#2e7d32;font-weight:700;margin-top:6px;">⭐ Points awarded: ${Math.floor((Number(o.total)||0)/POINTS_PER_KSH)} (customer ${escapeAttr(o.customerPhone||'')})</div>` : '';
         html += `<div style="background:#fff;border-radius:12px;margin-bottom:16px;border-left:5px solid ${c.border};box-shadow:0 2px 8px rgba(0,0,0,.07);overflow:hidden;">
-
-            <!-- HEADER -->
             <div style="padding:14px 16px;background:linear-gradient(90deg,#f8f9ff 0%,#fff 100%);border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
                 <div>
                     <div style="font-weight:700;color:#1a237e;font-size:16px;">Order #${escapeAttr(o.id)}</div>
@@ -4017,8 +3681,6 @@ function renderOrdersList(){
                     <option value="cancelled" ${o.status==='cancelled'?'selected':''}>● Cancelled</option>
                 </select>
             </div>
-
-            <!-- CUSTOMER BOX -->
             <div style="padding:12px 16px;background:#f9fafc;border-bottom:1px solid #eee;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;font-size:13px;">
                 <div><span style="color:#888;">Customer:</span> <strong style="color:#1a237e;">${escapeAttr(o.customerName||'—')}</strong></div>
                 <div><span style="color:#888;">Phone:</span> <a href="tel:${escapeAttr(o.customerPhone||'')}" style="color:#1a237e;font-weight:700;text-decoration:none;">📞 ${escapeAttr(o.customerPhone||'—')}</a></div>
@@ -4026,30 +3688,20 @@ function renderOrdersList(){
                 <div><span style="color:#888;">Status:</span> <strong style="color:${c.text};">${statusLabel(o.status)}</strong></div>
             </div>
             ${pointsNote ? `<div style="padding:6px 16px;background:#e8f5e9;border-bottom:1px solid #eee;">${pointsNote}</div>` : ''}
-
-            <!-- ITEMS TABLE -->
             <div style="padding:14px 16px 0;">
                 <div style="font-weight:700;color:#1a237e;font-size:13px;margin-bottom:8px;">🛒 Items ordered (${(o.items||[]).length}):</div>
                 <table style="width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:1px solid #eee;border-radius:8px;overflow:hidden;">
-                    <thead>
-                        <tr style="background:#1a237e;color:#fff;">
-                            <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:700;">ITEM</th>
-                            <th style="padding:8px 12px;text-align:center;font-size:11px;font-weight:700;width:60px;">QTY</th>
-                            <th style="padding:8px 12px;text-align:right;font-size:11px;font-weight:700;width:100px;">PRICE</th>
-                            <th style="padding:8px 12px;text-align:right;font-size:11px;font-weight:700;width:110px;">SUBTOTAL</th>
-                        </tr>
-                    </thead>
+                    <thead><tr style="background:#1a237e;color:#fff;">
+                        <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:700;">ITEM</th>
+                        <th style="padding:8px 12px;text-align:center;font-size:11px;font-weight:700;width:60px;">QTY</th>
+                        <th style="padding:8px 12px;text-align:right;font-size:11px;font-weight:700;width:100px;">PRICE</th>
+                        <th style="padding:8px 12px;text-align:right;font-size:11px;font-weight:700;width:110px;">SUBTOTAL</th>
+                    </tr></thead>
                     <tbody>${itemsRows}</tbody>
                 </table>
                 ${notesHTML}
             </div>
-
-            <!-- TOTAL -->
-            <div style="padding:14px 16px;text-align:right;font-size:20px;font-weight:700;color:#ff6f00;border-top:1px dashed #ddd;margin-top:10px;">
-                ${totalLine}
-            </div>
-
-            <!-- ACTIONS -->
+            <div style="padding:14px 16px;text-align:right;font-size:20px;font-weight:700;color:#ff6f00;border-top:1px dashed #ddd;margin-top:10px;">${totalLine}</div>
             <div style="padding:0 16px 16px;display:flex;gap:8px;flex-wrap:wrap;">
                 <button onclick="printOrder('${escapeAttr(o.id)}')" style="flex:1;min-width:130px;padding:11px 16px;background:#1a237e;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;">🖨️ Print Receipt</button>
                 <button onclick="sendOrderToCustomer('${escapeAttr(o.id)}')" style="flex:1;min-width:130px;padding:11px 16px;background:#25D366;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;">💬 Send to Customer</button>
@@ -4069,22 +3721,14 @@ async function changeOrderStatus(id, newStatus){
     renderOrdersList();
     const token = getToken();
     if(!token){ alert('No GitHub token saved. Status changed on this device only.'); return; }
-
-    // Award points if newly delivered
     if(newStatus === 'delivered' && prevStatus !== 'delivered'){
         const result = awardPointsForOrder(o);
         if(result.awarded){
             showNotification(`⭐ ${result.earned} points awarded to ${o.customerName} (${o.customerPhone})`);
-            // Save customers
             const saved = await saveCustomersToGitHub();
-            if(!saved){
-                showNotification('⚠️ Points awarded locally but not saved to GitHub — check token');
-            }
-        } else if(result.reason === 'already awarded'){
-            showNotification('ℹ️ Points already awarded for this order (not double-counted)');
-        }
+            if(!saved){ showNotification('⚠️ Points awarded locally but not saved to GitHub — check token'); }
+        } else if(result.reason === 'already awarded'){ showNotification('ℹ️ Points already awarded for this order (not double-counted)'); }
     }
-
     showNotification('⏳ Saving status...');
     await saveOrdersToGitHub();
     showNotification('✅ Status updated');
@@ -4104,10 +3748,8 @@ function buildReceiptText(o){
         const st = normalizeStock(i.availability);
         const tag = st === STOCK_ON_ORDER ? ' [Shipped on Order ~2 weeks]' : ' [In Stock]';
         const pmode = normalizePriceMode(i.priceMode);
-        if(pmode === PRICE_ON_REQUEST){
-            lines.push(`  • ${i.name}${tag}`);
-            lines.push(`      Qty: ${i.quantity} — Price: On request`);
-        } else if(pmode === PRICE_RANGE){
+        if(pmode === PRICE_ON_REQUEST){ lines.push(`  • ${i.name}${tag}`); lines.push(`      Qty: ${i.quantity} — Price: On request`); }
+        else if(pmode === PRICE_RANGE){
             const mn = Number(i.priceMin)||0, mx = Number(i.priceMax)||0;
             let rTxt;
             if(!mn && !mx) rTxt = 'On request';
@@ -4122,22 +3764,11 @@ function buildReceiptText(o){
         }
     });
     lines.push(``);
-    if(o.hasQuoteItems){
-        lines.push(`Fixed items total: ${formatPrice(o.fixedItemsTotal||o.total||0)} (+ quote items)`);
-    } else {
-        lines.push(`TOTAL: ${formatPrice(o.total||0)}`);
-    }
-    if(o.pointsRedeemed > 0){
-        lines.push(`⭐ Loyalty redemption: ${o.pointsRedeemed} points = ${formatPrice(o.pointsDiscount||0)} off`);
-    }
-    if(o.hasOnOrderItems){
-        lines.push(``);
-        lines.push(`Note: Items marked [Shipped on Order] require a 50% deposit and arrive in ~2 weeks.`);
-    }
-    if(o.hasQuoteItems){
-        lines.push(``);
-        lines.push(`Note: Some items require a quote — please confirm final prices.`);
-    }
+    if(o.hasQuoteItems){ lines.push(`Fixed items total: ${formatPrice(o.fixedItemsTotal||o.total||0)} (+ quote items)`); }
+    else { lines.push(`TOTAL: ${formatPrice(o.total||0)}`); }
+    if(o.pointsRedeemed > 0){ lines.push(`⭐ Loyalty redemption: ${o.pointsRedeemed} points = ${formatPrice(o.pointsDiscount||0)} off`); }
+    if(o.hasOnOrderItems){ lines.push(``); lines.push(`Note: Items marked [Shipped on Order] require a 50% deposit and arrive in ~2 weeks.`); }
+    if(o.hasQuoteItems){ lines.push(``); lines.push(`Note: Some items require a quote — please confirm final prices.`); }
     lines.push(``);
     lines.push(`Thank you for your business.`);
     lines.push(`ADIL: 0713349554 | SUHAYL: 0752763924`);
@@ -4152,9 +3783,8 @@ function printOrder(id){
         const tag = st === STOCK_ON_ORDER ? '<br><small style="color:#e65100;font-weight:700;">Shipped on Order ~2 weeks</small>' : '';
         const pmode = normalizePriceMode(i.priceMode);
         let priceCell, subtotalCell;
-        if(pmode === PRICE_ON_REQUEST){
-            priceCell = 'On request'; subtotalCell = '—';
-        } else if(pmode === PRICE_RANGE){
+        if(pmode === PRICE_ON_REQUEST){ priceCell = 'On request'; subtotalCell = '—'; }
+        else if(pmode === PRICE_RANGE){
             const mn = Number(i.priceMin)||0, mx = Number(i.priceMax)||0;
             let rTxt;
             if(!mn && !mx) rTxt = 'On request';
@@ -4162,17 +3792,12 @@ function printOrder(id){
             else if(!mx) rTxt = `From ${formatPrice(mn)}`;
             else rTxt = `${formatPrice(mn)} – ${formatPrice(mx)}`;
             priceCell = rTxt; subtotalCell = '—';
-        } else {
-            priceCell = formatPrice(i.price); subtotalCell = formatPrice(i.subtotal);
-        }
+        } else { priceCell = formatPrice(i.price); subtotalCell = formatPrice(i.subtotal); }
         const partNo = i.partNo || i.sku || '';
         const brand = i.brand || '';
         const subline = [partNo ? `Part No: ${escapeHtml(partNo)}` : '', brand ? `Brand: ${escapeHtml(brand)}` : ''].filter(Boolean).join(' · ');
         return `<tr>
-            <td>
-                ${escapeHtml(i.name)}${tag}
-                ${subline ? `<br><small style="color:#555;font-size:11px;">${subline}</small>` : ''}
-            </td>
+            <td>${escapeHtml(i.name)}${tag}${subline ? `<br><small style="color:#555;font-size:11px;">${subline}</small>` : ''}</td>
             <td style="text-align:center">${i.quantity}</td>
             <td style="text-align:right">${priceCell}</td>
             <td style="text-align:right">${subtotalCell}</td>
@@ -4183,9 +3808,7 @@ function printOrder(id){
     if(o.hasQuoteItems) notesArr.push('Some items require a quote — final prices will be confirmed.');
     if(o.pointsRedeemed > 0) notesArr.push(`Loyalty: ${o.pointsRedeemed} points redeemed = ${formatPrice(o.pointsDiscount||0)} off.`);
     const notesHTML = notesArr.length ? `<div style="background:#fff8e1;border-left:3px solid #ffc107;padding:8px 12px;border-radius:5px;font-size:12px;color:#e65100;margin-top:10px;"><strong>Note:</strong> ${notesArr.join(' ')}</div>` : '';
-    const totalHTML = o.hasQuoteItems
-        ? `Fixed items total: ${formatPrice(o.total||0)} <span style="font-size:12px;color:#1565c0;">+ quote items</span>`
-        : `TOTAL: ${formatPrice(o.total||0)}`;
+    const totalHTML = o.hasQuoteItems ? `Fixed items total: ${formatPrice(o.total||0)} <span style="font-size:12px;color:#1565c0;">+ quote items</span>` : `TOTAL: ${formatPrice(o.total||0)}`;
     const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Receipt #${escapeHtml(o.id)}</title>
     <style>
         body{font-family:Arial,sans-serif;padding:20px;max-width:480px;margin:0 auto;color:#222}
@@ -4234,9 +3857,7 @@ function sendOrderToCustomer(id){
     const msg = buildReceiptText(o);
     window.open(`https://wa.me/${digits}?text=${encodeURIComponent(msg)}`, '_blank');
 }
-function escapeHtml(s){
-    return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
-}
+function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
 async function refreshOrdersFromGitHub(){
     showNotification('⏳ Refreshing orders...');
     await fetchOrdersFromGitHub();
@@ -4247,19 +3868,15 @@ async function refreshOrdersFromGitHub(){
     showNotification('✅ Orders refreshed');
 }
 
-// ==================== ADMIN PANEL ====================
 function showAdminPanel(){
     const tokenSaved = getToken() ? '✅ Saved' : '⚠️ Not saved yet';
     const tokenBadgeCls = getToken() ? 'ok' : 'warn';
-
     let html = `<div id="adminPanel" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:2000;overflow-y:auto;">
         <div style="max-width:900px;margin:0 auto;padding:20px;">
-
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                 <h2 style="color:#1a237e;margin:0;">🔧 Admin Panel</h2>
                 <button onclick="closeAdminPanel()" title="Close" style="width:40px;height:40px;border-radius:50%;background:#f44336;color:#fff;border:none;cursor:pointer;font-size:18px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.2);">✕</button>
             </div>
-
             <div class="admin-tabs">
                 <button class="admin-tab" data-tab="orders" onclick="switchAdminTab('orders')">📋 Orders</button>
                 <button class="admin-tab" data-tab="recon" onclick="switchAdminTab('recon')">💰 Reconciliation</button>
@@ -4270,24 +3887,16 @@ function showAdminPanel(){
                 <button class="admin-tab" data-tab="github" onclick="switchAdminTab('github')">🔑 GitHub</button>
                 <button class="admin-tab" data-tab="session" onclick="switchAdminTab('session')">👤 Session</button>
             </div>
-
             <div class="admin-panel-section" data-tab="orders">
                 <div class="admin-section-header">
-                    <div>
-                        <h3>📋 Orders</h3>
-                        <div class="admin-section-sub" id="ordersCount">Loading…</div>
-                    </div>
+                    <div><h3>📋 Orders</h3><div class="admin-section-sub" id="ordersCount">Loading…</div></div>
                     <button onclick="refreshOrdersFromGitHub()" style="padding:10px 16px;background:#2196f3;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;">🔄 Refresh</button>
                 </div>
                 <div id="ordersList"></div>
             </div>
-
             <div class="admin-panel-section" data-tab="recon">
                 <div class="admin-section-header">
-                    <div>
-                        <h3>💰 Reconciliation</h3>
-                        <div class="admin-section-sub">Sales summary for any period you choose</div>
-                    </div>
+                    <div><h3>💰 Reconciliation</h3><div class="admin-section-sub">Sales summary for any period you choose</div></div>
                     <button onclick="refreshOrdersFromGitHub()" style="padding:10px 16px;background:#2196f3;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;">🔄 Refresh</button>
                 </div>
                 <div class="recon-controls">
@@ -4299,13 +3908,9 @@ function showAdminPanel(){
                 </div>
                 <div id="reconContent"></div>
             </div>
-
             <div class="admin-panel-section" data-tab="customers">
                 <div class="admin-section-header">
-                    <div>
-                        <h3>👥 Customers (Loyalty)</h3>
-                        <div class="admin-section-sub" id="customersCount">Loading…</div>
-                    </div>
+                    <div><h3>👥 Customers (Loyalty)</h3><div class="admin-section-sub" id="customersCount">Loading…</div></div>
                     <button onclick="refreshOrdersFromGitHub()" style="padding:10px 16px;background:#2196f3;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;">🔄 Refresh</button>
                 </div>
                 <div class="admin-card-box" style="background:#fff3e0;border-color:#ffcc80;">
@@ -4317,40 +3922,28 @@ function showAdminPanel(){
                 </div>
                 <div id="customersList"></div>
             </div>
-
             <div class="admin-panel-section" data-tab="parts">
                 <div class="admin-section-header">
-                    <div>
-                        <h3>🔩 Manage Parts</h3>
-                        <div class="admin-section-sub" id="adminSearchCount"></div>
-                    </div>
+                    <div><h3>🔩 Manage Parts</h3><div class="admin-section-sub" id="adminSearchCount"></div></div>
                     <button onclick="reloadProductsFromGitHub()" style="padding:10px 16px;background:#1a237e;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;">🔄 Reload</button>
                 </div>
                 <div class="admin-search-wrap">
                     <div class="admin-search-row">
-                        <input type="text" id="adminSearchInput" placeholder="Search name, Part No, brand, category, SKU…" oninput="handleAdminSearch(this.value)" value="${escapeAttr(adminSearchTerm)}">
+                        <input type="text" id="adminSearchInput" placeholder="Search name, Part No, brand, category, SKU, chassis…" oninput="handleAdminSearch(this.value)" value="${escapeAttr(adminSearchTerm)}">
                         <button onclick="clearAdminSearch()">Clear</button>
                     </div>
                 </div>
                 <div id="adminProductList"></div>
             </div>
-
             <div class="admin-panel-section" data-tab="add">
                 <div class="admin-section-header">
-                    <div>
-                        <h3>➕ Add New Part</h3>
-                        <div class="admin-section-sub">Fill the full form and push straight to GitHub.</div>
-                    </div>
+                    <div><h3>➕ Add New Part</h3><div class="admin-section-sub">Fill the full form and push straight to GitHub.</div></div>
                 </div>
                 <div id="addProductForm"></div>
             </div>
-
             <div class="admin-panel-section" data-tab="availability">
                 <div class="admin-section-header">
-                    <div>
-                        <h3>🟢 Availability Status</h3>
-                        <div class="admin-section-sub">Green = Available. Grey = Away (customers can still order).</div>
-                    </div>
+                    <div><h3>🟢 Availability Status</h3><div class="admin-section-sub">Green = Available. Grey = Away (customers can still order).</div></div>
                 </div>
                 <div class="admin-card-box">
                     <div style="display:flex;gap:20px;flex-wrap:wrap;">
@@ -4361,22 +3954,15 @@ function showAdminPanel(){
                 </div>
                 <div class="admin-card-box" style="margin-top:16px;">
                     <h4 style="color:#1a237e;margin-bottom:10px;font-size:15px;">🔒 Loyalty Points Redemption Lock</h4>
-                    <p style="font-size:13px;color:#555;line-height:1.5;margin-bottom:12px;">
-                        When <strong>locked</strong>, customers cannot redeem points for discounts in the cart.
-                        Points still accumulate, but redemption is blocked.
-                    </p>
+                    <p style="font-size:13px;color:#555;line-height:1.5;margin-bottom:12px;">When <strong>locked</strong>, customers cannot redeem points for discounts in the cart. Points still accumulate, but redemption is blocked.</p>
                     <button onclick="togglePointsRedemptionLock()" id="pointsRedemptionLockBtn" style="width:100%;padding:14px;background:${pointsRedemptionLocked ? '#f44336' : '#4caf50'};color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:15px;">
                         ${pointsRedemptionLocked ? '🔒 Redemption LOCKED — Click to Unlock' : '🔓 Redemption UNLOCKED — Click to Lock'}
                     </button>
                 </div>
             </div>
-
             <div class="admin-panel-section" data-tab="github">
                 <div class="admin-section-header">
-                    <div>
-                        <h3>🔑 GitHub Token</h3>
-                        <div class="admin-section-sub">Status: <span class="admin-badge ${tokenBadgeCls}">${tokenSaved}</span></div>
-                    </div>
+                    <div><h3>🔑 GitHub Token</h3><div class="admin-section-sub">Status: <span class="admin-badge ${tokenBadgeCls}">${tokenSaved}</span></div></div>
                 </div>
                 <div class="admin-card-box">
                     <p style="font-size:13px;color:#555;margin-bottom:12px;">Paste your GitHub Personal Access Token below. It stays on this device only (localStorage). Used to push changes to <code>products.json</code>, <code>options.json</code>, <code>availability.json</code>, <code>orders.json</code>, <code>customers.json</code> and <code>vehicleModels.json</code>.</p>
@@ -4392,24 +3978,18 @@ function showAdminPanel(){
                     <button onclick="pushAllToGitHub()" style="width:100%;padding:12px;background:#2e7d32;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;">⬆️ Push All Changes</button>
                 </div>
             </div>
-
             <div class="admin-panel-section" data-tab="session">
                 <div class="admin-section-header">
-                    <div>
-                        <h3>👤 Session</h3>
-                        <div class="admin-section-sub">You are logged in as admin.</div>
-                    </div>
+                    <div><h3>👤 Session</h3><div class="admin-section-sub">You are logged in as admin.</div></div>
                 </div>
                 <div class="admin-card-box">
                     <p style="font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;">Closing this panel keeps you logged in until you refresh the page or click Log Out. The panel auto-locks on page reload.</p>
                     <button onclick="logOutAdmin()" style="padding:12px 20px;background:#f44336;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;">🔒 Log Out</button>
                 </div>
             </div>
-
             <button onclick="closeAdminPanel()" style="width:100%;padding:14px;background:#ff6f00;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;margin-top:20px;">Close Panel</button>
         </div>
     </div>`;
-
     document.body.insertAdjacentHTML('beforeend', html);
     switchAdminTab(currentAdminTab);
     if(!cachedOrders || cachedOrders.length === 0){
@@ -4419,9 +3999,7 @@ function showAdminPanel(){
         });
     }
     if(!customersData || Object.keys(customersData).length === 0){
-        fetchCustomersFromGitHub().then(() => {
-            if(currentAdminTab === 'customers') renderCustomersList();
-        });
+        fetchCustomersFromGitHub().then(() => { if(currentAdminTab === 'customers') renderCustomersList(); });
     }
 }
 function saveTokenFromPanel(){ const t = document.getElementById('tokenInput').value.trim(); if(!t){ alert('Please paste a token.'); return; } setToken(t); alert('✅ Token saved on this device.'); closeAdminPanel(); showAdminPanel(); }
@@ -4450,6 +4028,7 @@ function showAddProductForm(){
     const catCombo = buildAdminComboHTML('new_cat', 'Category', catOptions, '', 'Type new category name');
     const brandCombo = buildAdminComboHTML('new_br', 'Brand', brandOptions, '', 'Type new brand name');
     const fitmentsWidget = buildFitmentsWidget('new_fit', []);
+    const chassisWidget = buildChassisWidget('new_fit', []); // SAME KEY reads fitments models
     const pointsLockNewHTML = `
         <div style="background:#f3e5f5;padding:10px;border-radius:6px;margin:10px 0;border-left:3px solid #9c27b0;">
             <label style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer;">
@@ -4468,6 +4047,7 @@ function showAddProductForm(){
             <div><label>Stock:</label><input type="number" id="new_stock" value="0" style="width:100%;padding:5px;"></div>
         </div>
         ${fitmentsWidget}
+        ${chassisWidget}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
             <div><label>Year Start:</label><input type="number" id="new_ystart" value="0" style="width:100%;padding:5px;"></div>
             <div><label>Year End:</label><input type="number" id="new_yend" value="0" style="width:100%;padding:5px;"></div>
@@ -4483,6 +4063,7 @@ function showAddProductForm(){
     document.getElementById('addProductForm').innerHTML=formHTML;
     renderMultiImagePicker('new_img');
     fitmentsRenderAll('new_fit');
+    chassisRenderAll('new_fit');
 }
 async function addNewProduct(){
     const form = document.getElementById('newProductForm');
@@ -4495,42 +4076,23 @@ async function addNewProduct(){
     const nameVal = document.getElementById('new_name').value;
     const stockStatus = normalizeStock(document.getElementById('new_stock_status').value);
     const fitments = fitmentsRead('new_fit');
-    if(fitments.length === 0){
-        alert('Please add at least one fitment (make + models).');
-        return;
-    }
+    const chassis = chassisRead('new_fit');
+    if(fitments.length === 0){ alert('Please add at least one fitment (make + models).'); return; }
     const application = (document.getElementById('new_application').value || '').trim() || buildApplicationFromFitments(fitments);
     if(!brandVal){ alert('Please select or add a brand.'); return; }
     if(!catVal){ alert('Please select or add a category.'); return; }
-
     const priceData = readPriceModeValue('new_price');
-    if(priceData.priceMode === PRICE_FIXED && !priceData.price){
-        alert('Please enter a price, or switch Price mode to Range / On request.');
-        return;
-    }
-    if(priceData.priceMode === PRICE_RANGE && !priceData.priceMin && !priceData.priceMax){
-        alert('Please enter at least one of Min / Max, or switch to On request.');
-        return;
-    }
-
+    if(priceData.priceMode === PRICE_FIXED && !priceData.price){ alert('Please enter a price, or switch Price mode to Range / On request.'); return; }
+    if(priceData.priceMode === PRICE_RANGE && !priceData.priceMin && !priceData.priceMax){ alert('Please enter at least one of Min / Max, or switch to On request.'); return; }
     const changed = fitmentsApplyToVehicleModels(fitments);
-    if(changed){
-        showNotification('⏳ Saving new makes/models to GitHub...');
-        await saveVehicleModelsToGitHub();
-    }
-
+    if(changed){ showNotification('⏳ Saving new makes/models to GitHub...'); await saveVehicleModelsToGitHub(); }
     const dup = findDuplicate({ name: nameVal, partNo: partNo, sku: null }, -1);
     if(dup){
         const proceed = await showDuplicateBanner(form, dup, (match) => {
             if(adminLoggedIn) closeAdminPanel();
             showAdminPanel();
             const idx = products.indexOf(match);
-            if(idx >= 0){
-                setTimeout(() => {
-                    const el = document.getElementById('name_' + idx);
-                    if(el){ el.scrollIntoView({behavior:'smooth', block:'center'}); el.style.transition='background 0.5s'; el.style.background='#fff3e0'; setTimeout(()=>el.style.background='', 1500); }
-                }, 300);
-            }
+            if(idx >= 0){ setTimeout(() => { const el = document.getElementById('name_' + idx); if(el){ el.scrollIntoView({behavior:'smooth', block:'center'}); el.style.transition='background 0.5s'; el.style.background='#fff3e0'; setTimeout(()=>el.style.background='', 1500); } }, 300); }
         });
         if(!proceed) return;
     }
@@ -4554,6 +4116,7 @@ async function addNewProduct(){
         image: imgVal,
         images: images,
         fitments: fitments,
+        chassisCodes: chassis,
         yearStart:parseInt(document.getElementById('new_ystart').value)||0,
         yearEnd:parseInt(document.getElementById('new_yend').value)||0,
         stock:parseInt(document.getElementById('new_stock').value)||0,
@@ -4583,40 +4146,29 @@ async function updateProduct(index){
     products[index].images = images;
     products[index].image = images.length > 0 ? images[0] : '🔧';
     const fitments = fitmentsRead(`edit_fit_${index}`);
-    if(fitments.length === 0){
-        alert('Please add at least one fitment (make + models).');
-        return;
-    }
+    const chassis = chassisRead(`edit_fit_${index}`);
+    if(fitments.length === 0){ alert('Please add at least one fitment (make + models).'); return; }
     const appFromInput = (document.getElementById(`application_${index}`).value || '').trim();
     products[index].application = appFromInput || buildApplicationFromFitments(fitments);
     products[index].fitments = fitments;
+    products[index].chassisCodes = chassis;
     products[index].yearStart = parseInt(document.getElementById(`ystart_${index}`).value) || 0;
     products[index].yearEnd = parseInt(document.getElementById(`yend_${index}`).value) || 0;
     products[index].availability = normalizeStock(document.getElementById(`edit_stock_${index}`).value);
-
     const changed = fitmentsApplyToVehicleModels(fitments);
     if(changed){
         showNotification('⏳ Saving new makes/models to GitHub...');
         await saveVehicleModelsToGitHub();
         renderMakeOptions();
     }
-
     const priceData = readPriceModeValue(`edit_price_${index}`);
-    if(priceData.priceMode === PRICE_FIXED && !priceData.price){
-        alert('Please enter a price, or switch Price mode to Range / On request.');
-        return;
-    }
-    if(priceData.priceMode === PRICE_RANGE && !priceData.priceMin && !priceData.priceMax){
-        alert('Please enter at least one of Min / Max, or switch to On request.');
-        return;
-    }
+    if(priceData.priceMode === PRICE_FIXED && !priceData.price){ alert('Please enter a price, or switch Price mode to Range / On request.'); return; }
+    if(priceData.priceMode === PRICE_RANGE && !priceData.priceMin && !priceData.priceMax){ alert('Please enter at least one of Min / Max, or switch to On request.'); return; }
     products[index].priceMode = priceData.priceMode;
     products[index].price = priceData.price;
     products[index].priceMin = priceData.priceMin;
     products[index].priceMax = priceData.priceMax;
-
     products[index].pointsLocked = document.getElementById(`pointsLock_${index}`)?.checked || false;
-
     const newBrandVal = getAdminComboValue(`edit_br_${index}`);
     const newCatVal = getAdminComboValue(`edit_cat_${index}`);
     if(!newBrandVal){ alert('Please select or add a brand.'); return; }
@@ -4625,10 +4177,7 @@ async function updateProduct(index){
     if(dup){
         const proceed = await showDuplicateBanner(card, dup, (match) => {
             const midx = products.indexOf(match);
-            if(midx >= 0){
-                const el = document.getElementById('name_' + midx);
-                if(el){ el.scrollIntoView({behavior:'smooth', block:'center'}); el.style.transition='background 0.5s'; el.style.background='#fff3e0'; setTimeout(()=>el.style.background='', 1500); }
-            }
+            if(midx >= 0){ const el = document.getElementById('name_' + midx); if(el){ el.scrollIntoView({behavior:'smooth', block:'center'}); el.style.transition='background 0.5s'; el.style.background='#fff3e0'; setTimeout(()=>el.style.background='', 1500); } }
         });
         if(!proceed) return;
     }
@@ -4670,24 +4219,10 @@ async function togglePointsRedemptionLock(){
     await saveAvailabilityToGitHub();
 }
 function closeAdminPanel(){ const panel=document.getElementById('adminPanel'); if(panel)panel.remove(); }
-function logOutAdmin(){
-    adminLoggedIn = false;
-    adminSearchTerm = '';
-    closeAdminPanel();
-    alert('🔒 Logged out.');
-}
+function logOutAdmin(){ adminLoggedIn = false; adminSearchTerm = ''; closeAdminPanel(); alert('🔒 Logged out.'); }
 
-// ==================== AI CHAT ASSISTANT ====================
 let aiChatOpen = false;
-let aiChatState = {
-    stage: 'welcome',
-    make: null,
-    model: null,
-    year: null,
-    partType: null,
-    history: []
-};
-
+let aiChatState = { stage: 'welcome', make: null, model: null, year: null, partType: null, history: [] };
 function toggleAIChat(){
     const win = document.getElementById('aiChatWindow');
     const icon = document.getElementById('aiChatIcon');
@@ -4695,28 +4230,12 @@ function toggleAIChat(){
     if(aiChatOpen){
         win.classList.add('open');
         icon.className = 'fas fa-times';
-        if(aiChatState.history.length === 0){
-            startAIChat();
-        }
-        setTimeout(() => {
-            const inp = document.getElementById('aiChatInput');
-            if(inp) inp.focus();
-        }, 300);
-    } else {
-        win.classList.remove('open');
-        icon.className = 'fas fa-robot';
-    }
+        if(aiChatState.history.length === 0){ startAIChat(); }
+        setTimeout(() => { const inp = document.getElementById('aiChatInput'); if(inp) inp.focus(); }, 300);
+    } else { win.classList.remove('open'); icon.className = 'fas fa-robot'; }
 }
-
 function startAIChat(){
-    aiChatState = {
-        stage: 'welcome',
-        make: null,
-        model: null,
-        year: null,
-        partType: null,
-        history: []
-    };
+    aiChatState = { stage: 'welcome', make: null, model: null, year: null, partType: null, history: [] };
     document.getElementById('aiChatBody').innerHTML = '';
     aiBotSay(`Karibu A & S AUTOPARTS! 👋<br><br>I'm your parts assistant. I can help you find the right part for your car.<br><br>What would you like to do?`, [
         {label: '🔧 Find a part for my car', action: 'start_find'},
@@ -4725,7 +4244,6 @@ function startAIChat(){
         {label: '💬 Chat with a human', action: 'human'}
     ]);
 }
-
 function aiBotSay(html, chips){
     const body = document.getElementById('aiChatBody');
     const typing = document.createElement('div');
@@ -4733,13 +4251,11 @@ function aiBotSay(html, chips){
     typing.innerHTML = '<span></span><span></span><span></span>';
     body.appendChild(typing);
     body.scrollTop = body.scrollHeight;
-
     setTimeout(() => {
         typing.remove();
         const msg = document.createElement('div');
         msg.className = 'ai-msg bot';
         msg.innerHTML = html;
-
         if(chips && chips.length > 0){
             const chipWrap = document.createElement('div');
             chipWrap.className = 'ai-chips';
@@ -4747,13 +4263,7 @@ function aiBotSay(html, chips){
                 const btn = document.createElement('button');
                 btn.className = 'ai-chip' + (c.primary ? ' primary' : '') + (c.wa ? ' wa' : '');
                 btn.innerHTML = c.label;
-                btn.onclick = () => {
-                    if(c.href){
-                        window.open(c.href, '_blank');
-                    } else if(c.action){
-                        handleAIAction(c.action, c.value);
-                    }
-                };
+                btn.onclick = () => { if(c.href){ window.open(c.href, '_blank'); } else if(c.action){ handleAIAction(c.action, c.value); } };
                 chipWrap.appendChild(btn);
             });
             msg.appendChild(chipWrap);
@@ -4762,7 +4272,6 @@ function aiBotSay(html, chips){
         body.scrollTop = body.scrollHeight;
     }, 500);
 }
-
 function aiUserSay(text){
     const body = document.getElementById('aiChatBody');
     const msg = document.createElement('div');
@@ -4771,7 +4280,6 @@ function aiUserSay(text){
     body.appendChild(msg);
     body.scrollTop = body.scrollHeight;
 }
-
 function handleAIAction(action, value){
     switch(action){
         case 'start_find':
@@ -4786,16 +4294,8 @@ function handleAIAction(action, value){
                 {label: 'Other...', action: 'set_make_other', value: ''}
             ]);
             break;
-        case 'set_make':
-            aiUserSay(value);
-            aiChatState.make = value;
-            aiChatState.stage = 'model';
-            showModelsForMake(value);
-            break;
-        case 'set_make_other':
-            aiBotSay(`No problem. Please type your car's make in the message box below 👇`);
-            aiChatState.stage = 'make_typed';
-            break;
+        case 'set_make': aiUserSay(value); aiChatState.make = value; aiChatState.stage = 'model'; showModelsForMake(value); break;
+        case 'set_make_other': aiBotSay(`No problem. Please type your car's make in the message box below 👇`); aiChatState.stage = 'make_typed'; break;
         case 'set_model':
             aiUserSay(value);
             aiChatState.model = value;
@@ -4814,16 +4314,8 @@ function handleAIAction(action, value){
             aiChatState.stage = 'part';
             showPartTypes();
             break;
-        case 'set_year_typed':
-            aiBotSay(`Please type the exact year (e.g. 2018) in the message box 👇`);
-            aiChatState.stage = 'year_typed';
-            break;
-        case 'set_part':
-            aiUserSay(value);
-            aiChatState.partType = value;
-            aiChatState.stage = 'results';
-            showAIResults();
-            break;
+        case 'set_year_typed': aiBotSay(`Please type the exact year (e.g. 2018) in the message box 👇`); aiChatState.stage = 'year_typed'; break;
+        case 'set_part': aiUserSay(value); aiChatState.partType = value; aiChatState.stage = 'results'; showAIResults(); break;
         case 'oil_help':
             aiBotSay(`For engine oil, we recommend:<br><br>🛢️ <b>Most Toyota/Nissan/Honda (2000-2015)</b>: 5W-30 or 10W-30<br>🛢️ <b>Modern cars (2015+)</b>: 0W-20 or 5W-20<br>🛢️ <b>Diesel Hilux/Prado</b>: 5W-30 or 15W-40<br>🛢️ <b>High mileage</b>: 10W-40 or 20W-50<br><br>We stock: Castrol, Total, Shell, Toyota Genuine.<br><br>Want me to check which oil fits your exact car?`, [
                 {label: '🔧 Yes, find my oil', action: 'start_find'},
@@ -4842,22 +4334,10 @@ function handleAIAction(action, value){
                 {label: '💬 WhatsApp SUHAYL', href: 'https://wa.me/254752763924?text=Hi%20SUHAYL%2C%20I%20need%20help%20with%20a%20part', wa: true}
             ]);
             break;
-        case 'model_other':
-            aiBotSay(`Please type the model name in the message box 👇`);
-            aiChatState.stage = 'model_typed';
-            break;
-        case 'part_other':
-            aiBotSay(`Please type the part you need in the message box 👇`);
-            aiChatState.stage = 'part_typed';
-            break;
-         case 'manual_points':
-            toggleAIChat();
-            openMyPoints();
-            break;
-        case 'manual_search':
-            toggleAIChat();
-            scrollToSection('products');
-            break;
+        case 'model_other': aiBotSay(`Please type the model name in the message box 👇`); aiChatState.stage = 'model_typed'; break;
+        case 'part_other': aiBotSay(`Please type the part you need in the message box 👇`); aiChatState.stage = 'part_typed'; break;
+        case 'manual_points': toggleAIChat(); openMyPoints(); break;
+        case 'manual_search': toggleAIChat(); scrollToSection('products'); break;
         case 'done':
             aiBotSay(`Asante! 🙏 Come back any time you need a part. You can reach us on WhatsApp 24/7.`, [
                 {label: '💬 WhatsApp ADIL', href: 'https://wa.me/254713349554', wa: true},
@@ -4866,7 +4346,6 @@ function handleAIAction(action, value){
             break;
     }
 }
-
 function showModelsForMake(make){
     const popular = {
         Toyota: ['Hilux', 'Corolla', 'Camry', 'Prado', 'Fortuner', 'RAV4', 'Vitz'],
@@ -4881,7 +4360,6 @@ function showModelsForMake(make){
     chips.push({label: 'Other...', action: 'model_other'});
     aiBotSay(`Which ${make} model?`, chips);
 }
-
 function showPartTypes(){
     aiBotSay(`Got it! What kind of part do you need?`, [
         {label: '🛢️ Oil & Filters', action: 'set_part', value: 'Filters'},
@@ -4894,18 +4372,13 @@ function showPartTypes(){
         {label: '📦 Something else', action: 'part_other'}
     ]);
 }
-
 function showAIResults(){
     const state = aiChatState;
     let filtered = products.filter(p => {
-        if(state.make || state.model){
-            const passes = productMatchesFitment(p, state.make || '', state.model || '', 0);
-            if(!passes) return false;
-        }
+        if(state.make || state.model){ const passes = productMatchesFitment(p, state.make || '', state.model || '', 0); if(!passes) return false; }
         if(state.partType && p.category !== state.partType) return false;
         return true;
     });
-
     if(filtered.length === 0){
         aiBotSay(`Hmm, I couldn't find an exact match in our current stock for:<br>• ${state.make} ${state.model}<br>• Category: ${state.partType}<br><br>But no worries — we can <b>source it for you</b> within a day or two.`, [
             {label: '💬 WhatsApp ADIL', href: `https://wa.me/254713349554?text=Hi%20ADIL%2C%20I%20need%20a%20${encodeURIComponent(state.partType)}%20for%20my%20${encodeURIComponent(state.make)}%20${encodeURIComponent(state.model)}`, wa: true},
@@ -4914,38 +4387,29 @@ function showAIResults(){
         ]);
         return;
     }
-
     filtered = filtered.slice(0, 3);
     const count = filtered.length;
     const body = document.getElementById('aiChatBody');
-
     const typing = document.createElement('div');
     typing.className = 'ai-msg bot typing';
     typing.innerHTML = '<span></span><span></span><span></span>';
     body.appendChild(typing);
     body.scrollTop = body.scrollHeight;
-
     setTimeout(() => {
         typing.remove();
-
         const intro = document.createElement('div');
         intro.className = 'ai-msg bot';
         intro.innerHTML = `Great! Here ${count === 1 ? 'is' : 'are'} <b>${count}</b> match${count > 1 ? 'es' : ''} for your ${escapeAttr(state.make)} ${escapeAttr(state.model)}:`;
         body.appendChild(intro);
-
         filtered.forEach(prod => {
             const idx = products.indexOf(prod);
             const { text: priceTxt } = priceDisplay(prod);
             const partNo = prod.partNo || prod.oem || 'N/A';
             const st = normalizeStock(prod.availability);
-            const stockTag = st === STOCK_ON_ORDER
-                ? '<span class="cart-item-status on-order">Shipped on Order</span>'
-                : '<span class="cart-item-status in-stock">In Stock</span>';
+            const stockTag = st === STOCK_ON_ORDER ? '<span class="cart-item-status on-order">Shipped on Order</span>' : '<span class="cart-item-status in-stock">In Stock</span>';
             const imgs = getProductImages(prod);
             const firstImg = imgs.length > 0 ? imgs[0] : '🔧';
-            const imgHtml = isImageReference(firstImg)
-                ? `<img src="${escapeAttr(firstImg)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">`
-                : escapeAttr(firstImg);
+            const imgHtml = isImageReference(firstImg) ? `<img src="${escapeAttr(firstImg)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">` : escapeAttr(firstImg);
             const msg = document.createElement('div');
             msg.className = 'ai-msg bot';
             msg.style.maxWidth = '100%';
@@ -4971,9 +4435,7 @@ function showAIResults(){
             `;
             body.appendChild(msg);
         });
-
         body.scrollTop = body.scrollHeight;
-
         setTimeout(() => {
             aiBotSay(`Anything else I can help with?`, [
                 {label: '🔍 Search another part', action: 'start_find'},
@@ -4983,25 +4445,15 @@ function showAIResults(){
         }, 500);
     }, 500);
 }
-
 function sendAIMessage(){
     const input = document.getElementById('aiChatInput');
     const text = input.value.trim();
     if(!text) return;
     input.value = '';
     aiUserSay(text);
-
     const lower = text.toLowerCase();
     const state = aiChatState;
-
-    if(state.stage === 'make_typed'){
-        state.make = text;
-        state.stage = 'model';
-        setTimeout(() => {
-            showModelsForMake(text);
-        }, 300);
-        return;
-    }
+    if(state.stage === 'make_typed'){ state.make = text; state.stage = 'model'; setTimeout(() => { showModelsForMake(text); }, 300); return; }
     if(state.stage === 'model_typed'){
         state.model = text;
         state.stage = 'year';
@@ -5015,23 +4467,11 @@ function sendAIMessage(){
         }, 300);
         return;
     }
-    if(state.stage === 'year_typed'){
-        state.year = text;
-        state.stage = 'part';
-        setTimeout(() => { showPartTypes(); }, 300);
-        return;
-    }
-    if(state.stage === 'part_typed'){
-        state.partType = text;
-        state.stage = 'results';
-        setTimeout(() => { showAIResults(); }, 300);
-        return;
-    }
-
+    if(state.stage === 'year_typed'){ state.year = text; state.stage = 'part'; setTimeout(() => { showPartTypes(); }, 300); return; }
+    if(state.stage === 'part_typed'){ state.partType = text; state.stage = 'results'; setTimeout(() => { showAIResults(); }, 300); return; }
     setTimeout(() => {
-        if(lower.includes('oil') || lower.includes('lubricant')){
-            handleAIAction('oil_help');
-        } else if(lower.includes('brake') || lower.includes('pad')){
+        if(lower.includes('oil') || lower.includes('lubricant')){ handleAIAction('oil_help'); }
+        else if(lower.includes('brake') || lower.includes('pad')){
             aiChatState.partType = 'Brakes';
             aiBotSay(`Brake pads! What car?`, [
                 {label: '🔧 Find brake pads', action: 'start_find'},
@@ -5054,9 +4494,8 @@ function sendAIMessage(){
                 {label: '💬 WhatsApp ADIL', href: 'https://wa.me/254713349554', wa: true},
                 {label: '💬 WhatsApp SUHAYL', href: 'https://wa.me/254752763924', wa: true}
             ]);
-        } else if(lower.includes('deliver') || lower.includes('shipping')){
-            handleAIAction('info');
-        } else if(lower.includes('hour') || lower.includes('open') || lower.includes('close')){
+        } else if(lower.includes('deliver') || lower.includes('shipping')){ handleAIAction('info'); }
+        else if(lower.includes('hour') || lower.includes('open') || lower.includes('close')){
             aiBotSay(`⏰ We're open:<br>• Mon-Fri: 8am - 5pm<br>• Sat: 8am - 12pm<br>• Sunday: Closed<br><br>But WhatsApp is answered 24/7!`, [
                 {label: '💬 WhatsApp ADIL', href: 'https://wa.me/254713349554', wa: true},
                 {label: '💬 WhatsApp SUHAYL', href: 'https://wa.me/254752763924', wa: true}
@@ -5087,19 +4526,12 @@ function sendAIMessage(){
         }
     }, 400);
 }
-
-// Add manual_cart handler
 const _origHandleAIAction = handleAIAction;
 handleAIAction = function(action, value){
-    if(action === 'manual_cart'){
-        toggleAIChat();
-        viewCart();
-        return;
-    }
+    if(action === 'manual_cart'){ toggleAIChat(); viewCart(); return; }
     return _origHandleAIAction(action, value);
 };
 
-// ==================== INITIALIZE ====================
 async function init(){
     const grid = document.getElementById('productGrid');
     grid.innerHTML = `<div class="loading-state"><div class="spinner"></div><div>Loading parts from GitHub...</div></div>`;

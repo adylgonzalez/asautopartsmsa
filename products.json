@@ -4763,9 +4763,9 @@
     "application": "LEXUS NX200T AGZ15 NX300H AYZ15 HARRIER ASU60 ZIO ANA10 RAV-4 ACA30 VANGUARD ACA33 COROLLA ZRE - AGZ15 AGZ10 AYZ15 ZSU65 AVU65 ZSU60 ASU60 ANA10 ANA15",
     "category": "Suspension",
     "brand": "TOYOTA Genuine",
-    "image": "images/new-part-1791342472703.jpg",
+    "image": "https://adylgonzalez.github.io/asautopartsmsa/images/new-part-1791342472703.jpg",
     "images": [
-      "images/new-part-1791342472703.jpg"
+      "https://adylgonzalez.github.io/asautopartsmsa/images/new-part-1791342472703.jpg"
     ],
     "vehicleMake": "Lexus",
     "vehicleModel": "NX200T",
@@ -4774,7 +4774,77 @@
     "stock": 0,
     "description": "",
     "availability": "in_stock",
-    "sku": "SKU-1791342492467"
+    "sku": "SKU-1791342492467",
+    "fitments": [
+      {
+        "make": "Lexus",
+        "models": [
+          "NX200T",
+          "NX300H"
+        ]
+      },
+      {
+        "make": "Toyota",
+        "models": [
+          "Harrier",
+          "RAV4",
+          "Vanguard",
+          "Corolla",
+          "Mark X Zio"
+        ]
+      }
+    ],
+    "chassisCodes": [
+      {
+        "model": "Vanguard",
+        "codes": [
+          "ACA30",
+          "ACA31",
+          "ACA33",
+          "ACA38"
+        ]
+      },
+      {
+        "model": "RAV4",
+        "codes": [
+          "ACA30",
+          "ACA31",
+          "ACA33",
+          "ACA38"
+        ]
+      },
+      {
+        "model": "Harrier",
+        "codes": [
+          "ZSU60",
+          "ZSU65"
+        ]
+      },
+      {
+        "model": "Mark X Zio",
+        "codes": [
+          "ANA10",
+          "ANA15"
+        ]
+      },
+      {
+        "model": "NX200T",
+        "codes": [
+          "AGZ10",
+          "AGZ15",
+          "AYZ15"
+        ]
+      },
+      {
+        "model": "NX300H",
+        "codes": [
+          "AGZ10",
+          "AGZ15",
+          "AYZ15"
+        ]
+      }
+    ],
+    "pointsLocked": false
   },
   {
     "name": "Shock Absorber Rear",

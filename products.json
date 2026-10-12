@@ -4888,7 +4888,37 @@
     "description": "",
     "availability": "in_stock",
     "pointsLocked": false,
-    "sku": "SKU-1791820931217"
+    "sku": "SKU-1791820931217",
+    "chassisCodes": [
+      {
+        "model": "Vellfire",
+        "codes": [
+          "ANH20",
+          "ACR50"
+        ]
+      },
+      {
+        "model": "Alphard",
+        "codes": [
+          "ANH20",
+          "ACR50"
+        ]
+      },
+      {
+        "model": "Estima",
+        "codes": [
+          "ANH20",
+          "ACR50"
+        ]
+      },
+      {
+        "model": "Vanguard",
+        "codes": [
+          "ACA33",
+          "GSA33"
+        ]
+      }
+    ]
   },
   {
     "name": "Front Shock Absorber",

@@ -4861,21 +4861,29 @@
     "partNo": "339031/2",
     "oem": "339031/2",
     "supercedes": "",
-    "application": "Toyota Rav4",
+    "application": "Toyota Vanguard, Rumion, Auris, Alphard, Vellfire, Estima, RAV4",
     "category": "Suspension",
     "brand": "KYB",
     "image": "🔧",
-    "images": [],
+    "images": [
+      "🔧"
+    ],
     "fitments": [
       {
-        "make": "Lexus",
+        "make": "Toyota",
         "models": [
-          "ACA30/ACA31/ACA33/ACA38/ZSU60/ZSU65/LEXUS NS SERIES"
+          "Vanguard",
+          "Rumion",
+          "Auris",
+          "Alphard",
+          "Vellfire",
+          "Estima",
+          "RAV4"
         ]
       }
     ],
-    "yearStart": 0,
-    "yearEnd": 0,
+    "yearStart": 2006,
+    "yearEnd": 2013,
     "stock": 4,
     "description": "",
     "availability": "in_stock",

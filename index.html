@@ -1442,6 +1442,22 @@ function normalizePhone(p){
     return digits;
 }
 
+// Find a customer by phone number, scanning ALL keys in customersData so any stored
+// format (0712..., 254712..., +254712..., 712...) matches.
+function findCustomerByPhone(phoneRaw){
+    if(!phoneRaw) return null;
+    const norm = normalizePhone(phoneRaw);
+    if(!norm) return null;
+    // 1. Direct hit
+    if(customersData[norm]) return customersData[norm];
+    // 2. Scan keys and compare normalized
+    const keys = Object.keys(customersData);
+    for(const k of keys){
+        if(normalizePhone(k) === norm) return customersData[k];
+    }
+    return null;
+}
+
 async function fetchCustomersFromGitHub(){
     try {
         const res = await axios.get(CUSTOMERS_URL + '?t=' + Date.now());
@@ -1470,11 +1486,19 @@ async function saveCustomersToGitHub(){
 
 function awardPointsForOrder(order){
     // Only called when order status = delivered
-    const phone = normalizePhone(order.customerPhone);
-    if(!phone) return { awarded: false, reason: 'no phone' };
-    if(!customersData[phone]){
-        customersData[phone] = {
-            phone: phone,
+    const phoneNorm = normalizePhone(order.customerPhone);
+    if(!phoneNorm) return { awarded: false, reason: 'no phone' };
+    // Find customer by any format
+    let cust = findCustomerByPhone(order.customerPhone);
+    let custKey = null;
+    if(cust){
+        // Find the key that matched, so we can update the correct entry
+        custKey = Object.keys(customersData).find(k => customersData[k] === cust);
+    }
+    if(!cust){
+        custKey = phoneNorm;
+        customersData[custKey] = {
+            phone: phoneNorm,
             name: order.customerName || 'Customer',
             points: 0,
             totalSpent: 0,
@@ -1482,12 +1506,13 @@ function awardPointsForOrder(order){
             lastOrderDate: order.date || new Date().toISOString(),
             awardedOrders: []
         };
+        cust = customersData[custKey];
     }
-    const cust = customersData[phone];
+    if(!cust.awardedOrders) cust.awardedOrders = [];
     if(cust.awardedOrders.includes(order.id)){
         return { awarded: false, reason: 'already awarded', points: cust.points };
     }
-    
+
     // Calculate points only from unlocked items (per-item lock) and only fixed-price items
     let pointsEligibleTotal = 0;
     (order.items || []).forEach(item => {
@@ -1497,14 +1522,15 @@ function awardPointsForOrder(order){
             pointsEligibleTotal += Number(item.subtotal) || 0;
         }
     });
-    
+
     const points = Math.floor(pointsEligibleTotal / POINTS_PER_KSH);
-    cust.points += points;
-    cust.totalSpent += Number(order.total) || 0;
-    cust.ordersCount += 1;
+    cust.points = (Number(cust.points)||0) + points;
+    cust.totalSpent = (Number(cust.totalSpent)||0) + (Number(order.total) || 0);
+    cust.ordersCount = (Number(cust.ordersCount)||0) + 1;
     cust.lastOrderDate = order.date || new Date().toISOString();
     cust.awardedOrders.push(order.id);
     if(order.customerName) cust.name = order.customerName;
+    if(!cust.phone) cust.phone = phoneNorm;
 
     // NOTE: Points redeemed on this order were already deducted at order placement.
     // Do NOT deduct again here.
@@ -1512,15 +1538,18 @@ function awardPointsForOrder(order){
     return { awarded: true, points: cust.points, earned: points };
 }
 
-// Deduct redeemed points immediately when the order is placed
-async function deductRedeemedPointsOnOrder(custPhoneNorm, pointsRedeemed, orderId){
+// Deduct redeemed points immediately when the order is placed.
+// Uses findCustomerByPhone so any stored phone format matches.
+async function deductRedeemedPointsOnOrder(custPhoneRaw, pointsRedeemed, orderId){
     if(!pointsRedeemed || pointsRedeemed <= 0) return false;
-    if(!custPhoneNorm) return false;
-    const cust = customersData[custPhoneNorm];
+    if(!custPhoneRaw) return false;
+    const cust = findCustomerByPhone(custPhoneRaw);
     if(!cust) return false;
-    cust.points = Math.max(0, (Number(cust.points)||0) - pointsRedeemed);
+    const before = Number(cust.points) || 0;
+    cust.points = Math.max(0, before - pointsRedeemed);
     if(!cust.redeemedOrders) cust.redeemedOrders = [];
     if(!cust.redeemedOrders.includes(orderId)) cust.redeemedOrders.push(orderId);
+    console.log(`⭐ Points deducted: ${before} → ${cust.points} (−${pointsRedeemed}) for order ${orderId}`);
     return await saveCustomersToGitHub();
 }
 
@@ -1537,12 +1566,12 @@ function closeMyPoints(){
 
 function checkMyPoints(){
     const input = document.getElementById('pointsPhone');
-    const phone = normalizePhone(input.value);
     const result = document.getElementById('pointsResult');
-    if(!phone){ result.innerHTML = `<div class="points-none">Please enter your phone number.</div>`; return; }
-    const cust = customersData[phone];
+    const raw = input.value.trim();
+    if(!raw){ result.innerHTML = `<div class="points-none">Please enter your phone number.</div>`; return; }
+    const cust = findCustomerByPhone(raw);
     if(!cust){
-        result.innerHTML = `<div class="points-none">No points yet for <strong>${escapeAttr(input.value)}</strong>.<br><br>Your points start earning on your first delivered order. ⭐</div>`;
+        result.innerHTML = `<div class="points-none">No points yet for <strong>${escapeAttr(raw)}</strong>.<br><br>Your points start earning on your first delivered order. ⭐</div>`;
         return;
     }
     const worth = (cust.points * POINTS_REDEEM_VALUE).toFixed(0);
@@ -2439,8 +2468,7 @@ function viewCart(){
 
         // Calculate discount if redemption is applied
         const custPhoneRaw = (document.getElementById('custPhone')?.value || '').trim();
-        const custPhoneNorm = normalizePhone(custPhoneRaw);
-        const cust = custPhoneNorm ? customersData[custPhoneNorm] : null;
+        const cust = findCustomerByPhone(custPhoneRaw);
         const availablePoints = cust ? (Number(cust.points)||0) : 0;
         const maxRedeemable = Math.min(availablePoints * POINTS_REDEEM_VALUE, totals.fixedTotal);
         const discount = (cartRedeemApplied && cust && !pointsRedemptionLocked) ? maxRedeemable : 0;
@@ -2515,12 +2543,11 @@ function renderCartLoyaltyBox(){
     const box = document.getElementById('loyaltyBoxWrap');
     if(!box) return;
     const phoneRaw = (document.getElementById('custPhone')?.value || '').trim();
-    const phoneNorm = normalizePhone(phoneRaw);
-    if(!phoneNorm){
+    if(!phoneRaw){
         box.innerHTML = `<div class="cart-loyalty-box"><div class="loyalty-line">⭐ Loyalty points</div><div class="loyalty-none">Enter your phone number above to check your points and redeem.</div></div>`;
         return;
     }
-    const cust = customersData[phoneNorm];
+    const cust = findCustomerByPhone(phoneRaw);
     if(!cust || (cust.points||0) === 0){
         box.innerHTML = `<div class="cart-loyalty-box"><div class="loyalty-line">⭐ Loyalty points</div><div class="loyalty-none">No points yet for this number. Points are earned on delivered orders.</div></div>`;
         return;
@@ -2565,8 +2592,7 @@ function refreshCartTotalsInline(){
     const mpesaPanel = document.getElementById('mpesaPanel');
     if(!totalElement) return;
     const totals = computeCartTotals();
-    const phoneNorm = normalizePhone((document.getElementById('custPhone')?.value || '').trim());
-    const cust = phoneNorm ? customersData[phoneNorm] : null;
+    const cust = findCustomerByPhone((document.getElementById('custPhone')?.value || '').trim());
     const availablePoints = cust ? (Number(cust.points)||0) : 0;
     const maxRedeemable = Math.min(availablePoints * POINTS_REDEEM_VALUE, totals.fixedTotal);
     const discount = (cartRedeemApplied && cust && !pointsRedemptionLocked) ? maxRedeemable : 0;
@@ -2753,9 +2779,8 @@ async function checkoutCart(brother){
     const hasOnOrder = cart.some(i => normalizeStock(i.availability) === STOCK_ON_ORDER);
     const hasQuote = totals.hasQuote;
 
-    // Calculate loyalty discount
-    const phoneNorm = normalizePhone(custPhone);
-    const cust = phoneNorm ? customersData[phoneNorm] : null;
+    // Calculate loyalty discount — find customer by any stored phone format
+    const cust = findCustomerByPhone(custPhone);
     const availablePoints = cust ? (Number(cust.points)||0) : 0;
     const maxRedeemable = Math.min(availablePoints * POINTS_REDEEM_VALUE, totals.fixedTotal);
     const discount = (cartRedeemApplied && cust && !pointsRedemptionLocked) ? maxRedeemable : 0;
@@ -2863,12 +2888,12 @@ async function checkoutCart(brother){
 
     // IMPORTANT: Deduct redeemed points IMMEDIATELY at order placement
     // (so the customer can't double-redeem while the order awaits delivery)
-    if(pointsRedeemed > 0 && phoneNorm){
-        const deducted = await deductRedeemedPointsOnOrder(phoneNorm, pointsRedeemed, orderId);
+    if(pointsRedeemed > 0 && custPhone){
+        const deducted = await deductRedeemedPointsOnOrder(custPhone, pointsRedeemed, orderId);
         if(deducted){
             showNotification(`⭐ ${pointsRedeemed} points redeemed — balance updated.`);
         } else {
-            showNotification('⚠️ Order placed, but points deduction could not be saved. Please check your GitHub token.');
+            showNotification('⚠️ Order placed, but points could not be saved to GitHub.');
         }
     }
 

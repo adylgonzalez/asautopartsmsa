@@ -4807,5 +4807,35 @@
     "description": "",
     "availability": "in_stock",
     "sku": "SKU-1791403832191"
+  },
+  {
+    "name": "Front Shock Absorbers Set",
+    "price": 18200,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "339064/5",
+    "oem": "339064/5",
+    "supercedes": "334472/3,3340196/7",
+    "application": "SCP90/SCP91/KSP92/SCP92/NCP100/SCP100/NZE161/NZE164/NKE165",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "🔧",
+    "images": [],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "SCP90/SCP91/KSP92/SCP92/NCP100/SCP100/NZE161/NZE164/NKE165"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 5,
+    "description": "Fits in Toyota Vitz,Ractis,Axio,Belta,Yaris and Subaru Trezia",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1791820345115"
   }
 ]

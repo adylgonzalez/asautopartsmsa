@@ -2,7 +2,7 @@
   "254713349554": {
     "phone": "254713349554",
     "name": "Adil",
-    "points": 178,
+    "points": 0,
     "totalSpent": 59677,
     "ordersCount": 3,
     "lastOrderDate": "2026-10-11T17:05:54.172Z",
@@ -10,6 +10,9 @@
       "A41110107",
       "A22150011",
       "A38354151"
+    ],
+    "redeemedOrders": [
+      "A90857728"
     ]
   }
 }

@@ -5017,5 +5017,35 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1791823585605"
+  },
+  {
+    "name": "Rear Shock Absorber",
+    "price": 5200,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "341307",
+    "oem": "341307",
+    "supercedes": "",
+    "application": "Toyota Corolla",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "🔧",
+    "images": [],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "NCP81/NZE121/ZZE122/NZT260/ZRT260"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 6,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1791823815087"
   }
 ]

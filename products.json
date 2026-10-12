@@ -1815,19 +1815,33 @@
     "priceMode": "fixed",
     "partNo": "48531-0K340",
     "oem": "48531-0K340",
-    "application": "Toyota Hilux 2015-2023 4WD",
+    "application": "Toyota Hilux",
     "category": "Suspension",
     "brand": "KYB",
     "image": "🛠️",
-    "images": [],
+    "images": [
+      "🛠️"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Hilux",
     "yearStart": 2015,
     "yearEnd": 2023,
     "stock": 12,
-    "description": "Front shock absorber for Hilux 4WD. [VERIFY: supplier]",
+    "description": "Front shock absorber for Hilux 4WD. Toyota Hilux 2015-2023 4WD",
     "sku": "SA-TH4-1523",
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "supercedes": "",
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Hilux"
+        ]
+      }
+    ],
+    "priceMin": null,
+    "priceMax": null,
+    "pointsLocked": false
   },
   {
     "name": "Serpentine Belt - Nissan X-Trail T32 2.5",

@@ -4867,5 +4867,35 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1791820931217"
+  },
+  {
+    "name": "Front Shock Absorber",
+    "price": 7250,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "333368",
+    "oem": "333368",
+    "supercedes": "333407",
+    "application": "Toyota Probox Old Shape",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "🔧",
+    "images": [],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "NCP50/NCP51/NCP55/NCP58/NCP20/NCP21//SCP10/SCP13/NCP60/NCP65/NCP81/"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 6,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1791821359048"
   }
 ]

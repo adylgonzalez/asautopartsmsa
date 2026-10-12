@@ -89,9 +89,9 @@
     "price": 6200,
     "priceMode": "fixed",
     "category": "Brakes",
-    "image": "images/brake-pads-toyota-land-cruiser-1789140225809.jpg",
+    "image": "https://adylgonzalez.github.io/asautopartsmsa/images/brake-pads-toyota-land-cruiser-1789140225809.jpg",
     "images": [
-      "images/brake-pads-toyota-land-cruiser-1789140225809.jpg"
+      "https://adylgonzalez.github.io/asautopartsmsa/images/brake-pads-toyota-land-cruiser-1789140225809.jpg"
     ],
     "brand": "BOSCH",
     "partNo": "04465-60310",
@@ -104,7 +104,19 @@
     "yearEnd": 2023,
     "sku": "BP-TL-1023",
     "stock": 18,
-    "availability": "in_stock"
+    "availability": "in_stock",
+    "supercedes": "",
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Land Cruiser"
+        ]
+      }
+    ],
+    "priceMin": null,
+    "priceMax": null,
+    "pointsLocked": true
   },
   {
     "name": "Air Filter - Toyota",

@@ -5107,5 +5107,37 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1791824383027"
+  },
+  {
+    "name": "Shock Mounting Bearing",
+    "price": 0,
+    "priceMode": "range",
+    "priceMin": 1200,
+    "priceMax": 1950,
+    "partNo": "48619-0D011",
+    "oem": "48619-0D011",
+    "supercedes": "",
+    "application": "Toyota Ractis",
+    "category": "Suspension",
+    "brand": "TOYOTA Genuine",
+    "image": "images/new-part-1791824644701.jpg",
+    "images": [
+      "images/new-part-1791824644701.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "NCP110/NCP120/NSP120/NZE161/NKE165/NRE160/SCP90/NCP100/NSP130"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 4,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": true,
+    "sku": "SKU-1791824816820"
   }
 ]

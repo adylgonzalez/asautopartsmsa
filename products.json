@@ -4927,5 +4927,35 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1791821689866"
+  },
+  {
+    "name": "Front Shock Absorbers Set",
+    "price": 25000,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "335068/9",
+    "oem": "335068/9",
+    "supercedes": "",
+    "application": "Toyota Voxy",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "🔧",
+    "images": [],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "ZRR70/ZRR75/ZRR80/ZWR80/ZRR85"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 2,
+    "description": "Fits in Toyota Voxy and Noah From 2007 onwards",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1791822479564"
   }
 ]

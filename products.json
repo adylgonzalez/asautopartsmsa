@@ -1546,14 +1546,16 @@
     "application": "Lexus GS300 GRS190, GS350 GRS191, GS430/GS460 2005-2011",
     "category": "Brakes",
     "brand": "LEXUS Genuine",
-    "image": "🔧",
-    "images": [],
+    "image": "images/brake-pads-lexus-gs300-gs350-front-1791900466400.jpg",
+    "images": [
+      "images/brake-pads-lexus-gs300-gs350-front-1791900466400.jpg"
+    ],
     "vehicleMake": "Lexus",
     "vehicleModel": "GS300, GS350, GS430, GS460",
     "yearStart": 2005,
     "yearEnd": 2011,
     "stock": 8,
-    "description": "Front brake pads for Lexus GS300, GS350, GS430 and GS460. [VERIFY: supplier]",
+    "description": "Front brake pads for Lexus GS300, GS350, GS430 and GS460.",
     "sku": "BP-LGS-0511F",
     "availability": "in_stock",
     "fitments": [
@@ -1563,7 +1565,8 @@
           "GS300",
           "GS350",
           "GS430",
-          "GS460"
+          "GS460",
+          "IS200"
         ]
       }
     ],
@@ -1595,7 +1598,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Brake Pads - Toyota Harrier ACU30/GSU30 (Front)",

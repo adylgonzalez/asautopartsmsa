@@ -679,14 +679,16 @@
     "application": "Nissan X-Trail T32 2014-2023",
     "category": "Brakes",
     "brand": "NISSAN Genuine",
-    "image": "🔧",
-    "images": [],
+    "image": "images/brake-pads-nissan-x-trail-t32-front-1791899995289.jpg",
+    "images": [
+      "images/brake-pads-nissan-x-trail-t32-front-1791899995289.jpg"
+    ],
     "vehicleMake": "Nissan",
     "vehicleModel": "X-Trail",
     "yearStart": 2014,
     "yearEnd": 2023,
     "stock": 15,
-    "description": "Front brake pads for Nissan X-Trail T32. [VERIFY: supplier]",
+    "description": "Front brake pads for Nissan X-Trail T32.",
     "sku": "BP-NXT-1423",
     "availability": "in_stock",
     "fitments": [
@@ -719,7 +721,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Brake Pads - Nissan Note E12 (Front)",

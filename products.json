@@ -13922,8 +13922,10 @@
     "application": "Toyota Ractis 4WD",
     "category": "Suspension",
     "brand": "KYB",
-    "image": "🔧",
-    "images": [],
+    "image": "images/rear-shock-absorber-1791900668691.jpg",
+    "images": [
+      "images/rear-shock-absorber-1791900668691.jpg"
+    ],
     "fitments": [
       {
         "make": "Toyota",

@@ -616,8 +616,10 @@
     "application": "Toyota 4Runner, FJ Cruiser, Sequoia (rear parking brake)",
     "category": "Brakes",
     "brand": "TOYOTA Genuine",
-    "image": "🔧",
-    "images": [],
+    "image": "images/park-brake-shoe-toyota-4runner-fj-cruise-1791899880192.jpg",
+    "images": [
+      "images/park-brake-shoe-toyota-4runner-fj-cruise-1791899880192.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "4Runner, FJ Cruiser, Sequoia",
     "yearStart": 2001,
@@ -663,7 +665,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Brake Pads - Nissan X-Trail T32 (Front)",

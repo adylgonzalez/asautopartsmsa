@@ -13948,5 +13948,34 @@
         ]
       }
     ]
+  },
+  {
+    "name": "TEST",
+    "price": 0,
+    "priceMode": "on_request",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "TEST",
+    "oem": "TEST",
+    "supercedes": "",
+    "application": "Audi",
+    "category": "Accessories",
+    "brand": "ACDelco",
+    "image": "🔧",
+    "images": [],
+    "fitments": [
+      {
+        "make": "Audi",
+        "models": []
+      }
+    ],
+    "chassisCodes": [],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 1,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1791903698166"
   }
 ]

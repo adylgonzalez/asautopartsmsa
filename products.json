@@ -845,14 +845,16 @@
     "application": "Nissan Navara D40 2005-2015",
     "category": "Brakes",
     "brand": "BOSCH",
-    "image": "🔧",
-    "images": [],
+    "image": "images/brake-pads-nissan-navara-d40-front-1791900338457.jpg",
+    "images": [
+      "images/brake-pads-nissan-navara-d40-front-1791900338457.jpg"
+    ],
     "vehicleMake": "Nissan",
     "vehicleModel": "Navara",
     "yearStart": 2005,
     "yearEnd": 2015,
     "stock": 18,
-    "description": "Front brake pads for Nissan Navara D40. [VERIFY: supplier]",
+    "description": "Front brake pads for Nissan Navara D40.",
     "sku": "BP-NND-0515",
     "availability": "in_stock",
     "fitments": [
@@ -886,7 +888,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Brake Pads - Honda Civic FC1 (Front)",

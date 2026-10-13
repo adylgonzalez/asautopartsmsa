@@ -4120,14 +4120,16 @@
     "application": "Toyota Hilux 2005-2015, Fortuner, Hiace, Innova 1KD/2KD diesel",
     "category": "Fuel System",
     "brand": "TOYOTA Genuine",
-    "image": "⛽",
-    "images": [],
+    "image": "images/fuel-filter-toyota-hilux-fortuner-hiace--1791918191820.jpg",
+    "images": [
+      "images/fuel-filter-toyota-hilux-fortuner-hiace--1791918191820.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Hilux, Fortuner, Hiace, Innova",
     "yearStart": 2005,
     "yearEnd": 2015,
     "stock": 30,
-    "description": "Diesel fuel filter element for 1KD/2KD engines. Also cross-ref: 23390-0L010, 23390-0L020. [VERIFY: supplier]",
+    "description": "Diesel fuel filter element for 1KD/2KD engines. Also cross-ref: 23390-0L010, 23390-0L020.",
     "sku": "FF-TH-0515",
     "availability": "in_stock",
     "fitments": [
@@ -4174,7 +4176,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Fuel Filter - Toyota Hilux Revo / Fortuner (Diesel)",

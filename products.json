@@ -735,14 +735,16 @@
     "application": "Nissan Note E12 2012-2023",
     "category": "Brakes",
     "brand": "Akebono",
-    "image": "🔧",
-    "images": [],
+    "image": "images/brake-pads-nissan-note-e12-front-1791900089477.jpg",
+    "images": [
+      "images/brake-pads-nissan-note-e12-front-1791900089477.jpg"
+    ],
     "vehicleMake": "Nissan",
     "vehicleModel": "Note",
     "yearStart": 2012,
     "yearEnd": 2023,
     "stock": 20,
-    "description": "Front brake pads for Nissan Note E12. [VERIFY: supplier]",
+    "description": "Front brake pads for Nissan Note E12.",
     "sku": "BP-NN-1223",
     "availability": "in_stock",
     "fitments": [
@@ -770,7 +772,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Brake Pads - Nissan Tiida C11 (Front)",

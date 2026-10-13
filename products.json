@@ -786,14 +786,16 @@
     "application": "Nissan Tiida C11, Latio 2004-2012",
     "category": "Brakes",
     "brand": "BOSCH",
-    "image": "🔧",
-    "images": [],
+    "image": "images/brake-pads-nissan-tiida-c11-front-1791900247482.jpg",
+    "images": [
+      "images/brake-pads-nissan-tiida-c11-front-1791900247482.jpg"
+    ],
     "vehicleMake": "Nissan",
     "vehicleModel": "Tiida, Latio",
     "yearStart": 2004,
     "yearEnd": 2012,
     "stock": 20,
-    "description": "Front brake pads for Nissan Tiida and Latio. [VERIFY: supplier]",
+    "description": "Front brake pads for Nissan Tiida and Latio.",
     "sku": "BP-NT-0412",
     "availability": "in_stock",
     "fitments": [
@@ -829,7 +831,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Brake Pads - Nissan Navara D40 (Front)",

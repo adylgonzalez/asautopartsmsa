@@ -13965,8 +13965,10 @@
     "application": "Toyota Vitz",
     "category": "Suspension",
     "brand": "Febest",
-    "image": "🔧",
-    "images": [],
+    "image": "images/shock-absorber-mounting-fr-1791900782030.jpg",
+    "images": [
+      "images/shock-absorber-mounting-fr-1791900782030.jpg"
+    ],
     "fitments": [
       {
         "make": "Toyota",

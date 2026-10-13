@@ -2244,17 +2244,15 @@
     "oem": "26296-FJ000",
     "application": "Subaru Impreza GJ/GK, XV GP/GT 2011-2023 (Front)",
     "category": "Brakes",
-    "brand": "BOSCH",
-    "image": "images/brake-pads-subaru-impreza-gj-gk-front-1791900923945.jpg",
-    "images": [
-      "images/brake-pads-subaru-impreza-gj-gk-front-1791900923945.jpg"
-    ],
+    "brand": "SUBARU Genuine",
+    "image": "🔧",
+    "images": [],
     "vehicleMake": "Subaru",
     "vehicleModel": "Impreza, XV",
     "yearStart": 2011,
     "yearEnd": 2023,
     "stock": 8,
-    "description": "Front brake pads for Subaru Impreza GJ/GK and XV GP/GT.",
+    "description": "Front brake pads for Subaru Impreza GJ/GK and XV GP/GT. [VERIFY: supplier]",
     "sku": "BP-SIGJ-1123F",
     "availability": "in_stock",
     "fitments": [
@@ -2283,10 +2281,7 @@
         ]
       }
     ],
-    "pointsLocked": true,
-    "supercedes": "",
-    "priceMin": null,
-    "priceMax": null
+    "pointsLocked": true
   },
   {
     "name": "Brake Pads - Mitsubishi Galant EA/EC (Front)",
@@ -5028,16 +5023,14 @@
     "application": "Subaru Legacy BL/BP/BR/BM, Impreza GH/GJ/GK, Forester SH/SJ",
     "category": "Filters",
     "brand": "SUBARU Genuine",
-    "image": "images/oil-filter-subaru-legacy-impreza-foreste-1791901005536.jpg",
-    "images": [
-      "images/oil-filter-subaru-legacy-impreza-foreste-1791901005536.jpg"
-    ],
+    "image": "🔩",
+    "images": [],
     "vehicleMake": "Subaru",
     "vehicleModel": "Legacy, Impreza, Forester",
     "yearStart": 2003,
     "yearEnd": 2023,
     "stock": 30,
-    "description": "Genuine Subaru oil filter for Legacy, Impreza and Forester.",
+    "description": "Genuine Subaru oil filter for Legacy, Impreza and Forester. [VERIFY: supplier]",
     "sku": "OF-SJDM-0323",
     "availability": "in_stock",
     "fitments": [
@@ -5097,10 +5090,94 @@
         ]
       }
     ],
-    "pointsLocked": true,
-    "supercedes": "",
-    "priceMin": null,
-    "priceMax": null
+    "pointsLocked": true
+  },
+  {
+    "name": "Oil Filter - Subaru Forester / Impreza / Legacy",
+    "price": 1400,
+    "priceMode": "fixed",
+    "partNo": "15208-AA100",
+    "oem": "15208-AA100",
+    "application": "Subaru Forester, Impreza, Legacy, Outback, XV",
+    "category": "Filters",
+    "brand": "SUBARU Genuine",
+    "image": "🔩",
+    "images": [],
+    "vehicleMake": "Subaru",
+    "vehicleModel": "Forester, Impreza, Legacy, Outback, XV",
+    "yearStart": 1999,
+    "yearEnd": 2023,
+    "stock": 40,
+    "description": "Genuine Subaru black oil filter. Fits Forester, Impreza, Legacy, Outback and XV. [VERIFY: supplier]",
+    "sku": "OF-SF-9923",
+    "availability": "in_stock",
+    "fitments": [
+      {
+        "make": "Subaru",
+        "models": [
+          "Forester",
+          "Impreza",
+          "Legacy",
+          "Outback",
+          "XV"
+        ]
+      }
+    ],
+    "chassisCodes": [
+      {
+        "model": "Forester",
+        "codes": [
+          "SF",
+          "SG",
+          "SH",
+          "SJ",
+          "SK"
+        ]
+      },
+      {
+        "model": "Impreza",
+        "codes": [
+          "GC",
+          "GD",
+          "GE",
+          "GH",
+          "GJ",
+          "GK",
+          "GP"
+        ]
+      },
+      {
+        "model": "Legacy",
+        "codes": [
+          "BE",
+          "BH",
+          "BL",
+          "BP",
+          "BR",
+          "BM",
+          "BN"
+        ]
+      },
+      {
+        "model": "Outback",
+        "codes": [
+          "BE",
+          "BH",
+          "BP",
+          "BR",
+          "BM",
+          "BN"
+        ]
+      },
+      {
+        "model": "XV",
+        "codes": [
+          "GP",
+          "GT"
+        ]
+      }
+    ],
+    "pointsLocked": true
   },
   {
     "name": "Timing Belt Kit - Toyota",
@@ -6550,6 +6627,137 @@
           "E72",
           "F16",
           "G06"
+        ]
+      }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Water Pump - Toyota",
+    "price": 8900,
+    "priceMode": "fixed",
+    "category": "Cooling",
+    "image": "💧",
+    "images": [],
+    "brand": "AISIN",
+    "partNo": "16100-09280",
+    "oem": "16100-09280",
+    "application": "Toyota All Models",
+    "description": "High-quality water pump for Toyota.",
+    "vehicleMake": "Toyota",
+    "vehicleModel": "All Models",
+    "yearStart": 0,
+    "yearEnd": 0,
+    "sku": "WP-TY-ALL",
+    "stock": 20,
+    "availability": "in_stock",
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Corolla",
+          "Camry",
+          "RAV4",
+          "Hilux",
+          "Fortuner",
+          "Hiace",
+          "Land Cruiser",
+          "Prado",
+          "Yaris",
+          "Vitz",
+          "Prius"
+        ]
+      }
+    ],
+    "chassisCodes": [
+      {
+        "model": "Corolla",
+        "codes": [
+          "ZRE142",
+          "ZRE172",
+          "NZE141",
+          "NZE161"
+        ]
+      },
+      {
+        "model": "Camry",
+        "codes": [
+          "ACV40",
+          "GSV40",
+          "ASV50",
+          "GSV50"
+        ]
+      },
+      {
+        "model": "RAV4",
+        "codes": [
+          "ACA33",
+          "ACA38",
+          "ASA44",
+          "ZSA42"
+        ]
+      },
+      {
+        "model": "Hilux",
+        "codes": [
+          "KUN25",
+          "KUN26",
+          "GUN125",
+          "GUN126"
+        ]
+      },
+      {
+        "model": "Fortuner",
+        "codes": [
+          "KUN60",
+          "GUN155",
+          "GUN156"
+        ]
+      },
+      {
+        "model": "Hiace",
+        "codes": [
+          "KDH200",
+          "TRH200"
+        ]
+      },
+      {
+        "model": "Land Cruiser",
+        "codes": [
+          "URJ200",
+          "VDJ200",
+          "GRJ200"
+        ]
+      },
+      {
+        "model": "Prado",
+        "codes": [
+          "GRJ120",
+          "GRJ150",
+          "KDJ150"
+        ]
+      },
+      {
+        "model": "Yaris",
+        "codes": [
+          "NCP91",
+          "NSP130"
+        ]
+      },
+      {
+        "model": "Vitz",
+        "codes": [
+          "SCP90",
+          "NCP91",
+          "NSP130"
+        ]
+      },
+      {
+        "model": "Prius",
+        "codes": [
+          "NHW20",
+          "ZVW30",
+          "ZVW50"
         ]
       }
     ],
@@ -13948,34 +14156,5 @@
         ]
       }
     ]
-  },
-  {
-    "name": "TEST",
-    "price": 0,
-    "priceMode": "on_request",
-    "priceMin": null,
-    "priceMax": null,
-    "partNo": "TEST",
-    "oem": "TEST",
-    "supercedes": "",
-    "application": "Audi",
-    "category": "Accessories",
-    "brand": "ACDelco",
-    "image": "🔧",
-    "images": [],
-    "fitments": [
-      {
-        "make": "Audi",
-        "models": []
-      }
-    ],
-    "chassisCodes": [],
-    "yearStart": 0,
-    "yearEnd": 0,
-    "stock": 1,
-    "description": "",
-    "availability": "in_stock",
-    "pointsLocked": false,
-    "sku": "SKU-1791903698166"
   }
 ]

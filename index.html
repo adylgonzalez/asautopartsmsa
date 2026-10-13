@@ -6,26 +6,26 @@
     <title>A & S AUTOPARTS - Mombasa, Kenya | Auto Parts in Mombasa</title>
     <meta name="description" content="A & S AUTOPARTS - Genuine auto parts in Mombasa, Kenya. Brake pads, filters, Sensors, Oil, Spark Plugs, Engines, Gearbox, Bushes, Clutch, Toyota, Nissan, Mazda, Subaru, Benz, BMW, Audi, Mitsubishi parts. Call or WhatsApp to order.">
     <meta name="keywords" content="A & S Autoparts, A S Autoparts MSA, auto parts Mombasa, Mombasa auto parts, car parts Mombasa Kenya, Kawsar Autoparts, Burooj Autoparts, Spare parts Mombasa">
-    <link rel="canonical" href="https://adylgonzalez.github.io/asautopartsmsa/">
+    <link rel="canonical" href="https://asautopartsmsa.pages.dev/">
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a237e'/><text x='50' y='70' font-size='64' font-family='Arial' font-weight='900' fill='%23ff6f00' text-anchor='middle'>A</text></svg>">
 
     <meta property="og:title" content="A & S AUTOPARTS — Mombasa, Kenya">
     <meta property="og:description" content="Genuine auto parts in Mombasa. Brakes, filters, engine, suspension. Call or WhatsApp to order.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://adylgonzalez.github.io/asautopartsmsa/">
-    <meta property="og:image" content="https://adylgonzalez.github.io/asautopartsmsa/preview.jpg">
+    <meta property="og:url" content="https://asautopartsmsa.pages.dev/">
+    <meta property="og:image" content="https://asautopartsmsa.pages.dev/preview.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="A & S AUTOPARTS — Mombasa, Kenya">
     <meta name="twitter:description" content="Genuine auto parts in Mombasa. Call or WhatsApp to order.">
-    <meta name="twitter:image" content="https://adylgonzalez.github.io/asautopartsmsa/preview.jpg">
+    <meta name="twitter:image" content="https://asautopartsmsa.pages.dev/preview.jpg">
 
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "AutoPartsStore",
       "name": "A & S AUTOPARTS",
-      "url": "https://adylgonzalez.github.io/asautopartsmsa/",
+      "url": "https://asautopartsmsa.pages.dev/",
       "telephone": ["+254713349554", "+254752763924"],
       "address": {
         "@type": "PostalAddress",
@@ -906,13 +906,19 @@ const ORDERS_FILE  = 'orders.json';
 const VEHICLE_MODELS_FILE = 'vehicleModels.json';
 const CUSTOMERS_FILE = 'customers.json';
 const GITHUB_BRANCH = 'main';
-const PAGES_BASE = `https://${GITHUB_OWNER}.github.io/${GITHUB_REPO}`;
+
+// ⚠️ CHANGED: read from raw.githubusercontent.com (no CORS, instant updates)
+const PAGES_BASE = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}`;
+
 const PRODUCTS_URL = `${PAGES_BASE}/${GITHUB_FILE}`;
 const OPTIONS_URL  = `${PAGES_BASE}/${OPTIONS_FILE}`;
 const AVAILABILITY_URL = `${PAGES_BASE}/${AVAILABILITY_FILE}`;
 const ORDERS_URL   = `${PAGES_BASE}/${ORDERS_FILE}`;
 const CUSTOMERS_URL = `${PAGES_BASE}/${CUSTOMERS_FILE}`;
 const IMAGES_FOLDER = 'images';
+
+// Images from the old GitHub Pages URL still work — leave that as-is
+const IMAGES_BASE = `https://${GITHUB_OWNER}.github.io/${GITHUB_REPO}`;
 
 const POINTS_PER_KSH = 100;
 const POINTS_REDEEM_VALUE = 1;
@@ -984,30 +990,16 @@ function normalizeStock(v){
     if(v === STOCK_ON_ORDER || v === 'on_order' || v === 'on-order' || v === 'shipped_on_order') return STOCK_ON_ORDER;
     return STOCK_IN;
 }
-function stockLabel(v){
-    return normalizeStock(v) === STOCK_ON_ORDER ? 'Shipped on Order ~2 weeks' : 'In Stock';
-}
-function stockLabelShort(v){
-    return normalizeStock(v) === STOCK_ON_ORDER ? 'Shipped on Order' : 'In Stock';
-}
+function stockLabel(v){ return normalizeStock(v) === STOCK_ON_ORDER ? 'Shipped on Order ~2 weeks' : 'In Stock'; }
+function stockLabelShort(v){ return normalizeStock(v) === STOCK_ON_ORDER ? 'Shipped on Order' : 'In Stock'; }
 function stockBadgeHTML(v, large){
     const cls = normalizeStock(v) === STOCK_ON_ORDER ? 'on-order' : 'in-stock';
     const lbl = stockLabelShort(v);
     return `<span class="stock-badge ${cls}${large?' large':''}">${lbl}</span>`;
 }
 
-function parseSupercedes(v){
-    if(!v) return [];
-    return String(v).split(',').map(s => s.trim()).filter(Boolean);
-}
-function supercedesDisplayText(supersedes){
-    const list = parseSupercedes(supersedes);
-    if(list.length === 0) return '';
-    return list.join(', ');
-}
+function parseSupercedes(v){ if(!v) return []; return String(v).split(',').map(s => s.trim()).filter(Boolean); }
 
-// ==================== CHASSIS HELPERS ====================
-// Chassis data shape: [ { model: "Vitz", codes: ["NCP91","NCP95"] }, ... ]
 function normalizeChassis(product){
     if(Array.isArray(product.chassisCodes) && product.chassisCodes.length > 0){
         return product.chassisCodes.map(c => ({
@@ -1015,7 +1007,6 @@ function normalizeChassis(product){
             codes: Array.isArray(c.codes) ? c.codes.map(x => String(x||'').trim().toUpperCase()).filter(Boolean) : []
         })).filter(c => c.model && c.codes.length > 0);
     }
-    // legacy string form: "NCP91, NCP95" — no model association, treat as a pseudo-model "All"
     if(typeof product.chassisCodes === 'string' && product.chassisCodes.trim()){
         const codes = product.chassisCodes.split(/[,\s\/]+/).map(s => s.trim().toUpperCase()).filter(Boolean);
         if(codes.length > 0) return [{ model: 'All', codes }];
@@ -1027,11 +1018,6 @@ function getAllChassisCodes(product){
     const out = [];
     list.forEach(c => c.codes.forEach(code => out.push(code)));
     return out;
-}
-function chassisDisplayText(product){
-    const list = normalizeChassis(product);
-    if(list.length === 0) return '';
-    return list.map(c => `${c.model}: ${c.codes.join(', ')}`).join(' | ');
 }
 function productMatchesChassis(product, searchCode){
     if(!searchCode) return false;
@@ -1163,10 +1149,7 @@ function renderModelOptions(make){
     }
     modelSel.innerHTML = html;
 }
-function onPublicMakeChange(){
-    const make = document.getElementById('vehicleMake').value;
-    renderModelOptions(make);
-}
+function onPublicMakeChange(){ renderModelOptions(document.getElementById('vehicleMake').value); }
 function findParts(){
     const year = parseInt(document.getElementById('vehicleYear').value);
     const make = document.getElementById('vehicleMake').value;
@@ -1197,9 +1180,7 @@ function productMatchesFitment(product, make, model, year){
     const selYear = parseInt(year) || 0;
     const yStart = parseInt(product.yearStart) || 0;
     const yEnd = parseInt(product.yearEnd) || 0;
-    if(selYear && yStart > 0 && yEnd > 0){
-        if(selYear < yStart || selYear > yEnd) return false;
-    }
+    if(selYear && yStart > 0 && yEnd > 0){ if(selYear < yStart || selYear > yEnd) return false; }
     return fitments.some(f => {
         const fMake = String(f.make || '').toLowerCase();
         if(fMake === 'universal'){
@@ -1238,7 +1219,6 @@ function getAdminComboValue(idPrefix){
     return sel.value;
 }
 
-// ==================== VEHICLE FITMENTS WIDGET ====================
 const fitmentsState = {};
 function fitmentsInit(widgetKey, initial){
     if(!fitmentsState[widgetKey]) fitmentsState[widgetKey] = { rows: [], initialized: false };
@@ -1249,94 +1229,38 @@ function fitmentsInit(widgetKey, initial){
 }
 function buildFitmentsWidget(widgetKey, initial){
     fitmentsInit(widgetKey, initial);
-    return `
-        <div class="fit-wrap" data-fit="${widgetKey}">
-            <label>Vehicle Fitments</label>
-            <div id="fitRows_${widgetKey}"></div>
-            <button type="button" class="fit-add-row" onclick="fitmentsAddRow('${widgetKey}')"><i class="fas fa-plus"></i> Add another make</button>
-            <div class="fit-hint">Each row groups one make with the models that fit it. Press Enter to add a model chip.</div>
-        </div>
-    `;
+    return `<div class="fit-wrap" data-fit="${widgetKey}"><label>Vehicle Fitments</label><div id="fitRows_${widgetKey}"></div><button type="button" class="fit-add-row" onclick="fitmentsAddRow('${widgetKey}')"><i class="fas fa-plus"></i> Add another make</button><div class="fit-hint">Each row groups one make with the models that fit it. Press Enter to add a model chip.</div></div>`;
 }
 function fitmentsRenderAll(widgetKey){
     const container = document.getElementById('fitRows_' + widgetKey);
     if(!container) return;
     const state = fitmentsState[widgetKey] || { rows: [] };
-    if(state.rows.length === 0){
-        container.innerHTML = `<div style="color:#999;font-size:12px;padding:8px 0;text-align:center;">No fitments yet — click "Add another make" below.</div>`;
-        return;
-    }
+    if(state.rows.length === 0){ container.innerHTML = `<div style="color:#999;font-size:12px;padding:8px 0;text-align:center;">No fitments yet — click "Add another make" below.</div>`; return; }
     const makes = Object.keys(vehicleModels).sort((a,b)=>a.localeCompare(b));
     let html = '';
     state.rows.forEach((row, i) => {
         const makeOpts = makes.map(m => `<option value="${escapeAttr(m)}"${m === row.make ? ' selected' : ''}>${escapeAttr(m)}</option>`).join('');
         const isNewMake = !row.make || !makes.includes(row.make);
         const makeSelectHTML = isNewMake
-            ? `<select class="fit-make-select" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)">
-                  <option value="">— Select make —</option>
-                  ${makeOpts}
-                  <option value="__ADD_NEW__">➕ Add new make…</option>
-               </select>
-               <input type="text" class="fit-make-new show" value="${escapeAttr(row.make || '')}" placeholder="Type new make and press Enter" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();fitmentsMakeChange('${widgetKey}', ${i}, this.value);}">`
-            : `<select class="fit-make-select" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)">
-                  <option value="">— Select make —</option>
-                  ${makeOpts}
-                  <option value="__ADD_NEW__">➕ Add new make…</option>
-               </select>
-               <input type="text" class="fit-make-new" placeholder="Type new make and press Enter" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();fitmentsMakeChange('${widgetKey}', ${i}, this.value);}">`;
-        html += `
-            <div class="fit-row" data-row="${i}">
-                <div class="fit-row-make">${makeSelectHTML}</div>
-                <div class="fit-row-models">
-                    <div class="fit-models-drop">
-                        <div class="fit-models-box" id="fitModelsBox_${widgetKey}_${i}" onclick="document.getElementById('fitModelsInput_${widgetKey}_${i}').focus()">
-                            ${(row.models || []).map((md, mi) => `
-                                <span class="fit-chip">${escapeAttr(md)} <button type="button" class="fit-chip-remove" onclick="fitmentsRemoveModel('${widgetKey}', ${i}, ${mi});event.stopPropagation();">✕</button></span>
-                            `).join('')}
-                            <input type="text" class="fit-models-input" id="fitModelsInput_${widgetKey}_${i}"
-                                placeholder="Type model or press Enter…"
-                                oninput="fitmentsFilterModels('${widgetKey}', ${i})"
-                                onfocus="fitmentsOpenModels('${widgetKey}', ${i})"
-                                onblur="setTimeout(()=>fitmentsCloseModels('${widgetKey}', ${i}), 200)"
-                                onkeydown="fitmentsModelsKeydown(event, '${widgetKey}', ${i})">
-                        </div>
-                        <div class="fit-models-menu" id="fitModelsMenu_${widgetKey}_${i}"></div>
-                    </div>
-                </div>
-                <button type="button" class="fit-row-remove" onclick="fitmentsRemoveRow('${widgetKey}', ${i})" title="Remove this row">✕</button>
-            </div>
-        `;
+            ? `<select class="fit-make-select" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)"><option value="">— Select make —</option>${makeOpts}<option value="__ADD_NEW__">➕ Add new make…</option></select><input type="text" class="fit-make-new show" value="${escapeAttr(row.make || '')}" placeholder="Type new make and press Enter" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();fitmentsMakeChange('${widgetKey}', ${i}, this.value);}">`
+            : `<select class="fit-make-select" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)"><option value="">— Select make —</option>${makeOpts}<option value="__ADD_NEW__">➕ Add new make…</option></select><input type="text" class="fit-make-new" placeholder="Type new make and press Enter" onchange="fitmentsMakeChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();fitmentsMakeChange('${widgetKey}', ${i}, this.value);}">`;
+        html += `<div class="fit-row" data-row="${i}"><div class="fit-row-make">${makeSelectHTML}</div><div class="fit-row-models"><div class="fit-models-drop"><div class="fit-models-box" id="fitModelsBox_${widgetKey}_${i}" onclick="document.getElementById('fitModelsInput_${widgetKey}_${i}').focus()">${(row.models || []).map((md, mi) => `<span class="fit-chip">${escapeAttr(md)} <button type="button" class="fit-chip-remove" onclick="fitmentsRemoveModel('${widgetKey}', ${i}, ${mi});event.stopPropagation();">✕</button></span>`).join('')}<input type="text" class="fit-models-input" id="fitModelsInput_${widgetKey}_${i}" placeholder="Type model or press Enter…" oninput="fitmentsFilterModels('${widgetKey}', ${i})" onfocus="fitmentsOpenModels('${widgetKey}', ${i})" onblur="setTimeout(()=>fitmentsCloseModels('${widgetKey}', ${i}), 200)" onkeydown="fitmentsModelsKeydown(event, '${widgetKey}', ${i})"></div><div class="fit-models-menu" id="fitModelsMenu_${widgetKey}_${i}"></div></div></div><button type="button" class="fit-row-remove" onclick="fitmentsRemoveRow('${widgetKey}', ${i})" title="Remove this row">✕</button></div>`;
     });
     container.innerHTML = html;
 }
-function fitmentsAddRow(widgetKey){
-    if(!fitmentsState[widgetKey]) fitmentsState[widgetKey] = { rows: [], initialized: true };
-    fitmentsState[widgetKey].rows.push({ make: '', models: [] });
-    fitmentsRenderAll(widgetKey);
-}
-function fitmentsRemoveRow(widgetKey, rowIdx){
-    if(!fitmentsState[widgetKey]) return;
-    fitmentsState[widgetKey].rows.splice(rowIdx, 1);
-    fitmentsRenderAll(widgetKey);
-}
+function fitmentsAddRow(widgetKey){ if(!fitmentsState[widgetKey]) fitmentsState[widgetKey] = { rows: [], initialized: true }; fitmentsState[widgetKey].rows.push({ make: '', models: [] }); fitmentsRenderAll(widgetKey); }
+function fitmentsRemoveRow(widgetKey, rowIdx){ if(!fitmentsState[widgetKey]) return; fitmentsState[widgetKey].rows.splice(rowIdx, 1); fitmentsRenderAll(widgetKey); }
 function fitmentsMakeChange(widgetKey, rowIdx, value){
     if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return;
     if(value === '__ADD_NEW__'){
         const rowEl = document.querySelector(`[data-fit="${widgetKey}"] [data-row="${rowIdx}"]`);
-        if(rowEl){
-            const inp = rowEl.querySelector('.fit-make-new');
-            if(inp){ inp.classList.add('show'); inp.focus(); }
-        }
+        if(rowEl){ const inp = rowEl.querySelector('.fit-make-new'); if(inp){ inp.classList.add('show'); inp.focus(); } }
         return;
     }
     fitmentsState[widgetKey].rows[rowIdx].make = value;
     fitmentsRenderAll(widgetKey);
 }
-function fitmentsRemoveModel(widgetKey, rowIdx, modelIdx){
-    if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return;
-    fitmentsState[widgetKey].rows[rowIdx].models.splice(modelIdx, 1);
-    fitmentsRenderAll(widgetKey);
-}
+function fitmentsRemoveModel(widgetKey, rowIdx, modelIdx){ if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return; fitmentsState[widgetKey].rows[rowIdx].models.splice(modelIdx, 1); fitmentsRenderAll(widgetKey); }
 function fitmentsSourceModels(widgetKey, rowIdx){
     if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return [];
     const row = fitmentsState[widgetKey].rows[rowIdx];
@@ -1347,10 +1271,7 @@ function fitmentsSourceModels(widgetKey, rowIdx){
     return [...pool].sort((a,b)=>a.localeCompare(b));
 }
 function fitmentsOpenModels(widgetKey, rowIdx){ fitmentsRenderModelsMenu(widgetKey, rowIdx, ''); }
-function fitmentsCloseModels(widgetKey, rowIdx){
-    const menu = document.getElementById(`fitModelsMenu_${widgetKey}_${rowIdx}`);
-    if(menu){ menu.classList.remove('open'); menu.innerHTML = ''; }
-}
+function fitmentsCloseModels(widgetKey, rowIdx){ const menu = document.getElementById(`fitModelsMenu_${widgetKey}_${rowIdx}`); if(menu){ menu.classList.remove('open'); menu.innerHTML = ''; } }
 function fitmentsFilterModels(widgetKey, rowIdx){
     const input = document.getElementById(`fitModelsInput_${widgetKey}_${rowIdx}`);
     const q = (input ? input.value : '').trim();
@@ -1366,28 +1287,21 @@ function fitmentsRenderModelsMenu(widgetKey, rowIdx, query){
     const q = (query || '').toLowerCase();
     const filtered = q ? source.filter(m => m.toLowerCase().includes(q)) : source;
     let html = '';
-    filtered.slice(0, 50).forEach(m => {
-        html += `<div class="fit-models-option" onmousedown="event.preventDefault();" onclick="fitmentsAddModel('${widgetKey}', ${rowIdx}, '${escapeAttr(m).replace(/'/g,"\\'")}')">${escapeAttr(m)}</div>`;
-    });
+    filtered.slice(0, 50).forEach(m => { html += `<div class="fit-models-option" onmousedown="event.preventDefault();" onclick="fitmentsAddModel('${widgetKey}', ${rowIdx}, '${escapeAttr(m).replace(/'/g,"\\'")}')">${escapeAttr(m)}</div>`; });
     const trimmed = (query || '').trim();
     if(trimmed && !existing.includes(trimmed) && !source.some(m => m.toLowerCase() === trimmed.toLowerCase())){
         html += `<div class="fit-models-option add-new" onmousedown="event.preventDefault();" onclick="fitmentsAddModel('${widgetKey}', ${rowIdx}, '${escapeAttr(trimmed).replace(/'/g,"\\'")}')">➕ Add "${escapeAttr(trimmed)}"</div>`;
     }
     if(!html){ html = `<div class="fit-models-option" style="color:#999;cursor:default;">No matches — type to add new</div>`; }
-    menu.innerHTML = html;
-    menu.classList.add('open');
+    menu.innerHTML = html; menu.classList.add('open');
 }
 function fitmentsAddModel(widgetKey, rowIdx, model){
     if(!fitmentsState[widgetKey] || !fitmentsState[widgetKey].rows[rowIdx]) return;
-    model = String(model || '').trim();
-    if(!model) return;
+    model = String(model || '').trim(); if(!model) return;
     const row = fitmentsState[widgetKey].rows[rowIdx];
     if(!row.models.includes(model)) row.models.push(model);
     fitmentsRenderAll(widgetKey);
-    setTimeout(() => {
-        const inp = document.getElementById(`fitModelsInput_${widgetKey}_${rowIdx}`);
-        if(inp) inp.focus();
-    }, 50);
+    setTimeout(() => { const inp = document.getElementById(`fitModelsInput_${widgetKey}_${rowIdx}`); if(inp) inp.focus(); }, 50);
 }
 function fitmentsModelsKeydown(ev, widgetKey, rowIdx){
     if(ev.key === 'Enter'){
@@ -1400,33 +1314,24 @@ function fitmentsModelsKeydown(ev, widgetKey, rowIdx){
 function fitmentsRead(widgetKey){
     const state = fitmentsState[widgetKey];
     if(!state) return [];
-    return state.rows
-        .map(r => ({ make: String(r.make || '').trim(), models: (r.models || []).map(m => String(m || '').trim()).filter(Boolean) }))
-        .filter(r => r.make);
+    return state.rows.map(r => ({ make: String(r.make || '').trim(), models: (r.models || []).map(m => String(m || '').trim()).filter(Boolean) })).filter(r => r.make);
 }
 function fitmentsApplyToVehicleModels(fitments){
     let changed = false;
     fitments.forEach(f => {
-        const make = f.make;
-        if(!make) return;
+        const make = f.make; if(!make) return;
         if(!vehicleModels[make]){ vehicleModels[make] = []; changed = true; }
-        (f.models || []).forEach(m => {
-            if(!vehicleModels[make].includes(m)){ vehicleModels[make].push(m); changed = true; }
-        });
+        (f.models || []).forEach(m => { if(!vehicleModels[make].includes(m)){ vehicleModels[make].push(m); changed = true; } });
     });
     if(changed) saveVehicleModels();
     return changed;
 }
 function buildApplicationFromFitments(fitments){
     if(!fitments || fitments.length === 0) return 'Universal';
-    const parts = fitments.map(f => {
-        const models = f.models && f.models.length > 0 ? f.models.join(', ') : '';
-        return models ? `${f.make} ${models}` : f.make;
-    });
+    const parts = fitments.map(f => { const models = f.models && f.models.length > 0 ? f.models.join(', ') : ''; return models ? `${f.make} ${models}` : f.make; });
     return parts.join(' | ');
 }
 
-// ==================== CHASSIS CODES WIDGET ====================
 const chassisState = {};
 function chassisInit(widgetKey, initial){
     if(!chassisState[widgetKey]) chassisState[widgetKey] = { rows: [], initialized: false };
@@ -1437,26 +1342,14 @@ function chassisInit(widgetKey, initial){
 }
 function buildChassisWidget(widgetKey, initial){
     chassisInit(widgetKey, initial);
-    return `
-        <div class="chassis-wrap" data-chassis="${widgetKey}">
-            <label>Chassis Codes (optional)</label>
-            <div id="chassisRows_${widgetKey}"></div>
-            <button type="button" class="chassis-add-row" onclick="chassisAddRow('${widgetKey}')"><i class="fas fa-plus"></i> Add another model</button>
-            <div class="chassis-hint">Optional. Group chassis codes per model (e.g. Vitz: NCP91, NCP95). Press Enter to add a code chip. Uppercase is automatic.</div>
-        </div>
-    `;
+    return `<div class="chassis-wrap" data-chassis="${widgetKey}"><label>Chassis Codes (optional)</label><div id="chassisRows_${widgetKey}"></div><button type="button" class="chassis-add-row" onclick="chassisAddRow('${widgetKey}')"><i class="fas fa-plus"></i> Add another model</button><div class="chassis-hint">Optional. Group chassis codes per model (e.g. Vitz: NCP91, NCP95). Press Enter to add a code chip. Uppercase is automatic.</div></div>`;
 }
 function chassisRenderAll(widgetKey){
     const container = document.getElementById('chassisRows_' + widgetKey);
     if(!container) return;
     const state = chassisState[widgetKey] || { rows: [] };
-    if(state.rows.length === 0){
-        container.innerHTML = `<div style="color:#999;font-size:12px;padding:8px 0;text-align:center;">No chassis codes yet — click "Add another model" below if you want them.</div>`;
-        return;
-    }
-    // Build model options from the fitments state if available (so only relevant models show),
-    // falling back to global model pool.
-    const fitKey = widgetKey; // fitments widget uses same widget key
+    if(state.rows.length === 0){ container.innerHTML = `<div style="color:#999;font-size:12px;padding:8px 0;text-align:center;">No chassis codes yet — click "Add another model" below if you want them.</div>`; return; }
+    const fitKey = widgetKey;
     const fitState = fitmentsState[fitKey];
     let modelPool = [];
     if(fitState && fitState.rows && fitState.rows.length > 0){
@@ -1475,65 +1368,25 @@ function chassisRenderAll(widgetKey){
         const opts = modelPool.map(m => `<option value="${escapeAttr(m)}"${m === row.model ? ' selected' : ''}>${escapeAttr(m)}</option>`).join('');
         const isNewModel = !row.model || !modelPool.includes(row.model);
         const modelSelectHTML = isNewModel
-            ? `<select class="chassis-model-select" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)">
-                  <option value="">— Select model —</option>
-                  ${opts}
-                  <option value="__ADD_NEW__">➕ Add new model…</option>
-               </select>
-               <input type="text" class="fit-make-new show" value="${escapeAttr(row.model || '')}" placeholder="Type new model and press Enter" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();chassisModelChange('${widgetKey}', ${i}, this.value);}">`
-            : `<select class="chassis-model-select" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)">
-                  <option value="">— Select model —</option>
-                  ${opts}
-                  <option value="__ADD_NEW__">➕ Add new model…</option>
-               </select>
-               <input type="text" class="fit-make-new" placeholder="Type new model and press Enter" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();chassisModelChange('${widgetKey}', ${i}, this.value);}">`;
-        html += `
-            <div class="chassis-row" data-crow="${i}">
-                <div class="chassis-row-model">${modelSelectHTML}</div>
-                <div class="chassis-row-codes">
-                    <div class="chassis-codes-box" id="chassisBox_${widgetKey}_${i}" onclick="document.getElementById('chassisInput_${widgetKey}_${i}').focus()">
-                        ${(row.codes || []).map((cd, ci) => `
-                            <span class="chassis-chip">${escapeAttr(cd)} <button type="button" class="chassis-chip-remove" onclick="chassisRemoveCode('${widgetKey}', ${i}, ${ci});event.stopPropagation();">✕</button></span>
-                        `).join('')}
-                        <input type="text" class="chassis-codes-input" id="chassisInput_${widgetKey}_${i}"
-                            placeholder="Type code + Enter…"
-                            onkeydown="chassisInputKeydown(event, '${widgetKey}', ${i})">
-                    </div>
-                </div>
-                <button type="button" class="chassis-row-remove" onclick="chassisRemoveRow('${widgetKey}', ${i})" title="Remove this row">✕</button>
-            </div>
-        `;
+            ? `<select class="chassis-model-select" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)"><option value="">— Select model —</option>${opts}<option value="__ADD_NEW__">➕ Add new model…</option></select><input type="text" class="fit-make-new show" value="${escapeAttr(row.model || '')}" placeholder="Type new model and press Enter" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();chassisModelChange('${widgetKey}', ${i}, this.value);}">`
+            : `<select class="chassis-model-select" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)"><option value="">— Select model —</option>${opts}<option value="__ADD_NEW__">➕ Add new model…</option></select><input type="text" class="fit-make-new" placeholder="Type new model and press Enter" onchange="chassisModelChange('${widgetKey}', ${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();chassisModelChange('${widgetKey}', ${i}, this.value);}">`;
+        html += `<div class="chassis-row" data-crow="${i}"><div class="chassis-row-model">${modelSelectHTML}</div><div class="chassis-row-codes"><div class="chassis-codes-box" id="chassisBox_${widgetKey}_${i}" onclick="document.getElementById('chassisInput_${widgetKey}_${i}').focus()">${(row.codes || []).map((cd, ci) => `<span class="chassis-chip">${escapeAttr(cd)} <button type="button" class="chassis-chip-remove" onclick="chassisRemoveCode('${widgetKey}', ${i}, ${ci});event.stopPropagation();">✕</button></span>`).join('')}<input type="text" class="chassis-codes-input" id="chassisInput_${widgetKey}_${i}" placeholder="Type code + Enter…" onkeydown="chassisInputKeydown(event, '${widgetKey}', ${i})"></div></div><button type="button" class="chassis-row-remove" onclick="chassisRemoveRow('${widgetKey}', ${i})" title="Remove this row">✕</button></div>`;
     });
     container.innerHTML = html;
 }
-function chassisAddRow(widgetKey){
-    if(!chassisState[widgetKey]) chassisState[widgetKey] = { rows: [], initialized: true };
-    chassisState[widgetKey].rows.push({ model: '', codes: [] });
-    chassisRenderAll(widgetKey);
-}
-function chassisRemoveRow(widgetKey, rowIdx){
-    if(!chassisState[widgetKey]) return;
-    chassisState[widgetKey].rows.splice(rowIdx, 1);
-    chassisRenderAll(widgetKey);
-}
+function chassisAddRow(widgetKey){ if(!chassisState[widgetKey]) chassisState[widgetKey] = { rows: [], initialized: true }; chassisState[widgetKey].rows.push({ model: '', codes: [] }); chassisRenderAll(widgetKey); }
+function chassisRemoveRow(widgetKey, rowIdx){ if(!chassisState[widgetKey]) return; chassisState[widgetKey].rows.splice(rowIdx, 1); chassisRenderAll(widgetKey); }
 function chassisModelChange(widgetKey, rowIdx, value){
     if(!chassisState[widgetKey] || !chassisState[widgetKey].rows[rowIdx]) return;
     if(value === '__ADD_NEW__'){
         const rowEl = document.querySelector(`[data-chassis="${widgetKey}"] [data-crow="${rowIdx}"]`);
-        if(rowEl){
-            const inp = rowEl.querySelector('.fit-make-new');
-            if(inp){ inp.classList.add('show'); inp.focus(); }
-        }
+        if(rowEl){ const inp = rowEl.querySelector('.fit-make-new'); if(inp){ inp.classList.add('show'); inp.focus(); } }
         return;
     }
     chassisState[widgetKey].rows[rowIdx].model = value;
     chassisRenderAll(widgetKey);
 }
-function chassisRemoveCode(widgetKey, rowIdx, codeIdx){
-    if(!chassisState[widgetKey] || !chassisState[widgetKey].rows[rowIdx]) return;
-    chassisState[widgetKey].rows[rowIdx].codes.splice(codeIdx, 1);
-    chassisRenderAll(widgetKey);
-}
+function chassisRemoveCode(widgetKey, rowIdx, codeIdx){ if(!chassisState[widgetKey] || !chassisState[widgetKey].rows[rowIdx]) return; chassisState[widgetKey].rows[rowIdx].codes.splice(codeIdx, 1); chassisRenderAll(widgetKey); }
 function chassisAddCode(widgetKey, rowIdx, code){
     if(!chassisState[widgetKey] || !chassisState[widgetKey].rows[rowIdx]) return;
     code = String(code || '').toUpperCase().trim().replace(/\s+/g, '');
@@ -1541,33 +1394,23 @@ function chassisAddCode(widgetKey, rowIdx, code){
     const row = chassisState[widgetKey].rows[rowIdx];
     if(!row.codes.includes(code)) row.codes.push(code);
     chassisRenderAll(widgetKey);
-    setTimeout(() => {
-        const inp = document.getElementById(`chassisInput_${widgetKey}_${rowIdx}`);
-        if(inp) inp.focus();
-    }, 50);
+    setTimeout(() => { const inp = document.getElementById(`chassisInput_${widgetKey}_${rowIdx}`); if(inp) inp.focus(); }, 50);
 }
 function chassisInputKeydown(ev, widgetKey, rowIdx){
     if(ev.key === 'Enter' || ev.key === ',' || ev.key === ' '){
         ev.preventDefault();
         const input = document.getElementById(`chassisInput_${widgetKey}_${rowIdx}`);
         const val = (input ? input.value : '').trim();
-        if(val){
-            // allow pasting multiple separated by , / or whitespace
-            const parts = val.split(/[,\/\s]+/).map(s => s.trim()).filter(Boolean);
-            parts.forEach(p => chassisAddCode(widgetKey, rowIdx, p));
-        }
+        if(val){ const parts = val.split(/[,\/\s]+/).map(s => s.trim()).filter(Boolean); parts.forEach(p => chassisAddCode(widgetKey, rowIdx, p)); }
         if(input) input.value = '';
     }
 }
 function chassisRead(widgetKey){
     const state = chassisState[widgetKey];
     if(!state) return [];
-    return state.rows
-        .map(r => ({ model: String(r.model || '').trim(), codes: (r.codes || []).map(c => String(c||'').toUpperCase().trim()).filter(Boolean) }))
-        .filter(r => r.model && r.codes.length > 0);
+    return state.rows.map(r => ({ model: String(r.model || '').trim(), codes: (r.codes || []).map(c => String(c||'').toUpperCase().trim()).filter(Boolean) })).filter(r => r.model && r.codes.length > 0);
 }
 
-// ==================== CUSTOMER POINTS SYSTEM ====================
 let customersData = {};
 let pointsRedemptionLocked = false;
 
@@ -1600,13 +1443,8 @@ async function fetchCustomersFromGitHub(){
 }
 async function saveCustomersToGitHub(){
     if(!getToken()){ console.warn('No token — customers not saved'); return false; }
-    try {
-        await putFileToGitHub(CUSTOMERS_FILE, customersData, `Update customers.json — ${new Date().toISOString()}`);
-        return true;
-    } catch (err){
-        console.error('Customers save failed:', err);
-        return false;
-    }
+    try { await putFileToGitHub(CUSTOMERS_FILE, customersData, `Update customers.json — ${new Date().toISOString()}`); return true; }
+    catch (err){ console.error('Customers save failed:', err); return false; }
 }
 function awardPointsForOrder(order){
     const phoneNorm = normalizePhone(order.customerPhone);
@@ -1871,16 +1709,7 @@ const defaultProducts = [
     {name:"Oil Filter - Toyota",price:1500,category:"Filters",image:"🔩",brand:"TOYOTA Genuine",oem:"90915-YZZD2",partNo:"90915-YZZD2",supercedes:"90915-YZZE1",application:"Toyota All Models",description:"Genuine Toyota oil filter. Traps 95% of contaminants.",fitments:[{make:"Toyota",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"OF-TY-ALL",stock:100,availability:"in_stock",priceMode:"fixed"},
     {name:"Air Filter - Toyota",price:2200,category:"Filters",image:"💨",brand:"DENSO",oem:"17801-0D050",partNo:"17801-0D050",supercedes:"",application:"Toyota All Models",description:"Engine air filter for Toyota. Improves fuel efficiency.",fitments:[{make:"Toyota",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"AF-TY-ALL",stock:50,availability:"in_stock",priceMode:"fixed"},
     {name:"Spark Plugs - Toyota (4 Pack)",price:2800,category:"Electrical",image:"⚡",brand:"NGK",oem:"90919-01253",partNo:"90919-01253",supercedes:"",application:"Toyota All Models",description:"Iridium spark plugs for Toyota. Better combustion and performance.",fitments:[{make:"Toyota",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"SP-TY-ALL",stock:60,availability:"in_stock",priceMode:"fixed"},
-    {name:"Engine Oil 5W-30 (4L) - Castrol",price:4800,category:"Oils & Fluids",image:"🛢️",brand:"Castrol",oem:"N/A",partNo:"N/A",supercedes:"",application:"Universal All Models",description:"Fully synthetic engine oil 5W-30. Ideal for most modern petrol and diesel engines.",fitments:[{make:"Universal",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"OIL-5W30-4L",stock:40,availability:"in_stock",priceMode:"fixed"},
-    {name:"Brake Pads - Honda Civic",price:3900,category:"Brakes",image:"🔧",brand:"ACDelco",oem:"45022-SNA-A01",partNo:"45022-SNA-A01",supercedes:"45022-SNA-A02",application:"Honda Civic 2016-2023",description:"Front brake pads for Honda Civic. Premium quality.",fitments:[{make:"Honda",models:["Civic"]}],yearStart:2016,yearEnd:2023,sku:"BP-HC-1623",stock:25,availability:"in_stock",priceMode:"fixed"},
-    {name:"Oil Filter - Honda",price:1200,category:"Filters",image:"🔩",brand:"HONDA Genuine",oem:"15400-PLM-A01",partNo:"15400-PLM-A01",supercedes:"",application:"Honda All Models",description:"Genuine Honda oil filter. Perfect fit.",fitments:[{make:"Honda",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"OF-HN-ALL",stock:80,availability:"in_stock",priceMode:"fixed"},
-    {name:"Brake Pads - Nissan X-Trail",price:4200,category:"Brakes",image:"🔧",brand:"Akebono",oem:"D1060-JD00A",partNo:"D1060-JD00A",supercedes:"D1060-JD00B",application:"Nissan X-Trail 2010-2023",description:"Front brake pads for Nissan X-Trail. OEM specification.",fitments:[{make:"Nissan",models:["X-Trail"]}],yearStart:2010,yearEnd:2023,sku:"BP-NX-1023",stock:20,availability:"in_stock",priceMode:"fixed"},
-    {name:"Brake Pads - Mitsubishi Pajero",price:5500,category:"Brakes",image:"🔧",brand:"BOSCH",oem:"MR527678",partNo:"MR527678",supercedes:"",application:"Mitsubishi Pajero 2005-2023",description:"Front brake pads for Pajero. Heavy-duty.",fitments:[{make:"Mitsubishi",models:["Pajero"]}],yearStart:2005,yearEnd:2023,sku:"BP-MP-0523",stock:15,availability:"in_stock",priceMode:"fixed"},
-    {name:"Oil Filter - Nissan",price:1300,category:"Filters",image:"🔩",brand:"NISSAN Genuine",oem:"15208-65F0A",partNo:"15208-65F0A",supercedes:"",application:"Nissan All Models",description:"Genuine Nissan oil filter.",fitments:[{make:"Nissan",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"OF-NS-ALL",stock:70,availability:"in_stock",priceMode:"fixed"},
-    {name:"Universal Alternator",price:21000,category:"Electrical",image:"🔋",brand:"DENSO",oem:"27060-0T041",partNo:"27060-0T041",supercedes:"",application:"Universal All Models",description:"High-output alternator for various vehicles.",fitments:[{make:"Universal",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"ALT-UNI-001",stock:8,availability:"in_stock",priceMode:"fixed"},
-    {name:"Timing Belt Kit - Toyota",price:14500,category:"Engine",image:"⛓️",brand:"Gates",oem:"13568-09070",partNo:"13568-09070",supercedes:"",application:"Toyota All Models",description:"Complete timing belt kit with tensioner.",fitments:[{make:"Toyota",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"TB-TY-ALL",stock:12,availability:"in_stock",priceMode:"fixed"},
-    {name:"Water Pump - Toyota",price:8900,category:"Cooling",image:"💧",brand:"AISIN",oem:"16100-09280",partNo:"16100-09280",supercedes:"",application:"Toyota All Models",description:"High-quality water pump for Toyota.",fitments:[{make:"Toyota",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"WP-TY-ALL",stock:20,availability:"in_stock",priceMode:"fixed"},
-    {name:"Shock Absorber - Toyota Hilux",price:14500,category:"Suspension",image:"🛠️",brand:"KYB",oem:"48531-09885",partNo:"48531-09885",supercedes:"",application:"Toyota Hilux 2015-2023",description:"Front shock absorber for Hilux.",fitments:[{make:"Toyota",models:["Hilux"]}],yearStart:2015,yearEnd:2023,sku:"SA-TH-1523",stock:10,availability:"in_stock",priceMode:"fixed"}
+    {name:"Engine Oil 5W-30 (4L) - Castrol",price:4800,category:"Oils & Fluids",image:"🛢️",brand:"Castrol",oem:"N/A",partNo:"N/A",supercedes:"",application:"Universal All Models",description:"Fully synthetic engine oil 5W-30. Ideal for most modern petrol and diesel engines.",fitments:[{make:"Universal",models:["All Models"]}],yearStart:0,yearEnd:0,sku:"OIL-5W30-4L",stock:40,availability:"in_stock",priceMode:"fixed"}
 ];
 
 let products = [];
@@ -1971,17 +1800,7 @@ function showDuplicateBanner(formEl, dup, onOpenExisting){
         banner.className = 'dup-banner ' + (dup.type === 'block' ? 'block' : 'warn');
         const title = dup.type === 'block' ? '❌ Duplicate part detected' : '⚠️ Possible duplicate';
         const p = dup.match;
-        banner.innerHTML = `
-            <strong>${title}</strong>
-            <div class="dup-row"><b>Existing:</b> ${escapeAttr(p.name || '')}</div>
-            <div class="dup-row"><b>Part No:</b> ${escapeAttr(p.partNo || p.oem || 'N/A')} &nbsp;|&nbsp; <b>Brand:</b> ${escapeAttr(p.brand || '')}</div>
-            <div class="dup-row"><b>Reason:</b> ${escapeAttr(dup.reason)}</div>
-            <div class="dup-actions">
-                <button type="button" class="open">Open existing</button>
-                ${dup.type === 'warn' ? '<button type="button" class="confirm">Add anyway</button>' : ''}
-                <button type="button" class="cancel">Cancel</button>
-            </div>
-        `;
+        banner.innerHTML = `<strong>${title}</strong><div class="dup-row"><b>Existing:</b> ${escapeAttr(p.name || '')}</div><div class="dup-row"><b>Part No:</b> ${escapeAttr(p.partNo || p.oem || 'N/A')} &nbsp;|&nbsp; <b>Brand:</b> ${escapeAttr(p.brand || '')}</div><div class="dup-row"><b>Reason:</b> ${escapeAttr(dup.reason)}</div><div class="dup-actions"><button type="button" class="open">Open existing</button>${dup.type === 'warn' ? '<button type="button" class="confirm">Add anyway</button>' : ''}<button type="button" class="cancel">Cancel</button></div>`;
         formEl.insertBefore(banner, formEl.firstChild);
         banner.classList.add('show');
         banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -2006,7 +1825,7 @@ function toAbsoluteImageUrl(img){
     const v = String(img).trim();
     if(!v) return v;
     if(/^https?:\/\//i.test(v)) return v;
-    if(/^images\//i.test(v)) return `${PAGES_BASE}/${v}`;
+    if(/^images\//i.test(v)) return `${IMAGES_BASE}/${v}`;
     return v;
 }
 function getProductImages(product){
@@ -2546,15 +2365,7 @@ function printCartQuotation(){
         } else { priceCell = formatPrice(item.price); subtotalCell = formatPrice((Number(item.price)||0) * item.quantity); }
         const partNo = item.partNo || item.oem || 'N/A';
         const brand = item.brand || '';
-        itemsRows += `<tr>
-            <td style="padding:8px;border-bottom:1px solid #eee;">
-                <strong>${escapeHtml(item.name)}</strong><br>
-                <small style="color:#666;">Part No: ${escapeHtml(partNo)}${brand ? ' · Brand: ' + escapeHtml(brand) : ''}</small>
-            </td>
-            <td style="padding:8px;border-bottom:1px solid #eee;text-align:center;">${item.quantity}</td>
-            <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;">${priceCell}</td>
-            <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;">${subtotalCell}</td>
-        </tr>`;
+        itemsRows += `<tr><td style="padding:8px;border-bottom:1px solid #eee;"><strong>${escapeHtml(item.name)}</strong><br><small style="color:#666;">Part No: ${escapeHtml(partNo)}${brand ? ' · Brand: ' + escapeHtml(brand) : ''}</small></td><td style="padding:8px;border-bottom:1px solid #eee;text-align:center;">${item.quantity}</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:right;">${priceCell}</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:right;">${subtotalCell}</td></tr>`;
         if(st === STOCK_ON_ORDER){ itemsRows += `<tr><td colspan="4" style="padding:2px 8px 8px;border-bottom:1px solid #eee;font-size:11px;color:#e65100;">⚠️ This item is Shipped on Order — requires 50% deposit, arrives in ~2 weeks.</td></tr>`; }
     });
     const totalLine = totals.hasQuote
@@ -2584,25 +2395,13 @@ function printCartQuotation(){
         <h1>A & S AUTOPARTS</h1>
         <div class="sub">Two Brothers, One Mission: Quality Parts</div>
         <div class="contact">Mombasa, Kenya · ADIL: 0713349554 · SUHAYL: 0752763924</div>
-        <div class="quote-head">
-            <div><strong>Quotation #:</strong> ${escapeHtml(quoteId)}</div>
-            <div><strong>Date:</strong> ${fmtDate(today)}</div>
-        </div>
-        <div class="customer-box">
-            <div><strong>Customer:</strong> ${escapeHtml(custName)}</div>
-            <div><strong>Phone:</strong> ${escapeHtml(custPhone)}</div>
-        </div>
-        <table>
-            <thead><tr><th>Item</th><th style="text-align:center;width:50px;">Qty</th><th style="text-align:right;width:110px;">Price</th><th style="text-align:right;width:120px;">Subtotal</th></tr></thead>
-            <tbody>${itemsRows}</tbody>
-        </table>
+        <div class="quote-head"><div><strong>Quotation #:</strong> ${escapeHtml(quoteId)}</div><div><strong>Date:</strong> ${fmtDate(today)}</div></div>
+        <div class="customer-box"><div><strong>Customer:</strong> ${escapeHtml(custName)}</div><div><strong>Phone:</strong> ${escapeHtml(custPhone)}</div></div>
+        <table><thead><tr><th>Item</th><th style="text-align:center;width:50px;">Qty</th><th style="text-align:right;width:110px;">Price</th><th style="text-align:right;width:120px;">Subtotal</th></tr></thead><tbody>${itemsRows}</tbody></table>
         ${totalLine}
         ${notesHTML}
         <div class="validity">⏳ This quotation is valid for 7 days — until ${fmtDate(validUntil)}</div>
-        <div class="footer">
-            Thank you for choosing A & S AUTOPARTS<br>
-            ADIL: 0713349554 · SUHAYL: 0752763924 · Mombasa, Kenya
-        </div>
+        <div class="footer">Thank you for choosing A & S AUTOPARTS<br>ADIL: 0713349554 · SUHAYL: 0752763924 · Mombasa, Kenya</div>
         <script>window.onload=function(){setTimeout(function(){window.print();},300);};<\/script>
     </body></html>`;
     const w = window.open('', '_blank');
@@ -2740,9 +2539,7 @@ function renderRecentlyViewed(){
     row.innerHTML = items.map(p => {
         const imgs = getProductImages(p);
         const first = imgs.length > 0 ? imgs[0] : '🔧';
-        const imgHtml = isImageReference(first)
-            ? `<img src="${escapeAttr(first)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">`
-            : `<span class="rv-emoji">${escapeAttr(first)}</span>`;
+        const imgHtml = isImageReference(first) ? `<img src="${escapeAttr(first)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">` : `<span class="rv-emoji">${escapeAttr(first)}</span>`;
         const { text: priceTxt } = priceDisplay(p);
         return `<div class="mini-card" onclick="openGallery(${products.indexOf(p)})">${imgHtml}<div class="rv-name">${escapeAttr(p.name)}</div><div class="rv-price">${escapeAttr(priceTxt)}</div></div>`;
     }).join('');
@@ -2765,9 +2562,7 @@ function renderAlsoBought(){
     row.innerHTML = items.map(p => {
         const imgs = getProductImages(p);
         const first = imgs.length > 0 ? imgs[0] : '🔧';
-        const imgHtml = isImageReference(first)
-            ? `<img src="${escapeAttr(first)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">`
-            : `<span class="ab-emoji">${escapeAttr(first)}</span>`;
+        const imgHtml = isImageReference(first) ? `<img src="${escapeAttr(first)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">` : `<span class="ab-emoji">${escapeAttr(first)}</span>`;
         const { text: priceTxt } = priceDisplay(p);
         return `<div class="mini-card" onclick="openGallery(${products.indexOf(p)})">${imgHtml}<div class="ab-name">${escapeAttr(p.name)}</div><div class="ab-price">${escapeAttr(priceTxt)}</div></div>`;
     }).join('');
@@ -2878,13 +2673,9 @@ function renderGallery(product){
     const stockNote = (stock === STOCK_ON_ORDER) ? `<div class="stock-note">50% Deposit required — arrives in about 2 weeks.</div>` : '';
     const priceHTML = priceDisplayHTML(product, true);
     const supercedesList = parseSupercedes(product.supercedes);
-    const supercedesHTML = supercedesList.length > 0
-        ? `<div class="psupercedes"><i class="fas fa-exchange-alt"></i> Replaces: ${escapeAttr(supercedesList.join(', '))}</div>`
-        : '';
+    const supercedesHTML = supercedesList.length > 0 ? `<div class="psupercedes"><i class="fas fa-exchange-alt"></i> Replaces: ${escapeAttr(supercedesList.join(', '))}</div>` : '';
     const chassisList = normalizeChassis(product);
-    const chassisHTML = chassisList.length > 0
-        ? `<div class="pchassis"><i class="fas fa-barcode"></i> <strong>Chassis:</strong> ${escapeAttr(chassisList.map(c => `${c.model} → ${c.codes.join(', ')}`).join(' | '))}</div>`
-        : '';
+    const chassisHTML = chassisList.length > 0 ? `<div class="pchassis"><i class="fas fa-barcode"></i> <strong>Chassis:</strong> ${escapeAttr(chassisList.map(c => `${c.model} → ${c.codes.join(', ')}`).join(' | '))}</div>` : '';
     const fitments = normalizeFitments(product);
     const application = product.application || buildApplicationFromFitments(fitments);
     document.getElementById('galleryInfo').innerHTML = `
@@ -2959,7 +2750,6 @@ function searchByVIN(){
     for(const db of allDBs){for(const code in db){if(vin.startsWith(code)){matchedVehicle=db[code];matchedCode=code;break}}if(matchedVehicle)break}
     const vinResults=document.getElementById('vinResults');
     if(!matchedVehicle){
-        // Fall back: search products by chassis code match
         const productHits = products.filter(p => productMatchesChassis(p, vin));
         if(productHits.length > 0){
             vinResults.style.display='block';
@@ -2982,7 +2772,6 @@ function searchByVIN(){
         return;
     }
     saveVehicleToGarage(matchedVehicle.years[1], matchedVehicle.make, matchedVehicle.model);
-    // Include products matching fitment AND products with matching chassis codes
     const seen = new Set();
     const matchingProducts = products.filter(p => {
         if(seen.has(p.sku)) return false;
@@ -3051,7 +2840,6 @@ function searchProducts(){
     if(!term){ resetFilters(); return; }
     const termU = term.toUpperCase().replace(/[^A-Z0-9]/g, '');
     const filtered=products.filter(p => {
-        // Standard text match
         const stdMatch = p.name.toLowerCase().includes(term)
             || p.category.toLowerCase().includes(term)
             || (p.oem && p.oem.toLowerCase().includes(term))
@@ -3062,7 +2850,6 @@ function searchProducts(){
             || (p.vehicleModel && p.vehicleModel.toLowerCase().includes(term))
             || (p.application && p.application.toLowerCase().includes(term));
         if(stdMatch) return true;
-        // Chassis codes match (loose prefix)
         if(termU && getAllChassisCodes(p).some(code => {
             const c = String(code).toUpperCase().replace(/[^A-Z0-9]/g, '');
             return c === termU || c.includes(termU) || termU.includes(c);
@@ -3393,7 +3180,7 @@ function renderAdminProductCards(){
         const fitments = normalizeFitments(product);
         const fitmentsWidget = buildFitmentsWidget(`edit_fit_${index}`, fitments);
         const chassisData = normalizeChassis(product);
-        const chassisWidget = buildChassisWidget(`edit_fit_${index}`, chassisData); // SAME KEY so it can read fitments models
+        const chassisWidget = buildChassisWidget(`edit_fit_${index}`, chassisData);
         html+=`<div style="margin-bottom:15px;padding:15px;border:1px solid #ddd;border-radius:5px;background:#f9f9f9;" id="adminCard_${index}">
             <label style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;">Product Name (editable):</label>
             <input type="text" id="name_${index}" value="${escapeAttr(product.name||'')}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;font-weight:700;font-size:15px;margin-bottom:6px;">
@@ -4028,7 +3815,7 @@ function showAddProductForm(){
     const catCombo = buildAdminComboHTML('new_cat', 'Category', catOptions, '', 'Type new category name');
     const brandCombo = buildAdminComboHTML('new_br', 'Brand', brandOptions, '', 'Type new brand name');
     const fitmentsWidget = buildFitmentsWidget('new_fit', []);
-    const chassisWidget = buildChassisWidget('new_fit', []); // SAME KEY reads fitments models
+    const chassisWidget = buildChassisWidget('new_fit', []);
     const pointsLockNewHTML = `
         <div style="background:#f3e5f5;padding:10px;border-radius:6px;margin:10px 0;border-left:3px solid #9c27b0;">
             <label style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer;">
@@ -4534,7 +4321,7 @@ handleAIAction = function(action, value){
 
 async function init(){
     const grid = document.getElementById('productGrid');
-    grid.innerHTML = `<div class="loading-state"><div class="spinner"></div><div>Loading parts from GitHub...</div></div>`;
+    grid.innerHTML = `<div class="loading-state"><div class="spinner"></div><div>Loading parts...</div></div>`;
     loadVehicleFromGarage();
     await fetchProductsFromGitHub();
     await fetchOptionsFromGitHub();

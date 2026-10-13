@@ -2244,15 +2244,17 @@
     "oem": "26296-FJ000",
     "application": "Subaru Impreza GJ/GK, XV GP/GT 2011-2023 (Front)",
     "category": "Brakes",
-    "brand": "SUBARU Genuine",
-    "image": "🔧",
-    "images": [],
+    "brand": "BOSCH",
+    "image": "images/brake-pads-subaru-impreza-gj-gk-front-1791900923945.jpg",
+    "images": [
+      "images/brake-pads-subaru-impreza-gj-gk-front-1791900923945.jpg"
+    ],
     "vehicleMake": "Subaru",
     "vehicleModel": "Impreza, XV",
     "yearStart": 2011,
     "yearEnd": 2023,
     "stock": 8,
-    "description": "Front brake pads for Subaru Impreza GJ/GK and XV GP/GT. [VERIFY: supplier]",
+    "description": "Front brake pads for Subaru Impreza GJ/GK and XV GP/GT.",
     "sku": "BP-SIGJ-1123F",
     "availability": "in_stock",
     "fitments": [
@@ -2281,7 +2283,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Brake Pads - Mitsubishi Galant EA/EC (Front)",

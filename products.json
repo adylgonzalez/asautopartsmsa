@@ -6646,14 +6646,16 @@
     "application": "Toyota Hilux 2005-2015, Fortuner, Hiace 1KD/2KD diesel",
     "category": "Cooling",
     "brand": "AISIN",
-    "image": "💧",
-    "images": [],
+    "image": "images/water-pump-toyota-hilux-fortuner-1kd-2kd-1791918917174.jpg",
+    "images": [
+      "images/water-pump-toyota-hilux-fortuner-1kd-2kd-1791918917174.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Hilux, Fortuner, Hiace",
     "yearStart": 2005,
     "yearEnd": 2015,
     "stock": 10,
-    "description": "Water pump for 1KD/2KD diesel engines. Includes gasket. [VERIFY: supplier]",
+    "description": "Water pump for 1KD/2KD diesel engines. Includes gasket.",
     "sku": "WP-TH-0515",
     "availability": "in_stock",
     "fitments": [
@@ -6700,7 +6702,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Water Pump - Toyota Corolla / Fielder / Axio 1NZ",

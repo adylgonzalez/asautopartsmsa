@@ -8700,23 +8700,25 @@
   },
   {
     "name": "Starter Motor - Nissan X-Trail T31 / Qashqai J10 MR20DE",
-    "price": 15500,
-    "priceMode": "fixed",
+    "price": 0,
+    "priceMode": "range",
     "partNo": "23300-JA00B",
     "oem": "23300-JA00B",
     "application": "Nissan X-Trail T31, Qashqai J10 MR20DE",
     "category": "Electrical",
     "brand": "HITACHI",
-    "image": "🔋",
-    "images": [],
+    "image": "images/starter-motor-nissan-x-trail-t31-qashqai-1792007210058.jpg",
+    "images": [
+      "images/starter-motor-nissan-x-trail-t31-qashqai-1792007210058.jpg"
+    ],
     "vehicleMake": "Nissan",
     "vehicleModel": "X-Trail, Qashqai",
     "yearStart": 2007,
     "yearEnd": 2013,
     "stock": 5,
-    "description": "Starter motor for MR20DE petrol engine. [VERIFY: supplier]",
+    "description": "Starter motor for MR20DE petrol engine.",
     "sku": "SM-NX-0713",
-    "availability": "in_stock",
+    "availability": "on_order",
     "fitments": [
       {
         "make": "Nissan",
@@ -8748,7 +8750,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": 16000,
+    "priceMax": 22000
   },
   {
     "name": "Alternator - Toyota Crown GRS180 / Mark X GRX120 / Lexus IS250",

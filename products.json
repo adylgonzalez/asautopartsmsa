@@ -8506,14 +8506,16 @@
     "application": "Toyota Corolla 1NZ, Fielder, Axio, Probox, Vitz",
     "category": "Electrical",
     "brand": "DENSO",
-    "image": "🔋",
-    "images": [],
+    "image": "images/alternator-toyota-corolla-fielder-axio-1-1792001090597.jpg",
+    "images": [
+      "images/alternator-toyota-corolla-fielder-axio-1-1792001090597.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Corolla, Fielder, Axio, Probox, Vitz",
     "yearStart": 2000,
     "yearEnd": 2012,
     "stock": 5,
-    "description": "Alternator (12V, 80A) for 1NZ petrol engines. [VERIFY: supplier]",
+    "description": "Alternator (12V, 80A) for 1NZ petrol engines. ",
     "sku": "ALT-TC-0012",
     "availability": "in_stock",
     "fitments": [
@@ -8621,7 +8623,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Starter Motor - Toyota Hilux / Fortuner 1KD/2KD Diesel",

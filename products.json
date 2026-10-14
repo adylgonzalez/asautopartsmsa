@@ -14040,5 +14040,52 @@
         ]
       }
     ]
+  },
+  {
+    "name": "MOTUL OIL 5W 40",
+    "price": 6000,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "N/A",
+    "oem": "N/A",
+    "supercedes": "",
+    "application": "Honda | Kia | Toyota | Nissan | Suzuki",
+    "category": "Oils & Fluids",
+    "brand": "Motul",
+    "image": "images/new-part-1792005472658.jpg",
+    "images": [
+      "images/new-part-1792005472658.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Honda",
+        "models": []
+      },
+      {
+        "make": "Kia",
+        "models": []
+      },
+      {
+        "make": "Toyota",
+        "models": []
+      },
+      {
+        "make": "Nissan",
+        "models": []
+      },
+      {
+        "make": "Suzuki",
+        "models": []
+      }
+    ],
+    "chassisCodes": [],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 5,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1792005489292"
   }
 ]

@@ -6894,14 +6894,16 @@
     "application": "Mazda CX-5, Mazda3 BM, Mazda6 GJ 2.2D Skyactiv",
     "category": "Cooling",
     "brand": "AISIN",
-    "image": "💧",
-    "images": [],
+    "image": "images/water-pump-mazda-cx-5-mazda3-mazda6-2-2d-1792006854048.jpg",
+    "images": [
+      "images/water-pump-mazda-cx-5-mazda3-mazda6-2-2d-1792006854048.jpg"
+    ],
     "vehicleMake": "Mazda",
     "vehicleModel": "CX-5, Mazda3, Mazda6",
     "yearStart": 2012,
     "yearEnd": 2023,
     "stock": 6,
-    "description": "Water pump for Skyactiv-D 2.2 diesel engines. [VERIFY: supplier]",
+    "description": "Water pump for Skyactiv-D 2.2 diesel engines.",
     "sku": "WP-MC-1223",
     "availability": "in_stock",
     "fitments": [
@@ -6945,7 +6947,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Water Pump - Mitsubishi Pajero / Lancer 4M41 / 4B11",

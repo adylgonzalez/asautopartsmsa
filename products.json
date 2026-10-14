@@ -6894,16 +6894,14 @@
     "application": "Mazda CX-5, Mazda3 BM, Mazda6 GJ 2.2D Skyactiv",
     "category": "Cooling",
     "brand": "AISIN",
-    "image": "images/water-pump-mazda-cx-5-mazda3-mazda6-2-2d-1792006854048.jpg",
-    "images": [
-      "images/water-pump-mazda-cx-5-mazda3-mazda6-2-2d-1792006854048.jpg"
-    ],
+    "image": "💧",
+    "images": [],
     "vehicleMake": "Mazda",
     "vehicleModel": "CX-5, Mazda3, Mazda6",
     "yearStart": 2012,
     "yearEnd": 2023,
     "stock": 6,
-    "description": "Water pump for Skyactiv-D 2.2 diesel engines.",
+    "description": "Water pump for Skyactiv-D 2.2 diesel engines. [VERIFY: supplier]",
     "sku": "WP-MC-1223",
     "availability": "in_stock",
     "fitments": [
@@ -6947,10 +6945,7 @@
         ]
       }
     ],
-    "pointsLocked": true,
-    "supercedes": "",
-    "priceMin": null,
-    "priceMax": null
+    "pointsLocked": true
   },
   {
     "name": "Water Pump - Mitsubishi Pajero / Lancer 4M41 / 4B11",
@@ -8642,14 +8637,16 @@
     "application": "Toyota Hilux, Fortuner, Hiace 1KD/2KD 2005-2015",
     "category": "Electrical",
     "brand": "DENSO",
-    "image": "🔋",
-    "images": [],
+    "image": "images/starter-motor-toyota-hilux-fortuner-1kd--1792007071515.jpg",
+    "images": [
+      "images/starter-motor-toyota-hilux-fortuner-1kd--1792007071515.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Hilux, Fortuner, Hiace",
     "yearStart": 2005,
     "yearEnd": 2015,
     "stock": 6,
-    "description": "Starter motor for 1KD/2KD diesel engines. [VERIFY: supplier]",
+    "description": "Starter motor for 1KD/2KD diesel engines.",
     "sku": "SM-TH-0515",
     "availability": "in_stock",
     "fitments": [
@@ -8696,7 +8693,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Starter Motor - Nissan X-Trail T31 / Qashqai J10 MR20DE",

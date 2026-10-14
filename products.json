@@ -14042,8 +14042,8 @@
     ]
   },
   {
-    "name": "MOTUL OIL 5W 40",
-    "price": 6000,
+    "name": "Motul 6100 Syn-nergy 5W-40",
+    "price": 6300,
     "priceMode": "fixed",
     "priceMin": null,
     "priceMax": null,
@@ -14053,9 +14053,9 @@
     "application": "Honda | Kia | Toyota | Nissan | Suzuki",
     "category": "Oils & Fluids",
     "brand": "Motul",
-    "image": "images/new-part-1792005472658.jpg",
+    "image": "https://raw.githubusercontent.com/adylgonzalez/asautopartsmsa/main/images/new-part-1792005472658.jpg",
     "images": [
-      "images/new-part-1792005472658.jpg"
+      "https://raw.githubusercontent.com/adylgonzalez/asautopartsmsa/main/images/new-part-1792005472658.jpg"
     ],
     "fitments": [
       {
@@ -14077,13 +14077,21 @@
       {
         "make": "Suzuki",
         "models": []
+      },
+      {
+        "make": "BMW",
+        "models": []
+      },
+      {
+        "make": "Volkswagen",
+        "models": []
       }
     ],
     "chassisCodes": [],
     "yearStart": 0,
     "yearEnd": 0,
     "stock": 5,
-    "description": "",
+    "description": "A high-performance oil built to ACEA A3/B4 and API SN standards, offering strong high-temperature shear stability, high TBN (Total Base Number), and broad OEM approvals",
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1792005489292"

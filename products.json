@@ -9220,16 +9220,14 @@
     "application": "Toyota Hilux, Fortuner, Hiace, Innova 1KD/2KD",
     "category": "Sensors",
     "brand": "DENSO",
-    "image": "images/crankshaft-position-sensor-toyota-1kd-2k-1792075928672.jpg",
-    "images": [
-      "images/crankshaft-position-sensor-toyota-1kd-2k-1792075928672.jpg"
-    ],
+    "image": "🔌",
+    "images": [],
     "vehicleMake": "Toyota",
     "vehicleModel": "Hilux, Fortuner, Hiace, Innova",
     "yearStart": 2005,
     "yearEnd": 2015,
     "stock": 10,
-    "description": "Crankshaft position sensor for 1KD/2KD diesel engines.",
+    "description": "Crankshaft position sensor for 1KD/2KD diesel engines. [VERIFY: supplier]",
     "sku": "CPS-TH-0515",
     "availability": "in_stock",
     "fitments": [
@@ -9276,10 +9274,7 @@
         ]
       }
     ],
-    "pointsLocked": true,
-    "supercedes": "",
-    "priceMin": null,
-    "priceMax": null
+    "pointsLocked": true
   },
   {
     "name": "Camshaft Position Sensor - Toyota Hilux / Fortuner 1KD",
@@ -13546,8 +13541,10 @@
     "application": "Toyota Rav4",
     "category": "Suspension",
     "brand": "KYB",
-    "image": "🔧",
-    "images": [],
+    "image": "images/rear-shock-absorber-1792076556810.jpg",
+    "images": [
+      "images/rear-shock-absorber-1792076556810.jpg"
+    ],
     "fitments": [
       {
         "make": "Toyota",

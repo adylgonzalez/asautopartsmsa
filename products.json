@@ -5469,14 +5469,16 @@
     "application": "Toyota Hilux KUN25/KUN26, Fortuner 1KD/2KD diesel",
     "category": "Engine",
     "brand": "TOYOTA Genuine",
-    "image": "🔗",
-    "images": [],
+    "image": "images/serpentine-belt-toyota-hilux-fortuner-1k-1792071946482.jpg",
+    "images": [
+      "images/serpentine-belt-toyota-hilux-fortuner-1k-1792071946482.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Hilux, Fortuner",
     "yearStart": 2005,
     "yearEnd": 2015,
     "stock": 20,
-    "description": "V-ribbed serpentine belt (6PK) for 1KD/2KD diesel engines. [VERIFY: supplier]",
+    "description": "V-ribbed serpentine belt (6PK) for 1KD/2KD diesel engines.",
     "sku": "SB-TH-0515",
     "availability": "in_stock",
     "fitments": [
@@ -5523,7 +5525,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Serpentine Belt - Nissan X-Trail T32 2.5",

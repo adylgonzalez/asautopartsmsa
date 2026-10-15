@@ -11637,18 +11637,20 @@
     "price": 4200,
     "priceMode": "fixed",
     "partNo": "SEH471",
-    "oem": "53540-T7A-003",
+    "oem": "SEH471",
     "application": "Honda Vezel RU1/RU3, HR-V 2013-2021",
     "category": "Steering",
     "brand": "555",
-    "image": "🔗",
-    "images": [],
+    "image": "images/tie-rod-end-honda-vezel-hr-v-front-1792072241354.jpg",
+    "images": [
+      "images/tie-rod-end-honda-vezel-hr-v-front-1792072241354.jpg"
+    ],
     "vehicleMake": "Honda",
     "vehicleModel": "Vezel, HR-V",
     "yearStart": 2013,
     "yearEnd": 2021,
     "stock": 12,
-    "description": "Tie rod end (outer) for Honda Vezel and HR-V. [VERIFY: supplier]",
+    "description": "Tie rod end (outer) for Honda Vezel and HR-V.",
     "sku": "TR-HV-1321",
     "availability": "in_stock",
     "fitments": [
@@ -11677,7 +11679,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Steering Rack End - Nissan Qashqai J11 / X-Trail T32",

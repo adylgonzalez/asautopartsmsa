@@ -3799,75 +3799,6 @@
     "pointsLocked": true
   },
   {
-    "name": "Oil Filter - Mazda CX-5 (2.5L / 2.2D)",
-    "price": 1800,
-    "priceMode": "fixed",
-    "partNo": "1WPY-14-302",
-    "oem": "1WPY-14-302",
-    "application": "Mazda CX-5 2.5L / 2.2D 2017-2023, CX-30, Mazda3, Mazda6",
-    "category": "Filters",
-    "brand": "MAZDA Genuine",
-    "image": "🔩",
-    "images": [],
-    "vehicleMake": "Mazda",
-    "vehicleModel": "CX-5, Mazda3, Mazda6",
-    "yearStart": 2017,
-    "yearEnd": 2023,
-    "stock": 40,
-    "description": "Genuine Mazda oil filter for Skyactiv 2.5L and 2.2D engines. Supersedes 1WPE-14-302 and PY8W-14-302. [VERIFY: supplier]",
-    "sku": "OF-MC-1723",
-    "availability": "in_stock",
-    "fitments": [
-      {
-        "make": "Mazda",
-        "models": [
-          "CX-5",
-          "CX-30",
-          "Mazda3",
-          "Mazda6",
-          "CX-8"
-        ]
-      }
-    ],
-    "chassisCodes": [
-      {
-        "model": "CX-5",
-        "codes": [
-          "KE",
-          "KF"
-        ]
-      },
-      {
-        "model": "CX-30",
-        "codes": [
-          "DM"
-        ]
-      },
-      {
-        "model": "Mazda3",
-        "codes": [
-          "BM",
-          "BN",
-          "BP"
-        ]
-      },
-      {
-        "model": "Mazda6",
-        "codes": [
-          "GJ",
-          "GL"
-        ]
-      },
-      {
-        "model": "CX-8",
-        "codes": [
-          "KG"
-        ]
-      }
-    ],
-    "pointsLocked": true
-  },
-  {
     "name": "Air Filter - Mazda Demio / Mazda2",
     "price": 1800,
     "priceMode": "fixed",
@@ -4941,83 +4872,46 @@
     "application": "Mazda Atenza GJ, Axela BM, CX-5, MPV, Biante",
     "category": "Filters",
     "brand": "MAZDA Genuine",
-    "image": "🔩",
-    "images": [],
+    "image": "images/oil-filter-mazda-atenza-axela-mpv-skyact-1792086322189.jpg",
+    "images": [
+      "images/oil-filter-mazda-atenza-axela-mpv-skyact-1792086322189.jpg"
+    ],
     "vehicleMake": "Mazda",
     "vehicleModel": "Atenza, Axela, MPV, Biante",
     "yearStart": 2012,
     "yearEnd": 2023,
     "stock": 30,
-    "description": "Genuine Mazda oil filter for Skyactiv engines. [VERIFY: supplier]",
+    "description": "Genuine Mazda oil filter for Skyactiv engines.",
     "sku": "OF-MJDM-1223",
     "availability": "in_stock",
     "fitments": [
       {
-        "make": "Mazda",
+        "make": "Honda",
         "models": [
-          "Atenza",
-          "Axela",
-          "MPV",
-          "Biante",
-          "CX-5",
-          "Mazda6",
-          "Mazda3"
+          "Inspire",
+          "Accord Euro"
         ]
       }
     ],
     "chassisCodes": [
       {
-        "model": "Atenza",
+        "model": "Inspire",
         "codes": [
-          "GJ",
-          "GL"
+          "UC1"
         ]
       },
       {
-        "model": "Axela",
+        "model": "Accord Euro",
         "codes": [
-          "BM",
-          "BN",
-          "BP"
-        ]
-      },
-      {
-        "model": "MPV",
-        "codes": [
-          "LW",
-          "LY"
-        ]
-      },
-      {
-        "model": "Biante",
-        "codes": [
-          "CC"
-        ]
-      },
-      {
-        "model": "CX-5",
-        "codes": [
-          "KE",
-          "KF"
-        ]
-      },
-      {
-        "model": "Mazda6",
-        "codes": [
-          "GJ",
-          "GL"
-        ]
-      },
-      {
-        "model": "Mazda3",
-        "codes": [
-          "BM",
-          "BN",
-          "BP"
+          "CL7",
+          "CL9"
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Oil Filter - Subaru Legacy / Impreza / Forester",

@@ -11689,18 +11689,20 @@
     "price": 4500,
     "priceMode": "fixed",
     "partNo": "SR-N580",
-    "oem": "48001-4BA0A",
+    "oem": "SR-N580",
     "application": "Nissan Qashqai J11, X-Trail T32 2013-2023",
     "category": "Steering",
     "brand": "555",
-    "image": "🔗",
-    "images": [],
+    "image": "images/steering-rack-end-nissan-qashqai-j11-x-t-1792072342060.jpg",
+    "images": [
+      "images/steering-rack-end-nissan-qashqai-j11-x-t-1792072342060.jpg"
+    ],
     "vehicleMake": "Nissan",
     "vehicleModel": "Qashqai, X-Trail",
     "yearStart": 2013,
     "yearEnd": 2023,
     "stock": 12,
-    "description": "Steering rack end (inner tie rod) for Nissan Qashqai J11 and X-Trail T32. [VERIFY: supplier]",
+    "description": "Steering rack end (inner tie rod) for Nissan Qashqai J11 and X-Trail T32.",
     "sku": "SR-NXQ-1323",
     "availability": "in_stock",
     "fitments": [
@@ -11733,7 +11735,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Rack End - Mazda CX-8 / CX-5 (Inner Tie Rod)",

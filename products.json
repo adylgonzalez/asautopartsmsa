@@ -6649,58 +6649,6 @@
     "priceMax": null
   },
   {
-    "name": "Water Pump - Nissan X-Trail T31 / Qashqai J10 MR20DE",
-    "price": 8500,
-    "priceMode": "fixed",
-    "partNo": "21010-EN20A",
-    "oem": "21010-EN20A",
-    "application": "Nissan X-Trail T31, Qashqai J10 MR20DE 2007-2013",
-    "category": "Cooling",
-    "brand": "AISIN",
-    "image": "💧",
-    "images": [],
-    "vehicleMake": "Nissan",
-    "vehicleModel": "X-Trail, Qashqai",
-    "yearStart": 2007,
-    "yearEnd": 2013,
-    "stock": 8,
-    "description": "Water pump for MR20DE petrol engine. [VERIFY: supplier]",
-    "sku": "WP-NX-0713",
-    "availability": "in_stock",
-    "fitments": [
-      {
-        "make": "Nissan",
-        "models": [
-          "X-Trail",
-          "Qashqai",
-          "Sentra"
-        ]
-      }
-    ],
-    "chassisCodes": [
-      {
-        "model": "X-Trail",
-        "codes": [
-          "T31"
-        ]
-      },
-      {
-        "model": "Qashqai",
-        "codes": [
-          "J10"
-        ]
-      },
-      {
-        "model": "Sentra",
-        "codes": [
-          "B16",
-          "B17"
-        ]
-      }
-    ],
-    "pointsLocked": true
-  },
-  {
     "name": "Water Pump - Mazda CX-5 / Mazda3 / Mazda6 2.2D",
     "price": 9500,
     "priceMode": "fixed",

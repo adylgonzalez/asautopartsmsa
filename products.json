@@ -11745,18 +11745,20 @@
     "price": 4000,
     "priceMode": "fixed",
     "partNo": "SR-M150",
-    "oem": "K131-32-240",
+    "oem": "SR-M150",
     "application": "Mazda CX-8, CX-5",
     "category": "Steering",
     "brand": "555",
-    "image": "🔗",
-    "images": [],
+    "image": "images/rack-end-mazda-cx-8-cx-5-inner-tie-rod-1792072699603.jpg",
+    "images": [
+      "images/rack-end-mazda-cx-8-cx-5-inner-tie-rod-1792072699603.jpg"
+    ],
     "vehicleMake": "Mazda",
     "vehicleModel": "CX-8, CX-5",
     "yearStart": 2017,
     "yearEnd": 2025,
     "stock": 10,
-    "description": "Steering rack end (inner tie rod) for Mazda CX-8 and CX-5. [VERIFY: supplier]",
+    "description": "Steering rack end (inner tie rod) for Mazda CX-8 and CX-5.",
     "sku": "SR-MC-1725",
     "availability": "in_stock",
     "fitments": [
@@ -11782,7 +11784,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "END SUB-ASSY TIE ROD RH (EACH) (GR)",

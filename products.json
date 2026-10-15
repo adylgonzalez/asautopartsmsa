@@ -6248,14 +6248,16 @@
     "application": "Toyota, Nissan, Honda - most models",
     "category": "Engine",
     "brand": "TOYOTA Genuine",
-    "image": "🔧",
-    "images": [],
+    "image": "images/oil-drain-plug-washer-toyota-nissan-hond-1792072074806.jpg",
+    "images": [
+      "images/oil-drain-plug-washer-toyota-nissan-hond-1792072074806.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "All Models",
     "yearStart": 1995,
     "yearEnd": 2024,
     "stock": 100,
-    "description": "Oil pan drain plug with crush washer. Fits most Toyota, Nissan and Honda engines. [VERIFY: supplier]",
+    "description": "Oil pan drain plug with crush washer. Fits most Toyota, Nissan and Honda engines.",
     "sku": "ODP-TY-ALL",
     "availability": "in_stock",
     "fitments": [
@@ -6279,7 +6281,10 @@
       }
     ],
     "chassisCodes": [],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "ENGINE - 4GR FSE",

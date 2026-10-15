@@ -3577,14 +3577,16 @@
     "application": "Nissan Navara D40, Pathfinder R51 (YD25 diesel)",
     "category": "Filters",
     "brand": "NISSAN Genuine",
-    "image": "🔩",
-    "images": [],
+    "image": "images/oil-filter-nissan-navara-pathfinder-dies-1792086560769.jpg",
+    "images": [
+      "images/oil-filter-nissan-navara-pathfinder-dies-1792086560769.jpg"
+    ],
     "vehicleMake": "Nissan",
     "vehicleModel": "Navara, Pathfinder",
     "yearStart": 2005,
     "yearEnd": 2015,
     "stock": 40,
-    "description": "Genuine Nissan oil filter for YD25 diesel engines. [VERIFY: supplier]",
+    "description": "Genuine Nissan oil filter for YD25 diesel engines.",
     "sku": "OF-NN-0515",
     "availability": "in_stock",
     "fitments": [
@@ -3619,7 +3621,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Air Filter - Nissan X-Trail T32 / Qashqai J11",

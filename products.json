@@ -3635,14 +3635,16 @@
     "application": "Nissan X-Trail T32, Qashqai J11",
     "category": "Filters",
     "brand": "NISSAN Genuine",
-    "image": "💨",
-    "images": [],
+    "image": "images/air-filter-nissan-x-trail-t32-qashqai-j1-1792087133227.jpg",
+    "images": [
+      "images/air-filter-nissan-x-trail-t32-qashqai-j1-1792087133227.jpg"
+    ],
     "vehicleMake": "Nissan",
     "vehicleModel": "X-Trail, Qashqai",
     "yearStart": 2014,
     "yearEnd": 2024,
     "stock": 30,
-    "description": "Genuine Nissan air filter for X-Trail T32 and Qashqai J11. [VERIFY: supplier]",
+    "description": "Genuine Nissan air filter for X-Trail T32 and Qashqai J11.",
     "sku": "AF-NX-1424",
     "availability": "in_stock",
     "fitments": [
@@ -3675,7 +3677,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Oil Filter - Honda Civic FC1 / Fit / Vezel",

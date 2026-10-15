@@ -5028,14 +5028,16 @@
     "application": "Subaru Legacy BL/BP/BR/BM, Impreza GH/GJ/GK, Forester SH/SJ",
     "category": "Filters",
     "brand": "SUBARU Genuine",
-    "image": "🔩",
-    "images": [],
+    "image": "images/oil-filter-subaru-legacy-impreza-foreste-1792083726011.jpg",
+    "images": [
+      "images/oil-filter-subaru-legacy-impreza-foreste-1792083726011.jpg"
+    ],
     "vehicleMake": "Subaru",
     "vehicleModel": "Legacy, Impreza, Forester",
     "yearStart": 2003,
     "yearEnd": 2023,
     "stock": 30,
-    "description": "Genuine Subaru oil filter for Legacy, Impreza and Forester. [VERIFY: supplier]",
+    "description": "Genuine Subaru oil filter for Legacy, Impreza and Forester.",
     "sku": "OF-SJDM-0323",
     "availability": "in_stock",
     "fitments": [
@@ -5095,94 +5097,10 @@
         ]
       }
     ],
-    "pointsLocked": true
-  },
-  {
-    "name": "Oil Filter - Subaru Forester / Impreza / Legacy",
-    "price": 1400,
-    "priceMode": "fixed",
-    "partNo": "15208-AA100",
-    "oem": "15208-AA100",
-    "application": "Subaru Forester, Impreza, Legacy, Outback, XV",
-    "category": "Filters",
-    "brand": "SUBARU Genuine",
-    "image": "🔩",
-    "images": [],
-    "vehicleMake": "Subaru",
-    "vehicleModel": "Forester, Impreza, Legacy, Outback, XV",
-    "yearStart": 1999,
-    "yearEnd": 2023,
-    "stock": 40,
-    "description": "Genuine Subaru black oil filter. Fits Forester, Impreza, Legacy, Outback and XV. [VERIFY: supplier]",
-    "sku": "OF-SF-9923",
-    "availability": "in_stock",
-    "fitments": [
-      {
-        "make": "Subaru",
-        "models": [
-          "Forester",
-          "Impreza",
-          "Legacy",
-          "Outback",
-          "XV"
-        ]
-      }
-    ],
-    "chassisCodes": [
-      {
-        "model": "Forester",
-        "codes": [
-          "SF",
-          "SG",
-          "SH",
-          "SJ",
-          "SK"
-        ]
-      },
-      {
-        "model": "Impreza",
-        "codes": [
-          "GC",
-          "GD",
-          "GE",
-          "GH",
-          "GJ",
-          "GK",
-          "GP"
-        ]
-      },
-      {
-        "model": "Legacy",
-        "codes": [
-          "BE",
-          "BH",
-          "BL",
-          "BP",
-          "BR",
-          "BM",
-          "BN"
-        ]
-      },
-      {
-        "model": "Outback",
-        "codes": [
-          "BE",
-          "BH",
-          "BP",
-          "BR",
-          "BM",
-          "BN"
-        ]
-      },
-      {
-        "model": "XV",
-        "codes": [
-          "GP",
-          "GT"
-        ]
-      }
-    ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Timing Belt Kit - Toyota",

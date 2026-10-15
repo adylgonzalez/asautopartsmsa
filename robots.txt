@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://adylgonzalez.github.io/asautopartsmsa/sitemap.xml
+Sitemap: https://asautopartsmsa.pages.dev/sitemap.xml

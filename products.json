@@ -9977,14 +9977,16 @@
     "application": "Mazda CX-5 2.2L Diesel 2017-2023",
     "category": "Cooling",
     "brand": "MAZDA Genuine",
-    "image": "🔗",
-    "images": [],
+    "image": "images/radiator-upper-hose-mazda-cx-5-2-2d-1792262095963.jpg",
+    "images": [
+      "images/radiator-upper-hose-mazda-cx-5-2-2d-1792262095963.jpg"
+    ],
     "vehicleMake": "Mazda",
     "vehicleModel": "CX-5",
     "yearStart": 2017,
     "yearEnd": 2023,
     "stock": 15,
-    "description": "Radiator upper hose for Mazda CX-5 2.2 diesel. [VERIFY: supplier]",
+    "description": "Radiator upper hose for Mazda CX-5 2.2 diesel.",
     "sku": "RH-MC-1723",
     "availability": "in_stock",
     "fitments": [
@@ -10010,7 +10012,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Thermostat - Mazda CX-5 / Mazda3 / Mazda6 Diesel",

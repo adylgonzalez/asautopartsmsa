@@ -9705,14 +9705,16 @@
     "application": "Toyota Hilux, Fortuner, Innova/Kijang Innova",
     "category": "Cooling",
     "brand": "TOYOTA Genuine",
-    "image": "🔗",
-    "images": [],
+    "image": "images/radiator-upper-hose-toyota-hilux-fortune-1792261621480.jpg",
+    "images": [
+      "images/radiator-upper-hose-toyota-hilux-fortune-1792261621480.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Hilux, Fortuner, Innova",
     "yearStart": 2005,
     "yearEnd": 2015,
     "stock": 25,
-    "description": "Radiator inlet (upper) hose for Hilux, Fortuner and Innova. [VERIFY: supplier]",
+    "description": "Radiator inlet (upper) hose for Hilux, Fortuner and Innova.",
     "sku": "RH-TH-0515",
     "availability": "in_stock",
     "fitments": [
@@ -9750,7 +9752,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Radiator Lower Hose - Toyota Hilux / Fortuner / Innova",

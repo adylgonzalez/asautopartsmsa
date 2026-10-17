@@ -9766,14 +9766,16 @@
     "application": "Toyota Hilux, Fortuner, Innova/Kijang Innova",
     "category": "Cooling",
     "brand": "TOYOTA Genuine",
-    "image": "🔗",
-    "images": [],
+    "image": "images/radiator-lower-hose-toyota-hilux-fortune-1792261815241.jpg",
+    "images": [
+      "images/radiator-lower-hose-toyota-hilux-fortune-1792261815241.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Hilux, Fortuner, Innova",
     "yearStart": 2005,
     "yearEnd": 2015,
     "stock": 25,
-    "description": "Radiator outlet (lower) hose for Hilux, Fortuner and Innova. [VERIFY: supplier]",
+    "description": "Radiator outlet (lower) hose for Hilux, Fortuner and Innova.",
     "sku": "RL-TH-0515",
     "availability": "in_stock",
     "fitments": [
@@ -9811,7 +9813,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Thermostat - Toyota Hilux / Corolla (1KD/1NZ)",

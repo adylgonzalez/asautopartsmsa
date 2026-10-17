@@ -9935,14 +9935,16 @@
     "application": "Nissan X-Trail T31 2007-2015 QR25DE",
     "category": "Cooling",
     "brand": "NISSAN Genuine",
-    "image": "🔗",
-    "images": [],
+    "image": "images/radiator-upper-hose-nissan-x-trail-t31-1792261970417.jpg",
+    "images": [
+      "images/radiator-upper-hose-nissan-x-trail-t31-1792261970417.jpg"
+    ],
     "vehicleMake": "Nissan",
     "vehicleModel": "X-Trail",
     "yearStart": 2007,
     "yearEnd": 2015,
     "stock": 20,
-    "description": "Radiator upper hose for X-Trail T31. [VERIFY: supplier]",
+    "description": "Radiator upper hose for X-Trail T31.",
     "sku": "RH-NXT-0715",
     "availability": "in_stock",
     "fitments": [
@@ -9961,7 +9963,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Radiator Upper Hose - Mazda CX-5 2.2D",

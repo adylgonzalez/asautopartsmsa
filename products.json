@@ -6729,14 +6729,16 @@
     "application": "Mitsubishi Pajero 4M41, Lancer 4B11, Outlander",
     "category": "Cooling",
     "brand": "AISIN",
-    "image": "💧",
-    "images": [],
+    "image": "images/water-pump-mitsubishi-pajero-lancer-4m41-1792261550227.jpg",
+    "images": [
+      "images/water-pump-mitsubishi-pajero-lancer-4m41-1792261550227.jpg"
+    ],
     "vehicleMake": "Mitsubishi",
     "vehicleModel": "Pajero, Lancer, Outlander",
     "yearStart": 2005,
     "yearEnd": 2023,
     "stock": 6,
-    "description": "Water pump for Mitsubishi 4M41 and 4B11 engines. [VERIFY: supplier]",
+    "description": "Water pump for Mitsubishi 4M41 and 4B11 engines.",
     "sku": "WP-MP-0523",
     "availability": "in_stock",
     "fitments": [
@@ -6784,7 +6786,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Spark Plugs - Toyota (4 Pack)",

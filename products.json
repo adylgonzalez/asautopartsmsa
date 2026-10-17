@@ -10026,14 +10026,16 @@
     "application": "Mazda CX-5, Mazda3 BK/BL, Mazda6 GJ/GL, BT-50 (Diesel)",
     "category": "Cooling",
     "brand": "MAZDA Genuine",
-    "image": "🌡️",
-    "images": [],
+    "image": "images/thermostat-mazda-cx-5-mazda3-mazda6-dies-1792262264029.jpg",
+    "images": [
+      "images/thermostat-mazda-cx-5-mazda3-mazda6-dies-1792262264029.jpg"
+    ],
     "vehicleMake": "Mazda",
     "vehicleModel": "CX-5, Mazda3, Mazda6, BT-50",
     "yearStart": 2003,
     "yearEnd": 2023,
     "stock": 12,
-    "description": "Engine coolant thermostat for Mazda diesel engines. [VERIFY: supplier]",
+    "description": "Engine coolant thermostat for Mazda diesel engines.",
     "sku": "TH-MC-0323",
     "availability": "in_stock",
     "fitments": [
@@ -10079,7 +10081,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Radiator - Toyota Hilux / Fortuner 1KD/2KD (Diesel)",

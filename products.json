@@ -10151,19 +10151,21 @@
     "name": "Radiator - Toyota Corolla / Fielder / Axio 1NZ",
     "price": 16500,
     "priceMode": "fixed",
-    "partNo": "16400-21541",
-    "oem": "16400-21541",
+    "partNo": "16400-21140",
+    "oem": "16400-21140",
     "application": "Toyota Corolla ZRE, Fielder, Axio, Auris 1NZ/2ZR",
     "category": "Cooling",
     "brand": "DENSO",
-    "image": "🔧",
-    "images": [],
+    "image": "images/radiator-toyota-corolla-fielder-axio-1nz-1792339226237.jpg",
+    "images": [
+      "images/radiator-toyota-corolla-fielder-axio-1nz-1792339226237.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Corolla, Fielder, Axio",
     "yearStart": 2006,
     "yearEnd": 2023,
     "stock": 6,
-    "description": "Radiator assembly for Corolla/Fielder/Axio 1NZ and 2ZR engines. [VERIFY: supplier]",
+    "description": "Radiator assembly for Corolla/Fielder/Axio 1NZ and 2ZR engines.",
     "sku": "RAD-TC-0623",
     "availability": "in_stock",
     "fitments": [
@@ -10214,7 +10216,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Radiator Cap - Toyota All Models (0.9 Bar)",

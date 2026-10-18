@@ -10223,21 +10223,23 @@
   },
   {
     "name": "Radiator Cap - Toyota All Models (0.9 Bar)",
-    "price": 850,
+    "price": 1000,
     "priceMode": "fixed",
     "partNo": "16401-20353",
     "oem": "16401-20353",
     "application": "Toyota Corolla, Camry, Hilux, Prado, RAV4 - most models",
     "category": "Cooling",
     "brand": "TOYOTA Genuine",
-    "image": "🔧",
-    "images": [],
+    "image": "images/radiator-cap-toyota-all-models-0-9-bar-1792340013779.jpg",
+    "images": [
+      "images/radiator-cap-toyota-all-models-0-9-bar-1792340013779.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "All Models",
     "yearStart": 1995,
     "yearEnd": 2024,
     "stock": 50,
-    "description": "Radiator cap (0.9 bar / 13 psi) for Toyota vehicles. [VERIFY: supplier]",
+    "description": "Radiator cap (0.9 bar / 13 psi) for Toyota vehicles.",
     "sku": "RC-TY-ALL",
     "availability": "in_stock",
     "fitments": [
@@ -10249,7 +10251,10 @@
       }
     ],
     "chassisCodes": [],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Fuel Pump - Toyota Hilux / Fortuner / Hiace (Diesel)",

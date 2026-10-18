@@ -10257,36 +10257,6 @@
     "priceMax": null
   },
   {
-    "name": "Radiator Coolant - Toyota Genuine Long Life (Red, 1L)",
-    "price": 1200,
-    "priceMode": "fixed",
-    "partNo": "08889-80015",
-    "oem": "08889-80015",
-    "application": "Toyota all models - red/pink coolant",
-    "category": "Cooling",
-    "brand": "TOYOTA Genuine",
-    "image": "💧",
-    "images": [],
-    "vehicleMake": "Toyota",
-    "vehicleModel": "All Models",
-    "yearStart": 1998,
-    "yearEnd": 2024,
-    "stock": 40,
-    "description": "Toyota Genuine Long Life Coolant (SLLC) - red/pink concentrate. 1L bottle. [VERIFY: supplier]",
-    "sku": "COOL-TY-RED",
-    "availability": "in_stock",
-    "fitments": [
-      {
-        "make": "Toyota",
-        "models": [
-          "All Models"
-        ]
-      }
-    ],
-    "chassisCodes": [],
-    "pointsLocked": true
-  },
-  {
     "name": "Fuel Pump - Toyota Hilux / Fortuner / Hiace (Diesel)",
     "price": 18500,
     "priceMode": "fixed",

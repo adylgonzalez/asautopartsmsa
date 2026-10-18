@@ -10095,14 +10095,16 @@
     "application": "Toyota Hilux 2005-2015, Fortuner, Innova 1KD/2KD (Auto/Manual)",
     "category": "Cooling",
     "brand": "DENSO",
-    "image": "🔧",
-    "images": [],
+    "image": "images/radiator-toyota-hilux-fortuner-1kd-2kd-d-1792314033167.jpg",
+    "images": [
+      "images/radiator-toyota-hilux-fortuner-1kd-2kd-d-1792314033167.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Hilux, Fortuner, Innova",
     "yearStart": 2005,
     "yearEnd": 2015,
     "stock": 4,
-    "description": "Radiator assembly for diesel Hilux/Fortuner/Innova. Copper-brass or aluminum core. [VERIFY: supplier]",
+    "description": "Radiator assembly for diesel Hilux/Fortuner/Innova. Copper-brass or aluminum core.",
     "sku": "RAD-TH-0515",
     "availability": "in_stock",
     "fitments": [
@@ -10140,7 +10142,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Radiator - Toyota Corolla / Fielder / Axio 1NZ",

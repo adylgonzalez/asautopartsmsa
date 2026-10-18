@@ -4293,14 +4293,16 @@
     "application": "Toyota Crown GRS180/182/200, Mark X GRX120/130, Lexus IS250/IS350, GS300/GS350",
     "category": "Filters",
     "brand": "TOYOTA Genuine",
-    "image": "🔩",
-    "images": [],
+    "image": "images/oil-filter-toyota-crown-mark-x-lexus-is--1792340814676.jpg",
+    "images": [
+      "images/oil-filter-toyota-crown-mark-x-lexus-is--1792340814676.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Crown, Mark X",
     "yearStart": 2004,
     "yearEnd": 2018,
     "stock": 40,
-    "description": "Genuine Toyota/Lexus oil filter element. Fits Crown, Mark X, IS250, IS350, GS300, GS350. Also cross-ref: 04152-YZZA1, 04152-31080, 04152-31070. [VERIFY: supplier]",
+    "description": "Genuine Toyota/Lexus oil filter element. Fits Crown, Mark X, IS250, IS350, GS300, GS350.",
     "sku": "OF-TCMX-0418",
     "availability": "in_stock",
     "fitments": [
@@ -4377,7 +4379,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "04152-YZZA1, 04152-31080, 04152-31070",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Oil Filter - Lexus IS250 / IS350 / GS300 (Metal)",

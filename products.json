@@ -13920,5 +13920,52 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1792005489292"
+  },
+  {
+    "name": "Bosch Aero Eco Wiper Blades - 14\"",
+    "price": 1200,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "-",
+    "oem": "-",
+    "supercedes": "",
+    "application": "Lexus | Nissan | Mitsubishi | Toyota | Suzuki",
+    "category": "Body & Exterior",
+    "brand": "BOSCH",
+    "image": "images/new-part-1792432462108.jpg",
+    "images": [
+      "images/new-part-1792432462108.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Lexus",
+        "models": []
+      },
+      {
+        "make": "Nissan",
+        "models": []
+      },
+      {
+        "make": "Mitsubishi",
+        "models": []
+      },
+      {
+        "make": "Toyota",
+        "models": []
+      },
+      {
+        "make": "Suzuki",
+        "models": []
+      }
+    ],
+    "chassisCodes": [],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 10,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1792432480239"
   }
 ]

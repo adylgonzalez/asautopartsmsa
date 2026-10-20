@@ -13969,38 +13969,466 @@
     "sku": "SKU-1792432480239"
   },
   {
-    "name": "Damper Electric Power Steering Shaft Motor",
-    "price": 700,
+    "name": "Brake Pads - Mazda Demio (Front)",
+    "price": 0,
     "priceMode": "fixed",
-    "priceMin": null,
-    "priceMax": null,
-    "partNo": "45254-28040",
-    "oem": "45254-28040",
-    "supercedes": "",
-    "application": "Toyota All Models, Noah, Voxy",
-    "category": "Steering",
-    "brand": "TOYOTA Genuine",
-    "image": "images/new-part-1792504095397.jpg",
-    "images": [
-      "images/new-part-1792504095397.jpg"
-    ],
-    "fitments": [
-      {
-        "make": "Toyota",
-        "models": [
-          "All Models",
-          "Noah",
-          "Voxy"
-        ]
-      }
-    ],
-    "chassisCodes": [],
-    "yearStart": 0,
-    "yearEnd": 0,
-    "stock": 5,
-    "description": "Fits most Toyota Models with Electric Power Steering shaft Motor",
+    "category": "Brakes",
+    "image": "",
+    "images": [],
+    "brand": "MAZDA Genuine",
+    "partNo": "DNY0-33-28Z",
+    "oem": "DNY0-33-28Z",
+    "application": "Mazda Demio DE, Mazda2 DE/DH 1.5",
+    "description": "Front brake pad set. Cross-ref found on PartSouq for Demio/Mazda2.",
+    "vehicleMake": "Mazda",
+    "vehicleModel": "Demio, Mazda2",
+    "yearStart": 2007,
+    "yearEnd": 2015,
+    "sku": "BP-MD-DE",
+    "stock": 0,
     "availability": "in_stock",
-    "pointsLocked": false,
-    "sku": "SKU-1792504275438"
+    "fitments": [
+      { "make": "Mazda", "models": ["Demio", "Mazda2"] }
+    ],
+    "chassisCodes": [
+      { "model": "Demio", "codes": ["DE"] },
+      { "model": "Mazda2", "codes": ["DE", "DH"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Oil Strainer/Filter - Mazda Demio",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Filters",
+    "image": "",
+    "images": [],
+    "brand": "MAZDA Genuine",
+    "partNo": "ZJ01-14-240",
+    "oem": "ZJ01-14-240",
+    "application": "Mazda Demio, Axela, Verisa",
+    "description": "Oil filter strainer. PartSouq lists compatibility with Demio.",
+    "vehicleMake": "Mazda",
+    "vehicleModel": "Demio",
+    "yearStart": 2007,
+    "yearEnd": 2015,
+    "sku": "OF-MD-DE",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Mazda", "models": ["Demio", "Axela", "Verisa"] }
+    ],
+    "chassisCodes": [
+      { "model": "Demio", "codes": ["DE"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Air Filter - Mazda Demio",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Filters",
+    "image": "",
+    "images": [],
+    "brand": "MAZDA Genuine",
+    "partNo": "ZJ01-13-Z40",
+    "oem": "ZJ01-13-Z40",
+    "application": "Mazda Demio, Axela, Verisa",
+    "description": "Engine air cleaner element. PartSouq confirms Demio compatibility.",
+    "vehicleMake": "Mazda",
+    "vehicleModel": "Demio",
+    "yearStart": 2007,
+    "yearEnd": 2015,
+    "sku": "AF-MD-DE",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Mazda", "models": ["Demio", "Axela", "Verisa"] }
+    ],
+    "chassisCodes": [
+      { "model": "Demio", "codes": ["DE"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Spark Plug - Mazda Demio",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Ignition",
+    "image": "",
+    "images": [],
+    "brand": "MAZDA Genuine",
+    "partNo": "BP04-18-110",
+    "oem": "BP04-18-110",
+    "application": "Mazda Demio, Axela, Premacy, Verisa",
+    "description": "Spark plug. PartSouq lists Demio compatibility. Superseded by BPY4-18-110.",
+    "vehicleMake": "Mazda",
+    "vehicleModel": "Demio",
+    "yearStart": 2007,
+    "yearEnd": 2015,
+    "sku": "SP-MD-DE",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Mazda", "models": ["Demio", "Axela", "Premacy", "Verisa"] }
+    ],
+    "chassisCodes": [
+      { "model": "Demio", "codes": ["DE"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Front Shock Absorber (Right) - Mazda Demio",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Suspension",
+    "image": "",
+    "images": [],
+    "brand": "MAZDA Genuine",
+    "partNo": "D04A-34-700C",
+    "oem": "D04A-34-700C",
+    "application": "Mazda Demio / Mazda2 / Ford Fiesta 2012~",
+    "description": "Front right shock absorber. PartSouq shows compatibility with Demio.",
+    "vehicleMake": "Mazda",
+    "vehicleModel": "Demio, Mazda2",
+    "yearStart": 2012,
+    "yearEnd": 2023,
+    "sku": "SA-MD-DE-FR",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Mazda", "models": ["Demio", "Mazda2"] }
+    ],
+    "chassisCodes": [
+      { "model": "Demio", "codes": ["DE", "DJ"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Front Stabilizer Link - Mazda Demio",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Suspension",
+    "image": "",
+    "images": [],
+    "brand": "MAZDA Genuine",
+    "partNo": "D350-34-170A",
+    "oem": "D350-34-170A",
+    "application": "Mazda Demio, Verisa",
+    "description": "Front stabilizer link (control rod). PartSouq lists Demio compatibility.",
+    "vehicleMake": "Mazda",
+    "vehicleModel": "Demio",
+    "yearStart": 2007,
+    "yearEnd": 2015,
+    "sku": "SL-MD-DE",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Mazda", "models": ["Demio", "Verisa"] }
+    ],
+    "chassisCodes": [
+      { "model": "Demio", "codes": ["DE"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Front Stabilizer Bush - Mazda Demio",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Suspension",
+    "image": "",
+    "images": [],
+    "brand": "MAZDA Genuine",
+    "partNo": "D651-34-156",
+    "oem": "D651-34-156",
+    "application": "Mazda Demio DE3F",
+    "description": "Front stabilizer bush. Listed on Nengun for Demio DE3F.",
+    "vehicleMake": "Mazda",
+    "vehicleModel": "Demio",
+    "yearStart": 2007,
+    "yearEnd": 2015,
+    "sku": "SBU-MD-DE",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Mazda", "models": ["Demio"] }
+    ],
+    "chassisCodes": [
+      { "model": "Demio", "codes": ["DE3F"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Ball Joint - Mazda Demio",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Suspension",
+    "image": "",
+    "images": [],
+    "brand": "MAZDA Genuine",
+    "partNo": "D651-32-240",
+    "oem": "D651-32-240",
+    "application": "Mazda Demio DE3F",
+    "description": "Ball joint. Listed on Nengun for Demio DE3F.",
+    "vehicleMake": "Mazda",
+    "vehicleModel": "Demio",
+    "yearStart": 2007,
+    "yearEnd": 2015,
+    "sku": "BJ-MD-DE",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Mazda", "models": ["Demio"] }
+    ],
+    "chassisCodes": [
+      { "model": "Demio", "codes": ["DE3F"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Front Wheel Bearing - Mazda Demio",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Bearings",
+    "image": "",
+    "images": [],
+    "brand": "MAZDA Genuine",
+    "partNo": "D651-33-047A",
+    "oem": "D651-33-047A",
+    "application": "Mazda Demio DE3F",
+    "description": "Front wheel bearing. Listed on Nengun for Demio DE3F.",
+    "vehicleMake": "Mazda",
+    "vehicleModel": "Demio",
+    "yearStart": 2007,
+    "yearEnd": 2015,
+    "sku": "WB-MD-DE-F",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Mazda", "models": ["Demio"] }
+    ],
+    "chassisCodes": [
+      { "model": "Demio", "codes": ["DE3F"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Lower Arm Bushing - Mazda Demio",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Suspension",
+    "image": "",
+    "images": [],
+    "brand": "MAZDA Genuine",
+    "partNo": "D651-34-470",
+    "oem": "D651-34-470",
+    "application": "Mazda Demio DE3F",
+    "description": "Lower arm rubber bushing. Listed on Nengun for Demio DE3F.",
+    "vehicleMake": "Mazda",
+    "vehicleModel": "Demio",
+    "yearStart": 2007,
+    "yearEnd": 2015,
+    "sku": "CAB-MD-DE",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Mazda", "models": ["Demio"] }
+    ],
+    "chassisCodes": [
+      { "model": "Demio", "codes": ["DE3F"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Oil Filter - Toyota Vitz",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Filters",
+    "image": "",
+    "images": [],
+    "brand": "TOYOTA Genuine",
+    "partNo": "90915-YZZA3",
+    "oem": "90915-YZZA3",
+    "application": "Toyota Vitz KSP130, NSP130, NCP131",
+    "description": "Genuine Toyota oil filter for Vitz.",
+    "vehicleMake": "Toyota",
+    "vehicleModel": "Vitz, Yaris",
+    "yearStart": 2010,
+    "yearEnd": 2017,
+    "sku": "OF-TV-1017",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Toyota", "models": ["Vitz", "Yaris"] }
+    ],
+    "chassisCodes": [
+      { "model": "Vitz", "codes": ["KSP130", "NSP130", "NCP131"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Brake Pads - Toyota Vitz (Front)",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Brakes",
+    "image": "",
+    "images": [],
+    "brand": "TOYOTA Genuine",
+    "partNo": "04465-52260",
+    "oem": "04465-52260",
+    "application": "Toyota Vitz 2010-2017 (non-RS)",
+    "description": "Front brake pads for Vitz.",
+    "vehicleMake": "Toyota",
+    "vehicleModel": "Vitz",
+    "yearStart": 2010,
+    "yearEnd": 2017,
+    "sku": "BP-TV-F",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Toyota", "models": ["Vitz"] }
+    ],
+    "chassisCodes": [
+      { "model": "Vitz", "codes": ["NSP130", "NCP131"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Brake Pads - Toyota Vitz (Rear)",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Brakes",
+    "image": "",
+    "images": [],
+    "brand": "TOYOTA Genuine",
+    "partNo": "04495-74030",
+    "oem": "04495-74030",
+    "application": "Toyota Vitz 2010-2017 (non-RS)",
+    "description": "Rear brake pads for Vitz.",
+    "vehicleMake": "Toyota",
+    "vehicleModel": "Vitz",
+    "yearStart": 2010,
+    "yearEnd": 2017,
+    "sku": "BP-TV-R",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Toyota", "models": ["Vitz"] }
+    ],
+    "chassisCodes": [
+      { "model": "Vitz", "codes": ["NSP130", "NCP131"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Stabilizer Link - Toyota Vitz (Front)",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Suspension",
+    "image": "",
+    "images": [],
+    "brand": "TOYOTA Genuine",
+    "partNo": "48820-52030",
+    "oem": "48820-52030",
+    "application": "Toyota Vitz, Yaris",
+    "description": "Front stabilizer link for Vitz and Yaris.",
+    "vehicleMake": "Toyota",
+    "vehicleModel": "Vitz, Yaris",
+    "yearStart": 2005,
+    "yearEnd": 2020,
+    "sku": "SL-TV-F",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Toyota", "models": ["Vitz", "Yaris"] }
+    ],
+    "chassisCodes": [
+      { "model": "Vitz", "codes": ["NCP91", "KSP90", "SCP90", "NSP130"] },
+      { "model": "Yaris", "codes": ["NSP130", "NCP91"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Stabilizer Bushing - Toyota Vitz (Front, 22mm)",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Suspension",
+    "image": "",
+    "images": [],
+    "brand": "TOYOTA Genuine",
+    "partNo": "48815-52120",
+    "oem": "48815-52120",
+    "application": "Toyota Vitz NSP130",
+    "description": "Front stabilizer bushing 22mm for Vitz.",
+    "vehicleMake": "Toyota",
+    "vehicleModel": "Vitz",
+    "yearStart": 2010,
+    "yearEnd": 2017,
+    "sku": "SBU-TV-22",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Toyota", "models": ["Vitz"] }
+    ],
+    "chassisCodes": [
+      { "model": "Vitz", "codes": ["NSP130"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Engine Mount RH - Toyota Porte",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Engine",
+    "image": "",
+    "images": [],
+    "brand": "TOYOTA Genuine",
+    "partNo": "12305-21520",
+    "oem": "12305-21520",
+    "application": "Toyota Porte NCP141 1NZ-FE",
+    "description": "Insulator sub-assy engine mounting RH for Porte NCP141.",
+    "vehicleMake": "Toyota",
+    "vehicleModel": "Porte, Spade",
+    "yearStart": 2012,
+    "yearEnd": 2015,
+    "sku": "EM-TP-1215R",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Toyota", "models": ["Porte", "Spade"] }
+    ],
+    "chassisCodes": [
+      { "model": "Porte", "codes": ["NCP141"] },
+      { "model": "Spade", "codes": ["NCP141"] }
+    ],
+    "pointsLocked": true
+  },
+  {
+    "name": "Engine Mount LH - Toyota Porte",
+    "price": 0,
+    "priceMode": "fixed",
+    "category": "Engine",
+    "image": "",
+    "images": [],
+    "brand": "TOYOTA Genuine",
+    "partNo": "12372-21310",
+    "oem": "12372-21310",
+    "application": "Toyota Porte NCP141 1NZ-FE",
+    "description": "Insulator engine mounting LH for Porte NCP141.",
+    "vehicleMake": "Toyota",
+    "vehicleModel": "Porte, Spade",
+    "yearStart": 2012,
+    "yearEnd": 2015,
+    "sku": "EM-TP-1215L",
+    "stock": 0,
+    "availability": "in_stock",
+    "fitments": [
+      { "make": "Toyota", "models": ["Porte", "Spade"] }
+    ],
+    "chassisCodes": [
+      { "model": "Porte", "codes": ["NCP141"] },
+      { "model": "Spade", "codes": ["NCP141"] }
+    ],
+    "pointsLocked": true
   }
 ]

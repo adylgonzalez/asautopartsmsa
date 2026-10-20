@@ -13967,5 +13967,40 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1792432480239"
+  },
+  {
+    "name": "Damper Electric Power Steering Shaft Motor",
+    "price": 700,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "45254-28040",
+    "oem": "45254-28040",
+    "supercedes": "",
+    "application": "Toyota All Models, Noah, Voxy",
+    "category": "Steering",
+    "brand": "TOYOTA Genuine",
+    "image": "images/new-part-1792504095397.jpg",
+    "images": [
+      "images/new-part-1792504095397.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "All Models",
+          "Noah",
+          "Voxy"
+        ]
+      }
+    ],
+    "chassisCodes": [],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 5,
+    "description": "Fits most Toyota Models with Electric Power Steering shaft Motor",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1792504275438"
   }
 ]

@@ -43,7 +43,21 @@
     "Axio",
     "Belta",
     "Ist",
-    "Crown Majesta"
+    "Crown Majesta",
+    "Aqua",
+    "Century",
+    "Comfort",
+    "Kluger",
+    "Land Cruiser 200",
+    "Prado 150",
+    "Mirai",
+    "Porte",
+    "Spade",
+    "Raize",
+    "Sienta",
+    "Tank",
+    "Roomy",
+    "Vios"
   ],
   "Nissan": [
     "X-Trail",
@@ -108,7 +122,10 @@
     "Outback",
     "Impreza",
     "Legacy",
-    "XV"
+    "XV",
+    "Justy",
+    "Rex",
+    "Trezia"
   ],
   "Mercedes-Benz": [
     "C-Class",
@@ -133,7 +150,8 @@
     "Discovery",
     "Range Rover",
     "Range Rover Sport",
-    "Freelander"
+    "Freelander",
+    "Range Rover Velar"
   ],
   "Isuzu": [
     "D-Max",
@@ -209,6 +227,31 @@
     "IS200",
     "NX",
     "GS250",
-    "GS450H"
+    "GS450H",
+    "ES200",
+    "GX400",
+    "GX460",
+    "ISF",
+    "IS300C",
+    "LS460",
+    "LS600H",
+    "LX450D",
+    "LX460",
+    "LX570",
+    "NX300"
+  ],
+  "Daihatsu": [
+    "Rocky",
+    "Thor"
+  ],
+  "Jaguar": [
+    "F Pace",
+    "I Pace",
+    "XE",
+    "XF"
+  ],
+  "Hongqi": [
+    "H7",
+    "HS7"
   ]
 }

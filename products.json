@@ -14002,5 +14002,68 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1792504275438"
+  },
+  {
+    "name": "4 POT BRAKE PADS",
+    "price": 3500,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "O4465-30430",
+    "oem": "O4465-30430",
+    "supercedes": "04465-30400, 04465-30510, 04465-30450, 04465-30470",
+    "application": "Toyota Crown, Mark X, Crown Majesta | Lexus IS250, IS350, IS300, GS250, GS300, GS350, GS430, GS450H, GS460",
+    "category": "Brakes",
+    "brand": "Mando",
+    "image": "images/new-part-1792563433074.jpg",
+    "images": [
+      "images/new-part-1792563433074.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Crown",
+          "Mark X",
+          "Crown Majesta"
+        ]
+      },
+      {
+        "make": "Lexus",
+        "models": [
+          "IS250",
+          "IS350",
+          "IS300",
+          "GS250",
+          "GS300",
+          "GS350",
+          "GS430",
+          "GS450H",
+          "GS460"
+        ]
+      }
+    ],
+    "chassisCodes": [
+      {
+        "model": "Crown",
+        "codes": [
+          "GRS184",
+          "GRS204"
+        ]
+      },
+      {
+        "model": "Crown Majesta",
+        "codes": [
+          "URS206"
+        ]
+      }
+    ],
+    "yearStart": 2004,
+    "yearEnd": 2014,
+    "stock": 4,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1792563460959"
   }
 ]

@@ -12549,54 +12549,6 @@
     "pointsLocked": true
   },
   {
-    "name": "Muffler - Toyota Hilux / Fortuner 1KD (Diesel, Rear)",
-    "price": 12500,
-    "priceMode": "fixed",
-    "partNo": "17430-0L040",
-    "oem": "17430-0L040",
-    "application": "Toyota Hilux 2005-2015, Fortuner 1KD diesel",
-    "category": "Exhaust",
-    "brand": "TOYOTA Genuine",
-    "image": "🔧",
-    "images": [],
-    "vehicleMake": "Toyota",
-    "vehicleModel": "Hilux, Fortuner",
-    "yearStart": 2005,
-    "yearEnd": 2015,
-    "stock": 3,
-    "description": "Rear muffler (silencer) for diesel Hilux/Fortuner. [VERIFY: supplier]",
-    "sku": "MUF-TH-0515",
-    "availability": "in_stock",
-    "fitments": [
-      {
-        "make": "Toyota",
-        "models": [
-          "Hilux",
-          "Fortuner"
-        ]
-      }
-    ],
-    "chassisCodes": [
-      {
-        "model": "Hilux",
-        "codes": [
-          "KUN25",
-          "KUN26",
-          "KUN35",
-          "KUN36"
-        ]
-      },
-      {
-        "model": "Fortuner",
-        "codes": [
-          "KUN60",
-          "KUN61"
-        ]
-      }
-    ],
-    "pointsLocked": true
-  },
-  {
     "name": "Exhaust Center Pipe - Toyota Corolla / Fielder / Axio",
     "price": 8500,
     "priceMode": "fixed",

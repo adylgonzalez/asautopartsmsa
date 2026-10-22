@@ -14165,5 +14165,39 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1792589884107"
+  },
+  {
+    "name": "Toyota Auris Headlight Driver Right O/S Halogen",
+    "price": 40000,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "81110-02K40",
+    "oem": "81110-02K40",
+    "supercedes": "",
+    "application": "Toyota Auris",
+    "category": "Body & Exterior",
+    "brand": "Other",
+    "image": "images/new-part-1792656201424.jpg",
+    "images": [
+      "images/new-part-1792656201424.jpg",
+      "images/new-part-1792656213351.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Auris"
+        ]
+      }
+    ],
+    "chassisCodes": [],
+    "yearStart": 2017,
+    "yearEnd": 0,
+    "stock": 1,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1792656360819"
   }
 ]

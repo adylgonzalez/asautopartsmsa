@@ -6972,7 +6972,7 @@
   },
   {
     "name": "Spark Plugs - DENSO Iridium TT",
-    "price": 25000,
+    "price": 22000,
     "priceMode": "fixed",
     "partNo": "IKBH20TT",
     "oem": "IKBH20TT",
@@ -6991,7 +6991,7 @@
     "description": "Iridium TT spark plugs for 4GR-FSE engines.",
     "sku": "SKU-1789937851009",
     "availability": "in_stock",
-    "supercedes": "",
+    "supercedes": "FK20HBR11",
     "fitments": [
       {
         "make": "Toyota",

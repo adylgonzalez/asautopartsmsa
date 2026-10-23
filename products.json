@@ -9405,14 +9405,16 @@
     "application": "Toyota Crown GRS180/182, Mark X GRX120, Lexus IS250 GSE20, GS300 GRS190",
     "category": "Sensors",
     "brand": "DENSO",
-    "image": "🔌",
-    "images": [],
+    "image": "images/oxygen-sensor-o2-toyota-crown-grs180-mar-1792768345779.jpg",
+    "images": [
+      "images/oxygen-sensor-o2-toyota-crown-grs180-mar-1792768345779.jpg"
+    ],
     "vehicleMake": "Toyota",
     "vehicleModel": "Crown, Mark X, Lexus IS250, Lexus GS300",
     "yearStart": 2003,
     "yearEnd": 2013,
     "stock": 10,
-    "description": "Air/fuel ratio sensor (upstream O2) for 4GR-FSE engines. Cross-ref: 89467-30010. [VERIFY: supplier]",
+    "description": "Air/fuel ratio sensor (upstream O2) for 4GR-FSE engines.",
     "sku": "O2-TCMX-0313",
     "availability": "in_stock",
     "fitments": [
@@ -9479,7 +9481,10 @@
         ]
       }
     ],
-    "pointsLocked": true
+    "pointsLocked": true,
+    "supercedes": "89467-30010",
+    "priceMin": null,
+    "priceMax": null
   },
   {
     "name": "Oxygen Sensor (O2) - Nissan Skyline V36 / Fuga Y50 VQ35HR",

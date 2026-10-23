@@ -14397,5 +14397,39 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1792731675304"
+  },
+  {
+    "name": "Side Mirror Nissan Note E12 RHS",
+    "price": 13000,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "N/A",
+    "oem": "N/A",
+    "supercedes": "",
+    "application": "Nissan Note",
+    "category": "EX JAPAN",
+    "brand": "AutoJapan",
+    "image": "images/new-part-1792731788817.jpg",
+    "images": [
+      "images/new-part-1792731788817.jpg",
+      "images/new-part-1792731797674.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Nissan",
+        "models": [
+          "Note"
+        ]
+      }
+    ],
+    "chassisCodes": [],
+    "yearStart": 2013,
+    "yearEnd": 2014,
+    "stock": 2,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1792731806441"
   }
 ]

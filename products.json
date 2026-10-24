@@ -14449,15 +14449,16 @@
     "application": "Toyota Prado",
     "category": "Brakes",
     "brand": "Febest",
-    "image": "images/new-part-1792838992758.jpg",
+    "image": "https://raw.githubusercontent.com/adylgonzalez/asautopartsmsa/main/images/new-part-1792838992758.jpg",
     "images": [
-      "images/new-part-1792838992758.jpg"
+      "https://raw.githubusercontent.com/adylgonzalez/asautopartsmsa/main/images/new-part-1792838992758.jpg"
     ],
     "fitments": [
       {
         "make": "Toyota",
         "models": [
-          "Prado"
+          "Prado",
+          "Prado 150"
         ]
       }
     ],

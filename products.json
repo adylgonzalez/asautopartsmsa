@@ -14436,5 +14436,49 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1792731806441"
+  },
+  {
+    "name": "Front caliper slide pin",
+    "price": 350,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "0174-GDJ150F",
+    "oem": "0174-GDJ150F",
+    "supercedes": "47735-60300",
+    "application": "Toyota Prado",
+    "category": "Brakes",
+    "brand": "Febest",
+    "image": "images/new-part-1792838992758.jpg",
+    "images": [
+      "images/new-part-1792838992758.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Prado"
+        ]
+      }
+    ],
+    "chassisCodes": [
+      {
+        "model": "Prado",
+        "codes": [
+          "GDJ150",
+          "GRJ150",
+          "KDJ150",
+          "LJ150",
+          "TRJ15"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 10,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1792839050920"
   }
 ]

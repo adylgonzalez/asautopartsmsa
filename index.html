@@ -4340,23 +4340,5 @@ async function init(){
 }
 init();
 </script>
-    <!-- 1. Load the auto-parts-db library -->
-<script src="https://cdn.jsdelivr.net/npm/auto-parts-db/dist/browser/auto-parts-db.min.js"></script>
-
-<!-- 2. Test code: check results in the browser console -->
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    if (window.AutoPartsDB) {
-      const brands = AutoPartsDB.getBrands();
-      console.log('Number of brands:', brands.length);
-      console.log('First 10 brands:', brands.slice(0, 10));
-
-      const toyotaModels = AutoPartsDB.getModelsByBrand('Toyota');
-      console.log('Toyota models:', toyotaModels);
-    } else {
-      console.error('AutoPartsDB did not load. Check the CDN link or network.');
-    }
-  });
-</script>
 </body>
 </html>

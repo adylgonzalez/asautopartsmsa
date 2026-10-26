@@ -14526,5 +14526,49 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1793034153950"
+  },
+  {
+    "name": "Shock Absorber Rear Axle pair",
+    "price": 6000,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "333116/7",
+    "oem": "333116/7",
+    "supercedes": "",
+    "application": "Toyota Corolla",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "images/new-part-1793034728635.jpg",
+    "images": [
+      "images/new-part-1793034728635.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Corolla"
+        ]
+      }
+    ],
+    "chassisCodes": [
+      {
+        "model": "Corolla",
+        "codes": [
+          "AE100",
+          "AE110",
+          "EE90",
+          "EE111",
+          "ZZE110"
+        ]
+      }
+    ],
+    "yearStart": 1985,
+    "yearEnd": 2004,
+    "stock": 10,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1793034817082"
   }
 ]

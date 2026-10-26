@@ -14481,5 +14481,50 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1792839050920"
+  },
+  {
+    "name": " Front Shock Absorber pair",
+    "price": 6000,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "333114/5",
+    "oem": "333114/5",
+    "supercedes": " 48510-12750, 48510-12760, 48510-12840, 485101A100 ",
+    "application": "Toyota Corolla",
+    "category": "Suspension",
+    "brand": "KYB",
+    "image": "images/new-part-1793033417894.jpg",
+    "images": [
+      "images/new-part-1793033417894.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Corolla"
+        ]
+      }
+    ],
+    "chassisCodes": [
+      {
+        "model": "Corolla",
+        "codes": [
+          "AE91",
+          "AE100",
+          "AE110",
+          "EE90",
+          "EE111",
+          "ZZE110"
+        ]
+      }
+    ],
+    "yearStart": 1985,
+    "yearEnd": 2004,
+    "stock": 10,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1793034153950"
   }
 ]

@@ -103,7 +103,7 @@
         .product-oem{background:#fff3e0;color:#e65100;padding:5px 10px;border-radius:3px;font-size:12px;margin-bottom:10px;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
         .product-description{color:#666;font-size:14px;margin-bottom:10px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;min-height:4.2em}
         .product-vehicle-info{background:#f0f0f0;padding:8px;border-radius:5px;margin-bottom:10px;font-size:13px;color:#555;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;min-height:3.2em}
-        .product-brand{background:#1a237e;color:#fff;display:inline-block;padding:5px 15px;border-radius:5px;font-size:14px;margin-bottom:10px;align-self:center}
+        .product-brand{background:#1a237e;color:#fff;display:inline-block;padding:4px 12px;border-radius:5px;font-size:12px;margin:0 0 10px 0;align-self:flex-start;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
         .product-supercedes{background:#e8eaf6;color:#3949ab;padding:5px 10px;border-radius:4px;font-size:11px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:5px;justify-content:center;line-height:1.3}
         .product-chassis{background:#f3e5f5;color:#6a1b9a;padding:5px 10px;border-radius:4px;font-size:11px;font-weight:700;margin-bottom:10px;display:flex;align-items:flex-start;gap:5px;justify-content:center;line-height:1.4;text-align:left}
         .product-chassis i{margin-top:2px;flex-shrink:0}
@@ -2607,7 +2607,8 @@ function renderProductCard(product){
     const card=document.createElement('div');
     card.className='product-card';
     card.onclick = (ev) => { if(ev.target.closest('button')) return; recordRecentlyViewed(product.sku); openGallery(idx); };
-    card.innerHTML=`<div class="product-image">${renderImageHTML(product)}${countBadge}</div><div class="product-name">${escapeAttr(product.name)}${isUniversal?' <span class="universal-badge">Universal</span>':''}</div>${fitBadgeHTML}<div>${stockBadge}</div><div class="product-oem">Part No: ${escapeAttr(partNo)}</div>${supercedesHTML}${chassisHTML}<div class="product-vehicle-info"><i class="fas fa-car"></i> Fits: ${escapeAttr(application)}</div><div class="product-description">${escapeAttr(product.description||'')}</div><div class="product-brand">${escapeAttr(product.brand||'')}</div>${priceHTML}<div class="product-buttons"><button class="add-to-cart-btn" onclick="addToCart(${idx})"><i class="fas fa-cart-plus"></i> Add to Cart</button><button class="order-now-btn" onclick="orderNow(${idx})"><i class="fas fa-bolt"></i> Order Now</button></div>`;
+    // Brand moved directly under the product name
+    card.innerHTML=`<div class="product-image">${renderImageHTML(product)}${countBadge}</div><div class="product-name">${escapeAttr(product.name)}${isUniversal?' <span class="universal-badge">Universal</span>':''}</div><div class="product-brand">${escapeAttr(product.brand||'')}</div>${fitBadgeHTML}<div>${stockBadge}</div><div class="product-oem">Part No: ${escapeAttr(partNo)}</div>${supercedesHTML}${chassisHTML}<div class="product-vehicle-info"><i class="fas fa-car"></i> Fits: ${escapeAttr(application)}</div><div class="product-description">${escapeAttr(product.description||'')}</div>${priceHTML}<div class="product-buttons"><button class="add-to-cart-btn" onclick="addToCart(${idx})"><i class="fas fa-cart-plus"></i> Add to Cart</button><button class="order-now-btn" onclick="orderNow(${idx})"><i class="fas fa-bolt"></i> Order Now</button></div>`;
     return card;
 }
 function loadProducts(){
@@ -3206,6 +3207,7 @@ function renderAdminProductCards(){
             <div style="margin-top:10px;"><label style="font-size:12px;">Description:</label><textarea id="desc_${index}" style="width:100%;padding:5px;height:40px;">${escapeAttr(product.description||'')}</textarea></div>
             <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
                 <button onclick="updateProduct(${index})" style="padding:8px 15px;background:#4caf50;color:#fff;border:none;border-radius:3px;cursor:pointer;">💾 Save</button>
+                <button onclick="duplicateProduct(${index})" style="padding:8px 15px;background:#ff6f00;color:#fff;border:none;border-radius:3px;cursor:pointer;">📋 Duplicate</button>
                 <button onclick="deleteProduct(${index})" style="padding:8px 15px;background:#f44336;color:#fff;border:none;border-radius:3px;cursor:pointer;">🗑️ Delete</button>
             </div>
         </div>`;
@@ -3917,6 +3919,12 @@ async function addNewProduct(){
     products.push(newProduct);
     loadProducts();
     renderMakeOptions();
+    // Clear add-form state so details disappear after adding
+    delete fitmentsState['new_fit'];
+    delete chassisState['new_fit'];
+    delete multiImgState['new_img'];
+    const addFormContainer = document.getElementById('addProductForm');
+    if(addFormContainer) addFormContainer.innerHTML = '';
     closeAdminPanel(); showAdminPanel();
     showNotification('⏳ Pushing to GitHub...');
     await saveProductsToGitHub(newSku);
@@ -3990,6 +3998,18 @@ async function deleteProduct(index){
         showNotification('⏳ Pushing to GitHub...');
         await saveProductsToGitHub(sku);
     }
+}
+async function duplicateProduct(index){
+    const src = products[index];
+    if(!src) return;
+    if(!confirm(`Duplicate "${src.name}"?\n\nA copy will be created with a new SKU and " (Copy)" added to the name. You can then edit and save it.`)) return;
+    const copy = JSON.parse(JSON.stringify(src));
+    copy.sku = 'SKU-' + Date.now();
+    copy.name = (src.name || '') + ' (Copy)';
+    products.push(copy);
+    renderAdminProductCards();
+    showNotification('⏳ Saving duplicate to GitHub...');
+    await saveProductsToGitHub(copy.sku);
 }
 async function toggleAvailability(brother){
     availability[brother] = !availability[brother];

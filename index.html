@@ -1895,6 +1895,15 @@ function renderSingleImage(img){
     if(isImageReference(img)){ return `<img src="${escapeAttr(img)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='📦';">`; }
     return `<span class="gallery-emoji">${escapeAttr(img)}</span>`;
 }
+// Helper used in Cart and Orders admin views so image paths render as real thumbnails instead of raw text
+function cartItemThumbHTML(item){
+    const imgs = getProductImages(item);
+    const first = imgs.length > 0 ? imgs[0] : '🔧';
+    if(isImageReference(first)){
+        return `<div style="width:48px;height:48px;flex-shrink:0;border-radius:6px;overflow:hidden;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:22px;"><img src="${escapeAttr(first)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none';this.parentElement.textContent='📦';"></div>`;
+    }
+    return `<div style="width:48px;height:48px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;">${escapeAttr(first)}</div>`;
+}
 
 function shrinkImage(file, maxWidth, quality){
     return new Promise((resolve, reject) => {
@@ -2273,7 +2282,7 @@ function viewCart(){
             const statusClass = st === STOCK_ON_ORDER ? 'on-order' : 'in-stock';
             const statusText = st === STOCK_ON_ORDER ? 'Shipped on Order' : 'In Stock';
             const priceLine = cartItemPriceLine(item);
-            itemsHTML+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee;gap:8px;flex-wrap:wrap;"><div style="flex:1;min-width:180px;"><strong>${item.image} ${escapeAttr(item.name)}</strong><span class="cart-item-status ${statusClass}">${statusText}</span><br><small>${priceLine}</small></div><div style="display:flex;align-items:center;gap:5px;"><button onclick="decreaseQuantity(${index})" style="padding:5px 10px;background:#ff6f00;color:#fff;border:none;border-radius:3px;cursor:pointer;">-</button><span style="font-weight:bold;">${item.quantity}</span><button onclick="increaseQuantity(${index})" style="padding:5px 10px;background:#4caf50;color:#fff;border:none;border-radius:3px;cursor:pointer;">+</button><button onclick="removeFromCart(${index})" style="padding:5px 10px;background:#f44336;color:#fff;border:none;border-radius:3px;cursor:pointer;">🗑️</button></div></div>`;
+            itemsHTML+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee;gap:8px;flex-wrap:wrap;"><div style="flex:1;min-width:180px;display:flex;align-items:flex-start;gap:10px;">${cartItemThumbHTML(item)}<div style="flex:1;min-width:0;"><strong>${escapeAttr(item.name)}</strong><span class="cart-item-status ${statusClass}">${statusText}</span><br><small>${priceLine}</small></div></div><div style="display:flex;align-items:center;gap:5px;"><button onclick="decreaseQuantity(${index})" style="padding:5px 10px;background:#ff6f00;color:#fff;border:none;border-radius:3px;cursor:pointer;">-</button><span style="font-weight:bold;">${item.quantity}</span><button onclick="increaseQuantity(${index})" style="padding:5px 10px;background:#4caf50;color:#fff;border:none;border-radius:3px;cursor:pointer;">+</button><button onclick="removeFromCart(${index})" style="padding:5px 10px;background:#f44336;color:#fff;border:none;border-radius:3px;cursor:pointer;">🗑️</button></div></div>`;
         });
         itemsContainer.innerHTML=itemsHTML;
         const custPhoneRaw = (document.getElementById('custPhone')?.value || '').trim();
@@ -2534,7 +2543,7 @@ async function checkoutCart(brother){
         items: cart.map(i => {
             const mode = getPriceMode(i);
             return {
-                name: i.name, sku: i.sku, partNo: i.partNo || i.oem || '', brand: i.brand || '', image: i.image || '',
+                name: i.name, sku: i.sku, partNo: i.partNo || i.oem || '', brand: i.brand || '', image: i.image || '', images: i.images || [],
                 price: mode === PRICE_FIXED ? i.price : null,
                 priceMode: mode,
                 priceMin: mode === PRICE_RANGE ? (Number(i.priceMin) || 0) : null,
@@ -2813,7 +2822,7 @@ function searchByVIN(){
             return;
         }
         vinResults.style.display='block';
-        vinResults.innerHTML=`<button class="vin-results-close" onclick="closeVinResults()" title="Close">✕</button><div style="background:#fff3e0;padding:15px;border-radius:5px;"><strong>Vehicle not found</strong><p>VIN: ${escapeAttr(vin)}</p><a href="https://partsouq.com/en/catalog/genuine/locate?vin=${encodeURIComponent(vin)}" target="_blank" style="display:inline-block;padding:10px 20px;background:#1a237e;color:#fff;text-decoration:none;border-radius:5px;margin-top:10px;">Check PartSouq Catalog</a></div>`;
+        vinResults.innerHTML=`<button class="vin-results-close" onclick="closeVinResults()" title="Close">✕</button><div style="background:#fff3e0;padding:15px;border-radius:5px;"><strong>Vehicle not found</strong><p>VIN/Chassis: ${escapeAttr(vin)}</p><p style="font-size:13px;color:#555;margin-top:10px;">Send us your VIN on WhatsApp and we'll source the right parts for you.</p><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;"><a href="https://wa.me/254713349554?text=${encodeURIComponent('Hi ADIL, please help me find parts for VIN/Chassis: ' + vin)}" target="_blank" style="flex:1;min-width:160px;padding:12px 16px;background:#25D366;color:#fff;text-decoration:none;border-radius:6px;text-align:center;font-weight:700;"><i class="fab fa-whatsapp"></i> WhatsApp ADIL</a><a href="https://wa.me/254752763924?text=${encodeURIComponent('Hi SUHAYL, please help me find parts for VIN/Chassis: ' + vin)}" target="_blank" style="flex:1;min-width:160px;padding:12px 16px;background:#128C7E;color:#fff;text-decoration:none;border-radius:6px;text-align:center;font-weight:700;"><i class="fab fa-whatsapp"></i> WhatsApp SUHAYL</a></div></div>`;
         return;
     }
     saveVehicleToGarage(matchedVehicle.years[1], matchedVehicle.make, matchedVehicle.model);
@@ -3478,8 +3487,13 @@ function renderOrdersList(){
             const subline = [partNo ? `Part No: <strong>${escapeAttr(partNo)}</strong>` : '', brand ? `Brand: <strong>${escapeAttr(brand)}</strong>` : ''].filter(Boolean).join(' · ');
             return `<tr>
                 <td style="padding:10px 12px;border-bottom:1px solid #eee;">
-                    <div style="font-weight:700;color:#333;margin-bottom:3px;">${escapeAttr(i.name)} ${stockTag}</div>
-                    ${subline ? `<div style="font-size:11px;color:#666;">${subline}</div>` : ''}
+                    <div style="display:flex;align-items:flex-start;gap:10px;">
+                        ${cartItemThumbHTML(i)}
+                        <div style="flex:1;min-width:0;">
+                            <div style="font-weight:700;color:#333;margin-bottom:3px;">${escapeAttr(i.name)} ${stockTag}</div>
+                            ${subline ? `<div style="font-size:11px;color:#666;">${subline}</div>` : ''}
+                        </div>
+                    </div>
                 </td>
                 <td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:center;font-weight:700;">${i.quantity}</td>
                 <td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">${priceCell}</td>

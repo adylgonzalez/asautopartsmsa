@@ -2634,11 +2634,15 @@ function renderProductCard(product){
 
     const priceHTML = priceDisplayHTML(product);
     
-    // Subtle "Fits your car" indicator
+    // Subtle "Fits your car" indicator (Green for fit, Red for doesn't fit)
     let fitBadgeHTML = '';
     if(savedVehicle){
         const fits = productMatchesFitment(product, savedVehicle.make, savedVehicle.model, savedVehicle.year);
-        if(fits){ fitBadgeHTML = `<div style="font-size:11px;color:#2e7d32;font-weight:700;margin-bottom:8px;"><i class="fas fa-check"></i> Fits your ${savedVehicle.make} ${savedVehicle.model}</div>`; }
+        if(fits){ 
+            fitBadgeHTML = `<div style="font-size:11px;color:#2e7d32;font-weight:700;margin-bottom:8px;"><i class="fas fa-check-circle"></i> Fits your ${savedVehicle.make} ${savedVehicle.model}</div>`; 
+        } else {
+            fitBadgeHTML = `<div style="font-size:11px;color:#c62828;font-weight:700;margin-bottom:8px;"><i class="fas fa-times-circle"></i> Doesn't fit your car</div>`;
+        }
     }
 
     const card = document.createElement('div');

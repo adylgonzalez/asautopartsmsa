@@ -696,11 +696,13 @@
         <input type="text" id="searchInput" placeholder="Search parts, OEM numbers, vehicles, chassis codes...">
         <button onclick="searchProducts()">🔍 Search</button>
     </div>
+    
+    <!-- Changed order to Make -> Model -> Year -->
     <div class="vehicle-selector">
         <h2><i class="fas fa-car"></i> Find Parts for Your Vehicle</h2>
-        <select id="vehicleYear"><option value="">Select Year</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option><option>2000</option></select>
         <select id="vehicleMake"></select>
         <select id="vehicleModel"><option value="">Select Model</option></select>
+        <select id="vehicleYear"><option value="">Select Year</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option><option>2000</option></select>
         <button onclick="findParts()">Find Parts</button>
     </div>
 
@@ -1184,10 +1186,10 @@ function renderModelOptions(make){
 }
 function onPublicMakeChange(){ renderModelOptions(document.getElementById('vehicleMake').value); }
 function findParts(){
-    const year = parseInt(document.getElementById('vehicleYear').value);
     const make = document.getElementById('vehicleMake').value;
     const model = document.getElementById('vehicleModel').value;
-    if(!year || !make || !model){ alert('Please select year, make, and model'); return; }
+    const year = parseInt(document.getElementById('vehicleYear').value);
+    if(!make || !model || !year){ alert('Please select make, model, and year'); return; }
     saveVehicleToGarage(year, make, model);
     const filtered = products.filter(p => productMatchesFitment(p, make, model, year));
     displayFilteredProducts(filtered, `Parts for ${year} ${make} ${model}`);

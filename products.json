@@ -14714,5 +14714,54 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1794639108448"
+  },
+  {
+    "name": "Brake pad set Front ",
+    "price": 12000,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "04465-48150",
+    "oem": "04465-48150",
+    "supercedes": "",
+    "application": "Toyota Harrier, RAV4",
+    "category": "Brakes",
+    "brand": "Advics",
+    "image": "images/new-part-1794639458865.jpg",
+    "images": [
+      "images/new-part-1794639458865.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Harrier",
+          "RAV4"
+        ]
+      }
+    ],
+    "chassisCodes": [
+      {
+        "model": "Harrier",
+        "codes": [
+          "ASU60",
+          "ZSU65"
+        ]
+      },
+      {
+        "model": "RAV4",
+        "codes": [
+          "MXAA52",
+          "MXAA54"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 4,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1794639469714"
   }
 ]

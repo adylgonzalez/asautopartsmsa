@@ -15132,12 +15132,14 @@
   },
   {
     "name": "ECCENTRIC NUT",
-    "price": null,
+    "price": 450,
     "priceMode": "fixed",
     "category": "Suspension",
-    "image": "",
-    "images": [],
-    "brand": null,
+    "image": "images/eccentric-nut-1794644393819.jpg",
+    "images": [
+      "images/eccentric-nut-1794644393819.jpg"
+    ],
+    "brand": "Febest",
     "partNo": "48198-60020",
     "oem": "48198-60020",
     "application": "TOYOTA LAND CRUISER PRADO GDJ150,GRJ150,KDJ150,LJ150,TRJ15# 2009.08-2017.08 [GR]",
@@ -15149,7 +15151,7 @@
     "sku": null,
     "stock": 50,
     "availability": "in_stock",
-    "supercedes": null,
+    "supercedes": "",
     "priceMin": null,
     "priceMax": null,
     "fitments": [

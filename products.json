@@ -14990,12 +14990,14 @@
   },
   {
     "name": "CAMBER ADJUSTING ECCENTRIC BOLT",
-    "price": null,
+    "price": 1500,
     "priceMode": "fixed",
     "category": "Suspension",
-    "image": "",
-    "images": [],
-    "brand": null,
+    "image": "images/camber-adjusting-eccentric-bolt-1794644092074.jpg",
+    "images": [
+      "images/camber-adjusting-eccentric-bolt-1794644092074.jpg"
+    ],
+    "brand": "Febest",
     "partNo": "48190-60020",
     "oem": "48190-60020",
     "application": "TOYOTA HILUX GGN15,25,35,KUN1#,2#,3#,LAN15,25,35,TGN1#,26,36 2004.08-2012.04 [US]",
@@ -15007,7 +15009,7 @@
     "sku": null,
     "stock": 50,
     "availability": "in_stock",
-    "supercedes": null,
+    "supercedes": "",
     "priceMin": null,
     "priceMax": null,
     "fitments": [

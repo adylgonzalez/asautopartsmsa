@@ -15086,12 +15086,14 @@
   },
   {
     "name": "ECCENTRIC WASHER",
-    "price": null,
+    "price": 250,
     "priceMode": "fixed",
     "category": "Suspension",
-    "image": "",
-    "images": [],
-    "brand": null,
+    "image": "images/eccentric-washer-1794644304274.jpg",
+    "images": [
+      "images/eccentric-washer-1794644304274.jpg"
+    ],
+    "brand": "Febest",
     "partNo": "48198-30090",
     "oem": "48198-30090",
     "application": "TOYOTA CROWN/CROWN MAJESTA GS151,JZS15#,LS151,UZS15# 1995.08-2001.08 [JP]",
@@ -15103,7 +15105,7 @@
     "sku": null,
     "stock": 50,
     "availability": "in_stock",
-    "supercedes": null,
+    "supercedes": "",
     "priceMin": null,
     "priceMax": null,
     "fitments": [
@@ -15117,7 +15119,7 @@
     ],
     "chassisCodes": [
       {
-        "model": "Crown / Crown Majesta",
+        "model": "Crown Majesta",
         "codes": [
           "GS151",
           "JZS15#",

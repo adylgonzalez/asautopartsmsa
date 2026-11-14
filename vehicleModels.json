@@ -197,7 +197,8 @@
   "Renault": [
     "Clio",
     "Megane",
-    "Duster"
+    "Duster",
+    "Koleos"
   ],
   "Suzuki": [
     "Swift",
@@ -253,5 +254,10 @@
   "Hongqi": [
     "H7",
     "HS7"
+  ],
+  "Infiniti": [
+    "Q50",
+    "Q60 Coupe",
+    "QX50"
   ]
 }

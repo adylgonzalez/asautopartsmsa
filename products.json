@@ -14944,12 +14944,14 @@
   },
   {
     "name": "CAMBER ADJUSTING ECCENTRIC BOLT",
-    "price": null,
+    "price": 500,
     "priceMode": "fixed",
     "category": "Suspension",
-    "image": "",
-    "images": [],
-    "brand": null,
+    "image": "images/camber-adjusting-eccentric-bolt-1794644005877.jpg",
+    "images": [
+      "images/camber-adjusting-eccentric-bolt-1794644005877.jpg"
+    ],
+    "brand": "Febest",
     "partNo": "48190-30040",
     "oem": "48190-30040",
     "application": "TOYOTA CROWN/CROWN MAJESTA GS171,JKS175,JZS17#,UZS17# 1999.09-2007.06 [JP]",
@@ -14961,7 +14963,7 @@
     "sku": null,
     "stock": 50,
     "availability": "in_stock",
-    "supercedes": null,
+    "supercedes": "",
     "priceMin": null,
     "priceMax": null,
     "fitments": [

@@ -14647,7 +14647,7 @@
     "sku": "SKU-1794638303160"
   },
   {
-    "name": "Brake pad set Front ",
+    "name": "Brake pad set Front",
     "price": 15500,
     "priceMode": "fixed",
     "priceMin": null,
@@ -14658,15 +14658,16 @@
     "application": "Nissan X-Trail | Infiniti Q50, Q60 Coupe, QX50 | Renault Koleos",
     "category": "Brakes",
     "brand": "NISSAN",
-    "image": "images/new-part-1794639075212.jpg",
+    "image": "https://raw.githubusercontent.com/adylgonzalez/asautopartsmsa/main/images/new-part-1794639075212.jpg",
     "images": [
-      "images/new-part-1794639075212.jpg"
+      "https://raw.githubusercontent.com/adylgonzalez/asautopartsmsa/main/images/new-part-1794639075212.jpg"
     ],
     "fitments": [
       {
         "make": "Nissan",
         "models": [
-          "X-Trail"
+          "X-Trail",
+          "Skyline"
         ]
       },
       {
@@ -14697,6 +14698,12 @@
         "model": "Koleos",
         "codes": [
           "HC"
+        ]
+      },
+      {
+        "model": "Skyline",
+        "codes": [
+          "YV37"
         ]
       }
     ],

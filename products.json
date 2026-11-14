@@ -14603,5 +14603,47 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1794563591502"
+  },
+  {
+    "name": "Bonnet Toyota Vitz",
+    "price": 11000,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "-",
+    "oem": "-",
+    "supercedes": "",
+    "application": "Toyota Vitz",
+    "category": "Body & Exterior",
+    "brand": "Value",
+    "image": "images/new-part-1794638265037.jpg",
+    "images": [
+      "images/new-part-1794638265037.jpg",
+      "images/new-part-1794638274584.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Toyota",
+        "models": [
+          "Vitz"
+        ]
+      }
+    ],
+    "chassisCodes": [
+      {
+        "model": "Vitz",
+        "codes": [
+          "KSP90",
+          "NCP90"
+        ]
+      }
+    ],
+    "yearStart": 2005,
+    "yearEnd": 2007,
+    "stock": 2,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1794638303160"
   }
 ]

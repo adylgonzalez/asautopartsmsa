@@ -14813,12 +14813,14 @@
   },
   {
     "name": "FRONT STABILIZER LINK / SWAY BAR LINK",
-    "price": null,
+    "price": 1500,
     "priceMode": "fixed",
     "category": "Suspension",
-    "image": "",
-    "images": [],
-    "brand": null,
+    "image": "images/front-stabilizer-link-sway-bar-link-1794643669312.jpg",
+    "images": [
+      "images/front-stabilizer-link-sway-bar-link-1794643669312.jpg"
+    ],
+    "brand": "Febest",
     "partNo": "48820-42020",
     "oem": "48820-42020",
     "application": "TOYOTA RAV4 ACA2#,CLA2#,ZCA2# 2000.05-2005.11 [GR]",
@@ -14830,7 +14832,7 @@
     "sku": null,
     "stock": 50,
     "availability": "in_stock",
-    "supercedes": null,
+    "supercedes": "",
     "priceMin": null,
     "priceMax": null,
     "fitments": [

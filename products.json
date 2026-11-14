@@ -15043,12 +15043,14 @@
   },
   {
     "name": "CAMBER ADJUSTING ECCENTRIC BOLT",
-    "price": null,
+    "price": 1300,
     "priceMode": "fixed",
     "category": "Suspension",
-    "image": "",
-    "images": [],
-    "brand": null,
+    "image": "images/camber-adjusting-eccentric-bolt-1794644176749.jpg",
+    "images": [
+      "images/camber-adjusting-eccentric-bolt-1794644176749.jpg"
+    ],
+    "brand": "Febest",
     "partNo": "48409-48020",
     "oem": "48409-48020",
     "application": "TOYOTA KLUGER L/V ACU2#,MCU2# 2000.11-2007.05 [JP]",
@@ -15060,7 +15062,7 @@
     "sku": null,
     "stock": 50,
     "availability": "in_stock",
-    "supercedes": null,
+    "supercedes": "",
     "priceMin": null,
     "priceMax": null,
     "fitments": [

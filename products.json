@@ -14645,5 +14645,67 @@
     "availability": "in_stock",
     "pointsLocked": false,
     "sku": "SKU-1794638303160"
+  },
+  {
+    "name": "Brake pad set Front ",
+    "price": 15500,
+    "priceMode": "fixed",
+    "priceMin": null,
+    "priceMax": null,
+    "partNo": "AY040-NS170",
+    "oem": "AY040-NS170",
+    "supercedes": "D106M-4CCXA",
+    "application": "Nissan X-Trail | Infiniti Q50, Q60 Coupe, QX50 | Renault Koleos",
+    "category": "Brakes",
+    "brand": "NISSAN",
+    "image": "images/new-part-1794639075212.jpg",
+    "images": [
+      "images/new-part-1794639075212.jpg"
+    ],
+    "fitments": [
+      {
+        "make": "Nissan",
+        "models": [
+          "X-Trail"
+        ]
+      },
+      {
+        "make": "Infiniti",
+        "models": [
+          "Q50",
+          "Q60 Coupe",
+          "QX50"
+        ]
+      },
+      {
+        "make": "Renault",
+        "models": [
+          "Koleos"
+        ]
+      }
+    ],
+    "chassisCodes": [
+      {
+        "model": "X-Trail",
+        "codes": [
+          "T32",
+          "T32R",
+          "T32RR"
+        ]
+      },
+      {
+        "model": "Koleos",
+        "codes": [
+          "HC"
+        ]
+      }
+    ],
+    "yearStart": 0,
+    "yearEnd": 0,
+    "stock": 4,
+    "description": "",
+    "availability": "in_stock",
+    "pointsLocked": false,
+    "sku": "SKU-1794639108448"
   }
 ]
